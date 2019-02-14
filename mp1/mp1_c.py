@@ -41,10 +41,13 @@ class ServerSocket:
         self.sock.listen(8)
 
     def accept(self):
-        conn, addr = self.sock.accept()
-        conn_list.append(conn)
-        print('# Connected by', addr)
-        self.client_conn(conn, addr)
+        # Accept a single connection
+	conn, addr = self.sock.accept()
+        # Add connection to connection list
+	conn_list.append(conn)
+        print('# Connection established by: ', addr)
+        # Send message to client 
+	self.client_conn(conn, addr)
         """
         while True:
             data = conn.recv(1024)
@@ -130,10 +133,15 @@ def client_conn(user_num):
     while True:
         send_input(client_socks)
 
+
 server = ServerSocket()
 server.bind(IP_ADDR, PORT)
+# TODO: Change to a looping while to accept all connections
+# include timeout from start of program
 server.accept()
 
+# TODO: Main logic loop
+# Every second look for message from all nodes, if missing, mark node as a failure
 client_conn(USER_NUM)
 
-
+# TODO: 
