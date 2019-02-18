@@ -53,6 +53,7 @@ class ServerSocket(Thread):
         super(ServerSocket, self).__init__()
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         else:
             self.sock = sock
 
