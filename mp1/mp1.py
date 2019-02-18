@@ -169,16 +169,16 @@ class ClientSocket(Thread):
             print("Error connecting to servers! SORRY")
 
 
-    def sendMessage(self, msg):
-
-        ts = [1, 0, 0, 0]
-        ts_byte = ','.join(ts).encode('utf-8')
-
-        for i in range():
-        self.sock.send(ts_byte)
-        self.sock.recv(1024)
-        self.sock.send(msg.encode('utf-8'))
-        self.sock.recv(1024)
+    # def sendMessage(self, msg):
+    #
+    #     ts = [1, 0, 0, 0]
+    #     ts_byte = ','.join(ts).encode('utf-8')
+    #
+    #     for i in range():
+    #     self.sock.send(ts_byte)
+    #     self.sock.recv(1024)
+    #     self.sock.send(msg.encode('utf-8'))
+    #     self.sock.recv(1024)
 
 
 
