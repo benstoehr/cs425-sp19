@@ -17,7 +17,7 @@
         <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="290">
-              <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+              <caret line="181" column="13" lean-forward="false" selection-start-line="181" selection-start-column="8" selection-end-line="181" selection-end-column="13" />
               <folding>
                 <element signature="e#125#138#0" expanded="true" />
               </folding>
@@ -40,8 +40,12 @@
     </leaf>
   </component>
   <component name="FindInProjectRecents">
+    <findStrings>
+      <find>print</find>
+    </findStrings>
     <replaceStrings>
       <replace>58</replace>
+      <replace>logging.info</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -183,7 +187,7 @@
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="290">
-          <caret line="35" column="21" lean-forward="false" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
+          <caret line="181" column="13" lean-forward="false" selection-start-line="181" selection-start-column="8" selection-end-line="181" selection-end-column="13" />
           <folding>
             <element signature="e#125#138#0" expanded="true" />
           </folding>
