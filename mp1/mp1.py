@@ -225,7 +225,7 @@ server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
 
 # Start the client
-client = ClientSocket(num_users=USER_NUM)
+#client = ClientSocket(num_users=USER_NUM)
 
 
 print("READY FOR ACTION!!!!")
