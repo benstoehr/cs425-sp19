@@ -75,8 +75,14 @@ class ServerSocket(Thread):
 
     def acceptConnections(self):
 
+        acceptConnectionsStart = time.time()
+
         while(not self.ready):
 
+            currentTime = time.time()
+            if(currentTime - acceptConnectionsStart > 20000):
+                print("Server: 20 second timeout exceeding when waiting for connections")
+                
             # Accept a single connection
             connection, address = self.sock.accept()
 
@@ -92,26 +98,32 @@ class ServerSocket(Thread):
 
             time.sleep(1)
 
-    def start(self):
+    def run(self):
+
         self.bind(self.ip, self.port)
         self.acceptConnections()
-
-    def run(self):
 
         while(not self.ready):
             print("NOT READY YET!")
             time.sleep(1)
 
+        count = 0
         while(1):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
             #
             print("In the main loops")
+            time.sleep(1)
+            count += 1
+            if(count == 30):
+                break
             continue
 
+        print("Server: run() is done!")
 
 
-class ClientSocket(Thread):
+
+class ClientSocket():
 
     def __init__(self, sock=None, num_users=USER_NUM):
         if sock is None:
@@ -185,12 +197,15 @@ class ClientSocket(Thread):
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM)
+serverThread = Thread(server)
+server.start()
 
 # Start the client
 client = ClientSocket(num_users=USER_NUM)
 
 
-server.bind(IP_ADDR, PORT)
+
+
 # TODO: Change to a looping while to accept all connections
 # include timeout from start of program
 server.acceptConnections()
