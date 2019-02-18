@@ -75,12 +75,14 @@ class ServerSocket(Thread):
         print("port: " + str(port))
 
         bindCheck = self.sock.bind((ip_addr, port))
+        print("bindCheck: " + str(bindCheck))
         if (bindCheck != 0):
             print("Error occured at self.sock.bind()")
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections
         listenCheck = self.sock.listen(self.numberOfUsers)
+        print("listenCheck: " + str(listenCheck))
         if(listenCheck != 0):
             print("Error occured at self.sock.listen()")
 
