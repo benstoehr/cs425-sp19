@@ -69,10 +69,12 @@ class ServerSocket(Thread):
 
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
-        self.sock.bind((ip_addr, port))
+        bindCheck = self.sock.bind((ip_addr, port))
+        if (bindCheck != 0):
+            print("Error occured at self.sock.bind()")
         # listens for 8 active connections.
         #self.sock.listen(8)
-        # listens for N active connections.
+        # listens for N active connections
         listenCheck = self.sock.listen(self.numberOfUsers)
         if(listenCheck != 0):
             print("Error occured at self.sock.listen()")
@@ -88,7 +90,10 @@ class ServerSocket(Thread):
                 print("Server: 20 second timeout exceeding when waiting for connections")
 
             # Accept a single connection
-            connection, address = self.sock.accept()
+            if(self.sock is not None):
+                connection, address = self.sock.accept()
+            else:
+                print("self.sock is None in acceptConnections")
 
             # Add connection to connection list
             self.connectionList[address] = (connection, 'active')
@@ -207,7 +212,7 @@ server.start()
 client = ClientSocket(num_users=USER_NUM)
 
 
-
+print("READY FOR ACTION!!!!")
 
 # TODO: Change to a looping while to accept all connections
 # include timeout from start of program
