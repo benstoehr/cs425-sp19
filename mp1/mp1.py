@@ -73,7 +73,9 @@ class ServerSocket(Thread):
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections.
-        self.sock.listen(USER_NUM - 1)
+        listenCheck = self.sock.listen(self.numberOfUsers)
+        if(listenCheck != 0):
+            print("Error occured at self.sock.listen()")
 
     def acceptConnections(self):
 
