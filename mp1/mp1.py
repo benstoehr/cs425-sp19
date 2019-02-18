@@ -137,8 +137,6 @@ class ClientSocket():
         self.num_users = num_users - 1
         self.activeConnections = 0
 
-        for i in range(num_users):
-            self.connections.append()
 
     def connectToServers(self):
 
