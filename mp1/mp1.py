@@ -38,7 +38,7 @@ PORT = int(sys.argv[2])
 # takes the third argument from command prompt:  number of users
 USER_NUM = int(sys.argv[3])
 
-hostName = socket.gethostbyname()
+hostName = socket.gethostname()
 splitHostName = hostName.split("-")
 VM_NUMBER = splitHostName[3].split(".")[0]
 
@@ -82,7 +82,7 @@ class ServerSocket(Thread):
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
                 print("Server: 20 second timeout exceeding when waiting for connections")
-                
+
             # Accept a single connection
             connection, address = self.sock.accept()
 
