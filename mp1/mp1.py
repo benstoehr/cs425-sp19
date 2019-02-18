@@ -82,6 +82,10 @@ class ServerSocket(Thread):
 
     def acceptConnections(self):
 
+
+        self.bind(self.ip, self.port)
+
+        print("START ACCEPTING CONNECTIONS!")
         acceptConnectionsStart = time.time()
 
         while(not self.ready):
@@ -92,14 +96,22 @@ class ServerSocket(Thread):
 
             # Accept a single connection
             if(self.sock is not None):
-                connection, address = self.sock.accept()
+                print("CALLING ACCEPT()")
+                try:
+                    connection, address = self.sock.accept()
+
+                    # Add connection to connection list
+                    self.connectionList[address] = (connection, 'active')
+                    print('# Server: Connection established by: ', address)
+                    self.activeConnections += 1
+
+                except(socket.error):
+                    print("CAUGHT SOCKET ERROR WTF")
+                    
             else:
                 print("self.sock is None in acceptConnections")
 
-            # Add connection to connection list
-            self.connectionList[address] = (connection, 'active')
-            print('# Server: Connection established by: ', address)
-            self.activeConnections += 1
+
 
             # Once the proper number of connections is made, exit the while loop
             if(self.activeConnections == (USER_NUM - 1)):
@@ -110,7 +122,7 @@ class ServerSocket(Thread):
 
     def run(self):
 
-        self.bind(self.ip, self.port)
+
         self.acceptConnections()
 
         while(not self.ready):
