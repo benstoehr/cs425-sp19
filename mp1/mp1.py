@@ -39,6 +39,8 @@ PORT = int(sys.argv[2])
 USER_NUM = int(sys.argv[3])
 
 hostName = socket.gethostname()
+print("hostName: " + str(hostName))
+
 splitHostName = hostName.split("-")
 VM_NUMBER = splitHostName[3].split(".")[0]
 
@@ -196,8 +198,7 @@ class ClientSocket():
 
 
 # Start the Server thread
-server = ServerSocket(num_users=USER_NUM)
-serverThread = Thread(server)
+server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
 
 # Start the client
