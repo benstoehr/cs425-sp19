@@ -138,14 +138,14 @@ class ClientSocket():
         self.activeConnections = 0
 
         for i in range(num_users):
-            self.connections.append(socket.socket(socket.AF_INET, socket.SOCK_STREAM))
+            self.connections.append()
 
     def connectToServers(self):
 
         connectionStartTime = time.time()
 
         servers = VM_LIST[:(self.num_users + 1)]
-        servers.remove(socket.gethostbyname())
+        servers.remove(socket.gethostname())
 
         attemptCount = 0
         while(self.activeConnections == self.num_users):
@@ -163,7 +163,9 @@ class ClientSocket():
                 continue
 
             # Try connecting to servers
-            connectCheck = self.connections[i].connect((server, PORT))
+            new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.connections[server] = new_connection
+            connectCheck = self.connections[server].connect((server, PORT))
             if(connectCheck == -1):
                 print("Error connecting to server " + str(server))
                 self.connections[server] = 'inactive'
