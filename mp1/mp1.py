@@ -70,6 +70,10 @@ class ServerSocket(Thread):
 
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
+
+        print("ip_addr: " +str(ip_addr))
+        print("port: " + str(port))
+
         bindCheck = self.sock.bind((ip_addr, port))
         if (bindCheck != 0):
             print("Error occured at self.sock.bind()")
@@ -81,7 +85,6 @@ class ServerSocket(Thread):
             print("Error occured at self.sock.listen()")
 
     def acceptConnections(self):
-
 
         self.bind(self.ip, self.port)
 
@@ -107,7 +110,7 @@ class ServerSocket(Thread):
 
                 except(socket.error):
                     print("CAUGHT SOCKET ERROR WTF")
-                    
+
             else:
                 print("self.sock is None in acceptConnections")
 
