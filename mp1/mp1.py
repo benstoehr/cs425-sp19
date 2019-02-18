@@ -44,7 +44,7 @@ print("hostName: " + str(hostName))
 splitHostName = hostName.split("-")
 VM_NUMBER = splitHostName[3].split(".")[0]
 
-print("Running on VM: ", VM_NUMBER)
+print("Running on VM: " +  str(VM_NUMBER))
 
 class ServerSocket(Thread):
 
@@ -222,7 +222,7 @@ class ClientSocket():
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
-server.start()
+#server.start()
 
 # Start the client
 #client = ClientSocket(num_users=USER_NUM)
