@@ -160,6 +160,7 @@ class ClientSocket():
         self.connections = dict()
         self.num_users = num_users - 1
         self.activeConnections = 0
+        self.name = socket.gethostname()
 
 
     def connectToServers(self):
@@ -167,7 +168,10 @@ class ClientSocket():
         connectionStartTime = time.time()
 
         servers = VM_LIST[:(self.num_users + 1)]
-        servers.remove(socket.gethostname())
+        print("Servers: " +str(servers))
+
+        print("NAME: " + str(self.name))
+        servers.remove(self.name)
 
         attemptCount = 0
         while(self.activeConnections == self.num_users):
