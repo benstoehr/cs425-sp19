@@ -76,15 +76,15 @@ class ServerSocket(Thread):
 
         bindCheck = self.sock.bind((ip_addr, port))
         print("bindCheck: " + str(bindCheck))
-        if (bindCheck != 0):
-            print("Error occured at self.sock.bind()")
+        # if (bindCheck != 0):
+        #     print("Error occured at self.sock.bind()")
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections
         listenCheck = self.sock.listen(self.numberOfUsers)
         print("listenCheck: " + str(listenCheck))
-        if(listenCheck != 0):
-            print("Error occured at self.sock.listen()")
+        # if(listenCheck != 0):
+        #     print("Error occured at self.sock.listen()")
 
     def acceptConnections(self):
 
@@ -126,7 +126,6 @@ class ServerSocket(Thread):
             time.sleep(1)
 
     def run(self):
-
 
         self.acceptConnections()
 
@@ -224,17 +223,16 @@ class ClientSocket():
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
-#server.start()
 
 # Start the client
-#client = ClientSocket(num_users=USER_NUM)
+client = ClientSocket(num_users=USER_NUM)
+client.connectToServers()
 
 
 print("READY FOR ACTION!!!!")
 
 # TODO: Change to a looping while to accept all connections
 # include timeout from start of program
-server.acceptConnections()
 
 # TODO: Main logic loop
 # Every second look for message from all nodes, if missing, mark node as a failure
