@@ -253,6 +253,7 @@ class ClientSocket():
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
+server.start()
 
 # time.sleep(5)
 # # Start the client
