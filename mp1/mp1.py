@@ -7,7 +7,7 @@ import sys
 from threading import Thread
 import time
 import logging
-
+import fcntl, os
 
 
 #server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -65,7 +65,8 @@ class ServerSocket(Thread):
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            self.sock.setblocking(False)
+            fcntl.fcntl(self.sock, fcntl.F_SETFL, os.O_NONBLOCK)
+            #self.sock.setblocking(False)
         else:
             self.sock = sock
 
@@ -130,7 +131,7 @@ class ServerSocket(Thread):
 
                     # Add connection to connection list
                     self.connections[address] = (connection, 'active')
-                    self.logger.info('# Server: Connection established by: '+ str(address))
+                    self.logger.info('Server: Connection established by: '+ str(address))
                     self.activeConnections += 1
 
                 except(socket.error):
@@ -268,7 +269,7 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
-            msg = raw_input(" > ")
+            msg = raw_input("> ")
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
                 connection.send(str(length).encode('utf-8'))
