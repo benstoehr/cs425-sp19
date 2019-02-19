@@ -91,18 +91,18 @@ class ServerSocket(Thread):
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
 
-        logging.info("ip_addr: " +str(ip_addr))
-        logging.info("port: " + str(port))
+        self.logger.info("ip_addr: " +str(ip_addr))
+        self.logger.info("port: " + str(port))
 
         bindCheck = self.sock.bind((ip_addr, port))
-        logging.info("bindCheck: " + str(bindCheck))
+        self.logger.info("bindCheck: " + str(bindCheck))
         # if (bindCheck != 0):
         #     print("Error occured at self.sock.bind()")
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections
         listenCheck = self.sock.listen(self.numberOfUsers)
-        logging.info("listenCheck: " + str(listenCheck))
+        self.logger.info("listenCheck: " + str(listenCheck))
         # if(listenCheck != 0):
         #     print("Error occured at self.sock.listen()")
 
@@ -110,38 +110,38 @@ class ServerSocket(Thread):
 
         self.bind(self.ip, self.port)
 
-        logging.info("START ACCEPTING CONNECTIONS!")
+        self.logger.info("START ACCEPTING CONNECTIONS!")
         acceptConnectionsStart = time.time()
 
         while(not self.ready):
 
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
-                logging.info("Server: 20 second timeout exceeding when waiting for connections")
+                self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
 
             # Accept a single connection
             if(self.sock is not None):
-                logging.info("CALLING ACCEPT()")
+                self.logger.info("CALLING ACCEPT()")
                 try:
                     connection, address = self.sock.accept()
 
                     # Add connection to connection list
                     self.connections[address] = (connection, 'active')
-                    logging.info('# Server: Connection established by: ', address)
+                    self.logger.info('# Server: Connection established by: ', address)
                     self.activeConnections += 1
 
                 except(socket.error):
-                    logging.info("CAUGHT SOCKET ERROR WTF")
+                    self.logger.info("CAUGHT SOCKET ERROR WTF")
 
             else:
-                logging.info("self.sock is None in acceptConnections")
+                self.logger.info("self.sock is None in acceptConnections")
 
 
 
             # Once the proper number of connections is made, exit the while loop
             if(self.activeConnections == (USER_NUM - 1)):
                 self.ready = True
-                logging.info("Server: CONNECTED TO ALL THE CLIENTS!")
+                self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
             time.sleep(1)
 
@@ -150,7 +150,7 @@ class ServerSocket(Thread):
         self.acceptConnections()
 
         while(not self.ready):
-            logging.info("NOT READY YET!")
+            self.logger.info("NOT READY YET!")
             time.sleep(1)
 
         count = 0
@@ -158,14 +158,14 @@ class ServerSocket(Thread):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
             #
-            logging.info("In the main loops")
+            self.logger.info("In the main loops")
             time.sleep(1)
             count += 1
             if(count == 30):
                 break
             continue
 
-        logging.info("Server: run() is done!")
+        self.logger.info("Server: run() is done!")
 
 
 
