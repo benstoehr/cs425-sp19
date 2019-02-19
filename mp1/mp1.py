@@ -65,6 +65,7 @@ class ServerSocket(Thread):
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            self.sock.setblocking(False)
         else:
             self.sock = sock
 
@@ -165,14 +166,17 @@ class ServerSocket(Thread):
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
                     try:
-                        print("receive on from " + str(address))
+                        print("Server: receive byte from " + str(address))
                         receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
-                            print("receiveCheck == -1")
+                            print("Server: receiveCheck == -1")
                         elif(len(receiveCheck) == 0):
-                            print("receiveCheck: nothing to read")
+                            print("Server: receiveCheck: nothing to read")
                         elif(len(receiveCheck) > 0):
-                            print("receiveCheck > 0: " + str(receiveCheck))
+                            print("Server: receiveCheck > 0: " + str(receiveCheck))
+                            message = connection.recv(receiveCheck)
+                            print("Server: Received message: " + str(message))
+
                     except socket.error:
                         print("Server: Error calling connection.recv(8)!")
 
