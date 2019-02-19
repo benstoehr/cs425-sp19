@@ -254,10 +254,10 @@ class ClientSocket():
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 
-time.sleep(5)
-# Start the client
-client = ClientSocket(num_users=USER_NUM)
-client.connectToServers()
+# time.sleep(5)
+# # Start the client
+# client = ClientSocket(num_users=USER_NUM)
+# client.connectToServers()
 
 
 print("READY FOR ACTION!!!!")
