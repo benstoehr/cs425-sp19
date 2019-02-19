@@ -267,11 +267,11 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
-            input = input()
-            length = len(input)
+            msg = input()
+            length = len(msg)
             for serverName, connection in self.connections.items():
                 connection.send(length.encode('utf-8'))
-                connection.send(input.encode('utf-8'))
+                connection.send(msg.encode('utf-8'))
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
