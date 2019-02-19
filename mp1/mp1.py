@@ -110,7 +110,9 @@ class ServerSocket(Thread):
 
         self.bind(self.ip, self.port)
 
-        self.logger.info("START ACCEPTING CONNECTIONS!")
+        print("START ACCEPTING CONNECTIONS!")
+        sys.stdout.flush()
+        
         acceptConnectionsStart = time.time()
 
         while(not self.ready):
