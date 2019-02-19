@@ -15,26 +15,26 @@ import fcntl, os
 IP_ADDR = ''
 
 # Addresses of other VMs for mp1
-VM0 = 'sp19-cs425-g32-01.cs.illinois.edu'
-VM1 = 'sp19-cs425-g32-02.cs.illinois.edu'
-VM2 = 'sp19-cs425-g32-03.cs.illinois.edu'
-VM3 = 'sp19-cs425-g32-04.cs.illinois.edu'
-VM4 = 'sp19-cs425-g32-05.cs.illinois.edu'
-VM5 = 'sp19-cs425-g32-06.cs.illinois.edu'
-VM6 = 'sp19-cs425-g32-07.cs.illinois.edu'
-VM7 = 'sp19-cs425-g32-08.cs.illinois.edu'
-VM_LIST = [VM0, VM1, VM2, VM3, VM4, VM5, VM6, VM7]
+# VM0 = 'sp19-cs425-g32-01.cs.illinois.edu'
+# VM1 = 'sp19-cs425-g32-02.cs.illinois.edu'
+# VM2 = 'sp19-cs425-g32-03.cs.illinois.edu'
+# VM3 = 'sp19-cs425-g32-04.cs.illinois.edu'
+# VM4 = 'sp19-cs425-g32-05.cs.illinois.edu'
+# VM5 = 'sp19-cs425-g32-06.cs.illinois.edu'
+# VM6 = 'sp19-cs425-g32-07.cs.illinois.edu'
+# VM7 = 'sp19-cs425-g32-08.cs.illinois.edu'
+# VM_LIST = [VM0, VM1, VM2, VM3, VM4, VM5, VM6, VM7]
 
 # Addresses of other VMs for mp1
-# VM0 = 'sp19-cs425-g58-01.cs.illinois.edu'
-# VM1 = 'sp19-cs425-g58-02.cs.illinois.edu'
-# VM2 = 'sp19-cs425-g58-03.cs.illinois.edu'
-# VM3 = 'sp19-cs425-g58-04.cs.illinois.edu'
-# VM4 = 'sp19-cs425-g58-05.cs.illinois.edu'
-# VM5 = 'sp19-cs425-g58-06.cs.illinois.edu'
-# VM6 = 'sp19-cs425-g58-07.cs.illinois.edu'
-# VM7 = 'sp19-cs425-g58-08.cs.illinois.edu'
-# VM_LIST = [VM0, VM1, VM2, VM3, VM4, VM5, VM6, VM7]
+VM0 = 'sp19-cs425-g58-01.cs.illinois.edu'
+VM1 = 'sp19-cs425-g58-02.cs.illinois.edu'
+VM2 = 'sp19-cs425-g58-03.cs.illinois.edu'
+VM3 = 'sp19-cs425-g58-04.cs.illinois.edu'
+VM4 = 'sp19-cs425-g58-05.cs.illinois.edu'
+VM5 = 'sp19-cs425-g58-06.cs.illinois.edu'
+VM6 = 'sp19-cs425-g58-07.cs.illinois.edu'
+VM7 = 'sp19-cs425-g58-08.cs.illinois.edu'
+VM_LIST = [VM0, VM1, VM2, VM3, VM4, VM5, VM6, VM7]
 
 #CUR_VM = 0
 #del VM_LIST[CUR_VM]
