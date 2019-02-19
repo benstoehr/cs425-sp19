@@ -166,11 +166,13 @@ class ServerSocket(Thread):
                 if(status == 'active'):
                     try:
                         print("receive on from " + str(address))
-                        receiveCheck = connection.recv(8)
+                        receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
                             print("receiveCheck == -1")
-                        else:
-                            print("receiveCheck: " + str(receiveCheck))
+                        elif(len(receiveCheck) == 0):
+                            print("receiveCheck: nothing to read")
+                        elif(len(receiveCheck) > 0):
+                            print("receiveCheck > 0: " + str(receiveCheck))
                     except socket.error:
                         print("Server: Error calling connection.recv(8)!")
 
@@ -182,7 +184,7 @@ class ServerSocket(Thread):
 
 
 
-
+            time.sleep(1)
             count += 1
             if(count == 30):
                 break
@@ -279,7 +281,7 @@ time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
 client.connectToServers()
-
+client.mainLoop()
 
 #print("READY FOR ACTION!!!!")
 
