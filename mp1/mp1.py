@@ -87,7 +87,7 @@ class ServerSocket(Thread):
         # add ch to logger
         self.logger.addHandler(ch)
 
-        sys.stdout.write("PRINTING FROM INIT\n")
+        sys.stdout.write("Server: PRINTING FROM INIT\n")
         sys.stdout.flush()
 
 
@@ -98,14 +98,14 @@ class ServerSocket(Thread):
         self.logger.info("port: " + str(port))
 
         bindCheck = self.sock.bind((ip_addr, port))
-        self.logger.info("bindCheck: " + str(bindCheck))
+        #self.logger.info("bindCheck: " + str(bindCheck))
         # if (bindCheck != 0):
         #     print("Error occured at self.sock.bind()")
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections
         listenCheck = self.sock.listen(self.numberOfUsers)
-        self.logger.info("listenCheck: " + str(listenCheck))
+        #self.logger.info("listenCheck: " + str(listenCheck))
         # if(listenCheck != 0):
         #     print("Error occured at self.sock.listen()")
 
@@ -113,7 +113,7 @@ class ServerSocket(Thread):
 
         self.bind(self.ip, self.port)
 
-        sys.stdout.write("START ACCEPTING CONNECTIONS!\n")
+        sys.stdout.write("Server: START ACCEPTING CONNECTIONS!\n")
         sys.stdout.flush()
 
         acceptConnectionsStart = time.time()
@@ -136,10 +136,10 @@ class ServerSocket(Thread):
                     self.activeConnections += 1
 
                 except(socket.error):
-                    self.logger.info("CAUGHT SOCKET ERROR WTF")
+                    self.logger.info("Server: CAUGHT SOCKET ERROR WTF")
 
             else:
-                self.logger.info("self.sock is None in acceptConnections")
+                self.logger.info("Server: self.sock is None in acceptConnections")
 
 
 
@@ -152,11 +152,11 @@ class ServerSocket(Thread):
 
     def run(self):
 
-        print("INSIDE THE RUN FUNCTION")
+        print("Server: INSIDE THE RUN FUNCTION")
         self.acceptConnections()
 
         while(not self.ready):
-            self.logger.info("NOT READY YET!")
+            self.logger.info("Server: NOT READY YET!")
             time.sleep(1)
 
         count = 0
@@ -164,7 +164,7 @@ class ServerSocket(Thread):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
             #
-            self.logger.info("In the main loops")
+            self.logger.info("Server: In the main loops")
             time.sleep(1)
             count += 1
             if(count == 30):
@@ -194,9 +194,9 @@ class ClientSocket():
         connectionStartTime = time.time()
 
         servers = VM_LIST[:(self.num_users + 1)]
-        print("Servers: " +str(servers))
+        print("Client: Servers: " +str(servers))
 
-        print("NAME: " + str(self.name))
+        print("Client: NAME: " + str(self.name))
         servers.remove(self.name)
 
         attemptCount = 0
@@ -204,7 +204,7 @@ class ClientSocket():
 
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
-                print("30 second timeout for connecting to servers")
+                print("Client: 30 second timeout for connecting to servers")
                 break
 
             connectionIndex = attemptCount % self.num_users
@@ -219,7 +219,7 @@ class ClientSocket():
             self.connections[server] = new_connection
             connectCheck = self.connections[server].connect((server, PORT))
             if(connectCheck == -1):
-                print("Error connecting to server " + str(server))
+                print("Client: Error connecting to server " + str(server))
                 self.connections[server] = 'inactive'
                 attemptCount += 1
                 continue
@@ -229,24 +229,14 @@ class ClientSocket():
                 attemptCount += 1
                 continue
 
+            time.sleep(1)
+
         # Check to ensure all the connections are made
         if(self.activeConnections == self.num_users):
-            print("Connected to " + str(self.num_users) + " servers!")
-            print("I'M READY!")
+            print("Client: Connected to " + str(self.num_users) + " servers!")
+            print("Client: I'M READY!")
         else:
-            print("Error connecting to servers! SORRY")
-
-
-    # def sendMessage(self, msg):
-    #
-    #     ts = [1, 0, 0, 0]
-    #     ts_byte = ','.join(ts).encode('utf-8')
-    #
-    #     for i in range():
-    #     self.sock.send(ts_byte)
-    #     self.sock.recv(1024)
-    #     self.sock.send(msg.encode('utf-8'))
-    #     self.sock.recv(1024)
+            print("Client: Error connecting to servers! SORRY")
 
 
 
@@ -255,7 +245,7 @@ class ClientSocket():
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
 
-# time.sleep(5)
+time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
 client.connectToServers()
