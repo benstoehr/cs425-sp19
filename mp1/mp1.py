@@ -152,6 +152,7 @@ class ServerSocket(Thread):
 
     def run(self):
 
+        print("INSIDE THE RUN FUNCTION")
         self.acceptConnections()
 
         while(not self.ready):
