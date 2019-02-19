@@ -78,6 +78,15 @@ class ServerSocket(Thread):
         self.ready = False
         self.activeConnections = 0
 
+        # create logger
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.DEBUG)
+        # create console handler and set level to debug
+        ch = logging.StreamHandler()
+        ch.setLevel(logging.DEBUG)
+        # add ch to logger
+        self.logger.addHandler(ch)
+
 
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
