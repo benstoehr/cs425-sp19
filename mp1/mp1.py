@@ -267,7 +267,7 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
-            msg = input()
+            msg = raw_input(" > ")
             length = len(msg)
             for serverName, connection in self.connections.items():
                 connection.send(length.encode('utf-8'))
