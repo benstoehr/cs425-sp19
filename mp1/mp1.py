@@ -160,7 +160,7 @@ class ServerSocket(Thread):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
             #
-            self.logger.info("Server: In the main loops")
+            #self.logger.info("Server: In the main loops")
 
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
@@ -236,18 +236,19 @@ class ClientSocket():
 
             # Try connecting to servers
             new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.connections[server] = new_connection
+            connectCheck = new_connection.connect((server, PORT))
+
             #print("Client: Trying to connect to server " + str(server))
 
-            connectCheck = self.connections[server].connect((server, PORT))
+
             if(connectCheck == -1):
                 print("Client: Error connecting to server " + str(server))
-                self.connections[server] = 'inactive'
+                self.connections[server] = (new_connection, 'inactive')
                 attemptCount += 1
                 continue
             else:
                 self.activeConnections += 1
-                self.connections[server] = 'active'
+                self.connections[server] = (new_connection, 'active')
                 attemptCount += 1
                 continue
 
@@ -269,7 +270,7 @@ class ClientSocket():
         while(1):
             msg = raw_input(" > ")
             length = len(msg)
-            for serverName, connection in self.connections.items():
+            for serverName, (connection, status) in self.connections.items():
                 connection.send(length.encode('utf-8'))
                 connection.send(msg.encode('utf-8'))
 
