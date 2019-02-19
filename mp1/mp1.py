@@ -217,6 +217,8 @@ class ClientSocket():
             # Try connecting to servers
             new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.connections[server] = new_connection
+            print("Client: Trying to connect to server " + str(server))
+            
             connectCheck = self.connections[server].connect((server, PORT))
             if(connectCheck == -1):
                 print("Client: Error connecting to server " + str(server))
