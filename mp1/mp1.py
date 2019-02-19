@@ -257,8 +257,8 @@ server.start()
 
 # time.sleep(5)
 # # Start the client
-# client = ClientSocket(num_users=USER_NUM)
-# client.connectToServers()
+client = ClientSocket(num_users=USER_NUM)
+client.connectToServers()
 
 
 print("READY FOR ACTION!!!!")
