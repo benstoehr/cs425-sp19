@@ -174,8 +174,11 @@ class ServerSocket(Thread):
                             print("Server: receiveCheck: nothing to read")
                         elif(len(receiveCheck) > 0):
                             print("Server: receiveCheck > 0: " + str(receiveCheck))
-                            message = connection.recv(receiveCheck)
-                            print("Server: Received message: " + str(message))
+                            if(receiveCheck == "0"):
+                                print("HB")
+                            else:
+                                message = connection.recv(receiveCheck)
+                                print("Server: Received message: " + str(message))
 
                     except socket.error:
                         print("Server: Error calling connection.recv(8)!")
