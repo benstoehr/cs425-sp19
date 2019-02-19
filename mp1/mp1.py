@@ -161,7 +161,28 @@ class ServerSocket(Thread):
             # iterate over each connection and read 8 bytes for message length
             #
             self.logger.info("Server: In the main loops")
-            time.sleep(1)
+
+            for address, (connection, status) in self.connections.items():
+                if(status == 'active'):
+                    try:
+                        print("receive on from " + address)
+                        receiveCheck = connection.recv(8)
+                        if(receiveCheck == -1):
+                            print("receiveCheck == -1")
+                        else:
+                            print("receiveCheck: " + str(receiveCheck))
+                    except socket.error:
+                        print("Server: Error calling connection.recv(8)!")
+
+
+
+
+
+
+
+
+
+
             count += 1
             if(count == 30):
                 break
@@ -201,6 +222,7 @@ class ClientSocket():
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
                 print("Client: 30 second timeout for connecting to servers")
+
                 break
 
             connectionIndex = attemptCount % self.num_users
@@ -237,7 +259,17 @@ class ClientSocket():
             print("Client: Error connecting to servers! SORRY")
 
 
+    def heartbeat(self):
+        for serverName, connection in self.connections.items():
+            connection.send("\x00")
 
+    def mainLoop(self):
+        while(1):
+            input = input()
+            length = len(input)
+            for serverName, connection in self.connections.items():
+                connection.send(length.encode('utf-8'))
+                connection.send(input.encode('utf-8'))
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
