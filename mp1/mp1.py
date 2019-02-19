@@ -200,7 +200,7 @@ class ClientSocket():
         servers.remove(self.name)
 
         attemptCount = 0
-        while(self.activeConnections == self.num_users):
+        while(self.activeConnections != self.num_users):
 
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
