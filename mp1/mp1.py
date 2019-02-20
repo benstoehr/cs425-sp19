@@ -274,8 +274,7 @@ class ClientSocket():
             msg = raw_input("> ")
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
-                connection.send(str(length).encode('utf-8'))
-                connection.send(msg.encode('utf-8'))
+                connection.send((str(length) + msg).encode('utf-8'))
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
