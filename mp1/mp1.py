@@ -177,7 +177,7 @@ class ServerSocket(Thread):
                         elif(len(receiveCheck) == 0):
                             print("Server: receiveCheck: nothing to read")
                         elif(len(receiveCheck) > 0):
-                            print("Server: receiveCheck > 0: " + str(receiveCheck))
+                            print("Server: receiveCheck > 0: " + str(int(receiveCheck)))
                             if(receiveCheck == "0"):
                                 print("HB")
                             else:
