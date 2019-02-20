@@ -194,7 +194,7 @@ class ServerSocket(Thread):
                             self.connections[address] = (connection, 'inactive')
                         else:
                             #print("Server: Other error calling connection.recv()!")
-                            print("Error: str(errno.errorcode[e.errno]))
+                            print("Error: " + str(errno.errorcode[e.errno]))
 
 
             time.sleep(1)
