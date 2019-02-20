@@ -134,8 +134,9 @@ class ServerSocket(Thread):
                     self.logger.info('Server: Connection established by: '+ str(address))
                     self.activeConnections += 1
 
-                except(socket.error):
+                except socket.error as error:
                     self.logger.info("Server: CAUGHT SOCKET ERROR WTF")
+                    print(error)
 
             else:
                 self.logger.info("Server: self.sock is None in acceptConnections")
