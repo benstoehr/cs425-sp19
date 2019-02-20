@@ -131,7 +131,7 @@ class ServerSocket(Thread):
                 try:
                     connection, address = self.sock.accept()
                     connection.setblocking(0)
-                    
+
                     # Add connection to connection list
                     self.connections[address] = (connection, 'active')
                     self.logger.info('Server: Connection established by: '+ str(address))
@@ -139,7 +139,7 @@ class ServerSocket(Thread):
 
                 except socket.error as error:
                     #self.logger.info("Server: CAUGHT SOCKET ERROR WTF")
-
+                    pass
 
             else:
                 self.logger.info("Server: self.sock is None in acceptConnections")
