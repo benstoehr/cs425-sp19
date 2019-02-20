@@ -199,7 +199,7 @@ class ServerSocket(Thread):
 
             time.sleep(1)
             count += 1
-            if(count == 30):
+            if(count == 100):
                 break
             continue
 
