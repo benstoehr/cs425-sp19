@@ -175,11 +175,17 @@ class ServerSocket(Thread):
 
 
                         print("Server: recv(1) " + str(address))
+
                         receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
                             print("Server: receiveCheck == -1")
+
+                        # THIS MEANS THE CONNECTION CLOSED
                         elif(len(receiveCheck) == 0):
                             print("Server: receiveCheck: nothing to read")
+                            print(str(address) + " disconnected!")
+                            self.connections[address] = (connection, 'inactive')
+                            
                         elif(len(receiveCheck) > 0):
                             print("Server: receiveCheck > 0: " + str(ord(receiveCheck)))
                             if(receiveCheck == "0"):
@@ -190,8 +196,9 @@ class ServerSocket(Thread):
 
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
-                            print(str(address) + " disconnected!")
-                            self.connections[address] = (connection, 'inactive')
+                            pass
+                        if (e.errno == errno.EGAIN):
+                            pass
                         else:
                             #print("Server: Other error calling connection.recv()!")
                             print("Error: " + str(errno.errorcode[e.errno]))
