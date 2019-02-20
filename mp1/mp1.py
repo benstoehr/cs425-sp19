@@ -248,6 +248,7 @@ class ClientSocket():
                 attemptCount += 1
                 continue
             else:
+                print("Client: Connected to server " + str(server))
                 self.activeConnections += 1
                 self.connections[server] = (new_connection, 'active')
                 attemptCount += 1
