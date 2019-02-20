@@ -242,7 +242,6 @@ class ClientSocket():
 
             #print("Client: Trying to connect to server " + str(server))
 
-
             if(connectCheck == -1):
                 print("Client: Error connecting to server " + str(server))
                 self.connections[server] = (new_connection, 'inactive')
@@ -274,7 +273,7 @@ class ClientSocket():
             msg = raw_input("> ")
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
-                connection.send(length.encode('utf-8') + msg.encode('utf-8'))
+                connection.send(chr(length) + msg.encode('utf-8'))
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
