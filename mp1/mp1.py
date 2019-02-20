@@ -188,7 +188,11 @@ class ServerSocket(Thread):
                                 message = connection.recv(ord(receiveCheck))
                                 print("Server: Received message: " + str(message))
 
-                    except socket.error:
+                    except socket.error, e:
+                        if(e.errno == errno.ECONNRESET):
+                            print(str(address) + " disconnected!")
+                            self.connections[address] = (connection, 'inactive')
+                            
                         print("Server: Error calling connection.recv()!")
 
 
