@@ -115,7 +115,7 @@ class ServerSocket(Thread):
         self.bind(self.ip, self.port)
 
         #sys.stdout.write("Server: START ACCEPTING CONNECTIONS!\n")
-        sys.stdout.flush()
+        #sys.stdout.flush()
 
         acceptConnectionsStart = time.time()
 
@@ -130,15 +130,16 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CALLING ACCEPT()")
                 try:
                     connection, address = self.sock.accept()
-
+                    connection.setblocking(0)
+                    
                     # Add connection to connection list
                     self.connections[address] = (connection, 'active')
                     self.logger.info('Server: Connection established by: '+ str(address))
                     self.activeConnections += 1
 
                 except socket.error as error:
-                    self.logger.info("Server: CAUGHT SOCKET ERROR WTF")
-                    print(error)
+                    #self.logger.info("Server: CAUGHT SOCKET ERROR WTF")
+
 
             else:
                 self.logger.info("Server: self.sock is None in acceptConnections")
@@ -161,6 +162,7 @@ class ServerSocket(Thread):
             time.sleep(1)
 
         count = 0
+
         while(1):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
@@ -170,6 +172,8 @@ class ServerSocket(Thread):
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
                     try:
+
+
                         print("Server: receive byte from " + str(address))
                         receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
@@ -182,10 +186,10 @@ class ServerSocket(Thread):
                                 print("HB")
                             else:
                                 message = connection.recv(ord(receiveCheck))
-                                print("\rServer: Received message: " + str(message))
+                                print("Server: Received message: " + str(message))
 
                     except socket.error:
-                        print("Server: Error calling connection.recv(8)!")
+                        print("Server: Error calling connection.recv()!")
 
 
             time.sleep(1)
