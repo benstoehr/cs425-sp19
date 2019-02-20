@@ -66,7 +66,9 @@ class ServerSocket(Thread):
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             fcntl.fcntl(self.sock, fcntl.F_SETFL, os.O_NONBLOCK)
+
             #self.sock.setblocking(False)
+
         else:
             self.sock = sock
 
@@ -195,7 +197,6 @@ class ServerSocket(Thread):
         self.logger.info("Server: run() is done!")
 
 
-
 class ClientSocket():
 
     def __init__(self, sock=None, num_users=USER_NUM):
@@ -226,7 +227,6 @@ class ClientSocket():
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
                 print("Client: 30 second timeout for connecting to servers")
-
                 break
 
             connectionIndex = attemptCount % self.num_users
@@ -274,7 +274,7 @@ class ClientSocket():
             msg = raw_input("> ")
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
-                connection.send((str(length) + msg).encode('utf-8'))
+                connection.send(length.encode('utf-8') + msg.encode('utf-8'))
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
