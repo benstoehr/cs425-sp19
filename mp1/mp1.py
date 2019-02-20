@@ -174,7 +174,7 @@ class ServerSocket(Thread):
                     try:
 
 
-                        print("Server: receive byte from " + str(address))
+                        print("Server: recv(1) " + str(address))
                         receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
                             print("Server: receiveCheck == -1")
@@ -194,7 +194,7 @@ class ServerSocket(Thread):
                             self.connections[address] = (connection, 'inactive')
                         else:
                             #print("Server: Other error calling connection.recv()!")
-                            print(e)
+                            print("Error: str(errno.errorcode[e.errno]))
 
 
             time.sleep(1)
