@@ -248,7 +248,7 @@ class ClientSocket():
         self.activeConnections = 0
         self.name = socket.gethostname()
         self.username = username
-        self.vmNumber = vmNumber
+        self.vmNumber = int(vmNumber)
 
         self.vector = []
         for i in range(num_users):
