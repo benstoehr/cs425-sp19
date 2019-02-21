@@ -246,7 +246,6 @@ class ServerSocket(Thread):
                             expected_vector[count] += 1
 
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers - 1
-
                             vmSender = int(ord(connection.recv(1)))
 
                             new_vector = []
@@ -275,9 +274,10 @@ class ServerSocket(Thread):
                                 sentCondition.notify_all()
                                 sentCondition.release()
                                 toSendCondition.notify_all()
-                                toSendCondition.notify_all()
+                                toSendCondition.release()
 
                                 self.vector = new_vector
+
                             else:
                                 #print("appending " + str(vector) + " " + str(message))
                                 self.messageQueue.append((new_vector, message))
@@ -300,9 +300,17 @@ class ServerSocket(Thread):
                             for old_vector, queuedMessage in self.messageQueue:
                                 #print("inside message queue for loop")
                                 if (old_vector[count] == expected_vector[count]):
+                                    safe = True
+                                    for j in len(old_vector):
+                                        if(j == count):
+                                            continue
+                                        if(old_vector[j] > expected_vector[j]) :
+                                            safe = False
+                                            break
 
-                                    print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
-                                    self.messageQueue.remove((old_vector, queuedMessage))
+                                    if(safe):
+                                        print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
+                                        self.messageQueue.remove((old_vector, queuedMessage))
 
                                     vector = old_vector
                         else:
@@ -415,14 +423,15 @@ class ClientSocket():
 
             ## CRAFTING THE MESSAGE FROM INPUT
             # message is a string
-            message = raw_input()
+            inputMessage = raw_input()
             # also a string
-            messageWithName = self.username + ": " + message
+            inputMessageWithName = self.username + ": " + message
+            # +1 is for the VM number added at the beginning
             length = len(messageWithName) + USER_NUM + 1
 
             # give length of full message
-            fullMessage = chr(length)
-            fullMessage += chr(self.vmNumber)
+            inputFullMessage = chr(length)
+            inputFullMessage += chr(self.vmNumber)
             # increment vector accordingly
 
             c.acquire()
@@ -435,12 +444,12 @@ class ClientSocket():
 
             # include the vector timestamp
             for i in range(self.num_users + 1):
-                fullMessage += chr(self.vector[i])
+                inputFullMessage += chr(self.vector[i])
 
             # add the message with the name
-            fullMessage += messageWithName.encode('utf-8')
+            inputFullMessage += messageWithName.encode('utf-8')
 
-            print("Client: " + str(self.vector) + " " + str(fullMessage))
+            print("Client: " + str(self.vector) + " " + str(inputFullMessage))
 
             for serverName, (connection, status) in self.connections.items():
 
@@ -450,10 +459,13 @@ class ClientSocket():
                         sentCondition.acquire()
                         toSendCondition.acquire()
 
+                        print("messagesToSend: " + str(messagesToSend))
+
                         for message in messagesToSend:
                             print(message)
                             connection.send(message)
                             sentMessages.append(message)
+
                         messagesToSend = []
 
                         connection.send(fullMessage)
