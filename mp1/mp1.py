@@ -50,7 +50,7 @@ class ServerSocket(Thread):
         else:
             self.sock = sock
 
-        ip_and_port = socket.getsockname()
+        ip_and_port = sock.getsockname()
         self.ip = ip_and_port[0]
         #self.port = ip_and_port[1]
 
