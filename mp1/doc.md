@@ -27,7 +27,7 @@ e.g. `Python mp1.py Alice 4444 2`
 
 ## Commit Hash
 
-[I'm the 40-charactorer hash]
+[I'm the 40-character hash]
 
 ## Design Document
 
@@ -35,9 +35,10 @@ e.g. `Python mp1.py Alice 4444 2`
 
 #### Integrity
 
-Every message received will be checked if already received by its sequence number. If the sequence number is seen, then the process drops the duplicate. If the sequence number does not appear yet, the process puts the message in the hold-back queue.
+Every message received will be checked if already received by the sequence number. If the sequence number is seen, then the process drops the duplicate. If the sequence number does not appear yet, the process puts the message in the hold-back queue.
 
 Please refer to:
+
 ```
 class ServerSocket(Thread):
     ...
@@ -52,7 +53,7 @@ class ClientSocket():
 
 #### Agreement
 
-R-Multicast
+R-Multicast guarantees that every process receives the message and deliver it if a message is delivered by a correct process.
 
 Please refer to:
 ```
@@ -142,5 +143,15 @@ After the delivery, the process checks if there are any messages in the queue al
 Please refer to:
 
 ```
-code
+class ServerSocket(Thread):
+    ...
+    def run(self):
+        ...
+        count = 0
+
+        while(run_event.is_set()):
+        ...
+            count = 0
+            for address, (connection, status) in self.connections.items():
+            ... (the logic is in this block)
 ```
