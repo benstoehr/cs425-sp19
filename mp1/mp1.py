@@ -194,7 +194,7 @@ class ServerSocket(Thread):
             count = 0
             for address, (connection, status) in self.connections.items():
 
-                c.aquire()
+                c.acquire()
 
                 self.vector = vector
 
@@ -361,11 +361,11 @@ class ClientSocket():
             fullMessage = chr(length)
 
             # increment vector accordingly
-            c.aquire()
+            c.acquire()
             self.vector[self.vmNumber - 1]  = self.vector[self.vmNumber - 1] + 1
             c.notify_all()
             c.release()
-            
+
             # include the vector timestamp
             for i in range(self.num_users + 1):
                 fullMessage += chr(self.vector[i])
