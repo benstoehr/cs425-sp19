@@ -217,7 +217,8 @@ class ServerSocket(Thread):
                         if (len(receiveCheck) == 0):
                             print(str(address) + " disconnected!")
                             connection.close()
-                            self.connections[address] = (hostname, None, 'inactive',[],[])
+                            self.connections[address] = (hostname, None, 'inactive',mes2send,sent_mes)
+                            break
 
                         # GET MESSAGE
                         elif (len(receiveCheck) > 0):
@@ -256,6 +257,9 @@ class ServerSocket(Thread):
                                     #print(m)
                                     connection.send(m)
                                     sent_mes += [m]
+                            mes2send = []
+
+                self.connections[address] = (hostname, connection, status, mes2send, sent_mes)
 
             #sentMessages += messagesToSend
             clientMessagesToSend = []
