@@ -142,7 +142,7 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip_address in self.connections.keys()):
                         print("Already connected to " + str(ip_address))
-                        (tempserver, connection, status, message2send, [sent_messages]) = self.connections[ip_address]
+                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip_address]
                         if(tempserver is None):
                             self.connections[ip_address] = (vm, connection, 'active',[],[])
                             self.activeConnections += 1
