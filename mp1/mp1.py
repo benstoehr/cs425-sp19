@@ -322,12 +322,6 @@ class ServerSocket(Thread):
                 c.notify_all()
                 c.release()
 
-            time.sleep(1)
-            count += 1
-            if(count == 100):
-                break
-            continue
-
         self.shutdown()
         self.logger.info("Server: run() is done!")
 
