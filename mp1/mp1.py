@@ -188,9 +188,8 @@ class ServerSocket(Thread):
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
-
-                    print(str(connection.getsockname()) + "<-> (" + str(address) + "," + str(port) + ")")
-
+                    print(str("IN: " + in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
+                    print(str("IN: " + out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()))
                 print("READY")
                 c.acquire()
                 globalready = True
