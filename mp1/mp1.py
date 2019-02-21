@@ -99,7 +99,7 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
                 print("Server: 20 second timeout exceeding when waiting for connections")
 
-            #print("VM LIST TIME")
+            print("VM LIST TIME")
             for vm in VM_LIST:
 
                 if(vm == self.hostname or vm in self.vmsNamed):
@@ -115,7 +115,7 @@ class ServerSocket(Thread):
                     ip_and_port = new_connection.getpeername()
                     ip, nuport = ip_and_port
 
-                    print("ip: " + str(ip))
+                    print(str(self.sock.getsockname) +"<->"+ str(ip_and_port))
 
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
@@ -128,7 +128,7 @@ class ServerSocket(Thread):
                             self.vmsNamed += [vm]
 
                     else:
-                        print("New connection to " + str(ip_and_port) + ": " +str(vm))
+                        print("New connection to " + str(ip_and_port) + ":" + str(vm))
                         self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
