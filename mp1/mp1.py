@@ -229,14 +229,10 @@ class ServerSocket(Thread):
                 if(status == 'active'):
                     try:
                         #print("Server: recv(1) " + str(address))
-
                         receiveCheck = connection.recv(1)
 
-                        if(receiveCheck == -1):
-                            print("Server: receiveCheck == -1")
-
                         # THIS MEANS THE CONNECTION CLOSED
-                        elif(len(receiveCheck) == 0):
+                        if(len(receiveCheck) == 0):
                             print(str(address) + " disconnected!")
                             self.connections[address] = (connection, 'inactive')
 
@@ -244,22 +240,20 @@ class ServerSocket(Thread):
                         elif(len(receiveCheck) > 0):
 
                             expected_vector[count] += 1
-
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers - 1
                             vmSender = int(ord(connection.recv(1)))
 
                             if(vmSender == self.vmNumber):
+                                print("found my own message")
                                 dummy = connection.recv(messageLength - 2)
                             else:
                                 new_vector = []
                                 for i in range(self.numberOfTotalUsers):
                                     temp = int(ord(connection.recv(1)))
                                     new_vector.append(temp)
-
                                 message = connection.recv(messageLength)
 
-                                #print("expected: " + str(expected_vector))
-                                #print("new: " + str(new_vector))
+                                # Build message for placement on queue or whatever
                                 fullMessage = chr(messageLength) + chr(vmSender)
                                 for x in new_vector:
                                     fullMessage += chr(x)
@@ -291,14 +285,8 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
 
-
-                            #print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector[:]
-                            #print("expected pre: " +str(expected_vector))
                             expected_vector[count] += 1
-                            #print("expected post: " + str(expected_vector))
-                            #print("new: " + str(new_vector))
-
 
                             for old_vector, queuedMessage in self.messageQueue:
                                 #print("inside message queue for loop")
@@ -315,13 +303,13 @@ class ServerSocket(Thread):
                                         print("Server: Pulled message from queue: " + str(old_vector) + " " + str(queuedMessage))
                                         self.messageQueue.remove((old_vector, queuedMessage))
 
+                                    # THIS MIGHT BE FUCKING UP
                                     vector = old_vector
                         else:
                             #print("Server: Other error calling connection.recv()!")
                             print("Error: " + str(errno.errorcode[e.errno]))
 
                 count += 1
-
                 c.notify_all()
                 c.release()
 
@@ -404,11 +392,6 @@ class ClientSocket():
             print("Client: I'M READY!")
         else:
             print("Client: Error connecting to servers! SORRY")
-
-
-    def heartbeat(self):
-        for serverName, connection in self.connections.items():
-            connection.send("\x00")
 
     def mainLoop(self):
 
