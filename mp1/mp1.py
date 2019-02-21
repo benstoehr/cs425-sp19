@@ -130,7 +130,7 @@ class ServerSocket(Thread):
                 # self.logger.info("Server: self.sock is None in acceptConnections")
                 print("Server: self.sock is None in acceptConnections")
 
-                
+
             print("VM LIST TIME")
             for vm in VM_LIST:
 
@@ -155,7 +155,7 @@ class ServerSocket(Thread):
                         print("\tAlready connected to " + str(ip))
                         (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
-                            print("\tupdating name for " + str(ip) + " to " + str(vm))
+                            print("\tupdating name for " + str(ip_and_port) + " to " + str(vm))
                             self.connections[ip] = (port, vm, connection, 'active',[],[])
                             self.vmsNamed += [vm]
 
@@ -171,10 +171,6 @@ class ServerSocket(Thread):
                     new_connection.close()
                     continue
 
-
-
-
-
             # Once the proper number of connections is made, exit the while loop
             if(self.activeConnections == self.numberOfClients and self.numberOfClients == len(self.vmsNamed)):
                 self.ready = True
@@ -182,7 +178,8 @@ class ServerSocket(Thread):
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
-                    print("Connected to " + str(address) + ":" + str(port) + " from " + str(connection.getsockname()))
+
+                    print(str(self.sock.getsockname()) + "<->" + str(address,port))
 
                 print("READY")
                 c.acquire()
