@@ -221,7 +221,7 @@ class ServerSocket(Thread):
                             messageLength = int(ord(receiveCheck)) - 1
                             vmSender = int(ord(connection.recv(1)))
 
-                            fullReceivedMessage = chr(messageLength) + 1
+                            fullReceivedMessage = chr(messageLength + 1)
                             fullReceivedMessage += chr(vmSender)
 
                             if (vmSender == self.vmNumber):
