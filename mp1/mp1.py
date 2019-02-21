@@ -207,11 +207,11 @@ class ServerSocket(Thread):
                 if(len(clientMessagesToSend) > 0):
                     mes2send += clientMessagesToSend
 
-                print("{}: {}".format(hostname, status))
 
                 if(status == 'active' and connection is not None):
 
                     if (len(mes2send) > 0):
+                        print("{}: {}".format(hostname, status))
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
