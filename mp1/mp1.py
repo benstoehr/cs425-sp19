@@ -241,11 +241,12 @@ class ServerSocket(Thread):
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
-                print("Beginning of Loop mes2send " + str(mes2send))
+
 
                 if(status == 'active' and out_connection is not None):
 
                     print("{}: {}".format(hostname, status))
+                    print("\tBeginning of Loop mes2send " + str(mes2send))
 
                     if (len(mes2send) > 0):
                         print("sending messages from queue " + str(mes2send))
@@ -278,13 +279,13 @@ class ServerSocket(Thread):
                             fullReceivedMessage += chr(vmSender)
 
                             if (vmSender == self.vmNumber):
-                                print("Received my own message")
+                                print("\t\tReceived my own message")
                                 dummy = in_connection.recv(messageLength)
                             else:
                                 message = in_connection.recv(messageLength)
                                 fullReceivedMessage += message
 
-                                print("Received message from " +str(hostname)+": " + message)
+                                print("\t\tReceived message from " +str(hostname)+": " + message)
 
                                 #print(message)
 
@@ -292,7 +293,7 @@ class ServerSocket(Thread):
                                     mes2send.append(fullReceivedMessage)
 
                                 else:
-                                    print("Already sent message " + str(fullReceivedMessage))
+                                    print("\t\tAlready sent message " + str(fullReceivedMessage))
 
 
                     # NOTHING AVAILABLE ON THE SOCKET
@@ -306,7 +307,7 @@ class ServerSocket(Thread):
                                 print(e)
                             mes2send = []
 
-                print("End of loop mes2send " +str(mes2send))
+                print("\tEnd of loop mes2send " +str(mes2send))
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
             time.sleep(2)
