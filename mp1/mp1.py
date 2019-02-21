@@ -442,24 +442,23 @@ class ClientSocket():
             print("Client: " + str(self.vector) + " " + str(fullMessage))
 
             for serverName, (connection, status) in self.connections.items():
+
                 if(status == 'active' and connection is not None):
                     try:
                         sentCondition.acquire()
                         toSendCondition.acquire()
 
                         for message in messagesToSend:
-
-                        if (message not in sentMessages):
+                            connection.send(message)
                             sentMessages.append(message)
-                        else:
-                            messagesToSend.append(message)
+
+                        connection.send(fullMessage)
+                        sentMessages.append(fullMessage)
 
                         sentCondition.notify_all()
                         sentCondition.release()
                         toSendCondition.notify_all()
                         toSendCondition.notify_all()
-
-                        connection.send(fullMessage)
 
                     except socket.error as e:
                         if(e == 'Broken pipe'):
