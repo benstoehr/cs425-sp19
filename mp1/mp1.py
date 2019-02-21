@@ -295,7 +295,7 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
                             error_count += 1
-                            if(error_count % 1000 == 0):
+                            if(error_count % 100000 == 0):
                                 print(e)
                             mes2send = []
 
