@@ -307,9 +307,12 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
+            # message is a string
             message = raw_input()
+            # also a string
             messageWithName = self.username + ": " + message
-            length = len(messageWithName)
+
+            length = len(messageWithName) + USER_NUM + 1
 
             # give length of full message
             fullMessage = chr(length)
@@ -323,6 +326,9 @@ class ClientSocket():
 
             # add the message with the name
             fullMessage += messageWithName.encode('utf-8')
+
+            print("Client: " + str(fullMessage))
+
 
             for serverName, (connection, status) in self.connections.items():
                 if(status == 'active' and connection is not None):
