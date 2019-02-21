@@ -114,7 +114,7 @@ class ServerSocket(Thread):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
-                        self.connections[ip] = (None, connection, 'active', [], [])
+                        self.connections[ip] = (port, None, connection, 'active', [], [])
                         self.activeConnections += 1
 
                 except socket.error as error:
@@ -148,16 +148,15 @@ class ServerSocket(Thread):
                     if(ip in self.connections.keys()):
 
                         print("Already connected to " + str(ip))
-                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
+                        (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
                             print("updating name for " + str(ip) + " to " + str(vm))
-                            self.connections[ip] = (vm, connection, 'active',[],[])
+                            self.connections[ip] = (port, vm, connection, 'active',[],[])
                             self.vmsNamed += [vm]
-
 
                     else:
                         print("New connection to " + str(ip_and_port) + ": " +str(vm))
-                        self.connections[ip] = (vm, new_connection, 'active',[],[])
+                        self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
 
@@ -173,6 +172,9 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
+                for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
+                    print("Connected to " + str(hostname) + " on port " + str(port) + " from " + str(connection.getsockname()))
+
                 print("READY")
                 c.acquire()
                 globalready = True
@@ -183,7 +185,7 @@ class ServerSocket(Thread):
 
     def shutdown(self):
 
-        for address, (hostname, connection, status, mes2send, sentmes) in self.connections.items():
+        for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
             if(status == 'active' and connection is not None):
                 connection.close()
 
@@ -211,7 +213,7 @@ class ServerSocket(Thread):
 
             c.acquire()
 
-            for address, (hostname, connection, status, mes2send, sent_mes) in self.connections.items():
+            for address, (port, hostname, connection, status, mes2send, sent_mes) in self.connections.items():
 
                 if(len(clientMessagesToSend) > 0):
                     mes2send += clientMessagesToSend
@@ -235,7 +237,7 @@ class ServerSocket(Thread):
                         if (len(receiveCheck) == 0):
                             print(str(address) + " disconnected!")
                             connection.close()
-                            self.connections[address] = (hostname, None, 'inactive',mes2send,sent_mes)
+                            self.connections[address] = (port, hostname, None, 'inactive',mes2send,sent_mes)
                             break
 
                         # GET MESSAGE
@@ -272,7 +274,7 @@ class ServerSocket(Thread):
                             mes2send = []
                             pass
 
-                self.connections[address] = (hostname, connection, status, mes2send, sent_mes)
+                self.connections[address] = (port, hostname, connection, status, mes2send, sent_mes)
 
             #sentMessages += messagesToSend
             clientMessagesToSend = []
