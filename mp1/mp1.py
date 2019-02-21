@@ -234,7 +234,6 @@ class ServerSocket(Thread):
 
             c.acquire()
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
-
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send+clientMessagesToSend, sent_mes)
                 clientMessagesToSend = []
             c.release()
@@ -302,7 +301,7 @@ class ServerSocket(Thread):
 
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
-            time.sleep(.5)
+            #time.sleep(.5)
             count = 0
 
         self.shutdown()
