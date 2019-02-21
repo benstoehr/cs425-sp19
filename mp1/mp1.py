@@ -67,6 +67,7 @@ sentMessages = []
 
 for i in range(USER_NUM):
     vector.append(0)
+
 c = threading.Condition()
 sentCondition = threading.Condition()
 toSendCondition = threading.Condition()
@@ -411,16 +412,16 @@ class ClientSocket():
         global sentMessages
 
         while(1):
+
+            ## CRAFTING THE MESSAGE FROM INPUT
             # message is a string
             message = raw_input()
             # also a string
             messageWithName = self.username + ": " + message
-
             length = len(messageWithName) + USER_NUM + 1
 
             # give length of full message
             fullMessage = chr(length)
-
             fullMessage += chr(self.vmNumber)
             # increment vector accordingly
 
@@ -445,12 +446,15 @@ class ClientSocket():
 
                 if(status == 'active' and connection is not None):
                     try:
+
                         sentCondition.acquire()
                         toSendCondition.acquire()
 
                         for message in messagesToSend:
+                            print(message)
                             connection.send(message)
                             sentMessages.append(message)
+                        messagesToSend = []
 
                         connection.send(fullMessage)
                         sentMessages.append(fullMessage)
@@ -458,7 +462,7 @@ class ClientSocket():
                         sentCondition.notify_all()
                         sentCondition.release()
                         toSendCondition.notify_all()
-                        toSendCondition.notify_all()
+                        toSendCondition.release()
 
                     except socket.error as e:
                         if(e == 'Broken pipe'):
