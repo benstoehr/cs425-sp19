@@ -125,7 +125,7 @@ class ServerSocket(Thread):
                 except socket.error as error:
                     pass
                     print("\tno connections yet")
-                    time.sleep(.5)
+                    #time.sleep(.5)
                     # print(error)
             else:
                 # self.logger.info("Server: self.sock is None in acceptConnections")
@@ -188,7 +188,7 @@ class ServerSocket(Thread):
                 #c.notify_all()
                 c.release()
 
-            time.sleep(1)
+            #time.sleep(1)
 
     def shutdown(self):
 
