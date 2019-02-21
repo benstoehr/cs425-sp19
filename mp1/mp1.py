@@ -248,6 +248,9 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
+            output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
+            logger.info(output)
+            
             # increment vector accordingly
             # c.acquire()
             # #print("Client: incrementing vector")
@@ -271,8 +274,8 @@ while(1):
             c.release()
 
             #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            logger.info(output)
+            # output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
+            # logger.info(output)
 
 
             # for serverName, (connection, status) in self.connections.items():
