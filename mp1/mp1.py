@@ -160,8 +160,9 @@ class ServerSocket(Thread):
             if(status == 'active'):
                 connection.close()
 
-            self.sock.close()
-            
+        self.sock.close()
+        exit(1)
+
     def run(self):
 
         #print("Server: INSIDE THE RUN FUNCTION")
@@ -313,6 +314,7 @@ server.start()
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
+    exit(1)
 
 #time.sleep(5)
 # # Start the client
