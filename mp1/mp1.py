@@ -198,9 +198,6 @@ class ServerSocket(Thread):
 
                 self.vector = vector
 
-                c.notify_all()
-                c.release()
-
                 if(status == 'active'):
 
 
