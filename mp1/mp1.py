@@ -123,7 +123,7 @@ class ServerSocket(Thread):
                 new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
                 try:
-                    connectCheck = new_connection.connect((server, PORT))
+                    connectCheck = new_connection.connect((vm, self.port))
                     new_connection.setblocking(0)
 
                     ip = new_connection.getpeername()
