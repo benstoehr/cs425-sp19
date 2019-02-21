@@ -204,12 +204,15 @@ class ServerSocket(Thread):
                             #if(receiveCheck == "0"):
                             #    print("HB")
                             #else:
+                            
+                            messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
                             vector = []
                             for i in range(self.numberOfTotalUsers):
                                 temp = ord(connection.recv(1))
                                 vector.append(temp)
 
-                            message = connection.recv(ord(receiveCheck) - self.numberOfTotalUsers)
+                            message = connection.recv(messageLength)
+
                             print("Server: Received message: " + str(vector) + " " + str(message))
 
                     except socket.error as e:
