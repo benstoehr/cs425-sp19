@@ -266,7 +266,7 @@ class ClientSocket():
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 connectCheck = new_connection.connect((server, PORT))
             except socket.error as e:
-                print(errno.errorcode[e])
+                print(errno.errorcode[e.errno])
             #print("Client: Trying to connect to server " + str(server))
 
             if(connectCheck == -1):
