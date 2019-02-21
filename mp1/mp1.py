@@ -97,16 +97,16 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CALLING ACCEPT()")
                 try:
 
-                    connection, address = self.sock.accept()
+                    connection, (ip_address, port) = self.sock.accept()
                     connection.setblocking(0)
                     self.logger.info('Server: Connection established by: ' + str(address))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
-                    if(address in self.connections.keys()):
+                    if(ip_address in self.connections.keys()):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
-                        self.connections[address] = (None, connection, 'active')
+                        self.connections[ip_address] = (None, connection, 'active')
                         self.activeConnections += 1
 
                 except socket.error as error:
@@ -129,19 +129,19 @@ class ServerSocket(Thread):
                     connectCheck = new_connection.connect((vm, self.port))
                     new_connection.setblocking(0)
 
-                    ip = new_connection.getpeername()
-                    print("ip: " + str(ip))
+                    ip_address, nuport = new_connection.getpeername()
+                    print("ip: " + str(ip_address))
 
                     # already connected to this ip, update the vm hostname
-                    if(ip in self.connections.keys()):
-                        print("Already connected to " + str(ip))
-                        (tempserver, connection, status) = self.connections[ip]
+                    if(ip_address in self.connections.keys()):
+                        print("Already connected to " + str(ip_address))
+                        (tempserver, connection, status) = self.connections[ip_address]
                         if(tempserver is None):
-                            self.connections[ip] = (server, connection, 'active')
+                            self.connections[ip_address] = (server, connection, 'active')
 
                     else:
-                        print("New connection to " + str(ip))
-                        self.connections[ip] = (server, new_connection, 'active')
+                        print("New connection to " + str(ip_address))
+                        self.connections[ip_address] = (server, new_connection, 'active')
                         self.activeConnections += 1
 
                 except socket.error as e:
