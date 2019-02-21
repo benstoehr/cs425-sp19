@@ -223,7 +223,7 @@ class ServerSocket(Thread):
         #print("Server: INSIDE THE RUN FUNCTION")
         self.initializeConnections()
 
-        count = 0
+        error_count = 0
         while(run_event.is_set()):
 
             # TODO: Main server logic
@@ -252,6 +252,7 @@ class ServerSocket(Thread):
                         #mes2send = []
 
                     try:
+
                         receiveCheck = in_connection.recv(1)
 
                         # THIS MEANS THE CONNECTION CLOSED
@@ -293,10 +294,11 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-
-                            #print("nothing to read")
+                            error_count += 1
+                            if(error_count % 1000 == 0):
+                                print(e)
                             mes2send = []
-                            pass
+
 
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
