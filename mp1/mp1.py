@@ -265,7 +265,7 @@ class ServerSocket(Thread):
 
 
                             print("Server: receiveCheck: nothing to read")
-                            expected_vector = self.vector.copy()
+                            expected_vector = self.vector[:]
                             print("expected pre: " +str(expected_vector))
                             expected_vector[count] += 1
                             print("expected post: " + str(expected_vector))
