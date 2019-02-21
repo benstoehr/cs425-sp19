@@ -142,7 +142,7 @@ class ServerSocket(Thread):
             print("VM LIST TIME")
             for vm in VM_LIST:
 
-                if(vm == self.hostname or vm in self.vmsNamed):
+                if(vm == self.hostname):
                     continue
 
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
