@@ -104,7 +104,7 @@ class ServerSocket(Thread):
                     connection.setblocking(0)
 
                     #self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    #print('Server: Connection established by: ' + str(ip_address))
+                    print('Server: Connection established by: ' + str(ip_address))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if(ip_address in self.connections.keys()):
