@@ -86,7 +86,7 @@ class ServerSocket(Thread):
 
         initializeConnectionsStart = time.time()
 
-        while(not self.ready):
+        while(not self.ready and run_event.is_set()):
             print("serverWhile")
 
             currentTime = time.time()
@@ -194,6 +194,10 @@ class ServerSocket(Thread):
 
 #################################################
 
+
+run_event = threading.Event()
+run_event.set()
+
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
@@ -208,6 +212,3 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 ### BEGINNING OF IMPORTANT STUFF
-
-run_event = threading.Event()
-run_event.set()
