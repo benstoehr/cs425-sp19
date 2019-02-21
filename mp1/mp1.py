@@ -253,7 +253,7 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
                             if(len(mes2send) > 0):
-                                print("Sending from queue " + str str(mes2send))
+                                print(str(self.hostname) + " -> " + str(hostname) +": " + str(mes2send))
                                 for m in mes2send:
                                     #print(m)
                                     connection.send(m)
