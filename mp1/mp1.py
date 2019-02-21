@@ -230,6 +230,8 @@ class ServerSocket(Thread):
                                 message = connection.recv(messageLength)
                                 fullReceivedMessage += message
 
+                                print("Received message from " +str(hostname)+": " +fullReceivedMessage)
+
                                 print(message)
 
                                 if(fullReceivedMessage not in sentMessages):
