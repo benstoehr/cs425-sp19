@@ -125,7 +125,7 @@ class ServerSocket(Thread):
         acceptConnectionsStart = time.time()
 
         while(not self.ready):
-            print("serverWhile")
+            #print("serverWhile")
 
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
@@ -204,7 +204,7 @@ class ServerSocket(Thread):
                             #if(receiveCheck == "0"):
                             #    print("HB")
                             #else:
-                            
+
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
                             vector = []
                             for i in range(self.numberOfTotalUsers):
@@ -265,7 +265,7 @@ class ClientSocket():
         attemptCount = 0
         while(self.activeConnections != self.num_users):
 
-            print("clientWhile")
+            #print("clientWhile")
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
                 print("Client: 30 second timeout for connecting to servers")
@@ -285,7 +285,7 @@ class ClientSocket():
                 connectCheck = new_connection.connect((server, PORT))
 
             except socket.error as e:
-                print(errno.errorcode[e.errno])
+                #print(errno.errorcode[e.errno])
                 #self.connections[server] = (None, 'inactive')
                 new_connection.close()
                 attemptCount += 1
@@ -336,7 +336,7 @@ class ClientSocket():
             # add the message with the name
             fullMessage += messageWithName.encode('utf-8')
 
-            print("Client: " + str(fullMessage))
+            #print("Client: " + str(fullMessage))
 
 
             for serverName, (connection, status) in self.connections.items():
@@ -345,7 +345,7 @@ class ClientSocket():
                         connection.send(fullMessage)
                     except socket.error as e:
                         if(e == 'Broken pipe'):
-                            print("Broken pipe to connection " + str(serverName) + " changing status")
+                            #print("Broken pipe to connection " + str(serverName) + " changing status")
                             self.connections[serverName] = (connection, 'inactive')
 
     def shutdown(self):
