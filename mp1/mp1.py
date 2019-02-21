@@ -272,14 +272,14 @@ class ServerSocket(Thread):
                             #print("new: " + str(new_vector))
 
 
-                            for vector, queuedMessage in self.messageQueue:
+                            for old_vector, queuedMessage in self.messageQueue:
 
-                                if (vector[count] == expected_vector[count]):
+                                if (old_vector[count] == expected_vector[count]):
 
-                                    print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
-                                    self.messageQueue.remove((vector, queuedMessage))
+                                    print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
+                                    self.messageQueue.remove((old_vector, queuedMessage))
 
-                                    self.vector = new_vector
+                                    vector = old_vector
                         else:
                             #print("Server: Other error calling connection.recv()!")
                             print("Error: " + str(errno.errorcode[e.errno]))
