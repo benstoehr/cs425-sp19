@@ -239,6 +239,8 @@ class ServerSocket(Thread):
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
+                print("mes2send " + str(mes2send))
+                
                 if(status == 'active' and out_connection is not None):
 
                     print("{}: {}".format(hostname, status))
@@ -302,7 +304,6 @@ class ServerSocket(Thread):
                                 print(e)
                             mes2send = []
 
-                print("mes2send " +str(mes2send))
                 print("mes2send " +str(mes2send))
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
