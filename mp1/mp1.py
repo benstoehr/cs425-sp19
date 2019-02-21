@@ -266,7 +266,7 @@ class ServerSocket(Thread):
 
             c.release()
 
-            #time.sleep(1)
+            time.sleep(.5)
             count = 0
 
         self.shutdown()
