@@ -425,9 +425,9 @@ class ClientSocket():
             # message is a string
             inputMessage = raw_input()
             # also a string
-            inputMessageWithName = self.username + ": " + message
+            inputMessageWithName = self.username + ": " + inputMessage
             # +1 is for the VM number added at the beginning
-            length = len(messageWithName) + USER_NUM + 1
+            length = len(inputMessageWithName) + USER_NUM + 1
 
             # give length of full message
             inputFullMessage = chr(length)
