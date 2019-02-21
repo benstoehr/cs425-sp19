@@ -97,7 +97,7 @@ class ServerSocket(Thread):
         self.vector = []
         for i in range(num_users):
             self.vector.append(0)
-            
+
         self.messageQueue = []
         self.ready = False
         self.activeConnections = 0
@@ -208,7 +208,7 @@ class ServerSocket(Thread):
                 if (count == self.vmNumber - 1):
                     count += 1
 
-                print(address)
+                #print(address)
                 print(self.vector)
 
                 c.acquire()
@@ -236,7 +236,9 @@ class ServerSocket(Thread):
 
                             expected_vector[count] += 1
 
-                            messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
+                            messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers - 1
+
+                            vmSender = int(ord(connection.recv(1)))
 
                             new_vector = []
                             for i in range(self.numberOfTotalUsers):
@@ -249,7 +251,7 @@ class ServerSocket(Thread):
                             print("new: " + str(new_vector))
 
                             if(new_vector[count] == expected_vector[count]):
-                                print("Server: Received message: " + str(vector) + " " + str(message))
+                                print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
                                 self.vector = new_vector
                             else:
                                 print("appending " + str(vector) + " " + str(message))
@@ -260,7 +262,8 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            #print("Server: receiveCheck: nothing to read")
+                            pass
+                            print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector
                             expected_vector[count] += 1
                             for vector, queuedMessage in self.messageQueue:
@@ -379,6 +382,7 @@ class ClientSocket():
             # give length of full message
             fullMessage = chr(length)
 
+            fullMessage += chr(self.vmNumber)
             # increment vector accordingly
             c.acquire()
             self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
