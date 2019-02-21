@@ -90,7 +90,7 @@ class ServerSocket(Thread):
             print("serverWhile")
 
             currentTime = time.time()
-            if(currentTime - acceptConnectionsStart > 20000):
+            if(currentTime - initializeConnectionsStart > 20000):
                 self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
 
             if(self.sock is not None):
