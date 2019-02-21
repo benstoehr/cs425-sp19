@@ -258,8 +258,8 @@ class ServerSocket(Thread):
                                 fullMessage += message
 
                                 print("expected: " + str(expected_vector))
-                                print("new: " + str(new))
-                                
+                                print("new: " + str(new_vector))
+
                                 if(new_vector[count] == expected_vector[count]):
                                     print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
 
