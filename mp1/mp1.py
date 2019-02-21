@@ -9,6 +9,9 @@ import time
 import logging
 import fcntl, os
 import errno
+import signal
+
+
 
 #server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -172,8 +175,6 @@ class ServerSocket(Thread):
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
                     try:
-
-
                         print("Server: recv(1) " + str(address))
 
                         receiveCheck = connection.recv(1)
@@ -185,14 +186,14 @@ class ServerSocket(Thread):
                             print("Server: receiveCheck: nothing to read")
                             print(str(address) + " disconnected!")
                             self.connections[address] = (connection, 'inactive')
-                            
+
                         elif(len(receiveCheck) > 0):
-                            print("Server: receiveCheck > 0: " + str(ord(receiveCheck)))
-                            if(receiveCheck == "0"):
-                                print("HB")
-                            else:
-                                message = connection.recv(ord(receiveCheck))
-                                print("Server: Received message: " + str(message))
+                            #print("Server: receiveCheck > 0: " + str(ord(receiveCheck)))
+                            #if(receiveCheck == "0"):
+                            #    print("HB")
+                            #else:
+                            message = connection.recv(ord(receiveCheck))
+                            print("Server: Received message: " + str(message))
 
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
@@ -259,7 +260,7 @@ class ClientSocket():
             #print("Client: Trying to connect to server " + str(server))
 
             if(connectCheck == -1):
-                print("Client: Error connecting to server " + str(server))
+                #print("Client: Error connecting to server " + str(server))
                 self.connections[server] = (new_connection, 'inactive')
                 attemptCount += 1
                 continue
@@ -286,16 +287,27 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
-            msg = raw_input("> ")
+            msg = raw_input()
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
                 connection.send(chr(length) + msg.encode('utf-8'))
+
+    def shutdown(self):
+        for serverName, (connection, status) in self.connections.items():
+            connection.close()
+
+        self.sock.close()
+
 
 # Start the Server thread
 server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
 
-time.sleep(5)
+def signal_handler(signal, frame):
+    print("You pressed Control+C!")
+    client.shutdown()
+    
+#time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
 client.connectToServers()
