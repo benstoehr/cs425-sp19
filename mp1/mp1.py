@@ -111,7 +111,7 @@ class ServerSocket(Thread):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
-                        self.connections[ip_address] = (None, connection, 'active')
+                        self.connections[ip_address] = (None, connection, 'active', [], [])
                         #self.activeConnections += 1
 
                 except socket.error as error:
@@ -142,14 +142,14 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip_address in self.connections.keys()):
                         print("Already connected to " + str(ip_address))
-                        (tempserver, connection, status) = self.connections[ip_address]
+                        (tempserver, connection, status, message2send, [sent_messages]) = self.connections[ip_address]
                         if(tempserver is None):
-                            self.connections[ip_address] = (vm, connection, 'active')
+                            self.connections[ip_address] = (vm, connection, 'active',[],[])
                             self.activeConnections += 1
 
                     else:
                         print("New connection to " + str(ip_address))
-                        self.connections[ip_address] = (vm, new_connection, 'active')
+                        self.connections[ip_address] = (vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
 
                 except socket.error as e:
@@ -184,8 +184,8 @@ class ServerSocket(Thread):
 
         # make vector global
         global vector
-        global sentMessages
-        global messagesToSend
+        #global sentMessages
+        global clientMessagesToSend
 
         #print("Server: INSIDE THE RUN FUNCTION")
         self.initializeConnections()
@@ -201,9 +201,13 @@ class ServerSocket(Thread):
 
             c.acquire()
 
-            for address, (hostname, connection, status) in self.connections.items():
+            for address, (hostname, connection, status, mes2send, sent_mes) in self.connections.items():
 
-                print("{}: {}".format(hostname, status))
+                if(len(clientMessagesToSend) > 0):
+                    mes2send += clientMessagesToSend
+
+                #print("{}: {}".format(hostname, status))
+
                 if(status == 'active' and connection is not None):
 
                     try:
@@ -213,11 +217,10 @@ class ServerSocket(Thread):
                         if (len(receiveCheck) == 0):
                             print(str(address) + " disconnected!")
                             connection.close()
-                            self.connections[address] = (hostname, None, 'inactive')
+                            self.connections[address] = (hostname, None, 'inactive',[],[])
 
                         # GET MESSAGE
                         elif (len(receiveCheck) > 0):
-
 
                             messageLength = int(ord(receiveCheck)) - 1
                             vmSender = int(ord(connection.recv(1)))
@@ -236,8 +239,8 @@ class ServerSocket(Thread):
 
                                 #print(message)
 
-                                if(fullReceivedMessage not in sentMessages):
-                                    messagesToSend.append(fullReceivedMessage)
+                                if(fullReceivedMessage not in sent_mes):
+                                    mes2send.append(fullReceivedMessage)
                                 else:
                                     print("Already sent message " + str(fullReceivedMessage))
 
@@ -247,17 +250,19 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            if(len(messagesToSend) > 0):
-                                print("sending messages from queue " + str(messagesToSend))
-                                for m in messagesToSend:
+                            if(len(mes2send) > 0):
+                                print("sending messages from queue " + str(mes2send))
+                                for m in mes2send:
                                     #print(m)
                                     connection.send(m)
+                                    sent_mes += [m]
 
-            sentMessages += messagesToSend
-            messagesToSend = []
+            #sentMessages += messagesToSend
+            #messagesToSend = []
+
             c.release()
 
-            time.sleep(3)
+            #time.sleep(1)
             count = 0
 
         self.shutdown()
