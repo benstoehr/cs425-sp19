@@ -124,7 +124,7 @@ class ServerSocket(Thread):
 
         while(not self.ready):
             print("serverWhile")
-
+ 
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
                 self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
