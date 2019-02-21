@@ -206,7 +206,7 @@ class ServerSocket(Thread):
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
                             pass
-                        if (e.errno == errno.EGAIN):
+                        if (e.errno == errno.EAGAIN):
                             pass
                         else:
                             #print("Server: Other error calling connection.recv()!")
@@ -264,6 +264,7 @@ class ClientSocket():
             # Try connecting to servers
             try:
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                 connectCheck = new_connection.connect((server, PORT))
 
             except socket.error as e:
