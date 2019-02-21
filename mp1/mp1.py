@@ -264,12 +264,12 @@ class ServerSocket(Thread):
                         if (e.errno == errno.EAGAIN):
                             pass
                             print("Server: receiveCheck: nothing to read")
-                            expected_vector = self.vector
-                            expected_vector[count] += 1
-                            for vector, queuedMessage in self.messageQueue:
-                                if (new_vector[count] == expected_vector[count]):
-                                    print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
-                                    self.vector = new_vector
+                            # expected_vector = self.vector
+                            # expected_vector[count] += 1
+                            # for vector, queuedMessage in self.messageQueue:
+                            #     if (new_vector[count] == expected_vector[count]):
+                            #         print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
+                            #         self.vector = new_vector
                         else:
                             #print("Server: Other error calling connection.recv()!")
                             print("Error: " + str(errno.errorcode[e.errno]))
