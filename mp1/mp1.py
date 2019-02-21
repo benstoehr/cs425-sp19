@@ -253,7 +253,8 @@ while(1):
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
             #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            output = str(inputFullMessage)
+            output = "Client: VM{}: {}".format(VM_NUMBER, inputFullMessage)
+            #output = str(inputFullMessage)
             logger.info(output)
 
             # increment vector accordingly
