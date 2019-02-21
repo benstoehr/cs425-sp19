@@ -159,13 +159,6 @@ class ServerSocket(Thread):
 
             time.sleep(1)
 
-    def signal_handler(signal, frame):
-        print("Server: You pressed Control+C!")
-        self.shutdown()
-        exit(1)
-
-
-
     def shutdown(self):
         for address, (connection, status) in self.connections.items():
             if(status == 'active' and connection is not None):
@@ -185,7 +178,7 @@ class ServerSocket(Thread):
 
         count = 0
 
-        while(1):
+        while(run_event.is_set()):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
             #
@@ -332,15 +325,23 @@ server.start()
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
+    run_event.clear()
+    t1.join()
     exit(1)
 
 signal.signal(signal.SIGINT, signal_handler)
+
+### BEGINNING OF IMPORTANT STUFF
+
+run_event = threading.Event()
+run_event.set()
 
 #time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
 client.connectToServers()
 client.mainLoop()
+
 
 #print("READY FOR ACTION!!!!")
 
