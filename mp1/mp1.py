@@ -123,6 +123,7 @@ class ServerSocket(Thread):
         acceptConnectionsStart = time.time()
 
         while(not self.ready):
+            print("serverWhile")
 
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
@@ -179,6 +180,7 @@ class ServerSocket(Thread):
             # iterate over each connection and read 8 bytes for message length
             #
             #self.logger.info("Server: In the main loops")
+
 
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
@@ -249,6 +251,7 @@ class ClientSocket():
         attemptCount = 0
         while(self.activeConnections != self.num_users):
 
+            print("clientWhile")
             curr_time = time.time()
             if(curr_time - connectionStartTime > 30000):
                 print("Client: 30 second timeout for connecting to servers")
@@ -305,7 +308,7 @@ class ClientSocket():
 
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
-            if(status == 'active'):
+            if(status == 'active' and connection not None):
                 connection.close()
 
         self.sock.close()
