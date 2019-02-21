@@ -92,6 +92,8 @@ class ServerSocket(Thread):
         self.numberOfClients = num_users - 1
 
         self.connections = dict()
+        self.ip2vmNumber = dict()
+
         self.messageQueue = []
         self.ready = False
         self.activeConnections = 0
@@ -148,8 +150,10 @@ class ServerSocket(Thread):
                     connection, address = self.sock.accept()
                     connection.setblocking(0)
 
+
                     # Add connection to connection list
                     self.connections[address] = (connection, 'active')
+                    #self.ip2vmNumber[address] =
                     self.logger.info('Server: Connection established by: '+ str(address))
                     self.activeConnections += 1
 
@@ -199,7 +203,7 @@ class ServerSocket(Thread):
 
                 if (count == self.vmNumber - 1):
                     count += 1
-                    
+
                 print(address)
 
                 c.acquire()
@@ -207,7 +211,6 @@ class ServerSocket(Thread):
                 self.vector = vector
 
                 if(status == 'active'):
-
 
                     try:
                         #print("Server: recv(1) " + str(address))
@@ -260,7 +263,6 @@ class ServerSocket(Thread):
 
                 count += 1
 
-
                 c.notify_all()
                 c.release()
 
@@ -270,6 +272,7 @@ class ServerSocket(Thread):
                 break
             continue
 
+        self.shutdown()
         self.logger.info("Server: run() is done!")
 
 
