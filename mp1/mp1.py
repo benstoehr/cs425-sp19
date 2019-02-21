@@ -205,7 +205,7 @@ server.start()
 
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
-    client.shutdown()
+    #client.shutdown()
     run_event.clear()
     server.join()
     exit(1)
@@ -222,26 +222,27 @@ while(1):
             # message is a string
             inputMessage = raw_input()
             # also a string
-            inputMessageWithName = self.username + ": " + inputMessage
+            inputMessageWithName = NAME + ": " + inputMessage
             # +1 is for the VM number added at the beginning
             length = len(inputMessageWithName) + USER_NUM + 1
+            length = len(inputMessageWithName) + 1
 
             # give length of full message
             inputFullMessage = chr(length)
-            inputFullMessage += chr(self.vmNumber)
+            inputFullMessage += chr(VM_NUMBER)
             # increment vector accordingly
 
-            c.acquire()
-            #print("Client: incrementing vector")
-            self.vector = vector[:]
-            self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
-            vector = self.vector[:]
-            c.notify_all()
-            c.release()
+            # c.acquire()
+            # #print("Client: incrementing vector")
+            # self.vector = vector[:]
+            # self.vector[VM_NUMBER - 1] = self.vector[VM_NUMBER - 1] + 1
+            # vector = self.vector[:]
+            # c.notify_all()
+            # c.release()
 
             # include the vector timestamp
-            for i in range(self.num_users + 1):
-                inputFullMessage += chr(self.vector[i])
+            # for i in range(self.num_users + 1):
+            #     inputFullMessage += chr(self.vector[i])
 
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
