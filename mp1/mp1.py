@@ -275,6 +275,7 @@ class ClientSocket():
                 self.connections[server] = (None, 'inactive')
                 new_connection.close()
                 attemptCount += 1
+                time.sleep(1)
                 continue
 
 
