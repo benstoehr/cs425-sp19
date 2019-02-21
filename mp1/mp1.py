@@ -95,7 +95,7 @@ class ServerSocket(Thread):
             if(currentTime - initializeConnectionsStart > 20000):
                 #self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
                 print("Server: 20 second timeout exceeding when waiting for connections")
-                
+
             if(self.sock is not None):
                 #self.logger.info("Server: CALLING ACCEPT()")
                 try:
@@ -208,10 +208,10 @@ c = threading.Lock()
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # create console handler and set level to debug
-ch = logging.StreamHandler()
-ch.setLevel(logging.INFO)
+chan = logging.StreamHandler()
+chan.setLevel(logging.INFO)
 # add ch to logger
-logger.addHandler(ch)
+logger.addHandler(chan)
 
 
 run_event = threading.Event()
@@ -252,7 +252,8 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
-            output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
+            #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
+            output = str(inputFullMessage)
             logger.info(output)
 
             # increment vector accordingly
