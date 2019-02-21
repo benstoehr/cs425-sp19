@@ -325,7 +325,7 @@ def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
     run_event.clear()
-    t1.join()
+    server.join()
     exit(1)
 
 signal.signal(signal.SIGINT, signal_handler)
