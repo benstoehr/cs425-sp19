@@ -272,7 +272,7 @@ class ClientSocket():
 
             except socket.error as e:
                 print(errno.errorcode[e.errno])
-                self.connections[server] = (None, 'inactive')
+                #self.connections[server] = (None, 'inactive')
                 new_connection.close()
                 attemptCount += 1
                 time.sleep(1)
