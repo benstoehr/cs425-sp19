@@ -91,7 +91,7 @@ class ServerSocket(Thread):
 
         initializeConnectionsStart = time.time()
 
-        while(not self.ready and run_event.is_set()):
+        while(not self.ready and run_event.is_set() ):
             #print("serverWhile")
 
             currentTime = time.time()
@@ -103,6 +103,7 @@ class ServerSocket(Thread):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
                     print("Accept Call")
+                    self.sock.settimeout(100)
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
@@ -142,6 +143,7 @@ class ServerSocket(Thread):
                 new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
                 try:
+                    new_connection.settimeout(10)
                     connectCheck = new_connection.connect((vm, self.port))
                     new_connection.setblocking(0)
 
