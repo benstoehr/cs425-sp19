@@ -209,7 +209,7 @@ class ServerSocket(Thread):
                     count += 1
 
                 #print(address)
-                print(self.vector)
+                print("self.vector: " + str(self.vector))
 
                 c.acquire()
 
@@ -277,7 +277,7 @@ class ServerSocket(Thread):
 
                                     print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
                                     self.messageQueue.remove((vector, queuedMessage))
-                                    
+
                                     self.vector = new_vector
                         else:
                             #print("Server: Other error calling connection.recv()!")
@@ -394,6 +394,7 @@ class ClientSocket():
             fullMessage += chr(self.vmNumber)
             # increment vector accordingly
             c.acquire()
+            print("Client: incrementing vector")
             self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
             c.notify_all()
             c.release()
