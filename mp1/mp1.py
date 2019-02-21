@@ -158,12 +158,14 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
-                        if (out_connection is None):
-                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
+                        if(hostname is None):
                             print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
-                            self.activeOutputConnections += 1
                             self.vmsNamed += [vm]
+                        if (out_connection is None):
+                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
+                            self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
+                            self.activeOutputConnections += 1
 
                         else:
                             print("\tAlready have outgoing connection to " + str(ip))
@@ -182,15 +184,18 @@ class ServerSocket(Thread):
                     continue
 
             # Once the proper number of connections is made, exit the while loop
-            if(self.activeInputConnections == self.numberOfClients and self.numberOfClients == self.activeOutputConnections):
+            if(self.activeInputConnections == self.numberOfClients
+                    and self.activeOutputConnections == self.numberOfClients
+                    and self.vmsNamed == self.numberOfClients):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
                     print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
-                    print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()))
+                    print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
                 print("READY")
+
                 c.acquire()
                 globalready = True
                 #c.notify_all()
