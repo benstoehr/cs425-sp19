@@ -155,6 +155,13 @@ class ServerSocket(Thread):
 
             time.sleep(1)
 
+    def shutdown(self):
+        for address, (connection, status) in self.connections.items():
+            if(status == 'active'):
+                connection.close()
+
+            self.sock.close()
+            
     def run(self):
 
         #print("Server: INSIDE THE RUN FUNCTION")
@@ -306,7 +313,7 @@ server.start()
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
-    
+
 #time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
