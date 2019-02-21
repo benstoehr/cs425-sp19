@@ -197,6 +197,9 @@ class ServerSocket(Thread):
             count = 0
             for address, (connection, status) in self.connections.items():
 
+                if (count == self.vmNumber - 1):
+                    count += 1
+                    
                 print(address)
 
                 c.acquire()
@@ -256,8 +259,7 @@ class ServerSocket(Thread):
                             print("Error: " + str(errno.errorcode[e.errno]))
 
                 count += 1
-                if(count == self.vmNumber - 1):
-                    count += 1
+
 
                 c.notify_all()
                 c.release()
