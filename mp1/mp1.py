@@ -227,7 +227,7 @@ class ServerSocket(Thread):
 
 class ClientSocket():
 
-    def __init__(self, sock=None, num_users=USER_NUM):
+    def __init__(self, sock=None, num_users=USER_NUM, username=NAME):
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
@@ -237,7 +237,11 @@ class ClientSocket():
         self.num_users = num_users - 1
         self.activeConnections = 0
         self.name = socket.gethostname()
+        self.username = username
 
+        self.vector = []
+        for i in range(num_users):
+            self.vector.append(0)
 
     def connectToServers(self):
 
@@ -303,17 +307,32 @@ class ClientSocket():
 
     def mainLoop(self):
         while(1):
-            msg = raw_input()
-            length = len(msg)
+            message = raw_input()
+            messageWithName = self.username + ": " + message
+            length = len(messageWithName)
+
+            # give length of full message
+            fullMessage = chr(length)
+
+            # include the vector timestamp
+            for i in range(self.num_users + 1):
+                if(i+1 == int(VM_NUMBER)):
+                    fullMessage += chr(self.vector[i] + 1)
+                else:
+                    fullMessage += chr(self.vector[i])
+
+            # add the message with the name
+            fullMessage += messageWithName.encode('utf-8')
+
             for serverName, (connection, status) in self.connections.items():
                 if(status == 'active' and connection is not None):
                     try:
-                        connection.send(chr(length) + msg.encode('utf-8'))
+                        connection.send(fullMessage)
                     except socket.error as e:
                         if(e == 'Broken pipe'):
                             print("Broken pipe to connection " + str(serverName) + " changing status")
                             self.connections[serverName] = (connection, 'inactive')
-                            
+
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
             if(status == 'active' and connection is not None):
