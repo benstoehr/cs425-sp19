@@ -194,6 +194,9 @@ class ServerSocket(Thread):
 #################################################
 
 globalready = False
+messagesToSend = []
+sentMessages = []
+
 c = threading.Condition()
 
 run_event = threading.Event()
