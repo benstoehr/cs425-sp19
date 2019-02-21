@@ -208,9 +208,10 @@ class ServerSocket(Thread):
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
                             vector = []
                             for i in range(self.numberOfTotalUsers):
-                                temp = ord(connection.recv(1))
+                                temp = int(ord(connection.recv(1)))
                                 vector.append(temp)
 
+                            self.vector = vector
                             message = connection.recv(messageLength)
 
                             print("Server: Received message: " + str(vector) + " " + str(message))
@@ -326,12 +327,11 @@ class ClientSocket():
             # give length of full message
             fullMessage = chr(length)
 
+            # increment vector accordingly
+            self.vector[i]  = self.vector[i] + 1
             # include the vector timestamp
             for i in range(self.num_users + 1):
-                if(i+1 == int(VM_NUMBER)):
-                    fullMessage += chr(self.vector[i] + 1)
-                else:
-                    fullMessage += chr(self.vector[i])
+                fullMessage += chr(self.vector[i])
 
             # add the message with the name
             fullMessage += messageWithName.encode('utf-8')
