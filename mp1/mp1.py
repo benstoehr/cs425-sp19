@@ -156,7 +156,7 @@ class ServerSocket(Thread):
                         print("\tAlready connected to " + str(ip))
                         (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
-                            print("\tupdating name for " + str(ip, port) + " to " + str(vm))
+                            print("\tupdating name for " + str(ip)+","+str(port) + " to " + str(vm))
                             self.connections[ip] = (port, vm, connection, 'active',[],[])
                             self.vmsNamed += [vm]
 
