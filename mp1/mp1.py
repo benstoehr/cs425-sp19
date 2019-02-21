@@ -268,10 +268,11 @@ class ClientSocket():
 
             except socket.error as e:
                 print(errno.errorcode[e.errno])
-                self.connections[server] = (new_connection, 'inactive')
+                self.connections[server] = (None, 'inactive')
+                new_connection.close()
                 attemptCount += 1
                 continue
-            
+
 
             print("Client: Connected to server " + str(server))
             self.activeConnections += 1
