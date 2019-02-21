@@ -118,7 +118,7 @@ class ServerSocket(Thread):
 
                     # Otherwise add connection to connection list
                     else:
-                        print("New IP " + str(ip))
+                        print("\tNew IP " + str(ip))
                         self.connections[ip] = (port, None, connection, 'active', [], [])
                         self.activeConnections += 1
 
@@ -156,7 +156,7 @@ class ServerSocket(Thread):
                         print("\tAlready connected to " + str(ip))
                         (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
-                            print("\tupdating name for " + str(ip_and_port) + " to " + str(vm))
+                            print("\tupdating name for " + str(ip, port) + " to " + str(vm))
                             self.connections[ip] = (port, vm, connection, 'active',[],[])
                             self.vmsNamed += [vm]
 
