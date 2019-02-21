@@ -164,7 +164,7 @@ class ServerSocket(Thread):
             time.sleep(1)
 
     def shutdown(self):
-        for address, (connection, status) in self.connections.items():
+        for address, (hostname, connection, status) in self.connections.items():
             if(status == 'active' and connection is not None):
                 connection.close()
 
