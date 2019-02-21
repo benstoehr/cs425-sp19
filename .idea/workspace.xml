@@ -16,12 +16,12 @@
       <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="145" column="49" lean-forward="false" selection-start-line="145" selection-start-column="49" selection-end-line="145" selection-end-column="49" />
+            <state relative-caret-position="397">
+              <caret line="107" column="42" lean-forward="true" selection-start-line="107" selection-start-column="42" selection-end-line="107" selection-end-column="42" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#7491#7729#0" expanded="false" />
-                <element signature="e#7759#11230#0" expanded="false" />
+                <element signature="e#7492#7730#0" expanded="false" />
+                <element signature="e#7760#11231#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -272,12 +272,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="145" column="49" lean-forward="false" selection-start-line="145" selection-start-column="49" selection-end-line="145" selection-end-column="49" />
+        <state relative-caret-position="397">
+          <caret line="107" column="42" lean-forward="true" selection-start-line="107" selection-start-column="42" selection-end-line="107" selection-end-column="42" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7491#7729#0" expanded="false" />
-            <element signature="e#7759#11230#0" expanded="false" />
+            <element signature="e#7492#7730#0" expanded="false" />
+            <element signature="e#7760#11231#0" expanded="false" />
           </folding>
         </state>
       </provider>

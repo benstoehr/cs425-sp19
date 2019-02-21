@@ -103,7 +103,7 @@ class ServerSocket(Thread):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
                     print("Accept Call")
-                    self.sock.settimeout(1)
+                    #self.sock.settimeout(1)
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
