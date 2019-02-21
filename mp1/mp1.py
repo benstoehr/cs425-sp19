@@ -108,16 +108,17 @@ class ServerSocket(Thread):
                     connection.setblocking(0)
 
                     # self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('\tConnection established by: ' + str(ip_and_port))
+                    print('\tIncoming Connection : ' + str(self.sock.getsockname()) + " <- "+ str(ip_and_port))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if (ip in self.connections.keys()):
                         (oldport, hostname, connection, status, mes2send, sentmes) = self.connections[ip]
-                        print("\talready have a connection for " + str(ip) + ", keeping port " + str(oldport))
+                        print("\tAlready have a connection for " + str(ip) + ", keeping port " + str(oldport))
                         connection.close()
 
                     # Otherwise add connection to connection list
                     else:
+                        print("New IP " + str(ip))
                         self.connections[ip] = (port, None, connection, 'active', [], [])
                         self.activeConnections += 1
 
@@ -147,7 +148,7 @@ class ServerSocket(Thread):
                     ip_and_port = new_connection.getpeername()
                     ip, nuport = ip_and_port
 
-                    print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
+                    #print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
 
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
@@ -160,7 +161,7 @@ class ServerSocket(Thread):
                             self.vmsNamed += [vm]
 
                     else:
-                        print("\tNew connection to " + str(ip_and_port) + ":" + str(vm))
+                        print("\tOutgoing Connection: " + str(self.sock.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
                         self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
