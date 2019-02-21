@@ -156,9 +156,10 @@ class ServerSocket(Thread):
             if(self.activeConnections == self.numberOfClients):
                 self.ready = True
                 self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
+
                 c.acquire()
                 globalready = True
-                c.notify_all()
+                #c.notify_all()
                 c.release()
 
             time.sleep(1)
@@ -197,7 +198,7 @@ globalready = False
 messagesToSend = []
 sentMessages = []
 
-c = threading.Condition()
+c = threading.Lock()
 
 # create logger
 logger = logging.getLogger(__name__)
@@ -266,9 +267,10 @@ while(1):
             c.acquire()
 
             messagesToSend.append(inputFullMessage)
-            c.notify_all()
+            #c.notify_all()
             c.release()
 
+            #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             logger.info(output)
 
