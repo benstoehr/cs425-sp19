@@ -156,7 +156,7 @@ class ServerSocket(Thread):
 
 
                     else:
-                        print("New connection to " + str(ip_and_port))
+                        print("New connection to " + str(ip_and_port) + ": " +str(vm))
                         self.connections[ip] = (vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
