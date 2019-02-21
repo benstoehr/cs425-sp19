@@ -251,7 +251,7 @@ while(1):
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
             #print("Client: " + str(self.vector) + " " + str(inputFullMessage))
-            print("Client: " +str(VM_NUMBER) + ": " + str(inputFullMessage))
+            print("Client: VM" +str(VM_NUMBER) + ": " + str(inputFullMessage))
 
             c.acquire()
             messagesToSend.append(inputFullMessage)
