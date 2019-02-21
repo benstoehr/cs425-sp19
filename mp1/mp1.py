@@ -272,7 +272,7 @@ class ServerSocket(Thread):
 #################################################
 
 globalready = False
-messagesToSend = []
+clientMessagesToSend = []
 sentMessages = []
 
 c = threading.Lock()
@@ -351,6 +351,6 @@ while(1):
 
             c.acquire()
 
-            messagesToSend.append(inputFullMessage)
+            clientMessagesToSend.append(inputFullMessage)
             #c.notify_all()
             c.release()
