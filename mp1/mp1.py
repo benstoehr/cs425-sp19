@@ -409,7 +409,7 @@ class ClientSocket():
             # add the message with the name
             fullMessage += messageWithName.encode('utf-8')
 
-            print("Client: " + str(fullMessage))
+            print("Client: " + str(self.vector) + " " + str(fullMessage))
 
 
             for serverName, (connection, status) in self.connections.items():
