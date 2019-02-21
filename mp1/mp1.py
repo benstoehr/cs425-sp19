@@ -226,15 +226,14 @@ class ServerSocket(Thread):
         count = 0
         while(run_event.is_set()):
 
-            #print("server run loop")
-            #print("messagesToSend: " + str(messagesToSend))
-
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
 
             c.acquire()
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
-                self.connections[address] = (hostname, in_connection, out_connection, status, mes2send+clientMessagesToSend, sent_mes)
+                added_messages = mes2send + clientMessagesToSend
+
+                self.connections[address] = (hostname, in_connection, out_connection, status, added_messages, sent_mes)
                 clientMessagesToSend = []
             c.release()
 
@@ -365,31 +364,6 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
-
-
-            #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            #output = "Client: VM{}: {}".format(VM_NUMBER, inputFullMessage)
-            #output = str(inputFullMessage)
-            #logger.info(output)
-
-            # increment vector accordingly
-            # c.acquire()
-            # #print("Client: incrementing vector")
-            # self.vector = vector[:]
-            # self.vector[VM_NUMBER - 1] = self.vector[VM_NUMBER - 1] + 1
-            # vector = self.vector[:]
-            # c.notify_all()
-            # c.release()
-
-            # include the vector timestamp
-            # for i in range(self.num_users + 1):
-            #     inputFullMessage += chr(self.vector[i])
-
-
-            #print("Client: " + str(self.vector) + " " + str(inputFullMessage))
-
             c.acquire()
-
             clientMessagesToSend.append(inputFullMessage)
-            #c.notify_all()
             c.release()
