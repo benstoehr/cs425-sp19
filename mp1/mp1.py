@@ -62,9 +62,12 @@ print("Running on VM: " +  str(VM_NUMBER))
 
 # initialize shared variable for thread and main process
 vector = []
+#global vector
+
 for i in range(USER_NUM):
     vector.append(0)
 c = threading.Condition()
+
 
 
 class ServerSocket(Thread):
@@ -300,6 +303,8 @@ class ServerSocket(Thread):
 
 
 class ClientSocket():
+
+    global vector
 
     def __init__(self, sock=None, num_users=USER_NUM, username=NAME, vmNumber=VM_NUMBER):
         if sock is None:
