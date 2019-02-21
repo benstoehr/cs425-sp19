@@ -231,9 +231,11 @@ class ServerSocket(Thread):
             # iterate over each connection and read 8 bytes for message length
 
             c.acquire()
+            clientMessages = clientMessagesToSend[:]
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
-                added_messages = mes2send + clientMessagesToSend
-                self.connections[address] = (hostname, in_connection, out_connection, status, added_messages, sent_mes)
+                mes2send_copy = mes2send[:]
+                added_messages = mes2send_copy + clientMessages
+                self.connections[address] = (hostname, in_connection, out_connection, status, added_messages[:], sent_mes[:])
                 clientMessagesToSend = []
             c.release()
 
