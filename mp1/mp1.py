@@ -301,7 +301,7 @@ class ServerSocket(Thread):
                                 #print("inside message queue for loop")
                                 if (old_vector[count] == expected_vector[count]):
                                     safe = True
-                                    for j in len(old_vector):
+                                    for j in range(len(old_vector)):
                                         if(j == count):
                                             continue
                                         if(old_vector[j] > expected_vector[j]) :
