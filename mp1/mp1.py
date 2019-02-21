@@ -161,7 +161,7 @@ class ServerSocket(Thread):
                             self.vmsNamed += [vm]
 
                     else:
-                        print("\tOutgoing Connection: " + str(self.sock.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
+                        print("\tOutgoing Connection: " + str(new_connection.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
                         self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
