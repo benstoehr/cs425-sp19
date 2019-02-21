@@ -243,7 +243,7 @@ class ServerSocket(Thread):
 
                             if(vmSender == self.vmNumber):
                                 print("found my own message")
-                                dummy = connection.recv(messageLength - 2)
+                                dummy = connection.recv(messageLength + self.numberOfTotalUsers)
                             else:
                                 new_vector = []
                                 for i in range(self.numberOfTotalUsers):
