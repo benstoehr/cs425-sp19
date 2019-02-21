@@ -307,8 +307,13 @@ class ClientSocket():
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
                 if(status == 'active' and connection is not None):
-                    connection.send(chr(length) + msg.encode('utf-8'))
-
+                    try:
+                        connection.send(chr(length) + msg.encode('utf-8'))
+                    except socket.error as e:
+                        if(e == 'Broken pipe'):
+                            print("Broken pipe to connection " + str(serverName) + " changing status")
+                            self.connections[serverName] = (connection, 'inactive')
+                            
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
             if(status == 'active' and connection is not None):
