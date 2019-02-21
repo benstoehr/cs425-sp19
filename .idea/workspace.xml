@@ -16,11 +16,10 @@
       <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="711">
-              <caret line="268" column="25" lean-forward="false" selection-start-line="268" selection-start-column="25" selection-end-line="268" selection-end-column="25" />
+            <state relative-caret-position="637">
+              <caret line="176" column="66" lean-forward="false" selection-start-line="176" selection-start-column="66" selection-end-line="176" selection-end-column="66" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#6332#6545#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -269,11 +268,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="711">
-          <caret line="268" column="25" lean-forward="false" selection-start-line="268" selection-start-column="25" selection-end-line="268" selection-end-column="25" />
+        <state relative-caret-position="637">
+          <caret line="176" column="66" lean-forward="false" selection-start-line="176" selection-start-column="66" selection-end-line="176" selection-end-column="66" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#6332#6545#0" expanded="false" />
           </folding>
         </state>
       </provider>

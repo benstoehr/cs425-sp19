@@ -173,7 +173,8 @@ class ServerSocket(Thread):
             time.sleep(1)
 
     def shutdown(self):
-        for address, (hostname, connection, status) in self.connections.items():
+
+        for address, (hostname, connection, status, mes2send, sentmes) in self.connections.items():
             if(status == 'active' and connection is not None):
                 connection.close()
 
@@ -252,7 +253,7 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
                             if(len(mes2send) > 0):
-                                print("sending messages from queue " + str(mes2send))
+                                print("Sending from queue " + str str(mes2send))
                                 for m in mes2send:
                                     #print(m)
                                     connection.send(m)
