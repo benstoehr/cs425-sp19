@@ -304,8 +304,6 @@ class ServerSocket(Thread):
 
 class ClientSocket():
 
-    global vector
-
     def __init__(self, sock=None, num_users=USER_NUM, username=NAME, vmNumber=VM_NUMBER):
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -318,6 +316,8 @@ class ClientSocket():
         self.name = socket.gethostname()
         self.username = username
         self.vmNumber = int(vmNumber)
+
+        #global vector
 
         self.vector = []
         for i in range(num_users):
@@ -386,6 +386,9 @@ class ClientSocket():
             connection.send("\x00")
 
     def mainLoop(self):
+
+        global vector
+
         while(1):
             # message is a string
             message = raw_input()
@@ -416,7 +419,6 @@ class ClientSocket():
             fullMessage += messageWithName.encode('utf-8')
 
             print("Client: " + str(self.vector) + " " + str(fullMessage))
-
 
             for serverName, (connection, status) in self.connections.items():
                 if(status == 'active' and connection is not None):
