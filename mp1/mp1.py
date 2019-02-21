@@ -162,11 +162,11 @@ class ServerSocket(Thread):
                             print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.vmsNamed += [vm]
+                            new_connection.close()
                         if (out_connection is None):
                             print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.activeOutputConnections += 1
-
                         else:
                             print("\tAlready have outgoing connection to " + str(ip))
                             new_connection.close()
@@ -186,7 +186,7 @@ class ServerSocket(Thread):
             # Once the proper number of connections is made, exit the while loop
             if(self.activeInputConnections == self.numberOfClients
                     and self.activeOutputConnections == self.numberOfClients
-                    and self.vmsNamed == self.numberOfClients):
+                    and len(self.vmsNamed) == self.numberOfClients):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
