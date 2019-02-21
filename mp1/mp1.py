@@ -295,6 +295,8 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
+
+                            print("nothing to read")
                             mes2send = []
                             pass
 
