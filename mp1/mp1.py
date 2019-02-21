@@ -205,19 +205,19 @@ class ServerSocket(Thread):
                     count += 1
 
                 print(address)
+                print(self.vector)
 
                 c.acquire()
 
                 self.vector = vector
                 expected_vector = self.vector
-                
+
                 if(status == 'active'):
-
-
                     try:
                         #print("Server: recv(1) " + str(address))
 
                         receiveCheck = connection.recv(1)
+
                         if(receiveCheck == -1):
                             print("Server: receiveCheck == -1")
 
@@ -248,6 +248,7 @@ class ServerSocket(Thread):
                                 print("Server: Received message: " + str(vector) + " " + str(message))
                                 self.vector = new_vector
                             else:
+                                print("appending " + str(vector) + " " + str(message))
                                 self.messageQueue.append((new_vector, message))
 
 
