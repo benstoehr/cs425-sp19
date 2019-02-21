@@ -211,6 +211,14 @@ class ServerSocket(Thread):
 
                 if(status == 'active' and connection is not None):
 
+                    if (len(mes2send) > 0):
+                        print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
+                        for m in mes2send:
+                            # print(m)
+                            connection.send(m)
+                            sent_mes += [m]
+                        mes2send = []
+
                     try:
                         receiveCheck = connection.recv(1)
 
@@ -252,13 +260,7 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            if(len(mes2send) > 0):
-                                print(str(self.hostname) + " -> " + str(hostname) +": " + str(mes2send))
-                                for m in mes2send:
-                                    #print(m)
-                                    connection.send(m)
-                                    sent_mes += [m]
-                            mes2send = []
+                            pass
 
                 self.connections[address] = (hostname, connection, status, mes2send, sent_mes)
 
