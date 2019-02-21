@@ -17,6 +17,8 @@ Your report should include the following information:
 
 ## Gitlab Repository
 
+https://gitlab.engr.illinois.edu/mttsao2/cs425-sp19/tree/master/mp1
+
 ## How to Run the Code
 
 Please run: `Python mp1.py [name] [port] [# of users]`
@@ -33,22 +35,35 @@ e.g. `Python mp1.py Alice 4444 2`
 
 #### Integrity
 
-Every message received will be checked if already received by its sequence number. If the sequence number is seen, then drop the duplicate. If the sequence number does not appear yet, put the message in the hold-back queue.
-
-dict, name of vm, array of msg & #
+Every message received will be checked if already received by its sequence number. If the sequence number is seen, then the process drops the duplicate. If the sequence number does not appear yet, the process puts the message in the hold-back queue.
 
 Please refer to:
 ```
-Code
+class ServerSocket(Thread):
+    ...
+
+```
+
+```
+class ClientSocket():
+    ...
+    
 ```
 
 #### Agreement
 
-A Server records the recent messages and their sequence number in case a process is failed after sending a message to some processes but not all. If there is any process finding a message is missing, it ask the server for the message.
+R-Multicast
 
 Please refer to:
 ```
-Code
+class ServerSocket(Thread):
+    ...
+```
+
+```
+class ClientSocket():
+    ...
+
 ```
 
 #### Validity
@@ -67,14 +82,45 @@ class ClientSocket():
 
 ### Failure Detection
 
-When a process closes the connection, it will send an empty string to other processes. If a process received the empty string, it declares the sender process is failed.
+When a process closes the connection, it will send an empty string to other processes by `close()`. If a process received the empty string, it declares the sender process is failed.
 
 Please refer to:
+
+```
+class ServerSocket(Thread):
+    ...
+    def shutdown(self):
+        for address, (connection, status) in self.connections.items():
+            if(status == 'active' and connection is not None):
+                connection.close()
+
+        self.sock.close()
+        exit(1)
+    ...
+    def run(self):
+        ....
+        self.shutdown()
+```
+
+```
+class ClientSocket():
+    ...
+    def shutdown(self):
+    for serverName, (connection, status) in self.connections.items():
+        if(status == 'active' and connection is not None):
+            connection.close()
+
+    self.sock.close()
+```
 
 ```
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
+```
+
+```
+signal.signal(signal.SIGINT, signal_handler)
 ```
 
 ### Causal Ordering
