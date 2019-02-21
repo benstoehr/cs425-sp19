@@ -69,7 +69,7 @@ for i in range(USER_NUM):
     vector.append(0)
 c = threading.Condition()
 sentCondition = threading.Condition()
-toSendCondition - threading.Condition()
+toSendCondition = threading.Condition()
 
 
 class ServerSocket(Thread):
