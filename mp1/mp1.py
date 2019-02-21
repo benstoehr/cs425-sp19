@@ -269,7 +269,7 @@ class ServerSocket(Thread):
                             print("expected pre: " +str(expected_vector))
                             expected_vector[count] += 1
                             print("expected post: " + str(expected_vector))
-                            print("new: " + str(new_vector))
+                            #print("new: " + str(new_vector))
 
 
                             for vector, queuedMessage in self.messageQueue:
