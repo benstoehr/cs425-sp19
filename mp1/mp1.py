@@ -36,7 +36,7 @@ hostName = socket.gethostname()
 print("hostName: " + str(hostName))
 
 splitHostName = hostName.split("-")
-VM_NUMBER = splitHostName[3].split(".")[0]
+VM_NUMBER = int(splitHostName[3].split(".")[0])
 print("Running on VM: " +  str(VM_NUMBER))
 
 class ServerSocket(Thread):
