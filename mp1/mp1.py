@@ -60,7 +60,7 @@ class ServerSocket(Thread):
         self.numberOfClients = num_users - 1
 
         self.activeConnections = 0
-        self.vmsNamed = 0
+        self.vmsNamed = []
         self.connections = dict()
 
         self.sentMessages = []
@@ -113,7 +113,7 @@ class ServerSocket(Thread):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
-                        self.connections[ip_and_port] = (None, connection, 'active', [], [])
+                        self.connections[ip] = (None, connection, 'active', [], [])
                         self.activeConnections += 1
 
                 except socket.error as error:
@@ -128,7 +128,7 @@ class ServerSocket(Thread):
             #print("VM LIST TIME")
             for vm in VM_LIST:
 
-                if(vm == self.hostname):
+                if(vm == self.hostname or vm in self.vmsNamed):
                     continue
 
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -146,16 +146,16 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
 
-                        print("Already connected to " + str(ip_and_port))
-                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip_and_port]
+                        print("Already connected to " + str(ip))
+                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
-                            self.connections[ip_and_port] = (vm, connection, 'active',[],[])
+                            self.connections[ip] = (vm, connection, 'active',[],[])
                             self.activeConnections += 1
 
                     else:
                         print("New connection to " + str(ip_and_port))
-                        self.connections[ip_and_port] = (vm, new_connection, 'active',[],[])
-                        self.vmsNamed += 1
+                        self.connections[ip] = (vm, new_connection, 'active',[],[])
+                        self.vmsNamed += [vm]
 
                 except socket.error as e:
                     #print(errno.errorcode[e.errno])
@@ -164,7 +164,7 @@ class ServerSocket(Thread):
                     continue
 
             # Once the proper number of connections is made, exit the while loop
-            if(self.activeConnections == self.numberOfClients == self.vmsNamed):
+            if(self.activeConnections == self.numberOfClients and self.numberOfClients == len(self.vmsNamed)):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
