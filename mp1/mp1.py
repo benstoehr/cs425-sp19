@@ -240,10 +240,10 @@ class ServerSocket(Thread):
 
                 if(status == 'active' and out_connection is not None):
 
-                    print("{}: {}".format(hostname, status))
+                    #print("{}: {}".format(hostname, status))
 
                     if (len(mes2send) > 0):
-
+                        print("sending messages from queue " + str(mes2send))
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
