@@ -60,6 +60,7 @@ class ServerSocket(Thread):
         self.numberOfClients = num_users - 1
 
         self.activeConnections = 0
+        self.vmsNamed = 0
         self.connections = dict()
 
         self.sentMessages = []
@@ -100,19 +101,19 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CALLING ACCEPT()")
                 try:
 
-                    connection, (ip_address, port) = self.sock.accept()
+                    connection, ip_and_port = self.sock.accept()
                     connection.setblocking(0)
 
                     #self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('Server: Connection established by: ' + str(ip_address))
+                    print('Server: Connection established by: ' + str(ip_and_port))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
-                    if(ip_address in self.connections.keys()):
+                    if(ip_and_port in self.connections.keys()):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
-                        self.connections[ip_address] = (None, connection, 'active', [], [])
-                        #self.activeConnections += 1
+                        self.connections[ip_and_port] = (None, connection, 'active', [], [])
+                        self.activeConnections += 1
 
                 except socket.error as error:
                     pass
@@ -136,21 +137,24 @@ class ServerSocket(Thread):
                     connectCheck = new_connection.connect((vm, self.port))
                     new_connection.setblocking(0)
 
-                    ip_address, nuport = new_connection.getpeername()
-                    #print("ip: " + str(ip_address))
+                    ip_and_port = new_connection.getpeername()
+                    ip_address, nuport = ip_and_port
+
+                    print("ip: " + str(ip_address))
 
                     # already connected to this ip, update the vm hostname
-                    if(ip_address in self.connections.keys()):
-                        print("Already connected to " + str(ip_address))
-                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip_address]
+                    if(ip_and_port in self.connections.keys()):
+
+                        print("Already connected to " + str(ip_and_port))
+                        (tempserver, connection, status, message2send, sent_messages) = self.connections[ip_and_port]
                         if(tempserver is None):
-                            self.connections[ip_address] = (vm, connection, 'active',[],[])
+                            self.connections[ip_and_port] = (vm, connection, 'active',[],[])
                             self.activeConnections += 1
 
                     else:
-                        print("New connection to " + str(ip_address))
-                        self.connections[ip_address] = (vm, new_connection, 'active',[],[])
-                        self.activeConnections += 1
+                        print("New connection to " + str(ip_and_port))
+                        self.connections[ip_and_port] = (vm, new_connection, 'active',[],[])
+                        self.vmsNamed += 1
 
                 except socket.error as e:
                     #print(errno.errorcode[e.errno])
