@@ -120,15 +120,15 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
 
-                        print("Already connected to " + str(ip))
+                        print("\tAlready connected to " + str(ip))
                         (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
-                            print("updating name for " + str(ip) + " to " + str(vm))
+                            print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (port, vm, connection, 'active',[],[])
                             self.vmsNamed += [vm]
 
                     else:
-                        print("New connection to " + str(ip_and_port) + ":" + str(vm))
+                        print("\tNew connection to " + str(ip_and_port) + ":" + str(vm))
                         self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
                         self.activeConnections += 1
                         self.vmsNamed += [vm]
@@ -142,18 +142,18 @@ class ServerSocket(Thread):
             if (self.sock is not None):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
-
+                    print("Accept Call")
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
 
                     # self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('Server: Connection established by: ' + str(ip_and_port))
+                    print('\tConnection established by: ' + str(ip_and_port))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if (ip in self.connections.keys()):
                         (oldport, hostname, connection, status, mes2send, sentmes) = self.connections[ip]
-                        print("already have a connection for " + str(ip) + ", keeping port " + str(oldport))
+                        print("\talready have a connection for " + str(ip) + ", keeping port " + str(oldport))
                         connection.close()
 
                     # Otherwise add connection to connection list
@@ -163,7 +163,7 @@ class ServerSocket(Thread):
 
                 except socket.error as error:
                     pass
-                    print("no connections yet")
+                    print("\tno connections yet")
                     time.sleep(.5)
                     # print(error)
             else:
