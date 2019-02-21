@@ -50,10 +50,7 @@ class ServerSocket(Thread):
         else:
             self.sock = sock
 
-        ip_and_port = sock.getsockname()
-        self.ip = ip_and_port[0]
-        #self.port = ip_and_port[1]
-
+        self.ip = ip
         self.port = port
         self.hostname = socket.gethostname()
         splitHostName = hostName.split("-")
@@ -180,7 +177,7 @@ class ServerSocket(Thread):
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
-                    print("Connected to " + str(address) + ":" + str(port) + " <->" + str(connection.getsockname()))
+                    print("Connected to " + str(address) + ":" + str(port) + " from " + str(connection.getsockname()))
 
                 print("READY")
                 c.acquire()
