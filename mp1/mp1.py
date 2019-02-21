@@ -247,6 +247,7 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
+            #print("Client: " + str(self.vector) + " " + str(inputFullMessage))
             print("Client: " + str(self.vector) + " " + str(inputFullMessage))
 
             c.acquire()
