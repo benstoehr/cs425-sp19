@@ -302,10 +302,11 @@ class ServerSocket(Thread):
                                 print(e)
                             mes2send = []
 
-                print(mes2send)
+                print("mes2send " +str(mes2send))
+                print("mes2send " +str(mes2send))
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
-            time.sleep(.5)
+            time.sleep(2)
             count = 0
 
         self.shutdown()
