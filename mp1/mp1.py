@@ -194,6 +194,7 @@ class ServerSocket(Thread):
 #################################################
 
 globalready = False
+c = threading.Condition()
 
 run_event = threading.Event()
 run_event.set()
