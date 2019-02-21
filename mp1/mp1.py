@@ -252,12 +252,14 @@ while(1):
 
             #print("Client: " + str(self.vector) + " " + str(inputFullMessage))
 
-
             c.acquire()
-            print("Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage))
+
             messagesToSend.append(inputFullMessage)
             c.notify_all()
             c.release()
+
+            output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
+            print(output)
 
 
             # for serverName, (connection, status) in self.connections.items():
