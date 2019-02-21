@@ -329,7 +329,8 @@ class ClientSocket():
             fullMessage = chr(length)
 
             # increment vector accordingly
-            self.vector[self.vmNumber]  = self.vector[self.vmNumber] + 1
+            self.vector[self.vmNumber - 1]  = self.vector[self.vmNumber - 1] + 1
+
             # include the vector timestamp
             for i in range(self.num_users + 1):
                 fullMessage += chr(self.vector[i])
