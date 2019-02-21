@@ -286,6 +286,7 @@ class ServerSocket(Thread):
 
                                 if(fullReceivedMessage not in sent_mes):
                                     mes2send.append(fullReceivedMessage)
+
                                 else:
                                     print("Already sent message " + str(fullReceivedMessage))
 
@@ -301,10 +302,10 @@ class ServerSocket(Thread):
                                 print(e)
                             mes2send = []
 
-
+                print(mes2send)
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
-            #time.sleep(.5)
+            time.sleep(.5)
             count = 0
 
         self.shutdown()
