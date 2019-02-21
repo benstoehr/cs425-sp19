@@ -248,39 +248,42 @@ class ServerSocket(Thread):
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers - 1
                             vmSender = int(ord(connection.recv(1)))
 
-                            new_vector = []
-                            for i in range(self.numberOfTotalUsers):
-                                temp = int(ord(connection.recv(1)))
-                                new_vector.append(temp)
-
-                            message = connection.recv(messageLength)
-
-                            #print("expected: " + str(expected_vector))
-                            #print("new: " + str(new_vector))
-                            fullMessage = chr(messageLength) + chr(vmSender)
-                            for x in new_vector:
-                                fullMessage += chr(x)
-                            fullMessage += message
-
-                            if(new_vector[count] == expected_vector[count]):
-                                print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
-
-                                sentCondition.acquire()
-                                toSendCondition.acquire()
-
-                                if(fullMessage not in sentMessages):
-                                    messagesToSend.append(fullMessage)
-
-                                sentCondition.notify_all()
-                                sentCondition.release()
-                                toSendCondition.notify_all()
-                                toSendCondition.release()
-
-                                self.vector = new_vector
-
+                            if(vmSender == self.vmNumber):
+                                dummy = connection.recv(messageLength - 2)
                             else:
-                                #print("appending " + str(vector) + " " + str(message))
-                                self.messageQueue.append((new_vector, message))
+                                new_vector = []
+                                for i in range(self.numberOfTotalUsers):
+                                    temp = int(ord(connection.recv(1)))
+                                    new_vector.append(temp)
+
+                                message = connection.recv(messageLength)
+
+                                #print("expected: " + str(expected_vector))
+                                #print("new: " + str(new_vector))
+                                fullMessage = chr(messageLength) + chr(vmSender)
+                                for x in new_vector:
+                                    fullMessage += chr(x)
+                                fullMessage += message
+
+                                if(new_vector[count] == expected_vector[count]):
+                                    print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
+
+                                    sentCondition.acquire()
+                                    toSendCondition.acquire()
+
+                                    if(fullMessage not in sentMessages):
+                                        messagesToSend.append(fullMessage)
+
+                                    sentCondition.notify_all()
+                                    sentCondition.release()
+                                    toSendCondition.notify_all()
+                                    toSendCondition.release()
+
+                                    self.vector = new_vector
+
+                                else:
+                                    #print("appending " + str(vector) + " " + str(message))
+                                    self.messageQueue.append((new_vector, message))
 
 
                     except socket.error as e:
