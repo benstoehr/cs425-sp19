@@ -16,8 +16,8 @@
       <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="175" column="125" lean-forward="false" selection-start-line="175" selection-start-column="125" selection-end-line="175" selection-end-column="125" />
+            <state relative-caret-position="358">
+              <caret line="117" column="43" lean-forward="true" selection-start-line="117" selection-start-column="43" selection-end-line="117" selection-end-column="43" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -42,6 +42,7 @@
       <find>self.vector</find>
       <find>inp</find>
       <find>client</find>
+      <find>connections</find>
     </findStrings>
     <replaceStrings>
       <replace>58</replace>
@@ -268,8 +269,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="175" column="125" lean-forward="false" selection-start-line="175" selection-start-column="125" selection-end-line="175" selection-end-column="125" />
+        <state relative-caret-position="358">
+          <caret line="117" column="43" lean-forward="true" selection-start-line="117" selection-start-column="43" selection-end-line="117" selection-end-column="43" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

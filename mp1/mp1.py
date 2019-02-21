@@ -85,6 +85,8 @@ class ServerSocket(Thread):
 
         global globalready
 
+        print("\nIP: " +str(self.ip) + "\n")
+
         self.bind(self.ip, self.port)
 
         initializeConnectionsStart = time.time()
@@ -96,35 +98,6 @@ class ServerSocket(Thread):
             if(currentTime - initializeConnectionsStart > 20000):
                 #self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
                 print("Server: 20 second timeout exceeding when waiting for connections")
-
-            if(self.sock is not None):
-                #self.logger.info("Server: CALLING ACCEPT()")
-                try:
-
-                    connection, ip_and_port = self.sock.accept()
-                    ip, port = ip_and_port
-                    connection.setblocking(0)
-
-                    #self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('Server: Connection established by: ' + str(ip_and_port))
-
-                    # if the address has been seen, it was seen when trying to connect to other clients
-                    if(ip in self.connections.keys()):
-                        print("already have a connection for " +str(ip))
-                        connection.close()
-                    # Otherwise add connection to connection list
-                    else:
-                        self.connections[ip] = (port, None, connection, 'active', [], [])
-                        self.activeConnections += 1
-
-                except socket.error as error:
-                    pass
-                    #print("no connections yet")
-                    #print(error)
-
-            else:
-                #self.logger.info("Server: self.sock is None in acceptConnections")
-                print("Server: self.sock is None in acceptConnections")
 
             #print("VM LIST TIME")
             for vm in VM_LIST:
@@ -165,6 +138,37 @@ class ServerSocket(Thread):
                     #self.connections[server] = (None, 'inactive')
                     new_connection.close()
                     continue
+
+            if (self.sock is not None):
+                # self.logger.info("Server: CALLING ACCEPT()")
+                try:
+
+                    connection, ip_and_port = self.sock.accept()
+                    ip, port = ip_and_port
+                    connection.setblocking(0)
+
+                    # self.logger.info('Server: Connection established by: ' + str(ip_address))
+                    print('Server: Connection established by: ' + str(ip_and_port))
+
+                    # if the address has been seen, it was seen when trying to connect to other clients
+                    if (ip in self.connections.keys()):
+                        print("already have a connection for " + str(ip))
+                        connection.close()
+                    # Otherwise add connection to connection list
+                    else:
+                        self.connections[ip] = (port, None, connection, 'active', [], [])
+                        self.activeConnections += 1
+
+                except socket.error as error:
+                    pass
+                    print("no connections yet")
+                    time.sleep(.5)
+                    # print(error)
+            else:
+                # self.logger.info("Server: self.sock is None in acceptConnections")
+                print("Server: self.sock is None in acceptConnections")
+
+
 
             # Once the proper number of connections is made, exit the while loop
             if(self.activeConnections == self.numberOfClients and self.numberOfClients == len(self.vmsNamed)):
