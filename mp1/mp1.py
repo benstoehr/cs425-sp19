@@ -111,7 +111,7 @@ class ServerSocket(Thread):
 
                 except socket.error as error:
                     print("no connections yet")
-                    print(error)
+                    #print(error)
 
             else:
                 self.logger.info("Server: self.sock is None in acceptConnections")
@@ -145,7 +145,7 @@ class ServerSocket(Thread):
                         self.activeConnections += 1
 
                 except socket.error as e:
-                    print(errno.errorcode[e.errno])
+                    #print(errno.errorcode[e.errno])
                     #self.connections[server] = (None, 'inactive')
                     new_connection.close()
                     continue
