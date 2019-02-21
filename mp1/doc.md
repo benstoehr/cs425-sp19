@@ -1,11 +1,3 @@
-Your report should include the following information:
-
-- The netids of the people in your group
-- The number of your VM cluster
-- The URL of your gitlab repository (e.g. https://gitlab.engr.illinois.edu/jsmith2/425-mp1
-- Instructions for building and running your code. Note that the TAs will be running your code on your VMs but under their own accounts, so make sure the instructions do not depend on anything installed inside your home directory (or specify how to install it)
-- The full commit hash of the revision that you want to be graded. You can see the revision on the command line with git rev-parse HEAD or in GitLab by selecting the "Copy SHA hash" button. Make sure to include the full 40-character hash, not the 8-character abbreviation GitLab displays.  
-
 # cs425-spring19-mp1 Report
 
 ## Group
@@ -21,15 +13,28 @@ https://gitlab.engr.illinois.edu/mttsao2/cs425-sp19/tree/master/mp1
 
 ## How to Run the Code
 
-Please run: `Python mp1.py [name] [port] [# of users]`
+Please run: `python mp1.py [name] [port] [# of users]`
 
-e.g. `Python mp1.py Alice 4444 2`
+e.g. `python mp1.py Alice 4444 2`
 
 ## Commit Hash
 
 [I'm the 40-character hash]
 
 ## Design Document
+
+### Connection
+
+To establish the connections among random combination of vms, each process holds a while loop to wait for everyone's connection. If a new connection appears, the server checks whether the address appeared before. If yes, the server closes the new connection and keeps the old one. If no, the server keeps the connection and records the client's address.
+
+Please refer to:
+
+```
+class ServerSocket(Thread):
+    ...
+    def initializeConnections(self):
+        ...(the logic is in this function)
+```
 
 ### Reliability
 
@@ -42,13 +47,8 @@ Please refer to:
 ```
 class ServerSocket(Thread):
     ...
-
-```
-
-```
-class ClientSocket():
-    ...
-    
+    def run(self):
+        ...(the logic is in this function)       
 ```
 
 #### Agreement
@@ -56,9 +56,30 @@ class ClientSocket():
 R-Multicast guarantees that every process receives the message and deliver it if a message is delivered by a correct process.
 
 Please refer to:
+
 ```
 class ServerSocket(Thread):
-    ...
+    ... 
+    def run(self):
+        ...
+        while(run_event.is_set()):
+            ...
+            for address, (hostname, connection, status) in self.connections.items():
+                if(status == 'active' and connection is not None):
+                    try:
+                        ...
+                        if (len(receiveCheck) == 0):
+                            ...
+                        elif (len(receiveCheck) > 0):
+                            ...
+                            if (vmSender == self.vmNumber):
+                                ...
+                            else:
+                                message = connection.recv(messageLength)
+                                print(message)
+                                c.acquire()
+                                if(message not in sentMessages):
+                                    messagesToSend.append(message)
 ```
 
 ```
@@ -153,5 +174,5 @@ class ServerSocket(Thread):
         ...
             count = 0
             for address, (connection, status) in self.connections.items():
-            ... (the logic is in this block)
+            ... (the logic is mainly in this block)
 ```
