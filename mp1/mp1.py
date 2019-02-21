@@ -447,7 +447,7 @@ class ClientSocket():
                 inputFullMessage += chr(self.vector[i])
 
             # add the message with the name
-            inputFullMessage += messageWithName.encode('utf-8')
+            inputFullMessage += inputMsessageWithName.encode('utf-8')
 
             print("Client: " + str(self.vector) + " " + str(inputFullMessage))
 
