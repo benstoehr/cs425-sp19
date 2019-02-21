@@ -468,8 +468,8 @@ class ClientSocket():
 
                         messagesToSend = []
 
-                        connection.send(fullMessage)
-                        sentMessages.append(fullMessage)
+                        connection.send(inputFullMessage)
+                        sentMessages.append(inputFullMessage)
 
                         sentCondition.notify_all()
                         sentCondition.release()
