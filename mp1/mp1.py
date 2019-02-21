@@ -186,7 +186,7 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
-                for address, (port, hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
+                for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
 
                     print(str(connection.getsockname()) + "<-> (" + str(address) + "," + str(port) + ")")
 
