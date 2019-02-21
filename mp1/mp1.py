@@ -158,17 +158,13 @@ class ServerSocket(Thread):
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
-                        if(hostname is None):
+                        if(hostname is None and out_connection is None):
+                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) + "<->" + str(
+                                ip_and_port))
                             print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
-                            self.vmsNamed += [vm]
-                            new_connection.close()
-
-                        if (out_connection is None):
-                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
-                            self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.activeOutputConnections += 1
-
+                            self.vmsNamed += [vm]
                         else:
                             print("\tAlready have outgoing connection to " + str(ip))
                             new_connection.close()
@@ -189,6 +185,7 @@ class ServerSocket(Thread):
             if(self.activeInputConnections == self.numberOfClients
                     and self.activeOutputConnections == self.numberOfClients
                     and len(self.vmsNamed) == self.numberOfClients):
+
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
