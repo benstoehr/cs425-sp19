@@ -82,12 +82,6 @@ class ServerSocket(Thread):
                                     messagesToSend.append(message)
 ```
 
-```
-class ClientSocket():
-    ...
-
-```
-
 #### Validity
 
 When something is typed in on the console in `raw_input()`, it appears directly on the console. 
@@ -95,11 +89,10 @@ When something is typed in on the console in `raw_input()`, it appears directly 
 Please refer to:
 
 ```
-class ClientSocket():
-    ...
-    def mainLoop(self):
-       while(1):
-            msg = raw_input("> ")
+while(1):
+    ## CRAFTING THE MESSAGE FROM INPUT
+    # message is a string
+    inputMessage = raw_input()
 ```
 
 ### Failure Detection
@@ -125,17 +118,6 @@ class ServerSocket(Thread):
 ```
 
 ```
-class ClientSocket():
-    ...
-    def shutdown(self):
-    for serverName, (connection, status) in self.connections.items():
-        if(status == 'active' and connection is not None):
-            connection.close()
-
-    self.sock.close()
-```
-
-```
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
@@ -153,9 +135,9 @@ Every message has its sequence number vector. The vector is assigned by its send
 
 For a message `m` sent from process `p1`, its vector is decided by:
 
-ele1: Its sequential number on process `p1`.
+`ele1`: Its sequential number on process `p1`.
 
-ele2, ... , elen: Its local vector. Each is how many messages from process `p2`, ..., `pn` delivered on process `p1`.
+`ele2`, ... , `elen`: Its local vector. Each is how many messages from process `p2`, ..., `pn` delivered on process `p1`.
 
 When a message arrives a process, the process compares message's sequence number vector and its local sequence number vector. If the sender's sequence number is equals to its counterpart in the local vector and all other non-sender numbers are less than or equal to their correspoding counterparts in local, then the process delivers the message. If not, the process put the message in the queue.
 
@@ -169,10 +151,6 @@ class ServerSocket(Thread):
     def run(self):
         ...
         count = 0
-
         while(run_event.is_set()):
-        ...
-            count = 0
-            for address, (connection, status) in self.connections.items():
             ... (the logic is mainly in this block)
 ```
