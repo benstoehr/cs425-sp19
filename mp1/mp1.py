@@ -79,7 +79,8 @@ class ServerSocket(Thread):
         self.ip = ip
         self.port = port
 
-        self.numberOfUsers = num_users - 1
+        self.numberOfTotalUsers = num_users
+        self.numberOfClients = num_users - 1
 
         self.connections = dict()
         self.messageQueue = []
@@ -109,7 +110,7 @@ class ServerSocket(Thread):
         # listens for 8 active connections.
         #self.sock.listen(8)
         # listens for N active connections
-        listenCheck = self.sock.listen(self.numberOfUsers)
+        listenCheck = self.sock.listen(self.numberOfClients)
         #self.logger.info("listenCheck: " + str(listenCheck))
         # if(listenCheck != 0):
         #     print("Error occured at self.sock.listen()")
@@ -203,8 +204,13 @@ class ServerSocket(Thread):
                             #if(receiveCheck == "0"):
                             #    print("HB")
                             #else:
-                            message = connection.recv(ord(receiveCheck))
-                            print("Server: Received message: " + str(message))
+                            vector = []
+                            for i in range(self.numberOfTotalUsers):
+                                temp = ord(connection.recv(1))
+                                vector.append(temp)
+
+                            message = connection.recv(ord(receiveCheck) - self.numberOfTotalUsersx)
+                            print("Server: Received message: " + str(vector) + " " + str(message))
 
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
