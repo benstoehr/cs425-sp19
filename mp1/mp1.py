@@ -160,8 +160,9 @@ class ServerSocket(Thread):
             if(status == 'active'):
                 connection.close()
 
-            self.sock.close()
-            
+        self.sock.close()
+        exit(1)
+
     def run(self):
 
         #print("Server: INSIDE THE RUN FUNCTION")
@@ -205,7 +206,7 @@ class ServerSocket(Thread):
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
                             pass
-                        if (e.errno == errno.EGAIN):
+                        if (e.errno == errno.EAGAIN):
                             pass
                         else:
                             #print("Server: Other error calling connection.recv()!")
@@ -261,22 +262,25 @@ class ClientSocket():
                 continue
 
             # Try connecting to servers
-            new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            connectCheck = new_connection.connect((server, PORT))
+            try:
+                new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                connectCheck = new_connection.connect((server, PORT))
 
-            #print("Client: Trying to connect to server " + str(server))
-
-            if(connectCheck == -1):
-                #print("Client: Error connecting to server " + str(server))
-                self.connections[server] = (new_connection, 'inactive')
+            except socket.error as e:
+                print(errno.errorcode[e.errno])
+                self.connections[server] = (None, 'inactive')
+                new_connection.close()
                 attemptCount += 1
                 continue
-            else:
-                print("Client: Connected to server " + str(server))
-                self.activeConnections += 1
-                self.connections[server] = (new_connection, 'active')
-                attemptCount += 1
-                continue
+
+
+            print("Client: Connected to server " + str(server))
+            self.activeConnections += 1
+            self.connections[server] = (new_connection, 'active')
+            attemptCount += 1
+            continue
+
 
             time.sleep(1)
 
@@ -313,6 +317,9 @@ server.start()
 def signal_handler(signal, frame):
     print("You pressed Control+C!")
     client.shutdown()
+    exit(1)
+
+signal.signal(signal.SIGINT, signal_handler)
 
 #time.sleep(5)
 # # Start the client
