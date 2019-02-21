@@ -265,21 +265,20 @@ class ClientSocket():
             try:
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 connectCheck = new_connection.connect((server, PORT))
+
             except socket.error as e:
                 print(errno.errorcode[e.errno])
-            #print("Client: Trying to connect to server " + str(server))
-
-            if(connectCheck == -1):
-                #print("Client: Error connecting to server " + str(server))
                 self.connections[server] = (new_connection, 'inactive')
                 attemptCount += 1
                 continue
-            else:
-                print("Client: Connected to server " + str(server))
-                self.activeConnections += 1
-                self.connections[server] = (new_connection, 'active')
-                attemptCount += 1
-                continue
+            
+
+            print("Client: Connected to server " + str(server))
+            self.activeConnections += 1
+            self.connections[server] = (new_connection, 'active')
+            attemptCount += 1
+            continue
+
 
             time.sleep(1)
 
