@@ -195,7 +195,7 @@ class ServerSocket(Thread):
             for address, (connection, status) in self.connections.items():
                 if(status == 'active'):
                     try:
-                        print("Server: recv(1) " + str(address))
+                        #print("Server: recv(1) " + str(address))
 
                         receiveCheck = connection.recv(1)
                         if(receiveCheck == -1):
