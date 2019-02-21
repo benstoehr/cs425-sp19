@@ -141,14 +141,14 @@ class ServerSocket(Thread):
 
                     # already connected to this ip, update the vm hostname
                     if(ip_address in self.connections.keys()):
-                        #print("Already connected to " + str(ip_address))
+                        print("Already connected to " + str(ip_address))
                         (tempserver, connection, status) = self.connections[ip_address]
                         if(tempserver is None):
                             self.connections[ip_address] = (vm, connection, 'active')
                             self.activeConnections += 1
 
                     else:
-                        #print("New connection to " + str(ip_address))
+                        print("New connection to " + str(ip_address))
                         self.connections[ip_address] = (vm, new_connection, 'active')
                         self.activeConnections += 1
 
@@ -163,7 +163,7 @@ class ServerSocket(Thread):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
-                #print("Server: CONNECTED TO ALL THE CLIENTS!")
+                print("Server: CONNECTED TO ALL THE CLIENTS!")
                 print("READY")
                 c.acquire()
                 globalready = True
@@ -203,6 +203,7 @@ class ServerSocket(Thread):
 
             for address, (hostname, connection, status) in self.connections.items():
 
+                print("{}: {}".format(hostname, status))
                 if(status == 'active' and connection is not None):
 
                     try:
@@ -251,13 +252,12 @@ class ServerSocket(Thread):
                                 for m in messagesToSend:
                                     #print(m)
                                     connection.send(m)
-                                    sentMessages.append(m)
-                                    #messagesToSend.remove(m)
-                                #messagesToSend = []
+
+            sentMessages += messagesToSend
             messagesToSend = []
             c.release()
 
-            time.sleep(1)
+            time.sleep(3)
             count = 0
 
         self.shutdown()
