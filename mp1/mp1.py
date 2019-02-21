@@ -209,8 +209,10 @@ class ServerSocket(Thread):
                 c.acquire()
 
                 self.vector = vector
-
+                expected_vector = self.vector
+                
                 if(status == 'active'):
+
 
                     try:
                         #print("Server: recv(1) " + str(address))
@@ -227,7 +229,7 @@ class ServerSocket(Thread):
                         # GET MESSAGE
                         elif(len(receiveCheck) > 0):
 
-                            expected_vector = self.vector
+
                             expected_vector[count] += 1
 
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
