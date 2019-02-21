@@ -18,12 +18,12 @@
           <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="411">
-                  <caret line="232" column="51" lean-forward="false" selection-start-line="232" selection-start-column="51" selection-end-line="232" selection-end-column="51" />
+                <state relative-caret-position="321">
+                  <caret line="223" column="72" lean-forward="false" selection-start-line="223" selection-start-column="72" selection-end-line="223" selection-end-column="72" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
-                    <element signature="e#2526#6203#0" expanded="false" />
-                    <element signature="e#6237#6450#0" expanded="false" />
+                    <element signature="e#2526#6252#0" expanded="false" />
+                    <element signature="e#6286#6499#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -289,12 +289,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="232" column="51" lean-forward="false" selection-start-line="232" selection-start-column="51" selection-end-line="232" selection-end-column="51" />
+        <state relative-caret-position="321">
+          <caret line="223" column="72" lean-forward="false" selection-start-line="223" selection-start-column="72" selection-end-line="223" selection-end-column="72" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#2526#6203#0" expanded="false" />
-            <element signature="e#6237#6450#0" expanded="false" />
+            <element signature="e#2526#6252#0" expanded="false" />
+            <element signature="e#6286#6499#0" expanded="false" />
           </folding>
         </state>
       </provider>

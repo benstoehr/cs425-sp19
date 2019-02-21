@@ -112,7 +112,7 @@ class ServerSocket(Thread):
                     # Otherwise add connection to connection list
                     else:
                         self.connections[ip_address] = (None, connection, 'active')
-                        self.activeConnections += 1
+                        #self.activeConnections += 1
 
                 except socket.error as error:
                     pass
@@ -144,11 +144,12 @@ class ServerSocket(Thread):
                         #print("Already connected to " + str(ip_address))
                         (tempserver, connection, status) = self.connections[ip_address]
                         if(tempserver is None):
-                            self.connections[ip_address] = (server, connection, 'active')
+                            self.connections[ip_address] = (vm, connection, 'active')
+                            self.activeConnections += 1
 
                     else:
                         #print("New connection to " + str(ip_address))
-                        self.connections[ip_address] = (server, new_connection, 'active')
+                        self.connections[ip_address] = (vm, new_connection, 'active')
                         self.activeConnections += 1
 
                 except socket.error as e:
@@ -220,7 +221,7 @@ class ServerSocket(Thread):
                             messageLength = int(ord(receiveCheck)) - 1
                             vmSender = int(ord(connection.recv(1)))
 
-                            fullReceivedMessage = chr(messageLength)
+                            fullReceivedMessage = chr(messageLength) + 1
                             fullReceivedMessage += chr(vmSender)
 
                             if (vmSender == self.vmNumber):
