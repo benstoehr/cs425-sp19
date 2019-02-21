@@ -13,9 +13,7 @@ Your report should include the following information:
 - mttsao2
 - stoehr2 
 
-## VM Cluster
-
-We formed the group after we submmited the mp group form so we got our vms separately. The vms are 32 (mttsao2) & 58 (stoehr). We put the code on [vm#] currently.
+## VM Cluster: 58
 
 ## Gitlab Repository
 
@@ -35,15 +33,54 @@ e.g. `Python mp1.py Alice 4444 2`
 
 #### Integrity
 
-Every message received will be checked if already received by its sequence number. If the sequence number is seen, then drop the duplicate. If 
+Every message received will be checked if already received by its sequence number. If the sequence number is seen, then drop the duplicate. If the sequence number does not appear yet, put the message in the hold-back queue.
 
-The 
+dict, name of vm, array of msg & #
 
+Please refer to:
+```
+Code
+```
 
 #### Agreement
 
+A Server records the recent messages and their sequence number in case a process is failed after sending a message to some processes but not all. If there is any process finding a message is missing, it ask the server for the message.
+
+Please refer to:
+```
+Code
+```
+
 #### Validity
+
+When something is typed in on the console in `raw_input()`, it appears directly on the console. 
+
+Please refer to:
+
+```
+class ClientSocket():
+    ...
+    def mainLoop(self):
+       while(1):
+            msg = raw_input("> ")
+```
 
 ### Failure Detection
 
+When a process closes the connection, it will send an empty string to other processes. If a process received the empty string, it declares the sender process is failed.
+
+Please refer to:
+
+```
+code
+```
+
 ### Causal Ordering
+
+Every message has its sequence number vector. The vector is assigned by its sender sequentially. When a message arrives a process, the process compares message's sequence number vector and its local sequence number vector. If the sender's sequence number is equals to its counterpart in the local vector and all other non-sender numbers are less than or equal to their correspoding counterparts in local, then the process delivers the 
+
+Please refer to:
+
+```
+code
+```
