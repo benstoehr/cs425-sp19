@@ -258,7 +258,7 @@ class ServerSocket(Thread):
                                     sent_mes += [m]
 
             #sentMessages += messagesToSend
-            #messagesToSend = []
+            clientMessagesToSend = []
 
             c.release()
 
