@@ -12,14 +12,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.70422536">
+    <splitter split-orientation="horizontal" split-proportion="0.49859154">
       <split-first>
         <leaf>
           <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="274">
-                  <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
+                <state relative-caret-position="810">
+                  <caret line="285" column="0" lean-forward="true" selection-start-line="255" selection-start-column="14" selection-end-line="285" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -34,8 +34,8 @@
           <file leaf-file-name="mp1_server_client.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp1/mp1_server_client.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="466">
-                  <caret line="485" column="0" lean-forward="false" selection-start-line="485" selection-start-column="0" selection-end-line="490" selection-end-column="15" />
+                <state relative-caret-position="735">
+                  <caret line="465" column="0" lean-forward="true" selection-start-line="404" selection-start-column="8" selection-end-line="465" selection-end-column="0" />
                   <folding>
                     <element signature="e#125#138#0" expanded="true" />
                   </folding>
@@ -277,8 +277,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1_server_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="485" column="0" lean-forward="false" selection-start-line="485" selection-start-column="0" selection-end-line="490" selection-end-column="15" />
+        <state relative-caret-position="735">
+          <caret line="465" column="0" lean-forward="true" selection-start-line="404" selection-start-column="8" selection-end-line="465" selection-end-column="0" />
           <folding>
             <element signature="e#125#138#0" expanded="true" />
           </folding>
@@ -287,8 +287,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
+        <state relative-caret-position="810">
+          <caret line="285" column="0" lean-forward="true" selection-start-line="255" selection-start-column="14" selection-end-line="285" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

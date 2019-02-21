@@ -82,6 +82,8 @@ class ServerSocket(Thread):
 
     def initializeConnections(self):
 
+        global globalready
+
         self.bind(self.ip, self.port)
 
         initializeConnectionsStart = time.time()
@@ -154,6 +156,10 @@ class ServerSocket(Thread):
             if(self.activeConnections == self.numberOfClients):
                 self.ready = True
                 self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
+                c.acquire()
+                globalready = True
+                c.notify_all()
+                c.release()
 
             time.sleep(1)
 
@@ -175,18 +181,11 @@ class ServerSocket(Thread):
         #print("Server: INSIDE THE RUN FUNCTION")
         self.initializeConnections()
 
-        while(not self.ready):
-            #self.logger.info("Server: NOT READY YET!")
-            time.sleep(1)
-
         count = 0
-
         while(run_event.is_set()):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
-
             count = 0
-
 
         self.shutdown()
         self.logger.info("Server: run() is done!")
@@ -194,6 +193,7 @@ class ServerSocket(Thread):
 
 #################################################
 
+globalready = False
 
 run_event = threading.Event()
 run_event.set()
@@ -212,3 +212,74 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 ### BEGINNING OF IMPORTANT STUFF
+while(not globalready):
+    pass
+
+while(1):
+
+            ## CRAFTING THE MESSAGE FROM INPUT
+            # message is a string
+            inputMessage = raw_input()
+            # also a string
+            inputMessageWithName = self.username + ": " + inputMessage
+            # +1 is for the VM number added at the beginning
+            length = len(inputMessageWithName) + USER_NUM + 1
+
+            # give length of full message
+            inputFullMessage = chr(length)
+            inputFullMessage += chr(self.vmNumber)
+            # increment vector accordingly
+
+            c.acquire()
+            #print("Client: incrementing vector")
+            self.vector = vector[:]
+            self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
+            vector = self.vector[:]
+            c.notify_all()
+            c.release()
+
+            # include the vector timestamp
+            for i in range(self.num_users + 1):
+                inputFullMessage += chr(self.vector[i])
+
+            # add the message with the name
+            inputFullMessage += inputMessageWithName.encode('utf-8')
+
+            print("Client: " + str(self.vector) + " " + str(inputFullMessage))
+
+            c.acquire()
+            messagesToSend.append(inputFullMessage)
+            c.notify_all()
+            c.release()
+
+
+            # for serverName, (connection, status) in self.connections.items():
+            #
+            #     if(status == 'active' and connection is not None):
+            #         try:
+            #
+            #             sentCondition.acquire()
+            #             toSendCondition.acquire()
+            #
+            #             print("messagesToSend: " + str(messagesToSend))
+            #
+            #             for message in messagesToSend:
+            #                 print(message)
+            #                 connection.send(message)
+            #                 sentMessages.append(message)
+            #
+            #             messagesToSend = []
+            #
+            #             connection.send(inputFullMessage)
+            #             sentMessages.append(inputFullMessage)
+            #
+            #             sentCondition.notify_all()
+            #             sentCondition.release()
+            #             toSendCondition.notify_all()
+            #             toSendCondition.release()
+            #
+            #         except socket.error as e:
+            #             if(e == 'Broken pipe'):
+            #                 #print("Broken pipe to connection " + str(serverName) + " changing status")
+            #                 self.connections[serverName] = (connection, 'inactive')
+            #
