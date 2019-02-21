@@ -262,9 +262,11 @@ class ClientSocket():
                 continue
 
             # Try connecting to servers
-            new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            connectCheck = new_connection.connect((server, PORT))
-
+            try:
+                new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                connectCheck = new_connection.connect((server, PORT))
+            except socket.error as e:
+                print(errno.errorcode[e])
             #print("Client: Trying to connect to server " + str(server))
 
             if(connectCheck == -1):
