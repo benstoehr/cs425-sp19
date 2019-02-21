@@ -115,7 +115,7 @@ class ServerSocket(Thread):
                     ip_and_port = new_connection.getpeername()
                     ip, nuport = ip_and_port
 
-                    print(str(self.sock.getsockname) +"<->"+ str(ip_and_port))
+                    print(str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
 
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
