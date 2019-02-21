@@ -273,7 +273,7 @@ class ServerSocket(Thread):
 
 
                             for old_vector, queuedMessage in self.messageQueue:
-
+                                print("inside message queue for loop")
                                 if (old_vector[count] == expected_vector[count]):
 
                                     print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
@@ -394,6 +394,7 @@ class ClientSocket():
 
             fullMessage += chr(self.vmNumber)
             # increment vector accordingly
+
             c.acquire()
             print("Client: incrementing vector")
             self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
