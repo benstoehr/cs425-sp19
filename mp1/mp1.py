@@ -165,6 +165,7 @@ class ServerSocket(Thread):
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.activeOutputConnections += 1
                             self.vmsNamed += [vm]
+
                         else:
                             print("\tAlready have outgoing connection to " + str(ip))
                             new_connection.close()
@@ -231,12 +232,15 @@ class ServerSocket(Thread):
             # iterate over each connection and read 8 bytes for message length
 
             c.acquire()
+            for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
+                self.connections[address] = (hostname, in_connection, out_connection, status, mes2send+clientMessagesToSend, sent_mes)
+                clientMessagesToSend = []
+            c.release()
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
-                if(len(clientMessagesToSend) > 0):
-                    mes2send += clientMessagesToSend
-
+                # if(len(clientMessagesToSend) > 0):
+                #     mes2send += clientMessagesToSend
 
                 if(status == 'active' and out_connection is not None):
 
@@ -295,11 +299,6 @@ class ServerSocket(Thread):
                             pass
 
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
-
-            #sentMessages += messagesToSend
-            clientMessagesToSend = []
-
-            c.release()
 
             time.sleep(.5)
             count = 0
