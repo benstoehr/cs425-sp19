@@ -242,6 +242,7 @@ class ServerSocket(Thread):
                                     sentMessages.append(m)
                                     #messagesToSend.remove(m)
                                 #messagesToSend = []
+            messagesToSend = []
             c.release()
 
             time.sleep(1)
