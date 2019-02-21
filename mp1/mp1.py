@@ -33,11 +33,11 @@ PORT = int(sys.argv[2])
 USER_NUM = int(sys.argv[3])
 
 hostName = socket.gethostname()
-print("hostName: " + str(hostName))
+#print("hostName: " + str(hostName))
 
 splitHostName = hostName.split("-")
 VM_NUMBER = int(splitHostName[3].split(".")[0])
-print("Running on VM: " +  str(VM_NUMBER))
+#print("Running on VM: " +  str(VM_NUMBER))
 
 class ServerSocket(Thread):
 
@@ -89,7 +89,7 @@ class ServerSocket(Thread):
         initializeConnectionsStart = time.time()
 
         while(not self.ready and run_event.is_set()):
-            print("serverWhile")
+            #print("serverWhile")
 
             currentTime = time.time()
             if(currentTime - initializeConnectionsStart > 20000):
@@ -104,7 +104,7 @@ class ServerSocket(Thread):
                     connection.setblocking(0)
 
                     #self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('Server: Connection established by: ' + str(ip_address))
+                    #print('Server: Connection established by: ' + str(ip_address))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if(ip_address in self.connections.keys()):
@@ -115,14 +115,14 @@ class ServerSocket(Thread):
                         self.activeConnections += 1
 
                 except socket.error as error:
-                    print("no connections yet")
+                    #print("no connections yet")
                     #print(error)
 
             else:
                 #self.logger.info("Server: self.sock is None in acceptConnections")
                 print("Server: self.sock is None in acceptConnections")
 
-            print("VM LIST TIME")
+            #print("VM LIST TIME")
             for vm in VM_LIST:
 
                 if(vm == self.hostname):
@@ -136,17 +136,17 @@ class ServerSocket(Thread):
                     new_connection.setblocking(0)
 
                     ip_address, nuport = new_connection.getpeername()
-                    print("ip: " + str(ip_address))
+                    #print("ip: " + str(ip_address))
 
                     # already connected to this ip, update the vm hostname
                     if(ip_address in self.connections.keys()):
-                        print("Already connected to " + str(ip_address))
+                        #print("Already connected to " + str(ip_address))
                         (tempserver, connection, status) = self.connections[ip_address]
                         if(tempserver is None):
                             self.connections[ip_address] = (server, connection, 'active')
 
                     else:
-                        print("New connection to " + str(ip_address))
+                        #print("New connection to " + str(ip_address))
                         self.connections[ip_address] = (server, new_connection, 'active')
                         self.activeConnections += 1
 
@@ -160,8 +160,9 @@ class ServerSocket(Thread):
             if(self.activeConnections == self.numberOfClients):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
-                print("Server: CONNECTED TO ALL THE CLIENTS!")
 
+                #print("Server: CONNECTED TO ALL THE CLIENTS!")
+                print("READY")
                 c.acquire()
                 globalready = True
                 #c.notify_all()
