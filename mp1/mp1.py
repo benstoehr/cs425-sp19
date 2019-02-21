@@ -67,14 +67,14 @@ class ServerSocket(Thread):
 
         self.ready = False
 
-        # create logger
-        self.logger = logging.getLogger(__name__)
-        self.logger.setLevel(logging.DEBUG)
-        # create console handler and set level to debug
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.INFO)
-        # add ch to logger
-        self.logger.addHandler(ch)
+        # # create logger
+        # self.logger = logging.getLogger(__name__)
+        # self.logger.setLevel(logging.DEBUG)
+        # # create console handler and set level to debug
+        # ch = logging.StreamHandler()
+        # ch.setLevel(logging.INFO)
+        # # add ch to logger
+        # self.logger.addHandler(ch)
 
     def bind(self, ip_addr, port):
         bindCheck = self.sock.bind((ip_addr, port))
@@ -250,7 +250,7 @@ while(1):
 
             output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             logger.info(output)
-            
+
             # increment vector accordingly
             # c.acquire()
             # #print("Client: incrementing vector")
