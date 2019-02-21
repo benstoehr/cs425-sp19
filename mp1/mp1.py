@@ -115,6 +115,7 @@ class ServerSocket(Thread):
                         self.activeConnections += 1
 
                 except socket.error as error:
+                    pass
                     #print("no connections yet")
                     #print(error)
 
