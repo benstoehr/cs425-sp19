@@ -52,11 +52,11 @@ class ServerSocket(Thread):
 
         self.ip = ip
         self.port = port
-        self.name = socket.gethostname()
+        self.hostname = socket.gethostname()
         splitHostName = hostName.split("-")
         self.vmNumber = int(splitHostName[3].split(".")[0])
 
-        self.numberOfTotalUsers = num_users
+        self.totalUsers = num_users
         self.numberOfClients = num_users - 1
 
         self.activeConnections = 0
@@ -119,6 +119,9 @@ class ServerSocket(Thread):
 
             for vm in VM_LIST:
 
+                if(vm == self.hostname):
+                    continue
+                    
                 new_connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
@@ -144,7 +147,7 @@ class ServerSocket(Thread):
                     continue
 
             # Once the proper number of connections is made, exit the while loop
-            if(self.activeConnections == (USER_NUM - 1)):
+            if(self.activeConnections == self.numberOfClients):
                 self.ready = True
                 self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
