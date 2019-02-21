@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/mp1/mp1.py" afterPath="$PROJECT_DIR$/mp1/mp1.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,12 +16,11 @@
       <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="127" column="71" lean-forward="true" selection-start-line="127" selection-start-column="71" selection-end-line="127" selection-end-column="71" />
+            <state relative-caret-position="528">
+              <caret line="255" column="101" lean-forward="false" selection-start-line="255" selection-start-column="101" selection-end-line="255" selection-end-column="101" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#7936#8174#0" expanded="false" />
-                <element signature="e#8204#11675#0" expanded="false" />
+                <element signature="e#7942#8180#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -195,8 +193,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
+            <element signature="e#7942#8180#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -207,27 +204,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp1/mp1_c.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
+            <element signature="e#7942#8180#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -245,8 +222,7 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
+            <element signature="e#7942#8180#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -264,8 +240,25 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
+            <element signature="e#7942#8180#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mp1/mp1_c.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#7942#8180#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -289,12 +282,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="127" column="71" lean-forward="true" selection-start-line="127" selection-start-column="71" selection-end-line="127" selection-end-column="71" />
+        <state relative-caret-position="528">
+          <caret line="255" column="101" lean-forward="false" selection-start-line="255" selection-start-column="101" selection-end-line="255" selection-end-column="101" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#7936#8174#0" expanded="false" />
-            <element signature="e#8204#11675#0" expanded="false" />
+            <element signature="e#7942#8180#0" expanded="false" />
           </folding>
         </state>
       </provider>

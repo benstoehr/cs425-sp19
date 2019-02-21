@@ -155,12 +155,11 @@ class ServerSocket(Thread):
                     ip_and_port = new_connection.getpeername()
                     ip, nuport = ip_and_port
 
-                    #print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
-
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
                         if (out_connection is None):
+                            print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
                             print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, in_connection, out_connection, 'active', mes2send, sentmes)
                             self.vmsNamed += [vm]
@@ -229,47 +228,48 @@ class ServerSocket(Thread):
 
             c.acquire()
 
-            for address, (port, hostname, connection, status, mes2send, sent_mes) in self.connections.items():
+            for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
                 if(len(clientMessagesToSend) > 0):
                     mes2send += clientMessagesToSend
 
 
-                if(status == 'active' and connection is not None):
+                if(status == 'active' and out_connection is not None):
 
                     if (len(mes2send) > 0):
                         print("{}: {}".format(hostname, status))
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
-                            connection.send(m)
+                            out_connection.send(m)
                             sent_mes += [m]
                         #mes2send = []
 
                     try:
-                        receiveCheck = connection.recv(1)
+                        receiveCheck = in_connection.recv(1)
 
                         # THIS MEANS THE CONNECTION CLOSED
                         if (len(receiveCheck) == 0):
                             print(str(address) + " disconnected!")
-                            connection.close()
-                            self.connections[address] = (port, hostname, None, 'inactive',mes2send,sent_mes)
+                            in_connection.close()
+                            out_connection.close()
+                            self.connections[address] = (hostname, None, None, 'inactive', mes2send, sent_mes)
                             break
 
                         # GET MESSAGE
                         elif (len(receiveCheck) > 0):
 
                             messageLength = int(ord(receiveCheck)) - 1
-                            vmSender = int(ord(connection.recv(1)))
+                            vmSender = int(ord(in_connection.recv(1)))
 
                             fullReceivedMessage = chr(messageLength + 1)
                             fullReceivedMessage += chr(vmSender)
 
                             if (vmSender == self.vmNumber):
                                 print("Received my own message")
-                                dummy = connection.recv(messageLength)
+                                dummy = in_connection.recv(messageLength)
                             else:
-                                message = connection.recv(messageLength)
+                                message = in_connection.recv(messageLength)
                                 fullReceivedMessage += message
 
                                 print("Received message from " +str(hostname)+": " + message)
@@ -290,7 +290,7 @@ class ServerSocket(Thread):
                             mes2send = []
                             pass
 
-                self.connections[address] = (port, hostname, connection, status, mes2send, sent_mes)
+                self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
             #sentMessages += messagesToSend
             clientMessagesToSend = []
