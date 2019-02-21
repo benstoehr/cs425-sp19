@@ -110,6 +110,7 @@ class ServerSocket(Thread):
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if(ip in self.connections.keys()):
+                        print("already have a connection for " +str(ip))
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
@@ -149,12 +150,15 @@ class ServerSocket(Thread):
                         print("Already connected to " + str(ip))
                         (tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
                         if(tempserver is None):
+                            print("updating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, connection, 'active',[],[])
-                            self.activeConnections += 1
+                            self.vmsNamed += [vm]
+
 
                     else:
                         print("New connection to " + str(ip_and_port))
                         self.connections[ip] = (vm, new_connection, 'active',[],[])
+                        self.activeConnections += 1
                         self.vmsNamed += [vm]
 
                 except socket.error as e:
