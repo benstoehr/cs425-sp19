@@ -118,11 +118,15 @@ class ServerSocket(Thread):
                         if(in_connection is not None):
                             print("\tAlready have an incoming connection for " + str(ip))
                             connection.close()
+                        else:
+                            print("\tNew incoming connection for ip " + str(ip))
+                            self.connections[ip] = (None, connection, None, 'active', [], [])
+                            self.activeInputConnections += 1
 
                     # Otherwise add connection to connection list
                     else:
-                        print("\tNew incoming connection " + str(ip))
-                        self.connections[ip] = (hostname, connection, None, 'active', mes2send, sentmes)
+                        print("\tNew incoming connection with fresh IP")
+                        self.connections[ip] = (None, connection, None, 'active', [], [])
                         self.activeInputConnections += 1
 
                 except socket.error as error:
