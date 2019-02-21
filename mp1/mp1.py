@@ -93,7 +93,7 @@ class ServerSocket(Thread):
 
             currentTime = time.time()
             if(currentTime - initializeConnectionsStart > 20000):
-                self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
+                #self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
 
             if(self.sock is not None):
                 #self.logger.info("Server: CALLING ACCEPT()")
@@ -101,7 +101,8 @@ class ServerSocket(Thread):
 
                     connection, (ip_address, port) = self.sock.accept()
                     connection.setblocking(0)
-                    self.logger.info('Server: Connection established by: ' + str(ip_address))
+                    #self.logger.info('Server: Connection established by: ' + str(ip_address))
+                    print('Server: Connection established by: ' + str(ip_address))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if(ip_address in self.connections.keys()):
@@ -116,7 +117,8 @@ class ServerSocket(Thread):
                     #print(error)
 
             else:
-                self.logger.info("Server: self.sock is None in acceptConnections")
+                #self.logger.info("Server: self.sock is None in acceptConnections")
+                print("Server: self.sock is None in acceptConnections")
 
             print("VM LIST TIME")
             for vm in VM_LIST:
@@ -155,7 +157,8 @@ class ServerSocket(Thread):
             # Once the proper number of connections is made, exit the while loop
             if(self.activeConnections == self.numberOfClients):
                 self.ready = True
-                self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
+                #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
+                print("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 c.acquire()
                 globalready = True
