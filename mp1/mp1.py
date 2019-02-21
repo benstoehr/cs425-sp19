@@ -397,6 +397,7 @@ class ClientSocket():
 
             c.acquire()
             #print("Client: incrementing vector")
+            self.vector = vector[:]
             self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
             vector = self.vector[:]
             c.notify_all()
