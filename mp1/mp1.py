@@ -125,7 +125,7 @@ class ServerSocket(Thread):
                 try:
                     connectCheck = new_connection.connect((server, PORT))
                     new_connection.setblocking(0)
-                    
+
                     ip = new_connection.getpeername()
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
@@ -166,7 +166,7 @@ class ServerSocket(Thread):
         global messagesToSend
 
         #print("Server: INSIDE THE RUN FUNCTION")
-        self.acceptConnections()
+        self.initializeConnections()
 
         while(not self.ready):
             #self.logger.info("Server: NOT READY YET!")
