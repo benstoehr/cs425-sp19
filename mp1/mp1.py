@@ -190,8 +190,8 @@ class ServerSocket(Thread):
         count = 0
         while(run_event.is_set()):
 
-            print("server run loop")
-            print("messagesToSend: " + str(messagesToSend))
+            #print("server run loop")
+            #print("messagesToSend: " + str(messagesToSend))
 
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
@@ -222,7 +222,7 @@ class ServerSocket(Thread):
                             else:
                                 message = connection.recv(messageLength)
                                 print(message)
-                                
+
                                 if(message not in sentMessages):
                                     messagesToSend.append(message)
 
