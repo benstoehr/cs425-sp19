@@ -239,6 +239,9 @@ class ServerSocket(Thread):
 
                             message = connection.recv(messageLength)
 
+                            print("expected: " + str(expected_vector))
+                            print("new: " + str(new_vector))
+
                             if(new_vector[count] == expected_vector[count]):
                                 print("Server: Received message: " + str(vector) + " " + str(message))
                                 self.vector = new_vector
@@ -250,7 +253,7 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            print("Server: receiveCheck: nothing to read")
+                            #print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector
                             expected_vector[count] += 1
                             for vector, queuedMessage in self.messageQueue:
