@@ -86,7 +86,7 @@ class ServerSocket(Thread):
         self.port = port
         self.name = socket.gethostname()
         splitHostName = hostName.split("-")
-        self.vmNumber = splitHostName[3].split(".")[0]
+        self.vmNumber = int(splitHostName[3].split(".")[0])
 
         self.numberOfTotalUsers = num_users
         self.numberOfClients = num_users - 1
@@ -256,7 +256,7 @@ class ServerSocket(Thread):
                             print("Error: " + str(errno.errorcode[e.errno]))
 
                 count += 1
-                if(count == self.vmNumber -1):
+                if(count == self.vmNumber - 1):
                     count += 1
 
                 c.notify_all()
