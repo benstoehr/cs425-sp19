@@ -93,7 +93,7 @@ class ServerSocket(Thread):
 
         initializeConnectionsStart = time.time()
 
-        while(not self.ready and run_event.is_set() ):
+        while(not self.ready and run_event.is_set()):
             #print("serverWhile")
 
             currentTime = time.time()
@@ -120,7 +120,7 @@ class ServerSocket(Thread):
                             connection.close()
                         else:
                             print("\tNew incoming connection for ip " + str(ip))
-                            self.connections[ip] = (None, connection, out_connection, 'active', [], [])
+                            self.connections[ip] = (hostname, connection, out_connection, 'active', [], [])
                             self.activeInputConnections += 1
 
                     # Otherwise add connection to connection list
@@ -163,10 +163,12 @@ class ServerSocket(Thread):
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.vmsNamed += [vm]
                             new_connection.close()
+
                         if (out_connection is None):
                             print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.activeOutputConnections += 1
+
                         else:
                             print("\tAlready have outgoing connection to " + str(ip))
                             new_connection.close()
