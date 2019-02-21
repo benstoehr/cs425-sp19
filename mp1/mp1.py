@@ -102,6 +102,7 @@ class ServerSocket(Thread):
 
                     connection, (ip_address, port) = self.sock.accept()
                     connection.setblocking(0)
+
                     #self.logger.info('Server: Connection established by: ' + str(ip_address))
                     print('Server: Connection established by: ' + str(ip_address))
 
@@ -188,6 +189,7 @@ class ServerSocket(Thread):
 
         count = 0
         while(run_event.is_set()):
+            print("server run loop")
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
 
@@ -225,9 +227,11 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
+                            print("sending messages from queue")
 
                             c.acquire()
                             for m in messagesToSend:
+                                print(m)
                                 connection.send(m)
                                 sentMessages.append(m)
                             messagesToSend = []
