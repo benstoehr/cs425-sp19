@@ -189,7 +189,10 @@ class ServerSocket(Thread):
 
         count = 0
         while(run_event.is_set()):
+            
             print("server run loop")
+            print("messagesToSend: " + str(messagesToSend))
+
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
 
@@ -227,16 +230,18 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            print("sending messages from queue")
 
                             c.acquire()
-                            for m in messagesToSend:
-                                print(m)
-                                connection.send(m)
-                                sentMessages.append(m)
-                            messagesToSend = []
+                            if(len(messagesToSend) > 0):
+                                print("sending messages from queue")
+                                for m in messagesToSend:
+                                    print(m)
+                                    connection.send(m)
+                                    sentMessages.append(m)
+                                messagesToSend = []
                             c.release()
 
+            time.sleep(1)
             count = 0
 
         self.shutdown()
