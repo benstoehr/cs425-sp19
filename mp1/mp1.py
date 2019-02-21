@@ -94,9 +94,6 @@ class ServerSocket(Thread):
         # add ch to logger
         self.logger.addHandler(ch)
 
-        # Set up signal handler
-        signal.signal(signal.SIGINT, self.signal_handler)
-
 
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
