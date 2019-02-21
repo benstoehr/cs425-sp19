@@ -159,9 +159,9 @@ class ServerSocket(Thread):
                     if(ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
                         if (out_connection is None):
-                            print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
+                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) +"<->"+ str(ip_and_port))
                             print("\tupdating name for " + str(ip) + " to " + str(vm))
-                            self.connections[ip] = (vm, in_connection, out_connection, 'active', mes2send, sentmes)
+                            self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.vmsNamed += [vm]
 
                         else:
