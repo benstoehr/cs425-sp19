@@ -209,7 +209,7 @@ class ServerSocket(Thread):
                     count += 1
 
                 #print(address)
-                print("self.vector: " + str(self.vector))
+                #print("self.vector: " + str(self.vector))
 
                 c.acquire()
 
@@ -247,14 +247,14 @@ class ServerSocket(Thread):
 
                             message = connection.recv(messageLength)
 
-                            print("expected: " + str(expected_vector))
-                            print("new: " + str(new_vector))
+                            #print("expected: " + str(expected_vector))
+                            #print("new: " + str(new_vector))
 
                             if(new_vector[count] == expected_vector[count]):
                                 print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
                                 self.vector = new_vector
                             else:
-                                print("appending " + str(vector) + " " + str(message))
+                                #print("appending " + str(vector) + " " + str(message))
                                 self.messageQueue.append((new_vector, message))
 
 
@@ -264,16 +264,16 @@ class ServerSocket(Thread):
                         if (e.errno == errno.EAGAIN):
 
 
-                            print("Server: receiveCheck: nothing to read")
+                            #print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector[:]
-                            print("expected pre: " +str(expected_vector))
+                            #print("expected pre: " +str(expected_vector))
                             expected_vector[count] += 1
-                            print("expected post: " + str(expected_vector))
+                            #print("expected post: " + str(expected_vector))
                             #print("new: " + str(new_vector))
 
 
                             for old_vector, queuedMessage in self.messageQueue:
-                                print("inside message queue for loop")
+                                #print("inside message queue for loop")
                                 if (old_vector[count] == expected_vector[count]):
 
                                     print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
@@ -396,7 +396,7 @@ class ClientSocket():
             # increment vector accordingly
 
             c.acquire()
-            print("Client: incrementing vector")
+            #print("Client: incrementing vector")
             self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
             c.notify_all()
             c.release()
