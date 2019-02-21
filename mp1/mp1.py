@@ -160,8 +160,8 @@ class ServerSocket(Thread):
             time.sleep(1)
 
     def signal_handler(signal, frame):
-        print("You pressed Control+C!")
-        client.shutdown()
+        print("Server: You pressed Control+C!")
+        self.shutdown()
         exit(1)
 
 
