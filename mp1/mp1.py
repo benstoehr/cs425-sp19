@@ -252,7 +252,8 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
-            print(inputFullMessage)
+            print(inputMessageWithName)
+            
             #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             #output = "Client: VM{}: {}".format(VM_NUMBER, inputFullMessage)
             #output = str(inputFullMessage)
