@@ -305,7 +305,8 @@ class ClientSocket():
 
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
-            connection.close()
+            if(status == 'active'):
+                connection.close()
 
         self.sock.close()
 
