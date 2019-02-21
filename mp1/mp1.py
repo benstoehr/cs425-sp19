@@ -94,6 +94,10 @@ class ServerSocket(Thread):
         self.connections = dict()
         self.ip2vmNumber = dict()
 
+        self.vector = []
+        for i in range(num_users):
+            self.vector.append(0)
+            
         self.messageQueue = []
         self.ready = False
         self.activeConnections = 0
