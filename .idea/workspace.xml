@@ -18,8 +18,8 @@
           <file leaf-file-name="mp1.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="274">
-                  <caret line="255" column="12" lean-forward="false" selection-start-line="255" selection-start-column="12" selection-end-line="255" selection-end-column="12" />
+                <state relative-caret-position="732">
+                  <caret line="233" column="39" lean-forward="false" selection-start-line="233" selection-start-column="39" selection-end-line="233" selection-end-column="39" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -34,8 +34,8 @@
           <file leaf-file-name="mp1_server_client.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp1/mp1_server_client.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="204">
-                  <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+                <state relative-caret-position="-1861">
+                  <caret line="288" column="53" lean-forward="true" selection-start-line="285" selection-start-column="20" selection-end-line="288" selection-end-column="53" />
                   <folding>
                     <element signature="e#125#138#0" expanded="true" />
                   </folding>
@@ -277,8 +277,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1_server_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="69" column="0" lean-forward="true" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+        <state relative-caret-position="-1861">
+          <caret line="288" column="53" lean-forward="true" selection-start-line="285" selection-start-column="20" selection-end-line="288" selection-end-column="53" />
           <folding>
             <element signature="e#125#138#0" expanded="true" />
           </folding>
@@ -287,8 +287,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp1/mp1.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="255" column="12" lean-forward="false" selection-start-line="255" selection-start-column="12" selection-end-line="255" selection-end-column="12" />
+        <state relative-caret-position="732">
+          <caret line="233" column="39" lean-forward="false" selection-start-line="233" selection-start-column="39" selection-end-line="233" selection-end-column="39" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

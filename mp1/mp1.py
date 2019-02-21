@@ -190,6 +190,49 @@ class ServerSocket(Thread):
         while(run_event.is_set()):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
+
+            for address, (hostname, connection, status) in self.connections.items():
+
+                if(status == 'active' and connection is not None):
+
+                    try:
+                        receiveCheck = connection.recv(1)
+
+                        # THIS MEANS THE CONNECTION CLOSED
+                        if (len(receiveCheck) == 0):
+                            print(str(address) + " disconnected!")
+                            connection.close()
+                            self.connections[address] = (hostname, None, 'inactive')
+
+                        # GET MESSAGE
+                        elif (len(receiveCheck) > 0):
+                            messageLength = int(ord(receiveCheck)) - 1
+                            vmSender = int(ord(connection.recv(1)))
+
+                            if (vmSender == self.vmNumber):
+                                print("found my own message")
+                                dummy = connection.recv(messageLength)
+                            else:
+                                message = connection.recv(messageLength)
+                                print(message)
+                                c.acquire()
+                                if(message not in sentMessages):
+                                    messagesToSend.append(message)
+                                c.release()
+
+                    # NOTHING AVAILABLE ON THE SOCKET
+                    except socket.error as e:
+                        if(e.errno == errno.ECONNRESET):
+                            pass
+                        if (e.errno == errno.EAGAIN):
+
+                            c.acquire()
+                            for m in messagesToSend:
+                                connection.send(m)
+                                sentMessages.append(m)
+                            messagesToSend = []
+                            c.release()
+
             count = 0
 
         self.shutdown()
@@ -253,7 +296,7 @@ while(1):
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
             print(inputMessageWithName)
-            
+
             #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             #output = "Client: VM{}: {}".format(VM_NUMBER, inputFullMessage)
             #output = str(inputFullMessage)
