@@ -94,6 +94,9 @@ class ServerSocket(Thread):
         # add ch to logger
         self.logger.addHandler(ch)
 
+        # Set up signal handler
+        signal.signal(signal.SIGINT, self.signal_handler)
+
 
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
@@ -156,9 +159,16 @@ class ServerSocket(Thread):
 
             time.sleep(1)
 
+    def signal_handler(signal, frame):
+        print("You pressed Control+C!")
+        client.shutdown()
+        exit(1)
+
+
+
     def shutdown(self):
         for address, (connection, status) in self.connections.items():
-            if(status == 'active'):
+            if(status == 'active' and connection is not None):
                 connection.close()
 
         self.sock.close()
