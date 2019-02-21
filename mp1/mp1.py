@@ -227,6 +227,8 @@ class ServerSocket(Thread):
 
                                 if(message not in sentMessages):
                                     messagesToSend.append(message)
+                                else:
+                                    print("Already sent message " + str(messages))
 
 
                     # NOTHING AVAILABLE ON THE SOCKET
@@ -237,7 +239,7 @@ class ServerSocket(Thread):
 
 
                             if(len(messagesToSend) > 0):
-                                #print("sending messages from queue")
+                                print("sending messages from queue " + str(messagesToSend))
                                 for m in messagesToSend:
                                     #print(m)
                                     connection.send(m)
