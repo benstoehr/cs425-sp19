@@ -124,7 +124,7 @@ class ServerSocket(Thread):
 
         while(not self.ready):
             print("serverWhile")
- 
+
             currentTime = time.time()
             if(currentTime - acceptConnectionsStart > 20000):
                 self.logger.info("Server: 20 second timeout exceeding when waiting for connections")
@@ -308,7 +308,7 @@ class ClientSocket():
 
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
-            if(status == 'active' and connection not None):
+            if(status == 'active' and connection is not None):
                 connection.close()
 
         self.sock.close()
