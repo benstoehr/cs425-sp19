@@ -120,7 +120,7 @@ class ServerSocket(Thread):
                             connection.close()
                         else:
                             print("\tNew incoming connection for ip " + str(ip))
-                            self.connections[ip] = (None, connection, None, 'active', [], [])
+                            self.connections[ip] = (None, connection, out_connection, 'active', [], [])
                             self.activeInputConnections += 1
 
                     # Otherwise add connection to connection list
@@ -189,7 +189,7 @@ class ServerSocket(Thread):
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
                     print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
-                    print("IN: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()))
+                    print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()))
                 print("READY")
                 c.acquire()
                 globalready = True
