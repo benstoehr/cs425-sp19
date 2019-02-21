@@ -180,7 +180,7 @@ class ServerSocket(Thread):
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
 
-                    print(str(self.sock.getsockname()) + "<-> (" + str(address) + "," + str(port) + ")")
+                    print(str(connection.getsockname()) + "<-> (" + str(address) + "," + str(port) + ")")
 
                 print("READY")
                 c.acquire()
