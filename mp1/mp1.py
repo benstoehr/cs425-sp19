@@ -199,6 +199,16 @@ sentMessages = []
 
 c = threading.Condition()
 
+# create logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+# create console handler and set level to debug
+ch = logging.StreamHandler()
+ch.setLevel(logging.INFO)
+# add ch to logger
+logger.addHandler(ch)
+
+
 run_event = threading.Event()
 run_event.set()
 
@@ -260,7 +270,7 @@ while(1):
             c.release()
 
             output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            print(output)
+            logger.info(output)
 
 
             # for serverName, (connection, status) in self.connections.items():
