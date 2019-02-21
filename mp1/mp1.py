@@ -119,8 +119,6 @@ class ServerSocket(Thread):
         # add ch to logger
         self.logger.addHandler(ch)
 
-
-
     def bind(self, ip_addr, port):
         # binds the server to IP and at the specified port number
 
@@ -258,6 +256,9 @@ class ServerSocket(Thread):
                                 for x in new_vector:
                                     fullMessage += chr(x)
                                 fullMessage += message
+
+                                print("expected: " + str(expected_vector))
+                                print("new: " + str(new_vector))
 
                                 if(new_vector[count] == expected_vector[count]):
                                     print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
