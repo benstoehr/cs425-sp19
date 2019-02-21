@@ -194,6 +194,8 @@ class ServerSocket(Thread):
             count = 0
             for address, (connection, status) in self.connections.items():
 
+                print(address)
+
                 c.acquire()
 
                 self.vector = vector
@@ -210,7 +212,6 @@ class ServerSocket(Thread):
 
                         # THIS MEANS THE CONNECTION CLOSED
                         elif(len(receiveCheck) == 0):
-                            print("Server: receiveCheck: nothing to read")
                             print(str(address) + " disconnected!")
                             self.connections[address] = (connection, 'inactive')
 
@@ -240,7 +241,7 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-
+                            print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector
                             expected_vector[count] += 1
                             for vector, queuedMessage in self.messageQueue:
@@ -255,7 +256,7 @@ class ServerSocket(Thread):
                 c.notify_all()
                 c.release()
 
-            time.sleep(1)
+            time.sleep(5)
             count += 1
             if(count == 100):
                 break
@@ -359,7 +360,7 @@ class ClientSocket():
 
             # increment vector accordingly
             c.acquire()
-            self.vector[self.vmNumber - 1]  = self.vector[self.vmNumber - 1] + 1
+            self.vector[self.vmNumber - 1] = self.vector[self.vmNumber - 1] + 1
             c.notify_all()
             c.release()
 
