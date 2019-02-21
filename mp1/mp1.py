@@ -316,6 +316,8 @@ def signal_handler(signal, frame):
     client.shutdown()
     exit(1)
 
+signal.signal(signal.SIGINT, signal_handler)
+
 #time.sleep(5)
 # # Start the client
 client = ClientSocket(num_users=USER_NUM)
