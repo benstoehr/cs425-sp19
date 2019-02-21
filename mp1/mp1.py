@@ -50,7 +50,10 @@ class ServerSocket(Thread):
         else:
             self.sock = sock
 
-        self.ip = ip
+        ip_and_port = socket.getsockname()
+        self.ip = ip_and_port[0]
+        #self.port = ip_and_port[1]
+
         self.port = port
         self.hostname = socket.gethostname()
         splitHostName = hostName.split("-")
