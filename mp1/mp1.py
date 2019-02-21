@@ -207,7 +207,7 @@ class ServerSocket(Thread):
                 if(len(clientMessagesToSend) > 0):
                     mes2send += clientMessagesToSend
 
-                #print("{}: {}".format(hostname, status))
+                print("{}: {}".format(hostname, status))
 
                 if(status == 'active' and connection is not None):
 
@@ -217,7 +217,7 @@ class ServerSocket(Thread):
                             # print(m)
                             connection.send(m)
                             sent_mes += [m]
-                        mes2send = []
+                        #mes2send = []
 
                     try:
                         receiveCheck = connection.recv(1)
@@ -260,6 +260,7 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
+                            mes2send = []
                             pass
 
                 self.connections[address] = (hostname, connection, status, mes2send, sent_mes)
