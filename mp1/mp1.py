@@ -266,14 +266,15 @@ class ServerSocket(Thread):
 
                             print("Server: receiveCheck: nothing to read")
                             expected_vector = self.vector
-                            print("expected: " +str(expected_vector))
+                            print("expected pre: " +str(expected_vector))
                             expected_vector[count] += 1
-                            print("expected: " + str(expected_vector))
+                            print("expected post: " + str(expected_vector))
+                            print("new: " + str(new_vector))
 
 
                             for vector, queuedMessage in self.messageQueue:
 
-                                if (new_vector[count] == expected_vector[count]):
+                                if (vector[count] == expected_vector[count]):
 
                                     print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
                                     self.messageQueue.remove((vector, queuedMessage))
