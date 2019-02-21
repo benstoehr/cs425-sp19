@@ -62,8 +62,8 @@ print("Running on VM: " +  str(VM_NUMBER))
 
 # initialize shared variable for thread and main process
 vector = []
-messagesToSend[]
-sentMessages[]
+messagesToSend = []
+sentMessages = []
 
 for i in range(USER_NUM):
     vector.append(0)
@@ -460,7 +460,7 @@ class ClientSocket():
                         toSendCondition.notify_all()
 
                         connection.send(fullMessage)
-                        
+
                     except socket.error as e:
                         if(e == 'Broken pipe'):
                             #print("Broken pipe to connection " + str(serverName) + " changing status")
