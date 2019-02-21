@@ -227,14 +227,17 @@ while(1):
             # also a string
             inputMessageWithName = NAME + ": " + inputMessage
             # +1 is for the VM number added at the beginning
-            length = len(inputMessageWithName) + USER_NUM + 1
+            #length = len(inputMessageWithName) + USER_NUM + 1
             length = len(inputMessageWithName) + 1
 
             # give length of full message
             inputFullMessage = chr(length)
             inputFullMessage += chr(VM_NUMBER)
-            # increment vector accordingly
 
+            # add the message with the name
+            inputFullMessage += inputMessageWithName.encode('utf-8')
+
+            # increment vector accordingly
             # c.acquire()
             # #print("Client: incrementing vector")
             # self.vector = vector[:]
@@ -247,8 +250,6 @@ while(1):
             # for i in range(self.num_users + 1):
             #     inputFullMessage += chr(self.vector[i])
 
-            # add the message with the name
-            inputFullMessage += inputMessageWithName.encode('utf-8')
 
             #print("Client: " + str(self.vector) + " " + str(inputFullMessage))
 
