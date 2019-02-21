@@ -58,8 +58,14 @@ print("hostName: " + str(hostName))
 
 splitHostName = hostName.split("-")
 VM_NUMBER = splitHostName[3].split(".")[0]
-
 print("Running on VM: " +  str(VM_NUMBER))
+
+# initialize shared variable for thread and main process
+vector = []
+for i in range(USER_NUM):
+    vector.append(0)
+c = threading.Condition()
+
 
 class ServerSocket(Thread):
 
@@ -95,6 +101,7 @@ class ServerSocket(Thread):
         ch.setLevel(logging.INFO)
         # add ch to logger
         self.logger.addHandler(ch)
+
 
 
     def bind(self, ip_addr, port):
@@ -168,6 +175,9 @@ class ServerSocket(Thread):
 
     def run(self):
 
+        # make vector global
+        global vector
+
         #print("Server: INSIDE THE RUN FUNCTION")
         self.acceptConnections()
 
@@ -180,12 +190,20 @@ class ServerSocket(Thread):
         while(run_event.is_set()):
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
-            #
-            #self.logger.info("Server: In the main loops")
 
-
+            count = 0
             for address, (connection, status) in self.connections.items():
+
+                c.aquire()
+
+                self.vector = vector
+
+                c.notify_all()
+                c.release()
+
                 if(status == 'active'):
+
+
                     try:
                         #print("Server: recv(1) " + str(address))
 
@@ -199,32 +217,46 @@ class ServerSocket(Thread):
                             print(str(address) + " disconnected!")
                             self.connections[address] = (connection, 'inactive')
 
+                        # GET MESSAGE
                         elif(len(receiveCheck) > 0):
-                            #print("Server: receiveCheck > 0: " + str(ord(receiveCheck)))
-                            #if(receiveCheck == "0"):
-                            #    print("HB")
-                            #else:
+
+                            expected_vector = self.vector
+                            expected_vector[count] += 1
 
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers
-                            vector = []
+
+                            new_vector = []
                             for i in range(self.numberOfTotalUsers):
                                 temp = int(ord(connection.recv(1)))
-                                vector.append(temp)
+                                new_vector.append(temp)
 
-                            self.vector = vector
                             message = connection.recv(messageLength)
 
-                            print("Server: Received message: " + str(vector) + " " + str(message))
+                            if(new_vector[count] == expected_vector[count]):
+                                print("Server: Received message: " + str(vector) + " " + str(message))
+                                self.vector = new_vector
+                            else:
+                                self.messageQueue.append((new_vector, message))
+
 
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-                            pass
+
+                            expected_vector = self.vector
+                            expected_vector[count] += 1
+                            for vector, queuedMessage in self.messageQueue:
+                                if (new_vector[count] == expected_vector[count]):
+                                    print("Server: Received message: " + str(vector) + " " + str(queuedMessage))
+                                    self.vector = new_vector
                         else:
                             #print("Server: Other error calling connection.recv()!")
                             print("Error: " + str(errno.errorcode[e.errno]))
 
+                count += 1
+                c.notify_all()
+                c.release()
 
             time.sleep(1)
             count += 1
@@ -329,8 +361,11 @@ class ClientSocket():
             fullMessage = chr(length)
 
             # increment vector accordingly
+            c.aquire()
             self.vector[self.vmNumber - 1]  = self.vector[self.vmNumber - 1] + 1
-
+            c.notify_all()
+            c.release()
+            
             # include the vector timestamp
             for i in range(self.num_users + 1):
                 fullMessage += chr(self.vector[i])
