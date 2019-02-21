@@ -192,7 +192,7 @@ class ServerSocket(Thread):
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
-                    print(hostname)
+                    print("{}:{}".format(hostname, status))
                     print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
                     print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
                 print("READY")
@@ -238,13 +238,12 @@ class ServerSocket(Thread):
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
-                # if(len(clientMessagesToSend) > 0):
-                #     mes2send += clientMessagesToSend
-
                 if(status == 'active' and out_connection is not None):
 
+                    print("{}: {}".format(hostname, status))
+
                     if (len(mes2send) > 0):
-                        print("{}: {}".format(hostname, status))
+
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
