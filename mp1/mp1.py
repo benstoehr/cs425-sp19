@@ -189,12 +189,14 @@ class ServerSocket(Thread):
 
         count = 0
         while(run_event.is_set()):
-            
+
             print("server run loop")
             print("messagesToSend: " + str(messagesToSend))
 
             # TODO: Main server logic
             # iterate over each connection and read 8 bytes for message length
+
+            c.acquire()
 
             for address, (hostname, connection, status) in self.connections.items():
 
@@ -220,10 +222,10 @@ class ServerSocket(Thread):
                             else:
                                 message = connection.recv(messageLength)
                                 print(message)
-                                c.acquire()
+                                
                                 if(message not in sentMessages):
                                     messagesToSend.append(message)
-                                c.release()
+
 
                     # NOTHING AVAILABLE ON THE SOCKET
                     except socket.error as e:
@@ -231,15 +233,16 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
 
-                            c.acquire()
+
                             if(len(messagesToSend) > 0):
-                                print("sending messages from queue")
+                                #print("sending messages from queue")
                                 for m in messagesToSend:
-                                    print(m)
+                                    #print(m)
                                     connection.send(m)
                                     sentMessages.append(m)
-                                messagesToSend = []
-                            c.release()
+                                    #messagesToSend.remove(m)
+                                #messagesToSend = []
+            c.release()
 
             time.sleep(1)
             count = 0
@@ -291,6 +294,7 @@ while(1):
             ## CRAFTING THE MESSAGE FROM INPUT
             # message is a string
             inputMessage = raw_input()
+
             # also a string
             inputMessageWithName = NAME + ": " + inputMessage
             # +1 is for the VM number added at the beginning
@@ -304,7 +308,7 @@ while(1):
             # add the message with the name
             inputFullMessage += inputMessageWithName.encode('utf-8')
 
-            print(inputMessageWithName)
+
 
             #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
             #output = "Client: VM{}: {}".format(VM_NUMBER, inputFullMessage)
@@ -332,39 +336,3 @@ while(1):
             messagesToSend.append(inputFullMessage)
             #c.notify_all()
             c.release()
-
-            #output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            # output = "Client: VM" + str(VM_NUMBER) + ": " + str(inputFullMessage)
-            # logger.info(output)
-
-
-            # for serverName, (connection, status) in self.connections.items():
-            #
-            #     if(status == 'active' and connection is not None):
-            #         try:
-            #
-            #             sentCondition.acquire()
-            #             toSendCondition.acquire()
-            #
-            #             print("messagesToSend: " + str(messagesToSend))
-            #
-            #             for message in messagesToSend:
-            #                 print(message)
-            #                 connection.send(message)
-            #                 sentMessages.append(message)
-            #
-            #             messagesToSend = []
-            #
-            #             connection.send(inputFullMessage)
-            #             sentMessages.append(inputFullMessage)
-            #
-            #             sentCondition.notify_all()
-            #             sentCondition.release()
-            #             toSendCondition.notify_all()
-            #             toSendCondition.release()
-            #
-            #         except socket.error as e:
-            #             if(e == 'Broken pipe'):
-            #                 #print("Broken pipe to connection " + str(serverName) + " changing status")
-            #                 self.connections[serverName] = (connection, 'inactive')
-            #
