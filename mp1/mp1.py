@@ -232,7 +232,6 @@ class ServerSocket(Thread):
             c.acquire()
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
                 added_messages = mes2send + clientMessagesToSend
-
                 self.connections[address] = (hostname, in_connection, out_connection, status, added_messages, sent_mes)
                 clientMessagesToSend = []
             c.release()
@@ -296,7 +295,7 @@ class ServerSocket(Thread):
                             pass
                         if (e.errno == errno.EAGAIN):
 
-                            print("nothing to read")
+                            #print("nothing to read")
                             mes2send = []
                             pass
 
