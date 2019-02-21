@@ -306,7 +306,8 @@ class ClientSocket():
             msg = raw_input()
             length = len(msg)
             for serverName, (connection, status) in self.connections.items():
-                connection.send(chr(length) + msg.encode('utf-8'))
+                if(status == 'active' and connection is not None):
+                    connection.send(chr(length) + msg.encode('utf-8'))
 
     def shutdown(self):
         for serverName, (connection, status) in self.connections.items():
