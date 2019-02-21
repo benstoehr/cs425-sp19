@@ -215,20 +215,27 @@ class ServerSocket(Thread):
 
                         # GET MESSAGE
                         elif (len(receiveCheck) > 0):
+
+
                             messageLength = int(ord(receiveCheck)) - 1
                             vmSender = int(ord(connection.recv(1)))
 
+                            fullReceivedMessage = chr(messageLength)
+                            fullReceivedMessage += chr(vmSender)
+
                             if (vmSender == self.vmNumber):
-                                print("found my own message")
+                                print("Received my own message")
                                 dummy = connection.recv(messageLength)
                             else:
                                 message = connection.recv(messageLength)
+                                fullReceivedMessage += message
+
                                 print(message)
 
-                                if(message not in sentMessages):
-                                    messagesToSend.append(message)
+                                if(fullReceivedMessage not in sentMessages):
+                                    messagesToSend.append(fullReceivedMessage)
                                 else:
-                                    print("Already sent message " + str(messages))
+                                    print("Already sent message " + str(fullReceivedMessage))
 
 
                     # NOTHING AVAILABLE ON THE SOCKET
@@ -236,8 +243,6 @@ class ServerSocket(Thread):
                         if(e.errno == errno.ECONNRESET):
                             pass
                         if (e.errno == errno.EAGAIN):
-
-
                             if(len(messagesToSend) > 0):
                                 print("sending messages from queue " + str(messagesToSend))
                                 for m in messagesToSend:
