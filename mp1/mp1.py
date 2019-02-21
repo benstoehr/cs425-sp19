@@ -152,8 +152,9 @@ class ServerSocket(Thread):
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if (ip in self.connections.keys()):
-                        print("already have a connection for " + str(ip))
+                        print("already have a connection for " + str(ip) + ", keeping port " + str(port))
                         connection.close()
+
                     # Otherwise add connection to connection list
                     else:
                         self.connections[ip] = (port, None, connection, 'active', [], [])
