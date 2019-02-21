@@ -309,7 +309,7 @@ class ServerSocket(Thread):
                                             break
 
                                     if(safe):
-                                        print("Server: Received message: " + str(old_vector) + " " + str(queuedMessage))
+                                        print("Server: Pulled message from queue: " + str(old_vector) + " " + str(queuedMessage))
                                         self.messageQueue.remove((old_vector, queuedMessage))
 
                                     vector = old_vector
