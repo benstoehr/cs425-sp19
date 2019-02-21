@@ -195,6 +195,7 @@ class ServerSocket(Thread):
                     print("{}:{}".format(hostname, status))
                     print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
                     print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
+
                 print("READY")
 
                 c.acquire()
@@ -292,10 +293,10 @@ class ServerSocket(Thread):
                     # NOTHING AVAILABLE ON THE SOCKET
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
-                            pass
+                            print(e)
                         if (e.errno == errno.EAGAIN):
                             error_count += 1
-                            if(error_count % 100000 == 0):
+                            if(error_count % 500000 == 0):
                                 print(e)
                             mes2send = []
 
