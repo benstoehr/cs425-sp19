@@ -102,7 +102,7 @@ class ServerSocket(Thread):
             if (self.sock is not None):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
-                    print("Accept Call")
+                    print("\nAccept Call")
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
@@ -131,7 +131,7 @@ class ServerSocket(Thread):
                 print("Server: self.sock is None in acceptConnections")
 
 
-            print("VM LIST TIME")
+            print("\nVM LIST TIME")
             for vm in VM_LIST:
 
                 if(vm == self.hostname or vm in self.vmsNamed):
@@ -147,7 +147,7 @@ class ServerSocket(Thread):
                     ip_and_port = new_connection.getpeername()
                     ip, nuport = ip_and_port
 
-                    print(str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
+                    print("\tOutgoing Connection: " + str(self.sock.getsockname()) +"<->"+ str(ip_and_port))
 
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
