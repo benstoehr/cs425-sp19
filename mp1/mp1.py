@@ -62,12 +62,14 @@ print("Running on VM: " +  str(VM_NUMBER))
 
 # initialize shared variable for thread and main process
 vector = []
-#global vector
+messagesToSend[]
+sentMessages[]
 
 for i in range(USER_NUM):
     vector.append(0)
 c = threading.Condition()
-
+sentCondition = threading.Condition()
+toSendCondition - threading.Condition()
 
 
 class ServerSocket(Thread):
@@ -96,6 +98,8 @@ class ServerSocket(Thread):
 
         self.connections = dict()
         self.ip2vmNumber = dict()
+
+        self.sentMessages = []
 
         self.vector = []
         for i in range(num_users):
@@ -191,6 +195,8 @@ class ServerSocket(Thread):
 
         # make vector global
         global vector
+        global sentMessages
+        global messagesToSend
 
         #print("Server: INSIDE THE RUN FUNCTION")
         self.acceptConnections()
@@ -236,7 +242,6 @@ class ServerSocket(Thread):
                         # GET MESSAGE
                         elif(len(receiveCheck) > 0):
 
-
                             expected_vector[count] += 1
 
                             messageLength = int(ord(receiveCheck)) - self.numberOfTotalUsers - 1
@@ -252,9 +257,25 @@ class ServerSocket(Thread):
 
                             #print("expected: " + str(expected_vector))
                             #print("new: " + str(new_vector))
+                            fullMessage = chr(messageLength) + chr(vmSender)
+                            for x in new_vector:
+                                fullMessage += chr(x)
+                            fullMessage += message
 
                             if(new_vector[count] == expected_vector[count]):
                                 print("Server: Received message: " + str(vmSender) + " " + str(vector) + " " + str(message))
+
+                                sentCondition.acquire()
+                                toSendCondition.acquire()
+
+                                if(fullMessage not in sentMessages):
+                                    messagesToSend.append(fullMessage)
+
+                                sentCondition.notify_all()
+                                sentCondition.release()
+                                toSendCondition.notify_all()
+                                toSendCondition.notify_all()
+
                                 self.vector = new_vector
                             else:
                                 #print("appending " + str(vector) + " " + str(message))
@@ -363,13 +384,11 @@ class ClientSocket():
                 time.sleep(1)
                 continue
 
-
             print("Client: Connected to server " + str(server))
             self.activeConnections += 1
             self.connections[server] = (new_connection, 'active')
             attemptCount += 1
             continue
-
 
             time.sleep(1)
 
@@ -388,6 +407,8 @@ class ClientSocket():
     def mainLoop(self):
 
         global vector
+        global messagesToSend
+        global sentMessages
 
         while(1):
             # message is a string
@@ -423,7 +444,23 @@ class ClientSocket():
             for serverName, (connection, status) in self.connections.items():
                 if(status == 'active' and connection is not None):
                     try:
+                        sentCondition.acquire()
+                        toSendCondition.acquire()
+
+                        for message in messagesToSend:
+
+                        if (message not in sentMessages):
+                            sentMessages.append(message)
+                        else:
+                            messagesToSend.append(message)
+
+                        sentCondition.notify_all()
+                        sentCondition.release()
+                        toSendCondition.notify_all()
+                        toSendCondition.notify_all()
+
                         connection.send(fullMessage)
+                        
                     except socket.error as e:
                         if(e == 'Broken pipe'):
                             #print("Broken pipe to connection " + str(serverName) + " changing status")
