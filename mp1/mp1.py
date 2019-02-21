@@ -237,7 +237,7 @@ class ServerSocket(Thread):
 
 class ClientSocket():
 
-    def __init__(self, sock=None, num_users=USER_NUM, username=NAME):
+    def __init__(self, sock=None, num_users=USER_NUM, username=NAME, vmNumber=VM_NUMBER):
         if sock is None:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         else:
@@ -248,6 +248,7 @@ class ClientSocket():
         self.activeConnections = 0
         self.name = socket.gethostname()
         self.username = username
+        self.vmNumber = vmNumber
 
         self.vector = []
         for i in range(num_users):
@@ -328,7 +329,7 @@ class ClientSocket():
             fullMessage = chr(length)
 
             # increment vector accordingly
-            self.vector[i]  = self.vector[i] + 1
+            self.vector[self.vmNumber]  = self.vector[self.vmNumber] + 1
             # include the vector timestamp
             for i in range(self.num_users + 1):
                 fullMessage += chr(self.vector[i])
