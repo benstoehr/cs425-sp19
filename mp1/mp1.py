@@ -59,7 +59,9 @@ class ServerSocket(Thread):
         self.totalUsers = num_users
         self.numberOfClients = num_users - 1
 
-        self.activeConnections = 0
+        self.activeInputConnections = 0
+        self.activeOutputConnections = 0
+
         self.vmsNamed = []
         self.connections = dict()
 
@@ -103,7 +105,6 @@ class ServerSocket(Thread):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
                     print("Accept Call")
-                    #self.sock.settimeout(1)
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
@@ -113,15 +114,16 @@ class ServerSocket(Thread):
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if (ip in self.connections.keys()):
-                        (oldport, hostname, connection, status, mes2send, sentmes) = self.connections[ip]
-                        print("\tAlready have a connection for " + str(ip) + ", keeping port " + str(oldport))
-                        connection.close()
+                        (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
+                        if(in_connection is not None):
+                            print("\tAlready have an incoming connection for " + str(ip))
+                            connection.close()
 
                     # Otherwise add connection to connection list
                     else:
-                        print("\tNew IP " + str(ip))
-                        self.connections[ip] = (port, None, connection, 'active', [], [])
-                        self.activeConnections += 1
+                        print("\tNew incoming connection " + str(ip))
+                        self.connections[ip] = (hostname, connection, None, 'active', mes2send, sentmes)
+                        self.activeInputConnections += 1
 
                 except socket.error as error:
                     pass
@@ -143,7 +145,6 @@ class ServerSocket(Thread):
                 new_connection.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
                 try:
-                    new_connection.settimeout(0.010)
                     connectCheck = new_connection.connect((vm, self.port))
                     new_connection.setblocking(0)
 
@@ -154,18 +155,20 @@ class ServerSocket(Thread):
 
                     # already connected to this ip, update the vm hostname
                     if(ip in self.connections.keys()):
-
-                        print("\tAlready connected to " + str(ip))
-                        (port, tempserver, connection, status, message2send, sent_messages) = self.connections[ip]
-                        if(tempserver is None):
-                            print("\tupdating name for " + str(ip)+","+str(port) + " to " + str(vm))
-                            self.connections[ip] = (port, vm, connection, 'active',[],[])
+                        (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
+                        if (out_connection is None):
+                            print("\tupdating name for " + str(ip) + " to " + str(vm))
+                            self.connections[ip] = (vm, in_connection, out_connection, 'active', mes2send, sentmes)
                             self.vmsNamed += [vm]
+
+                        else:
+                            print("\tAlready have outgoing connection to " + str(ip))
+                            new_connection.close()
 
                     else:
                         print("\tOutgoing Connection: " + str(new_connection.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
-                        self.connections[ip] = (nuport, vm, new_connection, 'active',[],[])
-                        self.activeConnections += 1
+                        self.connections[ip] = (vm, None, new_connection, 'active',[],[])
+                        self.activeOutputConnections += 1
                         self.vmsNamed += [vm]
 
                 except socket.error as e:
@@ -175,12 +178,12 @@ class ServerSocket(Thread):
                     continue
 
             # Once the proper number of connections is made, exit the while loop
-            if(self.activeConnections == self.numberOfClients and self.numberOfClients == len(self.vmsNamed)):
+            if(self.activeInputConnections == self.numberOfClients and self.numberOfClients == self.activeOutputConnections):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 print("Server: CONNECTED TO ALL THE CLIENTS!")
-                for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
+                for address, (port, hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
 
                     print(str(connection.getsockname()) + "<-> (" + str(address) + "," + str(port) + ")")
 
