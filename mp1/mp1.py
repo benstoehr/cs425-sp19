@@ -102,13 +102,14 @@ class ServerSocket(Thread):
                 try:
 
                     connection, ip_and_port = self.sock.accept()
+                    ip, port = ip_and_port
                     connection.setblocking(0)
 
                     #self.logger.info('Server: Connection established by: ' + str(ip_address))
                     print('Server: Connection established by: ' + str(ip_and_port))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
-                    if(ip_and_port in self.connections.keys()):
+                    if(ip in self.connections.keys()):
                         connection.close()
                     # Otherwise add connection to connection list
                     else:
@@ -138,12 +139,12 @@ class ServerSocket(Thread):
                     new_connection.setblocking(0)
 
                     ip_and_port = new_connection.getpeername()
-                    ip_address, nuport = ip_and_port
+                    ip, nuport = ip_and_port
 
-                    print("ip: " + str(ip_address))
+                    print("ip: " + str(ip))
 
                     # already connected to this ip, update the vm hostname
-                    if(ip_and_port in self.connections.keys()):
+                    if(ip in self.connections.keys()):
 
                         print("Already connected to " + str(ip_and_port))
                         (tempserver, connection, status, message2send, sent_messages) = self.connections[ip_and_port]
@@ -163,7 +164,7 @@ class ServerSocket(Thread):
                     continue
 
             # Once the proper number of connections is made, exit the while loop
-            if(self.activeConnections == self.numberOfClients):
+            if(self.activeConnections == self.numberOfClients == self.vmsNamed):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
