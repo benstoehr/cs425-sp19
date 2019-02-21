@@ -209,7 +209,7 @@ class ServerSocket(Thread):
                                 temp = ord(connection.recv(1))
                                 vector.append(temp)
 
-                            message = connection.recv(ord(receiveCheck) - self.numberOfTotalUsersx)
+                            message = connection.recv(ord(receiveCheck) - self.numberOfTotalUsers)
                             print("Server: Received message: " + str(vector) + " " + str(message))
 
                     except socket.error as e:
