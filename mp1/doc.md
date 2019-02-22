@@ -25,7 +25,9 @@ e.g. `python mp1.py Alice 4444 2`
 
 ### Connection
 
-To establish the connections among random combination of vms, each process holds a while loop to wait for everyone's connection. If a new connection appears, the server checks whether the address appeared before. If yes, the server closes the new connection and keeps the old one. If no, the server keeps the connection and records the client's address.
+To establish the connections among random combination of vms, each process repeats through a while loop. In the while loop, the first step is an attempt to accept a connection. If that request times out, it moves on and sends a socket.connect() request to all of the other VMs. In order to exit this loop, a server must have two connections satisfied (one for incoming messages, and another for outgoing messages. 
+
+We did this because we had trouble making a single connection that could be agreed upon by both applications. 
 
 Please refer to:
 
@@ -37,6 +39,8 @@ class ServerSocket(Thread):
 ```
 
 ### Reliability
+
+Whenever a message is received, it is compared to the list of all messages that have been sent before. If it has not been seen, the message is added to a queue which will be sent out in the next iteration of the main loop.
 
 #### Integrity
 
@@ -97,7 +101,7 @@ while(1):
 
 ### Failure Detection
 
-When a process closes the connection, it will send an empty string to other processes by `close()`. If a process received the empty string, it declares the sender process is failed.
+When a process closes the connection, it will send an empty string to other processes by `close()`. When a process is exited it sends a final message that includes the "XXX has left chat". After that, it will close its connection. If a process received the empty string, it declares the sender process is failed.
 
 Please refer to:
 
