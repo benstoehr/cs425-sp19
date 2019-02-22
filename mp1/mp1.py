@@ -213,10 +213,11 @@ class ServerSocket(Thread):
             if(status == 'active' and connection is not None):
 
                 message = NAME + " has left"
-                length = len(message) + 1
+                length = len(message) + 2
 
                 messageToSend = chr(length)
                 messageToSend += chr(int(VM_NUMBER))
+                messageToSend += chr(0)
                 messageToSend += message.encode('utf-8')
 
                 connection.send(messageToSend)
@@ -366,7 +367,7 @@ signal.signal(signal.SIGINT, signal_handler)
 while(not globalready):
     pass
 
-count = 0
+count = 1
 while(1):
 
         ## CRAFTING THE MESSAGE FROM INPUT
@@ -390,3 +391,5 @@ while(1):
         c.acquire()
         clientMessagesToSend.append(inputFullMessage)
         c.release()
+
+        count += 1
