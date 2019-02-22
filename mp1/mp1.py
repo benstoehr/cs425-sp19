@@ -290,8 +290,9 @@ class ServerSocket(Thread):
                                 #print(message)
 
                                 if(fullReceivedMessage not in sent_mes):
-                                    mes2send.append(fullReceivedMessage)
-
+                                    c.acquire()
+                                    clientMessagesToSend.append(fullReceivedMessage)
+                                    c.release()
                                 else:
                                     print("\t\tAlready sent message " + str(fullReceivedMessage))
 
