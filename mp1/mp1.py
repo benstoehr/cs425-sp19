@@ -302,10 +302,6 @@ class ServerSocket(Thread):
                             pass
                             #print(e)
                         if (e.errno == errno.EAGAIN):
-                            #print(e)
-                            error_count += 1
-                            if(error_count % 500000 == 0):
-                                #print(e)
                             mes2send = []
 
                 #print("\tEnd of loop mes2send " +str(mes2send))
