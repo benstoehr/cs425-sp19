@@ -139,7 +139,7 @@ class ServerSocket(Thread):
                 print("Server: self.sock is None in acceptConnections")
 
 
-            print("VM LIST TIME")
+            #print("VM LIST TIME")
             for vm in VM_LIST:
 
                 if(vm == self.hostname):
@@ -159,19 +159,18 @@ class ServerSocket(Thread):
                     if(ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
                         if(hostname is None and out_connection is None):
-                            print("\tOutgoing Connection: " + str(new_connection.getsockname()) + "<->" + str(
-                                ip_and_port))
-                            print("\tupdating name for " + str(ip) + " to " + str(vm))
+                            #print("\tOutgoing Connection: " + str(new_connection.getsockname()) + "<->" + str(ip_and_port))
+                            #print("\tupdating name for " + str(ip) + " to " + str(vm))
                             self.connections[ip] = (vm, in_connection, new_connection, 'active', mes2send, sentmes)
                             self.activeOutputConnections += 1
                             self.vmsNamed += [vm]
 
                         else:
-                            print("\tAlready have outgoing connection to " + str(ip))
+                            #print("\tAlready have outgoing connection to " + str(ip))
                             new_connection.close()
 
                     else:
-                        print("\tOutgoing Connection: " + str(new_connection.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
+                        #print("\tOutgoing Connection: " + str(new_connection.getsockname()) + " -> " + str(ip_and_port) + ": " + str(vm))
                         self.connections[ip] = (vm, None, new_connection, 'active',[],[])
                         self.activeOutputConnections += 1
                         self.vmsNamed += [vm]
@@ -190,11 +189,11 @@ class ServerSocket(Thread):
                 self.ready = True
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
-                print("Server: CONNECTED TO ALL THE CLIENTS!")
+                #print("Server: CONNECTED TO ALL THE CLIENTS!")
                 for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
-                    print("{}:{}".format(hostname, status))
-                    print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
-                    print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
+                    #print("{}:{}".format(hostname, status))
+                    #print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
+                    #print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
 
                 print("READY")
 
