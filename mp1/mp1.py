@@ -352,12 +352,12 @@ server = ServerSocket(num_users=USER_NUM, ip=hostName, port=PORT)
 server.start()
 
 def signal_handler(signal, frame):
-    print("You pressed Control+C!")
+    #print("You pressed Control+C!")
     #client.shutdown()
     run_event.clear()
     server.join()
     exit(1)
-
+ 
 signal.signal(signal.SIGINT, signal_handler)
 
 ### BEGINNING OF IMPORTANT STUFF
