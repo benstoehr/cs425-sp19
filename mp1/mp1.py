@@ -232,6 +232,7 @@ class ServerSocket(Thread):
 
             c.acquire()
             clientMessages = clientMessagesToSend[:]
+
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
                 mes2send_copy = mes2send[:]
                 added_messages = mes2send_copy + clientMessages
@@ -304,7 +305,7 @@ class ServerSocket(Thread):
                             mes2send = []
 
                 #print("\tEnd of loop mes2send " +str(mes2send))
-                self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
+                self.connections[address] = (hostname, in_connection, out_connection, status, mes2send[:], sent_mes[:])
 
             #time.sleep(2)
             count = 0
