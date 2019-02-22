@@ -245,8 +245,8 @@ class ServerSocket(Thread):
 
                 if(status == 'active' and out_connection is not None):
 
-                    print("{}: {}".format(hostname, status))
-                    print("\tBeginning of Loop mes2send " + str(mes2send))
+                    #print("{}: {}".format(hostname, status))
+                    #print("\tBeginning of Loop mes2send " + str(mes2send))
 
                     if (len(mes2send) > 0):
                         print("sending messages from queue " + str(mes2send))
@@ -299,18 +299,18 @@ class ServerSocket(Thread):
                     # NOTHING AVAILABLE ON THE SOCKET
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
-                            print(e)
+                            #print(e)
                         if (e.errno == errno.EAGAIN):
-                            print(e)
+                            #print(e)
                             error_count += 1
                             if(error_count % 500000 == 0):
-                                print(e)
+                                #print(e)
                             mes2send = []
 
-                print("\tEnd of loop mes2send " +str(mes2send))
+                #print("\tEnd of loop mes2send " +str(mes2send))
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes)
 
-            time.sleep(2)
+            #time.sleep(2)
             count = 0
 
         self.shutdown()
