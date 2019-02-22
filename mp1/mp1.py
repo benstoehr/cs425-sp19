@@ -245,10 +245,12 @@ class ServerSocket(Thread):
             clientMessages = clientMessagesToSend[:]
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
+
                 mes2send_copy = mes2send[:]
                 added_messages = mes2send_copy + clientMessages
                 self.connections[address] = (hostname, in_connection, out_connection, status, added_messages[:], sent_mes[:])
                 clientMessagesToSend = []
+
             c.release()
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
@@ -263,6 +265,7 @@ class ServerSocket(Thread):
                             # print(m)
                             out_connection.send(m)
                             sent_mes += [m]
+                        self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes[:])
 
                     try:
 
@@ -270,7 +273,7 @@ class ServerSocket(Thread):
 
                         # THIS MEANS THE CONNECTION CLOSED
                         if (len(receiveCheck) == 0):
-                            print(str(address) + " disconnected!")
+                            #print(str(address) + " disconnected!")
                             in_connection.close()
                             out_connection.close()
                             self.connections[address] = (hostname, None, None, 'inactive', mes2send, sent_mes)
