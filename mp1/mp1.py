@@ -288,8 +288,8 @@ class ServerSocket(Thread):
 
                             fullReceivedMessage = chr(messageLength + 2)
                             fullReceivedMessage += chr(vmSender)
-                            fullReceivedMessage += sequenceNumber
-                            
+                            fullReceivedMessage += chr(sequenceNumber)
+
                             if (vmSender == self.vmNumber):
                                 #print("\tReceived my own message")
                                 dummy = in_connection.recv(messageLength)
