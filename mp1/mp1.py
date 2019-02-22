@@ -87,7 +87,7 @@ class ServerSocket(Thread):
 
         global globalready
 
-        print("\nIP: " +str(self.ip) + "\n")
+        #print("\nIP: " +str(self.ip) + "\n")
 
         self.bind(self.ip, self.port)
 
@@ -104,34 +104,34 @@ class ServerSocket(Thread):
             if (self.sock is not None):
                 # self.logger.info("Server: CALLING ACCEPT()")
                 try:
-                    print("Accept Call")
+                    #print("Accept Call")
                     connection, ip_and_port = self.sock.accept()
                     ip, port = ip_and_port
                     connection.setblocking(0)
 
                     # self.logger.info('Server: Connection established by: ' + str(ip_address))
-                    print('\tIncoming Connection : ' + str(self.sock.getsockname()) + " <- "+ str(ip_and_port))
+                    #print('\tIncoming Connection : ' + str(self.sock.getsockname()) + " <- "+ str(ip_and_port))
 
                     # if the address has been seen, it was seen when trying to connect to other clients
                     if (ip in self.connections.keys()):
                         (hostname, in_connection, out_connection, status, mes2send, sentmes) = self.connections[ip]
                         if(in_connection is not None):
-                            print("\tAlready have an incoming connection for " + str(ip))
+                            #print("\tAlready have an incoming connection for " + str(ip))
                             connection.close()
                         else:
-                            print("\tNew incoming connection for ip " + str(ip))
+                            #print("\tNew incoming connection for ip " + str(ip))
                             self.connections[ip] = (hostname, connection, out_connection, 'active', [], [])
                             self.activeInputConnections += 1
 
                     # Otherwise add connection to connection list
                     else:
-                        print("\tNew incoming connection with fresh IP")
+                        #print("\tNew incoming connection with fresh IP")
                         self.connections[ip] = (None, connection, None, 'active', [], [])
                         self.activeInputConnections += 1
 
                 except socket.error as error:
                     pass
-                    print("\tno connections yet")
+                    #print("\tno connections yet")
                     #time.sleep(.5)
                     # print(error)
             else:
