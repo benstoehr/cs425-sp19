@@ -282,12 +282,14 @@ class ServerSocket(Thread):
                         # GET MESSAGE
                         elif (len(receiveCheck) > 0):
 
-                            messageLength = int(ord(receiveCheck)) - 1
+                            messageLength = int(ord(receiveCheck)) - 2
                             vmSender = int(ord(in_connection.recv(1)))
+                            sequenceNumber = int(ord(in_connection.recv(1)))
 
-                            fullReceivedMessage = chr(messageLength + 1)
+                            fullReceivedMessage = chr(messageLength + 2)
                             fullReceivedMessage += chr(vmSender)
-
+                            fullReceivedMessage += sequenceNumber
+                            
                             if (vmSender == self.vmNumber):
                                 #print("\tReceived my own message")
                                 dummy = in_connection.recv(messageLength)
@@ -364,6 +366,7 @@ signal.signal(signal.SIGINT, signal_handler)
 while(not globalready):
     pass
 
+count = 0
 while(1):
 
         ## CRAFTING THE MESSAGE FROM INPUT
@@ -374,11 +377,12 @@ while(1):
         inputMessageWithName = NAME + ": " + inputMessage
         # +1 is for the VM number added at the beginning
         #length = len(inputMessageWithName) + USER_NUM + 1
-        length = len(inputMessageWithName) + 1
+        length = len(inputMessageWithName) + 2
 
         # give length of full message
         inputFullMessage = chr(length)
         inputFullMessage += chr(VM_NUMBER)
+        inputFullMessage += chr(count)
 
         # add the message with the name
         inputFullMessage += inputMessageWithName.encode('utf-8')
