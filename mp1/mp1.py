@@ -263,6 +263,7 @@ class ServerSocket(Thread):
                         #print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
+
                             out_connection.send(m)
                             sent_mes += [m]
                         self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes[:])
@@ -297,9 +298,9 @@ class ServerSocket(Thread):
 
                                 print("\tReceived message from " +str(hostname)+": " + message)
 
-                                print(message)
-
                                 if(fullReceivedMessage not in sent_mes):
+                                    print(message)
+                                    sent_mes.append(fullReceivedMessage)
                                     c.acquire()
                                     clientMessagesToSend.append(fullReceivedMessage)
                                     c.release()
