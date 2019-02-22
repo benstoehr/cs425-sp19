@@ -299,6 +299,7 @@ class ServerSocket(Thread):
                     # NOTHING AVAILABLE ON THE SOCKET
                     except socket.error as e:
                         if(e.errno == errno.ECONNRESET):
+                            pass
                             #print(e)
                         if (e.errno == errno.EAGAIN):
                             #print(e)
