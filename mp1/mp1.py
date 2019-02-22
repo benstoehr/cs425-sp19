@@ -241,14 +241,13 @@ class ServerSocket(Thread):
 
             for address, (hostname, in_connection, out_connection, status, mes2send, sent_mes) in self.connections.items():
 
-
-
                 if(status == 'active' and out_connection is not None):
 
-                    #print("{}: {}".format(hostname, status))
+
                     #print("\tBeginning of Loop mes2send " + str(mes2send))
 
                     if (len(mes2send) > 0):
+                        print("{}: {}".format(hostname, status))
                         print("sending messages from queue " + str(mes2send))
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
