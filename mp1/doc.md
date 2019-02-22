@@ -19,7 +19,7 @@ e.g. `python mp1.py Alice 4444 2`
 
 ## Commit Hash
 
-[I'm the 40-character hash]
+2ee17b6d452fa2c29aa28c2e09ff2cb7f4fc1b82
 
 ## Design Document
 
@@ -139,7 +139,7 @@ For a message `m` sent from process `p1`, its vector is decided by:
 
 `ele2`, ... , `elen`: Its local vector. Each is how many messages from process `p2`, ..., `pn` delivered on process `p1`.
 
-When a message arrives a process, the process compares message's sequence number vector and its local sequence number vector. If the sender's sequence number is equals to its counterpart in the local vector and all other non-sender numbers are less than or equal to their correspoding counterparts in local, then the process delivers the message. If not, the process put the message in the queue.
+When a message arrives a process, the process compares message's sequence number vector and its local sequence number vector. If the sender's sequence num ber is equals to its counterpart in the local vector and all other non-sender numbers are less than or equal to their correspoding counterparts in local, then the process delivers the message. If not, the process put the message in the queue.
 
 After the delivery, the process checks if there are any messages in the queue also satisfies the rules. If yes, it delivers the satisfied message. 
 
