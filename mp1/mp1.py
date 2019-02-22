@@ -207,8 +207,20 @@ class ServerSocket(Thread):
 
     def shutdown(self):
 
+        global NAME
+        global VM_NUMBER
+
         for address, (port, hostname, connection, status, mes2send, sentmes) in self.connections.items():
             if(status == 'active' and connection is not None):
+
+                message = NAME + " has left"
+                length = len(message) + 1
+
+                messageToSend = chr(length)
+                messageToSend += chr(int(VM_NUMBER))
+                messageToSend += message.encode('utf-8')
+
+                connection.send(messageToSend)
                 connection.close()
 
         self.sock.close()
@@ -246,13 +258,12 @@ class ServerSocket(Thread):
 
                     if (len(mes2send) > 0):
                         print("{}: {}".format(hostname, status))
-                        print("sending messages from queue " + str(mes2send))
+                        #print("\tsending messages from queue " + str(mes2send))
                         print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
                             out_connection.send(m)
                             sent_mes += [m]
-                        #mes2send = []
 
                     try:
 
@@ -276,22 +287,23 @@ class ServerSocket(Thread):
                             fullReceivedMessage += chr(vmSender)
 
                             if (vmSender == self.vmNumber):
-                                print("\t\tReceived my own message")
+                                #print("\tReceived my own message")
                                 dummy = in_connection.recv(messageLength)
                             else:
                                 message = in_connection.recv(messageLength)
                                 fullReceivedMessage += message
 
-                                print("\tReceived message from " +str(hostname)+": " + message)
+                                #print("\tReceived message from " +str(hostname)+": " + message)
 
-                                #print(message)
+                                print(message)
 
                                 if(fullReceivedMessage not in sent_mes):
                                     c.acquire()
                                     clientMessagesToSend.append(fullReceivedMessage)
                                     c.release()
                                 else:
-                                    print("\t\tAlready sent message " + str(fullReceivedMessage))
+                                    pass
+                                    #print("\t\tAlready sent message " + str(fullReceivedMessage))
 
 
                     # NOTHING AVAILABLE ON THE SOCKET
