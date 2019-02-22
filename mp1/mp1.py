@@ -258,12 +258,11 @@ class ServerSocket(Thread):
                 if(status == 'active' and out_connection is not None):
 
                     if (len(mes2send) > 0):
-                        print("{}: {}".format(hostname, status))
-                        print("\tsending messages from queue " + str(mes2send))
+                        #print("{}: {}".format(hostname, status))
+                        #print("\tsending messages from queue " + str(mes2send))
                         #print(str(self.hostname) + " -> " + str(hostname) + ": " + str(mes2send))
                         for m in mes2send:
                             # print(m)
-
                             out_connection.send(m)
                             sent_mes += [m]
                         self.connections[address] = (hostname, in_connection, out_connection, status, mes2send, sent_mes[:])
@@ -296,7 +295,7 @@ class ServerSocket(Thread):
                                 message = in_connection.recv(messageLength)
                                 fullReceivedMessage += message
 
-                                print("\tReceived message from " +str(hostname)+": " + message)
+                                #print("\tReceived message from " +str(hostname)+": " + message)
 
                                 if(fullReceivedMessage not in sent_mes):
                                     print(message)
