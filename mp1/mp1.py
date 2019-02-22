@@ -244,8 +244,8 @@ class ServerSocket(Thread):
 
                 if(status == 'active' and out_connection is not None):
 
-                    print("{}: {}".format(hostname, status))
-                    print("\tBeginning of Loop mes2send " + str(mes2send))
+                    #print("{}: {}".format(hostname, status))
+                    #print("\tBeginning of Loop mes2send " + str(mes2send))
 
                     if (len(mes2send) > 0):
 
@@ -285,7 +285,7 @@ class ServerSocket(Thread):
                                 message = in_connection.recv(messageLength)
                                 fullReceivedMessage += message
 
-                                print("\t\tReceived message from " +str(hostname)+": " + message)
+                                print("\tReceived message from " +str(hostname)+": " + message)
 
                                 #print(message)
 
@@ -305,7 +305,7 @@ class ServerSocket(Thread):
                         if (e.errno == errno.EAGAIN):
                             mes2send = []
 
-                print("\tEnd of loop mes2send " +str(mes2send))
+                #print("\tEnd of loop mes2send " +str(mes2send))
                 self.connections[address] = (hostname, in_connection, out_connection, status, mes2send[:], sent_mes[:])
 
             time.sleep(2)
