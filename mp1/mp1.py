@@ -190,7 +190,7 @@ class ServerSocket(Thread):
                 #self.logger.info("Server: CONNECTED TO ALL THE CLIENTS!")
 
                 #print("Server: CONNECTED TO ALL THE CLIENTS!")
-                for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
+                #for address, (hostname, in_connection, out_connection, status, mes2send, sentmes) in self.connections.items():
                     #print("{}:{}".format(hostname, status))
                     #print("IN: " + str(in_connection.getsockname()) + " <-> " + str(in_connection.getpeername()))
                     #print("OUT: " + str(out_connection.getsockname()) + " <-> " + str(out_connection.getpeername()) + "\n")
@@ -363,23 +363,23 @@ while(not globalready):
 
 while(1):
 
-            ## CRAFTING THE MESSAGE FROM INPUT
-            # message is a string
-            inputMessage = raw_input()
+        ## CRAFTING THE MESSAGE FROM INPUT
+        # message is a string
+        inputMessage = raw_input()
 
-            # also a string
-            inputMessageWithName = NAME + ": " + inputMessage
-            # +1 is for the VM number added at the beginning
-            #length = len(inputMessageWithName) + USER_NUM + 1
-            length = len(inputMessageWithName) + 1
+        # also a string
+        inputMessageWithName = NAME + ": " + inputMessage
+        # +1 is for the VM number added at the beginning
+        #length = len(inputMessageWithName) + USER_NUM + 1
+        length = len(inputMessageWithName) + 1
 
-            # give length of full message
-            inputFullMessage = chr(length)
-            inputFullMessage += chr(VM_NUMBER)
+        # give length of full message
+        inputFullMessage = chr(length)
+        inputFullMessage += chr(VM_NUMBER)
 
-            # add the message with the name
-            inputFullMessage += inputMessageWithName.encode('utf-8')
+        # add the message with the name
+        inputFullMessage += inputMessageWithName.encode('utf-8')
 
-            c.acquire()
-            clientMessagesToSend.append(inputFullMessage)
-            c.release()
+        c.acquire()
+        clientMessagesToSend.append(inputFullMessage)
+        c.release()
