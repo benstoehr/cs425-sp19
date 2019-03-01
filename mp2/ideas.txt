@@ -1,0 +1,66 @@
+MAIN
+
+ininiate_node(
+	connect_to_intro_service() # connection_list updated
+	connect_to_nodes() # connection_list updated # LOG connections
+)
+
+main_loop(
+	while true:
+		check_neighbor() # connection_list updated # LOG connections
+		receive_and_send_message(
+			receive()
+			check_and_record_transaction() # transactions updated # LOG transactions
+			send_to_neighbors() # LOG transactions
+		)
+		termination_handler()
+)
+
+FILES/DATA
+
+connections[list]: current connections?
+transactions[dict]: all the transaction records received
+
+LOGGING 
+
+use csv?
+
+- connections
+
+format: id,ts,cur_node,neighbor_node,source,status
+
+columns:
+
+id: local record id
+ts: timestamps
+cur_node: current node (node id or ip?)
+neighbor_node: neighbor_node
+source: from the introduction service or which node
+status: connected or failed?
+
+- transactions
+
+id,ts,cur_node,sender,receiver,sent_ts,cur_action,ori_ts,transaction_id,source_account,destination_account,transaction_amount
+
+columns:
+
+id: local record id
+ts: timestamps
+cur_node: current node (node id or ip?)
+sender: sender node
+receiver: receiver node
+sent_ts: the ts when the sender sent the transaction
+cur_action: send or receive
+ori_ts: the ts of the transaction created
+transaction_id: the original transaction id
+source_account: source account
+destination_account: destination account
+transaction_amount: the transaction amount
+
+ANALYSIS
+
+1) propagation completed verification: Aggregate the number of nodes possess a specific transaction. In a time range, if a transaction appears in all alive nodes then we said the propagation is completed. Alive nodes are checked by status in connections.
+
+2) propagation speed: Aggregate the number of nodes possess a specific transaction by time. Caculate the progress in different time and its propagation speed.
+
+3) bandwidth of the system: I don't know...
