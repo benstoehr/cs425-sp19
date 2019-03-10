@@ -21,14 +21,16 @@ class Node:
     s = None
     ip = None
 
-    host = None
-    address = None
+    host = socket.gethostname()
+    address = socket.gethostname()
 
     service = None
     con = None
 
     serv = None
+
     def Node(self, host, address):
+
         self.host = host
         self.address = address
 
@@ -54,12 +56,6 @@ class Node:
     def sendInitiation(self):
         self.con.send('CONNECT node 1 ')
 
-
-HOST, ADDRESS  = socket.gethostname()
-
-
-
-node = Node(HOST, ADDRESS)
 
 
 
