@@ -29,7 +29,22 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 
+########################
+## START OF PROGRAM
+
 HOST, ADDRESS  = socket.gethostname()
+print(HOST)
+print(ADDRESS)
+
+NUM_NODES = sys.argv[1]
+print("NUM NODES: " + NUM_NODES)
+
+nodesList = dict()
+
+## TODO:
+##
+
+
 node = Node(HOST, ADDRESS)
 
 numberOfNodes = sys.argv[1]

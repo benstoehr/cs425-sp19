@@ -13,36 +13,24 @@ import logging
 import fcntl, os
 import errno
 import signal
+from server import mp2Server
 
 
+class Node(object):
 
-class Node:
-
-    s = None
-    ip = None
-
-    host = socket.gethostname()
-    address = socket.gethostname()
-
-    service = None
-    con = None
-
-    serv = None
-
-    def Node(self, host, address):
-
+    self.serv = None
+    def __init__(self, host, address):
         self.host = host
         self.address = address
 
 
-    def openServer(self, port):
 
-        serverSocket = socket.socket()
-        serverSocket.bind(port)
-        serverSocket.listen(20)
+    # TODO:
+    # Initialize server
+    # Params: port
 
-        return serverSocket
-
+    def initServer(self):
+        self.serv = mp2Server(port)
 
 
     def connect2Service(self, port, address, TYPE=None):
