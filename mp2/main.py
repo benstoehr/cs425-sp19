@@ -34,12 +34,12 @@ signal.signal(signal.SIGINT, signal_handler)
 ########################
 ## START OF PROGRAM
 
-HOST, ADDRESS  = socket.gethostname()
+HOST  = socket.gethostname()
 print(HOST)
-print(ADDRESS)
+#print(ADDRESS)
 
-NUM_NODES = sys.argv[1]
-print("NUM NODES: " + NUM_NODES)
+NUM_NODES = int(sys.argv[1])
+print("NUM NODES: " + str(NUM_NODES))
 
 nodesList = dict()
 
@@ -47,14 +47,17 @@ nodesList = dict()
 ##
 
 SERVICE_IP = sys.argv[2]
+print("Service hostname: " + str(SERVICE_IP))
+
 SERVICE_PORT = sys.argv[3]
+
 
 nodes = []
 
 for i in range(NUM_NODES):
 
     port = int(4000 + 4000 * random.random())
-    print("New Node with port: " + port)
+    print("New Node with port: " + str(port))
 
     new_node = Node(SERVICE_IP, SERVICE_PORT,port)
     new_node.start()

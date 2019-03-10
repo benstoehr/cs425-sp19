@@ -56,7 +56,6 @@ class Node(object):
         self.initServer()
         self.startServer()
 
-
         self.serv.join()
 
         print("Node DONE")
