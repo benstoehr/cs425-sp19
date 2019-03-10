@@ -18,6 +18,7 @@ from server import mp2Server
 
 class Node(object):
 
+    status = None
     hostname = None
 
     service_ip = None
@@ -30,6 +31,7 @@ class Node(object):
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, MY_PORT):
 
+        self.status = "Initializing"
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
 
@@ -43,13 +45,21 @@ class Node(object):
     # Params: port
 
     def initServer(self):
-        self.serv = mp2Server(self.port)
+        self.serv = mp2Server(self.service_ip, self.service_port, self.port)
+
+    def startServer(self):
+        self.serv.run()
 
 
+    def start(self):
 
-    def sendInitiation(self):
-        self.con.send('CONNECT node 1 ')
+        self.initServer()
+        self.startServer()
 
+
+        self.serv.join()
+
+        print("Node DONE")
 
 
 

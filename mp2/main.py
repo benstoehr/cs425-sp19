@@ -55,8 +55,14 @@ for i in range(NUM_NODES):
     port = int(4000 + 4000 * np.random.random())
     print("New Node with port: " + port)
 
+    new_node = Node(SERVICE_IP, SERVICE_PORT,port)
+    new_node.start()
+    nodes.append(new_node)
 
-    nodes.append(Node(SERVICE_IP, SERVICE_PORT,port))
+while():
+
+    for node in nodes:
+
 
 
 
