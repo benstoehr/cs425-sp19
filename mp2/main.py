@@ -59,9 +59,6 @@ for i in range(NUM_NODES):
     new_node.start()
     nodes.append(new_node)
 
-while():
-
-    for node in nodes:
 
 
 

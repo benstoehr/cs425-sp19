@@ -69,7 +69,7 @@ class mp2Server(Thread):
         count = 0
 
         while(1):
-            print("Count: " + count)
+            print("Count: " + count)f
             count += 1
             time.sleep(1)
 
