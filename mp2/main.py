@@ -46,14 +46,12 @@ nodesList = dict()
 ##
 
 SERVICE_IP = sys.argv[2]
-
-serv_ip_split = SERVICE_IP.split(":")
+SERVICE_PORT = sys.argv[3]
 
 nodes = []
 
-for i in range(numberOfNodes):
-
-    nodes.append(Node(service, port))
+for i in range(NUM_NODES):
+    nodes.append(Node(SERVICE_IP, SERVICE_PORT))
 
 
 

@@ -18,12 +18,22 @@ from server import mp2Server
 
 class Node(object):
 
+    hostname = None
 
+    service_ip = None
+    service_port = None
+
+    port = None
     serv = None
 
-    def __init__(self, serviceIP, address):
+    def __init__(self, SERVICE_IP, SERVICE_PORT, MY_PORT):
+
         self.host = socket.gethostname()
-        print(self.host)
+        print("self.host: " + str(self.host))
+
+        self.port = MY_PORT
+        self.service_ip = SERVICE_IP
+        self.service_port = SERVICE_PORT
 
 
     # TODO:
@@ -31,8 +41,7 @@ class Node(object):
     # Params: port
 
     def initServer(self, ):
-        self.serv = mp2Server(port)
-
+        self.serv = mp2Server(self.port)
 
     def connect2Service(self, port, address, TYPE=None):
 

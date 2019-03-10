@@ -16,7 +16,7 @@ import signal
 
 class mp2Server(Thread):
 
-    alive = False
+    status = None
 
     hostname = None
     port = None
@@ -26,12 +26,13 @@ class mp2Server(Thread):
 
     def __init__(self, port):
         Thread.__init__(self)
-
-        self.alive = False
+        self.status = "Initializing"
         self.sock = socket.socket()
         self.hostname = socket.gethostname()
+        self.sock.bind((self.hostname, port))
+        self.listen(10)
 
-        self.sock.bind(self.hostname)
+
 
     def mainLoop(self):
 
