@@ -51,7 +51,12 @@ SERVICE_PORT = sys.argv[3]
 nodes = []
 
 for i in range(NUM_NODES):
-    nodes.append(Node(SERVICE_IP, SERVICE_PORT))
+
+    port = int(4000 + 4000 * np.random.random())
+    print("New Node with port: " + port)
+
+
+    nodes.append(Node(SERVICE_IP, SERVICE_PORT,port))
 
 
 

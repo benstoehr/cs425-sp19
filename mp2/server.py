@@ -22,6 +22,9 @@ class mp2Server(Thread):
     port = None
 
     sock = None
+    serviceSocket = None
+
+    connections = []
 
 
     def __init__(self, port):
@@ -30,13 +33,36 @@ class mp2Server(Thread):
         self.sock = socket.socket()
         self.hostname = socket.gethostname()
         self.sock.bind((self.hostname, port))
-        self.listen(10)
+        self.sock.listen(10)
 
+    def acceptConnection(self):
+
+        ip, port = self.sock.accept()
+
+
+    def connect2Service(self, port, address, TYPE=None):
+
+        self.serviceSocket = socket.socket()
+        self.con = self.serviceSocket.connect((port, address))
+        self.service = self.con.getpeername()
+
+        print("peername: " +str(self.service))
 
 
     def mainLoop(self):
 
+
         while(1):
+
+
+
+
+
+
+
+
+
+
 
 
 

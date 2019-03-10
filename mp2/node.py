@@ -23,6 +23,8 @@ class Node(object):
     service_ip = None
     service_port = None
 
+    connections = dict()
+
     port = None
     serv = None
 
@@ -40,19 +42,14 @@ class Node(object):
     # Initialize server
     # Params: port
 
-    def initServer(self, ):
+    def initServer(self):
         self.serv = mp2Server(self.port)
 
-    def connect2Service(self, port, address, TYPE=None):
-
-        s = socket.socket()
-        self.con = s.connect((port, address))
-
-        self.service = s.getpeername()
 
 
     def sendInitiation(self):
         self.con.send('CONNECT node 1 ')
+
 
 
 
