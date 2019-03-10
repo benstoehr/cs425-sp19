@@ -18,18 +18,19 @@ from server import mp2Server
 
 class Node(object):
 
-    self.serv = None
-    def __init__(self, host, address):
-        self.host = host
-        self.address = address
 
+    serv = None
+
+    def __init__(self, serviceIP, address):
+        self.host = socket.gethostname()
+        print(self.host)
 
 
     # TODO:
     # Initialize server
     # Params: port
 
-    def initServer(self):
+    def initServer(self, ):
         self.serv = mp2Server(port)
 
 

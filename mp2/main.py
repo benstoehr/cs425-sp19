@@ -1,5 +1,6 @@
 from node import Node
 
+
 import numpy as np
 import socketserver as ss
 import parser
@@ -44,15 +45,15 @@ nodesList = dict()
 ## TODO:
 ##
 
+SERVICE_IP = sys.argv[2]
 
-node = Node(HOST, ADDRESS)
-
-numberOfNodes = sys.argv[1]
+serv_ip_split = SERVICE_IP.split(":")
 
 nodes = []
 
 for i in range(numberOfNodes):
-    nodes.append(Node())
+
+    nodes.append(Node(service, port))
 
 
 
