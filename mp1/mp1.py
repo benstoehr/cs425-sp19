@@ -357,7 +357,7 @@ def signal_handler(signal, frame):
     run_event.clear()
     server.join()
     exit(1)
- 
+
 signal.signal(signal.SIGINT, signal_handler)
 
 ### BEGINNING OF IMPORTANT STUFF
