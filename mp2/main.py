@@ -16,7 +16,8 @@ import logging
 import fcntl, os
 import errno
 import signal
-
+import math
+import random
 c = threading.Lock()
 run_event = threading.Event()
 run_event.set()
@@ -52,7 +53,7 @@ nodes = []
 
 for i in range(NUM_NODES):
 
-    port = int(4000 + 4000 * np.random.random())
+    port = int(4000 + 4000 * random.random())
     print("New Node with port: " + port)
 
     new_node = Node(SERVICE_IP, SERVICE_PORT,port)
