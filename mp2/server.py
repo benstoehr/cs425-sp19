@@ -29,7 +29,6 @@ class mp2Server(Thread):
 
     connections = []
 
-
     def __init__(self, SERVICE_IP, SERVICE_PORT, MY_PORT):
         Thread.__init__(self)
 
