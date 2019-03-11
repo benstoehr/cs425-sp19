@@ -218,7 +218,7 @@ class mp2Server(object):
     def printMessages(self):
         print("TRANSACTIONS")
         for transaction in self.transactionMessages:
-            print("\t" + str(transaction))
+            print("\t" + str(transaction.strip("\n")))
         print("INTRODUCTIONS")
         for introduction in self.introductionMessages:
             print("\t" + str(introduction))
