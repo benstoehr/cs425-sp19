@@ -16,7 +16,9 @@ import signal
 from server import mp2Server
 
 
-class Node(object):
+class Node(Thread):
+
+    #global run_event
 
     status = None
     hostname = None
@@ -26,18 +28,22 @@ class Node(object):
 
     connections = dict()
 
+    name = None
     port = None
     serv = None
 
-    def __init__(self, SERVICE_IP, SERVICE_PORT, MY_PORT):
+    def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
+        Thread.__init__(self)
 
         self.status = "Initializing"
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
 
+        self.name = name
         self.port = MY_PORT
         self.service_ip = SERVICE_IP
         self.service_port = SERVICE_PORT
+        self.event = event
 
 
     # TODO:
@@ -45,20 +51,25 @@ class Node(object):
     # Params: port
 
     def initServer(self):
-        self.serv = mp2Server(self.service_ip, self.service_port, self.port)
+        self.serv = mp2Server(self.service_ip, self.service_port, self.name, self.port, self.event)
 
     def startServer(self):
-        self.serv.run()
+        self.serv.start()
 
+    def shutdown(self):
+        self.serv.shutdown()
 
-    def start(self):
+    def run(self):
 
         self.initServer()
         self.startServer()
 
-        self.serv.join()
+        while (self.event.is_set()):
+            print("Node DONE")
 
-        print("Node DONE")
+
+
+        print("Run event unset!")
 
 
 

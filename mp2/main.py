@@ -18,23 +18,31 @@ import errno
 import signal
 import math
 import random
+
+
+
+########################
+## START OF PROGRAM
+
+
 c = threading.Lock()
+
 run_event = threading.Event()
 run_event.set()
 
 def signal_handler(signal, frame):
-    #print("You pressed Control+C!")
+    print("You pressed Control+C!")
     #client.shutdown()
+    for node in nodes:
+        node.shutdown()
+
     run_event.clear()
     exit(1)
 
 signal.signal(signal.SIGINT, signal_handler)
 
 
-########################
-## START OF PROGRAM
-
-HOST  = socket.gethostname()
+HOST = socket.gethostname()
 print(HOST)
 #print(ADDRESS)
 
@@ -51,17 +59,29 @@ print("Service hostname: " + str(SERVICE_IP))
 
 SERVICE_PORT = sys.argv[3]
 
-
 nodes = []
+
+count = 0
 
 for i in range(NUM_NODES):
 
     port = int(4000 + 4000 * random.random())
     print("New Node with port: " + str(port))
 
-    new_node = Node(SERVICE_IP, SERVICE_PORT,port)
+    new_node = Node(SERVICE_IP, SERVICE_PORT, "node"+str(i), port, run_event)
     new_node.start()
     nodes.append(new_node)
+
+while(1):
+    count += 1
+    if(count % 10000000 == 0):
+        print(count)
+    pass
+
+
+
+
+
 
 
 
