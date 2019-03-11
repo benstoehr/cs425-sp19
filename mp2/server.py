@@ -138,8 +138,8 @@ class mp2Server(object):
     def connectToNewNodes(self):
 
         for introduction in self.introductionMessages:
-            ip = introduction.strip().split(" ")[2]
-            port = introduction.strip().split(" ")[3]
+            ip = introduction.strip("\n").split(" ")[2]
+            port = int(introduction.strip("\n").split(" ")[3])
             if(ip not in self.connections.keys()):
                 self.connect2Node(ip,port)
 
