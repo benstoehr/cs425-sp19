@@ -74,6 +74,7 @@ class mp2Server(object):
         ip_and_port = None
 
         try:
+            self.sock.settimeout(0.25)
             connection, (ip, port) = self.sock.accept()
             print("Accepted connection from: " +str(ip))
 
@@ -205,6 +206,20 @@ class mp2Server(object):
 
         return self.transactionMessages[:-5].copy()
 
+    def printConnections(self):
+        for ip, (connection, port, num_reads, num_messages_read, num_sends, messages) in self.connections.items():
+            try:
+                if(connection.is_alive()):
+                    print(str(connection) + ":" + str(port))
+            except socket.error as error_msg:
+                print(error_msg)
+
+    def printMessages(self):
+        for transaction in self.transactionMessages:
+            print(transaction)
+        for introduction in self.introductionMessages:
+            print(introduction)
+            
     def start(self):
 
         self.connect2Service()
@@ -251,6 +266,9 @@ class mp2Server(object):
             self.sendToNodes(last5)
 
             time.sleep(0.1)
+
+            self.printConnections()
+            self.printMessages()
 
         print("Server: unset")
         #self.shutdown()
