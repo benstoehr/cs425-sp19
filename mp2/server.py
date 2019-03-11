@@ -218,12 +218,16 @@ class mp2Server(object):
 
 
     def printMessages(self):
-        print("TRANSACTIONS")
-        for transaction in self.transactionMessages:
-            print("\t" + str(transaction.strip("\n")))
-        print("INTRODUCTIONS")
-        for introduction in self.introductionMessages:
-            print("\t" + str(introduction))
+
+        if(len(self.transactionMessages) > 0):
+            print("TRANSACTIONS")
+            for transaction in self.transactionMessages:
+                print("\t" + str(transaction.strip("\n")))
+
+        if (len(self.introductionMessages) > 0):
+            print("INTRODUCTIONS")
+            for introduction in self.introductionMessages:
+                print("\t" + str(introduction))
 
     def start(self):
 
@@ -258,7 +262,7 @@ class mp2Server(object):
             self.acceptConnection()
 
             # try to read from service
-            
+
             self.readFromService()
 
             # try to read from nodes
