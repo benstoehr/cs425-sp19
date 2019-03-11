@@ -167,13 +167,14 @@ class mp2Server(object):
             # try to read from node
             try:
                 num_reads += 1
+
                 message = str(connection.recv(1024))
                 if(len(message) == 0):
                     print("Connection to " + str(ip) + ":" + str(port) + " closed!")
                     connection.close()
                     continue
-                    
-                num_messages += 1
+
+                num_messages_read += 1
                 print(str(self.name) + ": " + str(num_reads) + ": " + str(message))
 
                 splitMessage = message.strip().split(" ")
