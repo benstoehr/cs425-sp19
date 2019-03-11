@@ -115,12 +115,13 @@ class mp2Server(object):
 
         try:
             self.serviceReadAttempts += 1
-            message = str(self.serviceSocket.recv(1024))
+            message = (self.serviceSocket.recv(1024)).decode('utf-8')
+
             print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
 
             self.serviceMessageCount += 1
 
-            splitMessage = message.strip().split(" ")
+            splitMessage = message.strip("\n").split(" ")
             print(splitMessage)
 
             if (splitMessage[0] == "TRANSACTION"):
@@ -215,11 +216,13 @@ class mp2Server(object):
                 print(error_msg)
 
     def printMessages(self):
+        print("TRANSACTIONS")
         for transaction in self.transactionMessages:
-            print(transaction)
+            print("\t" + str(transaction))
+        print("INTRODUCTIONS")
         for introduction in self.introductionMessages:
-            print(introduction)
-            
+            print("\t" + str(introduction))
+
     def start(self):
 
         self.connect2Service()
