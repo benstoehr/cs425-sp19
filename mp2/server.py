@@ -91,8 +91,6 @@ class mp2Server(object):
             self.acceptAttempts += 1
             #print(error_msg)
 
-        return connection, ip_and_port
-
     def connect2Service(self):
 
         try:
@@ -260,6 +258,7 @@ class mp2Server(object):
             self.acceptConnection()
 
             # try to read from service
+            
             self.readFromService()
 
             # try to read from nodes
