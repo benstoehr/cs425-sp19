@@ -171,7 +171,7 @@ class mp2Server(object):
                 message = str(connection.recv(1024))
                 if(len(message) == 0):
                     print("Connection to " + str(ip) + ":" + str(port) + " closed!")
-                    connection.close()
+                    self.connections[ip] = (None, port, num_reads, num_messages_read, num_sends, messages)
                     continue
 
                 num_messages_read += 1
