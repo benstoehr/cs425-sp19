@@ -215,11 +215,9 @@ class mp2Server(object):
 
     def printConnections(self):
         for ip, (connection, port, num_reads, num_messages_read, num_sends, messages) in self.connections.items():
-            try:
-                if(connection is not None):
-                    print(str(connection) + ":" + str(port))
-            except socket.error as error_msg:
-                print(error_msg)
+            if(connection is not None):
+                print(str(ip) + ":" + str(port))
+
 
     def printMessages(self):
         print("TRANSACTIONS")
