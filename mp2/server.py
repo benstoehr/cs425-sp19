@@ -85,7 +85,7 @@ class mp2Server(object):
                 else:
                     connection.send("FRESHCONNECTION\n".encode('utf-8'))
                     # ip_and_port -> (connection, port, number_of_reads, number_received_messages, messages)
-                    self.connections[ip] = (connection, port, 0, 0, [])
+                    self.connections[ip] = (connection, port, 0, 0, 0, [])
 
         except socket.error as error_msg:
             self.acceptAttempts += 1
