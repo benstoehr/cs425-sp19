@@ -74,8 +74,8 @@ for i in range(NUM_NODES):
 
 while(1):
     count += 1
-    if(count % 10000000 == 0):
-        print(count)
+    # if(count % 10000000 == 0):
+    #     print(count)
     pass
 
 
