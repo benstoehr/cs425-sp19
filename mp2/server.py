@@ -155,7 +155,7 @@ class mp2Server(object):
                     print("connectionCheck: " + str(-1))
 
                 nu_socket.setblocking(0)
-                self.connections[ip] = (nu_socket, port, 0, 0, [])
+                self.connections[ip] = (nu_socket, port, 0, 0, 0, [])
 
         except socket.error as error_msg:
             print(error_msg)
