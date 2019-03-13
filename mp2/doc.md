@@ -1,5 +1,22 @@
 # cs425-spring19-mp2 Report
 
+Please submit CP1 using Gradescope. Your submission should include the following information:
+
+- The list of people in your group with names and NetIDs
+- The URL to your GitLab repository. You must use the Engineering GitLab server and give the course staff Reporter access to your repository.
+- Your group number
+- A description of how to compile (if needed) and run your nodes
+
+You should then have a description of the design of your MP2. Your description should explain:
+
+- How your nodes keep connectivity; how they discover nodes beyond the originally introduced ones, and how they detect failed nodes. **You should justify why you think your design is robust to failures.**
+- How transactions are propagated. Describe the algorithm you are using, any parameters and how you arrived at them.
+- What information is logged and how you used this to generate the graphs. Please make sure that the logs you used in your experiments are checked into the git repository. If you wrote any scripts to analyze the logs please include them in the repo and describe how they work.
+
+As a guideline, each of the three points above should be one or two paragraphs.
+
+Finally, you should have the graphs of transaction propagation and bandwidth from the experiments described above.
+
 ## Group
 
 - mttsao2
@@ -13,9 +30,11 @@ https://gitlab.engr.illinois.edu/mttsao2/cs425-sp19/tree/master/mp2
 
 ## How to Run the Code
 
-Please run: `python36 main.py [NUM_NODES_ON_THIS_VM] [SERVICE_IP] [SERVICE_PORT]`
+1. Run the service `python36 mp2_service.py [SERVICE_PORT] [TX_RATE]`
 
-e.g. `python36 main.py 2 sp19-cs425-g32-01.cs.illinois.edu 1111`
+2. Run our code: `python36 main.py [NUM_NODES_ON_THIS_VM] [SERVICE_IP] [SERVICE_PORT]`
+
+e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ## Commit Hash
 
@@ -25,21 +44,44 @@ e.g. `python36 main.py 2 sp19-cs425-g32-01.cs.illinois.edu 1111`
 
 ### Node connectivity
 
+After the introduction of three existing nodes, the new node asks these nodes for their neighbor list and add them to its list. It keeps asking until having the information of all nodes in the cluster. 
+
 Please refer to:
 
 ```
-     
+{server.py}
+class mp2Server(object):
+    ...
+    def connectToNewNodes(self):
+        ...
+    def connect2Node(self, ip, port):
+        ...
+```
+
+### Transaction broadcast
+
+Every round a node randomly chooses 3 nodes from the all-nighbor list and sends recent 10 transactions to them. 
+
+Please refer to:
+
+```
+
 ```
 
 ### Failure handling
 
-### Transaction broadcast
+If half of nodes fail, every round, in average, a node successfully sends recent transactions to 1.5 nodes. At time clog(n), the infected node number y = (n+1) - 1/n^(cb-2). Where n+1 is the total population of nodes. The situation with all nodes alive (b=3) and half nodes alive (b=1.5) is as follows:
 
-Please refer to:
+| c   | b    | time   |formula of y      | y             |
+| --- |:----:|:------:|-----------------:|--------------:|
+| 1   | 3    | log(n) |(n+1)-1/n^(3-2)   | (n+1)-1/n     |
+| 1   | 1.5  | log(n) |(n+1)-1/n^(1.5-2) | (n+1)-n^0.5   |
+| 2   | 3    | 2log(n)|(n+1)-1/n^(6-2)   | (n+1)-1/n^4   |
+| 2   | 1.5  | 2log(n)|(n+1)-1/n^(3-2)   | (n+1)-1/n     |
+| 3   | 3    | 3log(n)|(n+1)-1/n^(9-2)   | (n+1)-1/n^7   |
+| 3   | 1.5  | 3log(n)|(n+1)-1/n^(4.5-2) | (n+1)-1/n^2.5 |
 
-```
-
-```
+The propagation time is roughly doubled when half nodes die in comparison to all nodes alive.
 
 ### Node termination
 
