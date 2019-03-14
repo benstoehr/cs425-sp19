@@ -70,10 +70,10 @@ Please refer to:
 
 ### Failure handling
 
-If half of nodes fail, every round, in average, a node successfully sends recent transactions to 1.5 nodes. At time clog(n), the infected node number y = (n+1) - 1/n^(cb-2). Where n+1 is the total population of nodes. The situation with all nodes alive (b=3) and half nodes alive (b=1.5) is as follows:
+If half of nodes fail, every round, in average, a node successfully sends recent transactions to 1.5 nodes. At round clog(n), the infected node number y ~ (n+1) - 1/n^(cb-2). Where n+1 is the total population of nodes. The situation with all nodes alive (b=3) and half nodes alive (b=1.5) is as follows:
 
-| c   | b    | time   |formula of y      | y             |
-| --- |:----:|:------:|-----------------:|--------------:|
+| c   | b    | round  |formula of y      | ~y            |
+| --- |:----:|:------:|:----------------:|--------------:|
 | 1   | 3    | log(n) |(n+1)-1/n^(3-2)   | (n+1)-1/n     |
 | 1   | 1.5  | log(n) |(n+1)-1/n^(1.5-2) | (n+1)-n^0.5   |
 | 2   | 3    | 2log(n)|(n+1)-1/n^(6-2)   | (n+1)-1/n^4   |
@@ -95,6 +95,12 @@ Please refer to:
 
 (Your CP1 report should include a graph of the propagation delay and bandwidth used by your system)
 (20 nodes / 1tx per sec - 100 nodes / 20tx per sec)
+
+We log 
+
+| timestamp   | b    | round  |formula of y      | ~y            |
+| --- |:----:|:------:|:----------------:|--------------:|
+| 1   | 3    | log(n) |(n+1)-1/n^(3-2)   | (n+1)-1/n     |
 
 ### Transaction propagation completed
 
