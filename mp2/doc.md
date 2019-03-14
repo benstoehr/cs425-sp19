@@ -107,8 +107,29 @@ We log
 ### Propagation Speed
 
 - Propagation 50:
+
+![alt text](img/plot01_hist_propagation_delay_half.png "Plot 1")
+
 - Propagation completed:
+
+![alt text](img/plot02_hist_propagation_delay_all.png "Plot 2")
+
+- Transaction Propagation:
+
+Nodes: 20
+
+![alt text](img/plot03_line_tx_reached_20.png "Plot 3")
+
+Nodes: 100
+
+![alt text](img/plot04_line_tx_reached_100.png "Plot 4")
 
 ### Bandwidth
 
+Nodes: 20
 
+![alt text](img/plot05_line_bandwidth_20.png "Plot 5")
+
+Nodes: 100
+
+![alt text](img/plot06_line_bandwidth_100.png "Plot 6")
