@@ -56,11 +56,17 @@ nodesList = dict()
 ## TODO:
 ##
 
-## INFO
+## SERVICE INFO
 SERVICE_IP = sys.argv[2]
 print("Service hostname: " + str(SERVICE_IP))
 SERVICE_PORT = sys.argv[3]
 print("Service Port: " + str(SERVICE_PORT))
+
+## SELF INFO
+hostname = HOST.strip()
+hostnameSplit = hostname.split("-")
+vmWithIllinoisDotEDU = hostnameSplit[3]
+vmNumber = vmWithIllinoisDotEDU.split(".")[0]
 
 portNumbers = []
 nodes = []
@@ -78,7 +84,7 @@ for i in range(NUM_NODES):
     portNumbers.append(port)
     print("New Node with port: " + str(port))
 
-    #nodeName = "vm" +
+    nodeName = "vm" + str(vmNumber) + "node" + str(i)
     #new_node = Node(SERVICE_IP, SERVICE_PORT, "vmnode"+str(i), port, run_event)
     #new_node.start()
     #nodes.append(new_node)
