@@ -85,6 +85,8 @@ for i in range(NUM_NODES):
     print("New Node with port: " + str(port))
 
     nodeName = "vm" + str(vmNumber) + "node" + str(i)
+    print("nodeName: " + str(nodeName))
+    
     #new_node = Node(SERVICE_IP, SERVICE_PORT, "vmnode"+str(i), port, run_event)
     #new_node.start()
     #nodes.append(new_node)
