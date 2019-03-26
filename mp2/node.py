@@ -49,7 +49,10 @@ class Node(Thread):
     nameIPPortList = []
     ipAndport2Name = dict()
 
+    # (ip,port)
     liveAddresses = []
+
+    # (ip, port) -> (name, status)
     pendingAddresses = dict()
     deadAddresses = []
     unknownAddresses = []
@@ -109,7 +112,6 @@ class Node(Thread):
             self.file.write(message)
         return message, addr
 
-
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
@@ -160,8 +162,19 @@ class Node(Thread):
             if(self.event.isSet()):
                 break
 
+            print("transactionMessages")
+            print(self.transactionMessages)
+
+            print("serviceIntrodctionMessages")
+            print(self.serviceIntroductionMessages)
+
+            print("introdctionMessages")
+            print(self.introductionMessages)
+
+
             #print("Loop")
-            ############### READ ALL MESSAGES ###################
+    ############### READ ALL MESSAGES ###################
+        ## SERVICE STUFF
             ## Read until no messages
             while(1):
                 #print("serviceRead()")
@@ -171,7 +184,6 @@ class Node(Thread):
                     self.handleServiceMessage(serviceMessage)
                 else:
                     break
-
             ######## Update list of IPs from node messages
             for serviceIntroMessage in self.serviceIntroductionMessages:
                 vmname = serviceIntroMessage[1]
@@ -182,7 +194,9 @@ class Node(Thread):
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
                     # put it in the list of live addresses
                     self.liveAddresses.append((vmIP, vmPort))
+            self.serviceIntroductionMessages = []
 
+        ## NODE STUFF
             ## Read until no messages
             while(1):
                 #print("read()")
@@ -193,7 +207,6 @@ class Node(Thread):
                     self.handleMessage(message, addr)
                 else:
                     break
-
             ######## Update list of IPs from node messages
             for introMessage in self.introductionMessages:
                 vmname = introMessage[1]
@@ -201,19 +214,52 @@ class Node(Thread):
                 vmPort = introMessage[3]
                 if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
                     # Put it in the dictionary with the name
-                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
-
+                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")
+                    self.unknownAddresses.append((vmIP, vmPort))
             self.introductionMessages = []
+
+    ## END OF READING
+
+        ## ADDRESS CLEAN UP
+            ## Delete addresses that are stale
+            for address, count in self.pendingAddresses.items():
+                new_count = count + 1
+                # change this to be the number of rounds before addresses are "dead"
+                if (new_count > 10):
+                    print(str(address) + " is dead!")
+                    del self.pendingAddresses[address]
+                    self.deadAddresses.append(address)
+                else:
+                    self.pendingAddresses[address] = new_count
+
+    ## Figure out which addresses to send to
 
             # Shuffle the live addresses
             random.shuffle(self.liveAddresses)
 
             readyToSend = None
-            if(len(self.liveAddresses) < 3):
-                readyToSend = self.liveAddresses
-            else:
-                readyToSend = self.liveAddresses[:3]
+            readyToSendLive = None
+            readyToSendUnknown = None
 
+            # from live addresses
+            if(len(self.liveAddresses) < 3):
+                readyToSendLive = self.liveAddresses
+            else:
+                readyToSendLive = self.liveAddresses[:3]
+
+            for i in range(len(readyToSendLive)):
+                self.pendingAddresses[self.liveAddresses.pop()] = 0
+
+            # from unknown addresses
+            if(len(self.unknownAddresses) < 2):
+                readyToSendUnknown = self.unknownAddresses
+            else:
+                readyToSendUnknown = self.unknownAddresses[:2]
+
+            for i in range(len(readyToSendUnknown)):
+                self.pendingAddresses[self.unknownAddresses.pop()] = 0
+
+            readyToSend = readyToSendLive + readyToSendUnknown
 
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
@@ -235,19 +281,6 @@ class Node(Thread):
                 for transMessage in transactionsToSend:
                     self.sock.sendto(transMessage, address)
 
-            ## Delete addresses that are stale
-            for address, count in self.pendingAddresses.items():
-                new_count = count + 1
-                # change this to be the number of rounds before addresses are "dead"
-                if(new_count > 10):
-                    print(str(address) + " is dead!")
-                    del self.pendingAddresses[address]
-                    self.deadAddresses.append(address)
-                else:
-                    self.pendingAddresses[address] = new_count
-
-            for i in range(len(readyToSend)):
-                self.pendingAddresses[self.liveAddresses.pop()] = 0
 
             readyToSend = []
             transactionsToSend = []
