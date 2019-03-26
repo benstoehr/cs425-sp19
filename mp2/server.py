@@ -14,8 +14,6 @@ import errno
 import signal
 
 
-def sortFunction(x):
-    return x[1]
 
 class mp2Server(object):
 
@@ -81,8 +79,6 @@ class mp2Server(object):
 
         except socket.error as error_msg:
             print(error_msg)
-
-
 
     def openSocket(self):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -158,7 +154,7 @@ class mp2Server(object):
         except socket.error as error_msg:
             # print(error_msg)
             #print("No message from Service")
-            return "0"
+            return None
 
         return message
 
@@ -166,15 +162,16 @@ class mp2Server(object):
 
         try:
             messageFromService = self.serviceSocket.recv(1024)
-            message, addr = self.sock.recvfrom(1024)
+            # addr = (IP, PORT)
+            message, ipANDport = self.sock.recvfrom(1024)
             # firstMessageLength = self.serviceSocket.recv(1024)
             # print("firstMessage: " +str(firstMessageLength))
         except socket.error as error_msg:
             # self.serviceSocket = None
             #print("No message to receive!")
-            return "0"
+            return None
 
-        return message
+        return (message, ipANDport)
 
 
 
