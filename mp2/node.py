@@ -12,7 +12,9 @@ import logging
 import fcntl, os
 import errno
 import signal
+
 from server import mp2Server
+from messager import Messager
 
 
 class Node(Thread):
@@ -32,7 +34,7 @@ class Node(Thread):
     serv = None
 
     file = None
-
+    messager = None
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
@@ -49,6 +51,8 @@ class Node(Thread):
 
         filename = str(self.name) + ".txt"
         self.file = open(filename, "w+")
+
+        self.messager = Messager()
 
 
     # TODO:
@@ -68,6 +72,32 @@ class Node(Thread):
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
 
+    def read(self):
+        message = self.serv.read()
+        if (message == "0"):
+            # print("No message from Nodes")
+            pass
+        else:
+            stripped = message.strip()
+            print("New Message: " + str(stripped))
+            self.file.write(message)
+
+        return message
+
+    def serviceRead(self):
+        messageFromService = self.serv.readFromService()
+        if (messageFromService == "0"):
+            # print("No message from Service")
+            pass
+        else:
+            stripped = messageFromService.strip()
+            print(str(stripped))
+            self.file.write(messageFromService)
+
+        return messageFromService
+
+#######################################
+
     def run(self):
 
         self.initServer()
@@ -75,27 +105,14 @@ class Node(Thread):
 
         while (self.event.is_set()):
 
-            #print("Node DONE initializing!")
+            ############### READ ALL MESSAGES ###################
+            serviceMessage = self.serviceRead()
+            message = self.read()
 
-            messageFromService = self.serv.readFromService()
-            if(messageFromService == "0"):
-                #print("No message from Service")
-                pass
-            else:
-                stripped = messageFromService.strip()
-                print(str(stripped))
-                self.file.write(messageFromService)
 
-            message = self.serv.read()
-            if (message == "0"):
-                #print("No message from Nodes")
-                pass
-            else:
-                stripped = message.strip()
-                print("New Message: " + str(stripped))
-                self.file.write(message)
 
-            time.sleep(0.5)
+            messageType = self.messager.getMessageType(message)
+            ######## WRITE TO OTHER NODES
 
         print("Run event unset!")
 
