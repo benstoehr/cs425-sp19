@@ -124,6 +124,7 @@ class Node(Thread):
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
+        print("handleMessage: " + str(message))
         message = message.split()
         if ("TRANSACTION" in message):
             print("~~got transaction from " +str(addr) + " ~~")
