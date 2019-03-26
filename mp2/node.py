@@ -162,14 +162,14 @@ class Node(Thread):
             if(self.event.isSet()):
                 break
 
-            print("transactionMessages")
-            print(self.transactionMessages)
-
-            print("serviceIntrodctionMessages")
-            print(self.serviceIntroductionMessages)
-
-            print("introdctionMessages")
-            print(self.introductionMessages)
+            # print("transactionMessages")
+            # print(self.transactionMessages)
+            #
+            # print("serviceIntrodctionMessages")
+            # print(self.serviceIntroductionMessages)
+            #
+            # print("introductionMessages")
+            # print(self.introductionMessages)
 
 
             #print("Loop")
