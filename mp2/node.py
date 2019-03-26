@@ -216,6 +216,7 @@ class Node(Thread):
                 print("read()")
                 # addr = ipANDport = (ip, port)
                 message, addr = self.read()
+                print("post read()")
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)
