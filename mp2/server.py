@@ -146,17 +146,6 @@ class mp2Server(object):
             #self.serviceSocket = None
             print("Error connection to service!")
 
-        messageCount = 0
-        #time.sleep(2)
-
-        while(self.serviceMessageCount < 3):
-            message = self.readFromService()
-
-            if(message == "0"):
-                break
-
-            self.serviceMessageCount += 1
-
         print("Done reading from service!")
 
     def readFromService(self):
