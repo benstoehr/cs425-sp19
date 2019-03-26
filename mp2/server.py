@@ -147,6 +147,7 @@ class mp2Server(object):
         try:
             self.serviceReadAttempts += 1
             message = (self.serviceSocket.recv(1024)).decode('utf-8')
+            message = str(message)
             #print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
             self.serviceMessageCount += 1
 
@@ -164,6 +165,7 @@ class mp2Server(object):
             # addr = (IP, PORT)
             #print("about to recvfrom")
             message, ipANDport = self.sock.recvfrom(1024).decode('utf-8')
+            message = str(message)
             #print("after recvfrom")
             # firstMessageLength = self.serviceSocket.recv(1024)
             # print("firstMessage: " +str(firstMessageLength))
