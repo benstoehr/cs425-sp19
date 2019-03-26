@@ -70,11 +70,13 @@ class Node(Thread):
             messageFromService = self.serv.readFromService()
             if(messageFromService == "0"):
                 #print("No message from Service")
+                pass
             else:
                 print("Service: " + str(messageFromService))
             message = self.serv.read()
             if (message == "0"):
                 #print("No message from Nodes")
+                pass
             else:
                 print("New Message: " + str(message))
 
