@@ -155,8 +155,9 @@ class Node(Thread):
             ######## WRITE TO OTHER NODES
 
 
-
             #time.sleep(0.2)
+
+        self.shutdown()
 
         print("Run event unset!")
 

@@ -115,6 +115,7 @@ while(not done):
 
 print("main.py: DONE!")
 
+time.sleep(3)
 exit(1)
 
 
