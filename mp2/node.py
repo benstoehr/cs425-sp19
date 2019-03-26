@@ -213,6 +213,12 @@ class Node(Thread):
             else:
                 transactionsToSend = sortedTranscations[:-5]
 
+            print("transactionsToSend")
+            print(transactionsToSend)
+
+            print("IPs to receive messages")
+            print(readyToSend)
+
 
             ######## WRITE TO OTHER NODES
             for address in readyToSend:
