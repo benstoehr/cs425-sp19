@@ -304,7 +304,7 @@ class Node(Thread):
                     for address in readyToSend:
                         if(address not in self.sentMessagesByAddress.keys()):
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
-                            self.sock.sendto(transMessage, address)
+                            self.sock.sendto(str(transMessage.join(" ")).encode('utf-8'), address)
                             self.sentMessagesByAddress[address] = [transMessage]
                         else:
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
