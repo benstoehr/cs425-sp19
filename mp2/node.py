@@ -76,11 +76,13 @@ class Node(Thread):
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
 
+###### READING FUNCTIONS
+
     def read(self):
         message = self.serv.read()
         if (message == "0"):
             # print("No message from Nodes")
-            pass
+            return None
         else:
             stripped = message.strip()
             print("New Message: " + str(stripped))
@@ -96,12 +98,11 @@ class Node(Thread):
         elif ("REPLY" in message):
             pass
 
-
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
         if (messageFromService == "0"):
             # print("No message from Service")
-            pass
+            return None
         else:
             stripped = messageFromService.strip()
             print(str(stripped))
@@ -131,6 +132,7 @@ class Node(Thread):
 
         while (self.event.is_set()):
 
+            print("Loop")
             ############### READ ALL MESSAGES ###################
             ## Read until no messages
             while(1):
@@ -151,6 +153,8 @@ class Node(Thread):
                     break
 
             ######## WRITE TO OTHER NODES
+
+            time.sleep(0.25)
 
         print("Run event unset!")
 

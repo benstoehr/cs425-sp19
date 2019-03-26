@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/mp2/messager.py" afterPath="$PROJECT_DIR$/mp2/messager.py" />
       <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,16 +33,17 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="731">
-                  <caret line="151" column="0" lean-forward="true" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+                <state relative-caret-position="461">
+                  <caret line="134" column="23" lean-forward="false" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#659#1085#0" expanded="false" />
                     <element signature="e#1178#1269#0" expanded="false" />
                     <element signature="e#1306#1323#0" expanded="false" />
                     <element signature="e#1357#1528#0" expanded="false" />
-                    <element signature="e#1558#1840#0" expanded="false" />
-                    <element signature="e#2157#2489#0" expanded="false" />
+                    <element signature="e#1584#1873#0" expanded="false" />
+                    <element signature="e#1921#2152#0" expanded="false" />
+                    <element signature="e#2583#2901#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -86,7 +86,7 @@
           <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="447">
+                <state relative-caret-position="853">
                   <caret line="146" column="49" lean-forward="false" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
                   <folding>
                     <element signature="e#29#42#0" expanded="true" />
@@ -94,7 +94,6 @@
                     <element signature="e#2478#2603#0" expanded="false" />
                     <element signature="e#2645#2840#0" expanded="false" />
                     <element signature="e#2880#3260#0" expanded="false" />
-                    <element signature="e#4033#4484#0" expanded="false" />
                     <element signature="e#4515#4937#0" expanded="false" />
                   </folding>
                 </state>
@@ -329,8 +328,9 @@
             <element signature="e#1178#1269#0" expanded="false" />
             <element signature="e#1306#1323#0" expanded="false" />
             <element signature="e#1357#1528#0" expanded="false" />
-            <element signature="e#1558#1840#0" expanded="false" />
-            <element signature="e#2157#2489#0" expanded="false" />
+            <element signature="e#1584#1873#0" expanded="false" />
+            <element signature="e#1921#2152#0" expanded="false" />
+            <element signature="e#2583#2901#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -345,7 +345,6 @@
             <element signature="e#2478#2603#0" expanded="false" />
             <element signature="e#2645#2840#0" expanded="false" />
             <element signature="e#2880#3260#0" expanded="false" />
-            <element signature="e#4033#4484#0" expanded="false" />
             <element signature="e#4515#4937#0" expanded="false" />
           </folding>
         </state>
@@ -576,22 +575,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mp2/server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="146" column="49" lean-forward="false" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
-          <folding>
-            <element signature="e#29#42#0" expanded="true" />
-            <element signature="e#709#1315#0" expanded="false" />
-            <element signature="e#2478#2603#0" expanded="false" />
-            <element signature="e#2645#2840#0" expanded="false" />
-            <element signature="e#2880#3260#0" expanded="false" />
-            <element signature="e#4033#4484#0" expanded="false" />
-            <element signature="e#4515#4937#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mp2/messager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -600,18 +583,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mp2/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="853">
+          <caret line="146" column="49" lean-forward="false" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
+          <folding>
+            <element signature="e#29#42#0" expanded="true" />
+            <element signature="e#709#1315#0" expanded="false" />
+            <element signature="e#2478#2603#0" expanded="false" />
+            <element signature="e#2645#2840#0" expanded="false" />
+            <element signature="e#2880#3260#0" expanded="false" />
+            <element signature="e#4515#4937#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="151" column="0" lean-forward="true" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        <state relative-caret-position="461">
+          <caret line="134" column="23" lean-forward="false" selection-start-line="134" selection-start-column="23" selection-end-line="134" selection-end-column="23" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#659#1085#0" expanded="false" />
             <element signature="e#1178#1269#0" expanded="false" />
             <element signature="e#1306#1323#0" expanded="false" />
             <element signature="e#1357#1528#0" expanded="false" />
-            <element signature="e#1558#1840#0" expanded="false" />
-            <element signature="e#2157#2489#0" expanded="false" />
+            <element signature="e#1584#1873#0" expanded="false" />
+            <element signature="e#1921#2152#0" expanded="false" />
+            <element signature="e#2583#2901#0" expanded="false" />
           </folding>
         </state>
       </provider>
