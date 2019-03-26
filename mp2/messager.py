@@ -11,7 +11,9 @@ class Messager(object):
 
     def getMessageType(self, message):
 
-        if("TRANSACTION" in message):
+        if(message == "0"):
+            return None
+        elif("TRANSACTION" in message):
             return "TRANSACTION"
         elif("INTRODUCTION" in message):
             return "INTRODUCTION"
@@ -21,5 +23,6 @@ class Messager(object):
             return "DIE"
         elif ("REPLY" in message):
             return "REPLY"
+
 
 

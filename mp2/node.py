@@ -23,7 +23,6 @@ class Node(Thread):
 
     status = None
     hostname = None
-
     service_ip = None
     service_port = None
 
@@ -35,6 +34,11 @@ class Node(Thread):
 
     file = None
     messager = None
+
+    transactionMessages = []
+    introductionMessages = []
+    replyMessages = []
+
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
@@ -84,6 +88,15 @@ class Node(Thread):
 
         return message
 
+    def handleMessage(self, message):
+        if ("TRANSACTION" in message):
+            self.transactionMessages.append(message)
+        elif ("INTRODUCTION" in message):
+            self.introductionMessages.append(message)
+        elif ("REPLY" in message):
+            pass
+
+
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
         if (messageFromService == "0"):
@@ -96,6 +109,19 @@ class Node(Thread):
 
         return messageFromService
 
+    def handleServiceMessage(self, message):
+        if ("TRANSACTION" in message):
+            self.transactionMessages.append(message)
+        elif ("INTRODUCTION" in message):
+            self.introductionMessages.append(message)
+        elif ("QUIT" in message):
+            #TODO:
+            pass
+        elif ("DIE" in message):
+            #TODO:
+            pass
+
+
 #######################################
 
     def run(self):
@@ -106,12 +132,24 @@ class Node(Thread):
         while (self.event.is_set()):
 
             ############### READ ALL MESSAGES ###################
-            serviceMessage = self.serviceRead()
-            message = self.read()
+            ## Read until no messages
+            while(1):
+                serviceMessage = self.serviceRead()
+                serviceMessageType = self.messager.getMessageType(serviceMessage)
+                if(serviceMessageType is not None):
+                    self.handleServiceMessage(serviceMessage)
+                else:
+                    break
 
+            ## Read until no messages
+            while(1):
+                message = self.read()
+                messageType = self.messager.getMessageType(message)
+                if (messageType is not None):
+                    self.handleMessage(message)
+                else:
+                    break
 
-
-            messageType = self.messager.getMessageType(message)
             ######## WRITE TO OTHER NODES
 
         print("Run event unset!")
