@@ -132,7 +132,7 @@ class Node(Thread):
             messagesFromService = messageFromService.split("\n")
             for mess in messagesFromService:
                 stripped = messageFromService.strip()
-                print(str(self.name) + ":" + str(stripped))
+                #print(str(self.name) + ":" + str(stripped))
                 self.file.write(mess)
 
             return messagesFromService
