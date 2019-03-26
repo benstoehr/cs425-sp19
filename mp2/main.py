@@ -107,14 +107,13 @@ while(not done):
         print(str(node.name) + ": " +str(node.status))
 
         if(node.status == "shutdown"):
+            print(str(node.name) + ": " + str(node.status))
             pass
         else:
             shutdownCheck = False
 
     if(shutdownCheck == True):
         break
-
-    pass
 
 print("main.py: DONE!")
 
