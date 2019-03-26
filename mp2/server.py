@@ -171,8 +171,13 @@ class mp2Server(object):
 
         while(self.serviceMessageCount < 3):
             message = self.readFromService()
+
             if(message == "0"):
                 break
+
+            self.serviceMessageCount += 1
+
+        print("Done reading from service!")
 
 
     def read(self):
