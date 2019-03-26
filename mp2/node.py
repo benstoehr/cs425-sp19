@@ -126,12 +126,20 @@ class Node(Thread):
         message = message.split()
         if ("TRANSACTION" in message):
             print("~~got transaction from " +str(addr) + " ~~")
-            self.transactionMessages.append(message)
-            self.sock.sendto("REPLY \n".encode('utf-8'), addr)
+
+            splitMessage = message.split("@")
+            ip, port = splitMessage[0].split(":")
+            message2send = splitMessage[1]
+
+            self.transactionMessages.append(message2send)
+            self.sock.sendto("REPLY \n".encode('utf-8'), (ip, int(port)))
+
         # Assume you will only get good messages
         elif ("INTRODUCE" in message):
             self.introductionMessages.append(message)
         elif ("REPLY" in message):
+
+
             print("~~ got reply from " + str(addr) + " ~~")
             pass
 
