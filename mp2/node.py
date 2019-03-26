@@ -290,17 +290,17 @@ class Node(Thread):
                 transactionsToSend = sortedTranscations[-5:]
 
 
-
-            if(len(readyToSend) > 0 and (timer % 100000000) == 0):
-                print("IPs to receive messages")
+            ######## WRITE TO OTHER NODES
+            if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
+                print("transactionsToSend")
+                for t in transactionsToSend:
+                    print(t)
+                print("readyTpSend")
                 for ip in readyToSend:
                     print(ip)
 
-            ######## WRITE TO OTHER NODES
-            if(len(transactionsToSend) > 0):
                 for transMessage in transactionsToSend:
                     for address in readyToSend:
-
                         if(address not in self.sentMessagesByAddress.keys()):
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage, address)
