@@ -289,25 +289,29 @@ class Node(Thread):
             else:
                 transactionsToSend = sortedTranscations[-5:]
 
-            # print("transactionsToSend")
-            # for trans in transactionsToSend:
-            #     print(trans)
+
 
             if(len(readyToSend) > 0 and (timer % 100000000) == 0):
                 print("IPs to receive messages")
                 for ip in readyToSend:
                     print(ip)
 
-
             ######## WRITE TO OTHER NODES
             if(len(transactionsToSend) > 0):
+
+                print("transactionsToSend")
                 for transMessage in transactionsToSend:
+                    print(transMessage)
+
                     for address in readyToSend:
-                        if(address in self.sentMessagesByAddress.keys()):
-                            if(transMessage not in self.sentMessagesByAddress[address]):
-                                print("!! sending message to " + str(address) + " !!")
-                                self.sock.sendto(transMessage, address)
-                                self.sentMessagesByAddress[address] += [transMessage]
+                        if(address not in self.sentMessagesByAddress.keys()):
+                            print("!! sending message to " + str(address) + " !!")
+                            self.sock.sendto(transMessage, address)
+                            self.sentMessagesByAddress[address] = [transMessage]
+                        else:
+                            print("!! sending message to " + str(address) + " !!")
+                            self.sock.sendto(transMessage, address)
+                            self.sentMessagesByAddress[address] += [transMessage]
 
                 # only remove stuff if it was sent
                 for i in range(len(readyToSendLive)):
