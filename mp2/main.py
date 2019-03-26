@@ -98,6 +98,7 @@ for i in range(NUM_NODES):
 done = False
 
 while(not done):
+
     pass
 
 print("main.py: DONE!")

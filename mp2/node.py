@@ -61,6 +61,7 @@ class Node(Thread):
         self.serv.start()
 
     def shutdown(self):
+        print(str(self.name) + " shutting down")
         self.serv.shutdown()
         self.file.close()
         print(str(self.name) + " Exiting")

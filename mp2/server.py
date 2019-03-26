@@ -94,10 +94,8 @@ class mp2Server(object):
 
 ################################
     def shutdown(self):
-        #print("Server: shutdown")
-        for connection, ip_and_port in self.connections.items():
-            print("Closing connections!")
-            connection.close()
+        self.serviceSocket.close()
+        self.sock.close()
 
     def lastX(self, num):
         for message in self.transactionMessages[:-5]:
