@@ -169,12 +169,14 @@ class Node(Thread):
         message = message.split()
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
+            print("\t" + str(message))
             self.transactionMessages.append(message)
             # for tm in self.transactionMessages:
             #     print(tm)
             return
         elif ("INTRODUCE" in message):
             print("~~got introduction~~")
+            print("\t" + str(message))
             self.serviceIntroductionMessages.append(message)
             return
         elif ("QUIT" in message):
