@@ -186,6 +186,7 @@ class Node(Thread):
                     break
             ######## Update list of IPs from node messages
             for serviceIntroMessage in self.serviceIntroductionMessages:
+                print("Converting message to dictionary entry and adding to liveAddresses")
                 vmname = serviceIntroMessage[1]
                 vmIP = serviceIntroMessage[2]
                 vmPort = serviceIntroMessage[3]
@@ -238,7 +239,7 @@ class Node(Thread):
             print("liveAddresses")
             for add in self.liveAddresses:
                 print(add)
-                
+
             # Shuffle the live addresses
             random.shuffle(self.liveAddresses)
 
