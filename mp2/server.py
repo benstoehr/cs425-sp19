@@ -82,28 +82,8 @@ class mp2Server(object):
         except socket.error as error_msg:
             print(error_msg)
 
-    def readFromService(self):
-        try:
-            self.serviceReadAttempts += 1
-            message = (self.serviceSocket.recv(1024)).decode('utf-8')
 
-            print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
 
-            self.serviceMessageCount += 1
-
-            splitMessage = message.strip("\n").split(" ")
-            print(splitMessage)
-
-            if (splitMessage[0] == "TRANSACTION"):
-                self.transactionMessages.append(message)
-            elif (splitMessage[0] == "INTRODUCE"):
-                self.introductionMessages.append(message)
-
-        # timeout, keep going
-        except socket.error as error_msg:
-            # print(error_msg)
-            print("No message from Service")
-            return "0"
 
     def openSocket(self):
         # Setup TCP socket
@@ -169,6 +149,7 @@ class mp2Server(object):
             print("Error connection to service!")
 
         messageCount = 0
+        time.sleep(2)
 
         while(self.serviceMessageCount < 3):
             message = self.readFromService()
@@ -180,16 +161,34 @@ class mp2Server(object):
 
         print("Done reading from service!")
 
+    def readFromService(self):
+        try:
+            self.serviceReadAttempts += 1
+            message = (self.serviceSocket.recv(1024)).decode('utf-8')
+
+            print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
+
+            self.serviceMessageCount += 1
+
+        # timeout, keep going
+        except socket.error as error_msg:
+            # print(error_msg)
+            print("No message from Service")
+            return "0"
+
+        return message
 
     def read(self):
 
         try:
+            messageFromService = self.serviceSocket.recv(1024)
             message, addr = self.sock.recvfrom(1024)
             # firstMessageLength = self.serviceSocket.recv(1024)
             # print("firstMessage: " +str(firstMessageLength))
         except socket.error as error_msg:
             # self.serviceSocket = None
             print("No message to receive!")
+            return "0"
 
         return message
 

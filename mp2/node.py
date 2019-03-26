@@ -64,10 +64,19 @@ class Node(Thread):
         self.startServer()
 
         while (self.event.is_set()):
-            #print("Node DONE")
 
+            print("Node DONE initializing!")
+
+            messageFromService = self.serv.readFromService()
+            if(messageFromService == "0"):
+                print("No message from Service")
+            else:
+                print("Service: " + str(messageFromService))
             message = self.serv.read()
-            print(message)
+            if (message == "0"):
+                print("No message from Nodes")
+            else:
+                print("New Message: " + str(message))
 
             time.sleep(0.5)
 
