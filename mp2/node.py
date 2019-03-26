@@ -108,6 +108,7 @@ class Node(Thread):
     def read(self):
         message, addr = self.serv.read()
         if (message is not None):
+            print("Got message in read() call!")
             stripped = message.strip()
             print(str(self.name) + ": " + str(stripped))
             self.file.write(message)
@@ -151,11 +152,11 @@ class Node(Thread):
             self.serviceIntroductionMessages.append(message)
             return
         elif ("QUIT" in message):
-            #TODO:
-            pass
+            print("## Got Quit command ##")
+
         elif ("DIE" in message):
-            #TODO:
-            pass
+            print("@@ Got DIE command @@")
+
 
 
 #######################################

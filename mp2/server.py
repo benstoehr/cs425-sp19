@@ -159,9 +159,7 @@ class mp2Server(object):
         return message
 
     def read(self):
-
         try:
-            messageFromService = self.serviceSocket.recv(1024)
             # addr = (IP, PORT)
             message, ipANDport = self.sock.recvfrom(1024)
             # firstMessageLength = self.serviceSocket.recv(1024)
