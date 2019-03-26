@@ -117,7 +117,7 @@ class Node(Thread):
         if (message is not None):
             print("Got message in read() call!")
             stripped = message.strip()
-            print(str(self.name) + ": " + str(stripped))
+            #print(str(self.name) + ": " + str(stripped))
             self.file.write(message)
         return message, addr
 
