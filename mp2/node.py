@@ -132,7 +132,7 @@ class Node(Thread):
 
         while (self.event.is_set()):
 
-            print("Loop")
+            #print("Loop")
             ############### READ ALL MESSAGES ###################
             ## Read until no messages
             while(1):
@@ -156,7 +156,7 @@ class Node(Thread):
 
 
 
-            time.sleep(0.2)
+            #time.sleep(0.2)
 
         print("Run event unset!")
 
