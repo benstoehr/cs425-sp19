@@ -146,7 +146,6 @@ class Node(Thread):
             #print("~~ got reply from " + str(addr) + "~~")
             pass
 
-
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
         if (messageFromService is not None):
@@ -324,7 +323,9 @@ class Node(Thread):
 
                         print("!! " + str(transMessage) + " > " + str(address) + " !!")
                         transMessage = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
-                        self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
+
+                        if(transMessage not in self.sentMessagesByAddress[address]):
+                            self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
 
                         if(address not in self.sentMessagesByAddress.keys()):
                             self.sentMessagesByAddress[address] = [transMessage]
