@@ -15,8 +15,8 @@ class Messager(object):
             return None
         elif("TRANSACTION" in message):
             return "TRANSACTION"
-        elif("INTRODUCTION" in message):
-            return "INTRODUCTION"
+        elif("INTRODUCE" in message):
+            return "INTRODUCE"
         elif ("QUIT" in message):
             return "QUIT"
         elif ("DIE" in message):

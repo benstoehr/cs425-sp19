@@ -119,7 +119,7 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             self.transactionMessages.append(message)
         # Assume you will only get good messages
-        elif ("INTRODUCTION" in message):
+        elif ("INTRODUCE" in message):
             self.introductionMessages.append(message)
         elif ("REPLY" in message):
             #self.pendingAddresses.remove()
@@ -138,9 +138,10 @@ class Node(Thread):
 
         message = message.split()
         if ("TRANSACTION" in message):
+            print("~~got transaction~~")
             self.transactionMessages.append(message)
             return
-        elif ("INTRODUCTION" in message):
+        elif ("INTRODUCE" in message):
             print("~~got introduction~~")
             self.serviceIntroductionMessages.append(message)
             return
