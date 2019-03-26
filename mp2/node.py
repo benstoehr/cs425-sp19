@@ -46,7 +46,7 @@ class Node(Thread):
         self.service_port = SERVICE_PORT
         self.event = event
 
-        filename = str(self.name) + "txt"
+        filename = str(self.name) + ".txt"
         self.file = open(filename, "w+")
 
 
