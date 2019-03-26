@@ -105,7 +105,13 @@ class mp2Server(object):
             print("No message from Service")
             return "0"
 
+    def openSocket(self):
+        # Setup TCP socket
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.sock.bind((self.ip, self.port))
 
+################################
     def shutdown(self):
         #print("Server: shutdown")
         for connection, ip_and_port in self.connections.items():
@@ -134,6 +140,9 @@ class mp2Server(object):
             print("INTRODUCTIONS")
             for introduction in self.introductionMessages:
                 print("\t" + str(introduction))
+
+
+################################
 
     def start(self):
 
@@ -165,27 +174,9 @@ class mp2Server(object):
             if(message == "0"):
                 break
 
-##### MAIN LOOP #######
 
-        while(self.event.is_set()):
-
-            # try to read from nodes
-            self.readFromNodes()
-
-            self.connectToNewNodes()
-
-            # send last 5 transactions
-            last5 = self.lastX(5)
-
-            self.sendToNodes(last5)
-
-            time.sleep(0.1)
-
-            self.printConnections()
-            self.printMessages()
-
-        print("Server: unset")
-        #self.shutdown()
+    def read(self):
+        message = self.sock.recvfrom(1024)
 
 
 
