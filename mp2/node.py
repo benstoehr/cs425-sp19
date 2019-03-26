@@ -208,7 +208,6 @@ class Node(Thread):
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
                     # put it in the list of live addresses
                     self.liveAddresses.append((vmIP, vmPort))
-
             self.serviceIntroductionMessages = []
 
         ## NODE STUFF
