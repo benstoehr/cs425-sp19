@@ -135,7 +135,7 @@ class Node(Thread):
 
             self.transactionMessages.append(message2send)
 
-            replyMessage = "REPLY "+str(self.ip)+":"+str(self.port)
+            replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 

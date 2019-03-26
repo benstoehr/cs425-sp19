@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,12 +58,14 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="463">
-                  <caret line="129" column="33" lean-forward="false" selection-start-line="129" selection-start-column="33" selection-end-line="129" selection-end-column="33" />
+                <state relative-caret-position="515">
+                  <caret line="137" column="68" lean-forward="false" selection-start-line="137" selection-start-column="68" selection-end-line="137" selection-end-column="68" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
+                    <element signature="e#1018#1608#0" expanded="false" />
                     <element signature="e#1700#1791#0" expanded="false" />
                     <element signature="e#1880#2051#0" expanded="false" />
+                    <element signature="e#2121#2125#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -333,8 +336,10 @@
           <caret line="46" column="0" lean-forward="true" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
+            <element signature="e#1018#1608#0" expanded="false" />
             <element signature="e#1700#1791#0" expanded="false" />
             <element signature="e#1880#2051#0" expanded="false" />
+            <element signature="e#2121#2125#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -607,12 +612,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="129" column="33" lean-forward="false" selection-start-line="129" selection-start-column="33" selection-end-line="129" selection-end-column="33" />
+        <state relative-caret-position="515">
+          <caret line="137" column="68" lean-forward="false" selection-start-line="137" selection-start-column="68" selection-end-line="137" selection-end-column="68" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
+            <element signature="e#1018#1608#0" expanded="false" />
             <element signature="e#1700#1791#0" expanded="false" />
             <element signature="e#1880#2051#0" expanded="false" />
+            <element signature="e#2121#2125#0" expanded="false" />
           </folding>
         </state>
       </provider>
