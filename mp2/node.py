@@ -40,6 +40,7 @@ class Node(Thread):
     file = None
     messager = None
 
+    # []
     transactionMessages = []
     introductionMessages = []
     serviceIntroductionMessages = []
@@ -126,10 +127,8 @@ class Node(Thread):
         message = message.split()
         if ("TRANSACTION" in message):
             print("~~got transaction from " +str(addr) + " ~~")
-
-            splitMessage = message.split("@")
-            ip, port = splitMessage[0].split(":")
-            message2send = splitMessage[1]
+            ip, port = message[0].split(":")
+            message2send = message[1:]
 
             self.transactionMessages.append(message2send)
             self.sock.sendto("REPLY \n".encode('utf-8'), (ip, int(port)))
@@ -138,9 +137,8 @@ class Node(Thread):
         elif ("INTRODUCE" in message):
             self.introductionMessages.append(message)
         elif ("REPLY" in message):
+            print("~~ got reply from " + str(addr) + "~~")
 
-
-            print("~~ got reply from " + str(addr) + " ~~")
             pass
 
     def serviceRead(self):
@@ -318,7 +316,7 @@ class Node(Thread):
                         ip, port = address
                         port = int(port)
                         if(address not in self.sentMessagesByAddress.keys()):
-                            transMessage = str(self.ip)+ ":" + str(self.port) + "@ " + str(" ".join(transMessage))
+                            transMessage = str(self.ip)+ ":" + str(self.port) + " " + str(" ".join(transMessage))
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] = [transMessage]
