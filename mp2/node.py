@@ -280,13 +280,14 @@ class Node(Thread):
             else:
                 transactionsToSend = sortedTranscations[-5:]
 
-            print("transactionsToSend")
-            for trans in transactionsToSend:
-                print(trans)
+            # print("transactionsToSend")
+            # for trans in transactionsToSend:
+            #     print(trans)
 
-            print("IPs to receive messages")
-            for ip in readyToSend:
-                print(ip)
+            if(len(readyToSend) > 0):
+                print("IPs to receive messages")
+                for ip in readyToSend:
+                    print(ip)
 
 
             ######## WRITE TO OTHER NODES
@@ -309,8 +310,8 @@ class Node(Thread):
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
-            time.sleep(4)
-            #time.sleep(0.0001)
+            #time.sleep(1)
+            time.sleep(0.0001)
 
 
         print("Run event unset!")
