@@ -194,6 +194,7 @@ class Node(Thread):
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
                     # put it in the list of live addresses
                     self.liveAddresses.append((vmIP, vmPort))
+
             self.serviceIntroductionMessages = []
 
         ## NODE STUFF
@@ -234,6 +235,10 @@ class Node(Thread):
 
     ## Figure out which addresses to send to
 
+            print("liveAddresses")
+            for add in self.liveAddresses:
+                print(add)
+                
             # Shuffle the live addresses
             random.shuffle(self.liveAddresses)
 
@@ -289,7 +294,7 @@ class Node(Thread):
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
-            time.sleep(1)
+            time.sleep(4)
             #time.sleep(0.0001)
 
 
