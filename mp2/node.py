@@ -161,6 +161,8 @@ class Node(Thread):
 
 #######################################
 
+timer = 0
+
     def run(self):
 
         self.initServer()
@@ -287,7 +289,7 @@ class Node(Thread):
             # for trans in transactionsToSend:
             #     print(trans)
 
-            if(len(readyToSend) > 0):
+            if(len(readyToSend) > 0 and (timer % 100000) == 0):
                 print("IPs to receive messages")
                 for ip in readyToSend:
                     print(ip)
