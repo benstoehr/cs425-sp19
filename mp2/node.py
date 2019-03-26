@@ -78,7 +78,6 @@ class Node(Thread):
 
         self.messager = Messager()
 
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     # TODO:
     # Initialize server

@@ -141,7 +141,7 @@ class mp2Server(object):
             #self.serviceSocket = None
             print("Error connection to service!")
 
-        print("Done reading from service!")
+        self.openSocket()
 
     def readFromService(self):
         try:
