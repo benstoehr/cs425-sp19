@@ -139,7 +139,7 @@ class Node(Thread):
             ############### READ ALL MESSAGES ###################
             ## Read until no messages
             while(1):
-                print("serviceRead()")
+                #print("serviceRead()")
                 serviceMessage = self.serviceRead()
                 serviceMessageType = self.messager.getMessageType(serviceMessage)
                 if(serviceMessageType is not None):
@@ -149,7 +149,7 @@ class Node(Thread):
 
             ## Read until no messages
             while(1):
-                print("read()")
+                #print("read()")
                 message = self.read()
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
@@ -160,7 +160,7 @@ class Node(Thread):
             ######## WRITE TO OTHER NODES
 
 
-            #time.sleep(0.2)
+            time.sleep(0.01)
 
 
         print("Run event unset!")
