@@ -71,7 +71,7 @@ class Node(Thread):
 
         self.ip = socket.gethostbyname(self.host)
         print("self.ip:" + str(self.ip))
-        
+
         self.port = MY_PORT
         self.service_ip = SERVICE_IP
 
@@ -310,7 +310,7 @@ class Node(Thread):
                         ip, port = address
                         port = int(port)
                         if(address not in self.sentMessagesByAddress.keys()):
-                            transMessage = str(self.ip)str(" ".join(transMessage))
+                            transMessage = str(self.ip)+ ":" + str(self.port) + "@ " + str(" ".join(transMessage))
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] = [transMessage]
