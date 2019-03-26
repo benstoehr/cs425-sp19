@@ -163,10 +163,12 @@ class Node(Thread):
 
 #######################################
 
-timer = 0
+
 
     def run(self):
 
+        timer = 0
+        
         self.initServer()
         self.startServer()
 
