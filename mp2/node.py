@@ -85,7 +85,7 @@ class Node(Thread):
             pass
         else:
             stripped = message.strip()
-            print("New Message: " + str(stripped))
+            print(str(self.name) + ": " + str(stripped))
             self.file.write(message)
 
         return message
@@ -105,7 +105,7 @@ class Node(Thread):
             pass
         else:
             stripped = messageFromService.strip()
-            print(str(stripped))
+            print(str(self.name) + ":" + str(stripped))
             self.file.write(messageFromService)
 
         return messageFromService
@@ -154,7 +154,9 @@ class Node(Thread):
 
             ######## WRITE TO OTHER NODES
 
-            time.sleep(0.25)
+
+
+            #time.sleep(0.25)
 
         print("Run event unset!")
 
