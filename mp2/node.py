@@ -246,9 +246,9 @@ class Node(Thread):
 
     ## Figure out which addresses to send to
 
-            print("liveAddresses")
-            for add in self.liveAddresses:
-                print(add)
+            # print("liveAddresses")
+            # for add in self.liveAddresses:
+            #     print(add)
 
             # Shuffle the live addresses
             random.shuffle(self.liveAddresses)
