@@ -324,7 +324,7 @@ class Node(Thread):
                             self.sentMessagesByAddress[address] = [transMessage]
                         else:
                             transMessage = str(" ".join(transMessage))
-                            print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
+                            transMessage = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
                             self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] += [transMessage]
 
