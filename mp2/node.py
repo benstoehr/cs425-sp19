@@ -294,9 +294,10 @@ class Node(Thread):
             if(len(transactionsToSend) > 0):
                 for transMessage in transactionsToSend:
                     for address in readyToSend:
-                        if(transMessage not in self.sentMessagesByAddress[address]):
-                            self.sock.sendto(transMessage, address)
-                            self.sentMessagesByAddress[address] += [transMessage]
+                        if(address in self.sentMessagesByAddress.keys()):
+                            if(transMessage not in self.sentMessagesByAddress[address]):
+                                self.sock.sendto(transMessage, address)
+                                self.sentMessagesByAddress[address] += [transMessage]
 
                 # only remove stuff if it was sent
                 for i in range(len(readyToSendLive)):
