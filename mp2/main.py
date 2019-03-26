@@ -95,16 +95,15 @@ for i in range(NUM_NODES):
     new_node.start()
     nodes.append(new_node)
 
+
 done = False
-
-
 while(not done):
 
     shutdownCheck = True
 
     for node in nodes:
+        
         stat = node.status
-
         if(node.status == "shutdown"):
             print(str(node.name) + ": " + str(node.status))
             pass
@@ -113,6 +112,8 @@ while(not done):
 
     if(shutdownCheck == True):
         break
+
+    time.sleep(0.1)
 
 print("main.py: DONE!")
 
