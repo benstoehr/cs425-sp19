@@ -82,7 +82,7 @@ class Node(Thread):
         message = self.serv.read()
         if (message == "0"):
             # print("No message from Nodes")
-            return None
+            pass
         else:
             stripped = message.strip()
             print("New Message: " + str(stripped))
@@ -102,7 +102,7 @@ class Node(Thread):
         messageFromService = self.serv.readFromService()
         if (messageFromService == "0"):
             # print("No message from Service")
-            return None
+            pass
         else:
             stripped = messageFromService.strip()
             print(str(stripped))
