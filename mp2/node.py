@@ -62,6 +62,7 @@ class Node(Thread):
 
     def shutdown(self):
         self.serv.shutdown()
+        print(str(self.name) + " Exiting")
 
     def run(self):
 
@@ -79,6 +80,7 @@ class Node(Thread):
             else:
                 print("Service: " + str(messageFromService))
                 self.file.write(messageFromService)
+
             message = self.serv.read()
             if (message == "0"):
                 #print("No message from Nodes")
@@ -88,8 +90,6 @@ class Node(Thread):
                 self.file.write(message)
 
             time.sleep(0.5)
-
-
 
         print("Run event unset!")
 
