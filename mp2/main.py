@@ -103,7 +103,7 @@ while(not done):
     shutdownCheck = True
 
     for node in nodes:
-        if(node.status == "Shutdown"):
+        if(node.status == "shutdown"):
             pass
         else:
             shutdownCheck = False
