@@ -31,6 +31,8 @@ class Node(Thread):
     port = None
     serv = None
 
+    file = None
+
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
 
@@ -43,6 +45,9 @@ class Node(Thread):
         self.service_ip = SERVICE_IP
         self.service_port = SERVICE_PORT
         self.event = event
+
+        filename = str(self.name) + "txt"
+        self.file = open(filename, "w+")
 
 
     # TODO:
@@ -65,7 +70,7 @@ class Node(Thread):
 
         while (self.event.is_set()):
 
-            print("Node DONE initializing!")
+            #print("Node DONE initializing!")
 
             messageFromService = self.serv.readFromService()
             if(messageFromService == "0"):
@@ -73,12 +78,14 @@ class Node(Thread):
                 pass
             else:
                 print("Service: " + str(messageFromService))
+                self.file.write(messageFromService)
             message = self.serv.read()
             if (message == "0"):
                 #print("No message from Nodes")
                 pass
             else:
                 print("New Message: " + str(message))
+                self.file.write(message)
 
             time.sleep(0.5)
 
