@@ -168,7 +168,7 @@ class Node(Thread):
     def run(self):
 
         timer = 0
-        
+
         self.initServer()
         self.startServer()
 
@@ -246,7 +246,7 @@ class Node(Thread):
             for address, count in self.pendingAddresses.items():
                 new_count = count + 1
                 # change this to be the number of rounds before addresses are "dead"
-                if (new_count > 10):
+                if (new_count > 10000000):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
                     self.deadAddresses.append(address)
@@ -293,7 +293,7 @@ class Node(Thread):
             # for trans in transactionsToSend:
             #     print(trans)
 
-            if(len(readyToSend) > 0 and (timer % 100000) == 0):
+            if(len(readyToSend) > 0 and (timer % 100000000) == 0):
                 print("IPs to receive messages")
                 for ip in readyToSend:
                     print(ip)
@@ -305,6 +305,7 @@ class Node(Thread):
                     for address in readyToSend:
                         if(address in self.sentMessagesByAddress.keys()):
                             if(transMessage not in self.sentMessagesByAddress[address]):
+                                print("!! sending message to " + str(address) + " !!")
                                 self.sock.sendto(transMessage, address)
                                 self.sentMessagesByAddress[address] += [transMessage]
 
