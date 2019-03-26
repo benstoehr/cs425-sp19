@@ -326,15 +326,16 @@ class Node(Thread):
                         port = int(port)
 
                         print("!! " + str(transMessage) + " > " + str(address) + " !!")
-                        transMessage = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
+                        message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        if(transMessage not in self.sentMessagesByAddress[(ip,port)]):
-                            self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
+                        if((ip, port) not in self.sentMessagesByAddress.keys()):
+                            self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                            self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
-                        if(address not in self.sentMessagesByAddress.keys()):
-                            self.sentMessagesByAddress[(ip,port)] = [transMessage]
                         else:
-                            self.sentMessagesByAddress[(ip,port)] += [transMessage]
+                            if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
+                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                self.sentMessagesByAddress[(ip, port)] += [transMessage]
 
                 # only remove stuff if it was sent
                 for i in range(len(readyToSendLive)):
