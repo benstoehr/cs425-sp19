@@ -68,8 +68,13 @@ class Node(Thread):
         print("self.host: " + str(self.host))
 
         self.name = name
+
+        self.ip = socket.gethostbyname(self.host)
+        print("self.ip:" + str(self.ip))
+        
         self.port = MY_PORT
         self.service_ip = SERVICE_IP
+
         self.service_port = SERVICE_PORT
         self.event = event
 
@@ -305,7 +310,7 @@ class Node(Thread):
                         ip, port = address
                         port = int(port)
                         if(address not in self.sentMessagesByAddress.keys()):
-                            transMessage = str(" ".join(transMessage))
+                            transMessage = str(self.ip)str(" ".join(transMessage))
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] = [transMessage]
