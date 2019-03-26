@@ -147,8 +147,8 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
             self.transactionMessages.append(message)
-            for tm in self.transactionMessages:
-                print(tm)
+            # for tm in self.transactionMessages:
+            #     print(tm)
             return
         elif ("INTRODUCE" in message):
             print("~~got introduction~~")
