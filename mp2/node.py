@@ -206,7 +206,7 @@ class Node(Thread):
 
 
             ## Sort the transactions
-            sortedTranscations = sorted(set(self.transactionMessages), key=sortFunction)
+            sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
             transactionsToSend = None
             if (len(sortedTranscations) < 5):
                 transactionsToSend = sortedTranscations
