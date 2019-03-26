@@ -135,11 +135,15 @@ class Node(Thread):
         return messageFromService
 
     def handleServiceMessage(self, message):
+
         message = message.split()
         if ("TRANSACTION" in message):
             self.transactionMessages.append(message)
+            return
         elif ("INTRODUCTION" in message):
+            print("~~got introduction~~")
             self.serviceIntroductionMessages.append(message)
+            return
         elif ("QUIT" in message):
             #TODO:
             pass
