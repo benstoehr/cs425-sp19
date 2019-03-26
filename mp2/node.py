@@ -106,7 +106,7 @@ class Node(Thread):
 
     def read(self):
         message, addr = self.serv.read()
-        print("read() -> got message, addr")
+        #print("read() -> got message, addr")
         if (message is not None):
             print("Got message in read() call!")
             stripped = message.strip()
@@ -188,7 +188,7 @@ class Node(Thread):
         ## SERVICE STUFF
             ## Read until no messages
             while(1):
-                print("serviceRead()")
+                #print("serviceRead()")
                 serviceMessages = self.serviceRead()
                 if(serviceMessages is None):
                     break
@@ -213,10 +213,10 @@ class Node(Thread):
         ## NODE STUFF
             ## Read until no messages
             while(1):
-                print("read()")
+                #print("read()")
                 # addr = ipANDport = (ip, port)
                 message, addr = self.read()
-                print("post read()")
+                #print("post read()")
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)

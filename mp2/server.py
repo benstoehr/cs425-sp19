@@ -162,9 +162,9 @@ class mp2Server(object):
 
         try:
             # addr = (IP, PORT)
-            print("about to recvfrom")
+            #print("about to recvfrom")
             message, ipANDport = self.sock.recvfrom(1024)
-            print("after recvfrom")
+            #print("after recvfrom")
             # firstMessageLength = self.serviceSocket.recv(1024)
             # print("firstMessage: " +str(firstMessageLength))
         except socket.error as error_msg:
