@@ -301,16 +301,18 @@ class Node(Thread):
                     print(ip)
 
                 for transMessage in transactionsToSend:
-                    for ip, port in readyToSend:
+                    for address in readyToSend:
+                        ip, port = address
+                        port = int(port)
                         if(address not in self.sentMessagesByAddress.keys()):
                             transMessage = str(" ".join(transMessage))
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
-                            self.sock.sendto(transMessage.encode('utf-8'), address)
+                            self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] = [transMessage]
                         else:
                             transMessage = str(" ".join(transMessage))
                             print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
-                            self.sock.sendto(transMessage.encode('utf-8'), (ip, int(port)))
+                            self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] += [transMessage]
 
                 # only remove stuff if it was sent
