@@ -128,7 +128,6 @@ class Node(Thread):
 
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
-        messagesFromService = None
         if (messageFromService is not None):
             messagesFromService = messageFromService.split("\n")
             for mess in messagesFromService:
@@ -136,7 +135,8 @@ class Node(Thread):
                 print(str(self.name) + ":" + str(stripped))
                 self.file.write(mess)
 
-        return messagesFromService
+            return messagesFromService
+        return None
 
     def handleServiceMessage(self, message):
         message = message.split()
@@ -187,12 +187,13 @@ class Node(Thread):
             while(1):
                 #print("serviceRead()")
                 serviceMessages = self.serviceRead()
+                if(serviceMessages is None):
+                    break
                 for serviceMessage in serviceMessages:
                     serviceMessageType = self.messager.getMessageType(serviceMessage)
                     if(serviceMessageType is not None):
                         self.handleServiceMessage(serviceMessage)
-                    else:
-                        break
+
             ######## Update list of IPs from node messages
             for serviceIntroMessage in self.serviceIntroductionMessages:
                 print("Converting message to dictionary entry and adding to liveAddresses")
