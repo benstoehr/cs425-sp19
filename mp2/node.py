@@ -1,4 +1,3 @@
-
 import socketserver as ss
 import parser
 import socket
@@ -65,7 +64,8 @@ class Node(Thread):
         self.startServer()
 
         while (self.event.is_set()):
-            print("Node DONE")
+            #print("Node DONE")
+            pass
 
 
 

@@ -1,4 +1,3 @@
-
 import socketserver as ss
 import parser
 import socket
@@ -20,7 +19,6 @@ def sortFunction(x):
 
 class mp2Server(object):
 
-
     status = None
 
     hostname = None
@@ -41,7 +39,6 @@ class mp2Server(object):
     serviceReadAttempts = 0
     serviceMessageCount = 0
 
-
     transactionMessages = []
     introductionMessages = []
 
@@ -56,47 +53,23 @@ class mp2Server(object):
         self.event = EVENT
 
         self.status = "Initializing"
-        self.sock = socket.socket()
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.hostname = socket.gethostname()
         self.ip = socket.gethostbyname(self.hostname)
 
         print("hostname: " + str(self.hostname))
 
-        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.settimeout(0.5)
+        #self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        #self.sock.settimeout(0.5)
 
         self.sock.bind((self.hostname, MY_PORT))
-        self.sock.listen(10)
-
-    def acceptConnection(self):
-
-        connection = None
-        ip_and_port = None
-
-        try:
-            self.sock.settimeout(0.25)
-            connection, (ip, port) = self.sock.accept()
-            print("Accepted connection from: " +str(ip))
-
-            if (connection is not None):
-                if (ip in self.connections.items()):
-                    connection.send("ALREADYCONNECTED\n".encode('utf-8'))
-                    connection.close()
-                else:
-                    connection.send("FRESHCONNECTION\n".encode('utf-8'))
-                    # ip_and_port -> (connection, port, number_of_reads, number_received_messages, messages)
-                    self.connections[ip] = (connection, port, 0, 0, 0, [])
-
-        except socket.error as error_msg:
-            self.acceptAttempts += 1
-            #print(error_msg)
 
     def connect2Service(self):
 
         try:
+            # Setup TCP socket
             self.serviceSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.serviceSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
             print("self.service_ip: " + str(self.service_ip))
 
             connectionCheck = self.serviceSocket.connect((self.service_ip, self.service_port))
@@ -110,7 +83,6 @@ class mp2Server(object):
             print(error_msg)
 
     def readFromService(self):
-
         try:
             self.serviceReadAttempts += 1
             message = (self.serviceSocket.recv(1024)).decode('utf-8')
@@ -130,63 +102,17 @@ class mp2Server(object):
         # timeout, keep going
         except socket.error as error_msg:
             # print(error_msg)
-            # print("recv timeout")
+            print("No message from Service")
             pass
 
-    def connectToNewNodes(self):
+    def addNodes(self):
 
         for introduction in self.introductionMessages:
             ip = introduction.strip("\n").split(" ")[2]
             port = int(introduction.strip("\n").split(" ")[3])
-            if(ip not in self.connections.keys()):
-                self.connect2Node(ip,port)
 
-    def connect2Node(self, ip, port):
+            #TODO: Add ip and port to list of (active) connections
 
-        try:
-            nu_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            nu_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
-            if(ip not in self.connections.keys()):
-                connectionCheck = nu_socket.connect((ip, port))
-                if(connectionCheck == -1):
-                    print("connectionCheck: " + str(-1))
-
-                nu_socket.setblocking(0)
-                self.connections[ip] = (nu_socket, port, 0, 0, 0, [])
-
-        except socket.error as error_msg:
-            print(error_msg)
-
-    def readFromNodes(self):
-
-        for ip, (connection, port, num_reads, num_messages_read, num_sends, messages) in self.connections.items():
-
-            # try to read from node
-            try:
-                num_reads += 1
-
-                message = str(connection.recv(1024))
-                if(len(message) == 0):
-                    print("Connection to " + str(ip) + ":" + str(port) + " closed!")
-                    self.connections[ip] = (None, port, num_reads, num_messages_read, num_sends, messages)
-                    continue
-
-                num_messages_read += 1
-                print(str(self.name) + ": " + str(num_reads) + ": " + str(message))
-
-                splitMessage = message.strip().split(" ")
-                print(splitMessage)
-
-                if (splitMessage[0] == "TRANSACTION"):
-                    if(message not in self.transactionMessages):
-                        self.transactionMessages.append(message)
-                elif (splitMessage[0] == "INTRODUCE"):
-                    if(message not in self.introductionMessages):
-                        self.introductionMessages.append(message)
-
-            except socket.error as error_msg:
-                print(error_msg)
 
     def sendToNodes(self, last5Messages):
 

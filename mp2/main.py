@@ -1,6 +1,5 @@
 from node import Node
 
-
 #import socketserver as ss
 import parser
 import socket
@@ -65,8 +64,12 @@ print("Service Port: " + str(SERVICE_PORT))
 ## SELF INFO
 hostname = HOST.strip()
 hostnameSplit = hostname.split("-")
-vmWithIllinoisDotEDU = hostnameSplit[3]
-vmNumber = vmWithIllinoisDotEDU.split(".")[0]
+print(hostnameSplit)
+
+vmNumber = 0
+if(hostnameSplit[0] == "sp19"):
+    vmWithIllinoisDotEDU = hostnameSplit[3]
+    vmNumber = vmWithIllinoisDotEDU.split(".")[0]
 
 portNumbers = []
 nodes = []
@@ -86,9 +89,9 @@ for i in range(NUM_NODES):
 
     nodeName = "vm" + str(vmNumber) + "node" + str(i)
     print("nodeName: " + str(nodeName))
-    
-    #new_node = Node(SERVICE_IP, SERVICE_PORT, "vmnode"+str(i), port, run_event)
-    #new_node.start()
+
+    new_node = Node(SERVICE_IP, SERVICE_PORT, nodeName, port, run_event)
+    new_node.start()
     #nodes.append(new_node)
 
 

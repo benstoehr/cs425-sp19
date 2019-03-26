@@ -23,8 +23,8 @@ def read_data(filename):
 	raw = []
 	with open(filename, 'r') as f:
 		for line in f:
-	    	record = line.split(' ') # separating sign to be checked
-	    	raw.append(record)
+			record = line.split(' ') # separating sign to be checked
+			raw.append(record)
 
 	# columns TBD
 	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNum', 'bytes']
