@@ -132,6 +132,7 @@ class Node(Thread):
 
             self.transactionMessages.append(message2send)
             self.sock.sendto("REPLY \n".encode('utf-8'), (ip, int(port)))
+            self.liveAddresses.append((ip,int(port)))
 
         # Assume you will only get good messages
         elif ("INTRODUCE" in message):
@@ -149,7 +150,6 @@ class Node(Thread):
                 stripped = messageFromService.strip()
                 #print(str(self.name) + ":" + str(stripped))
                 self.file.write(mess)
-
             return messagesFromService
         return None
 
@@ -258,7 +258,7 @@ class Node(Thread):
             for address, count in self.pendingAddresses.items():
                 new_count = count + 1
                 # change this to be the number of rounds before addresses are "dead"
-                if (new_count > 100000):
+                if (new_count > 10):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
                     self.deadAddresses.append(address)
