@@ -31,7 +31,7 @@ run_event = threading.Event()
 run_event.set()
 
 ## Define Signal Handler
-def signal_handler(signal, frame):
+def signal_handler(sig, frame):
     print("You pressed Control+C!")
     #client.shutdown()
     for node in nodes:
