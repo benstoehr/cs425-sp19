@@ -69,7 +69,7 @@ class Node(Thread):
             message = self.serv.read()
             print(message)
 
-            pass
+            time.sleep(0.5)
 
 
 

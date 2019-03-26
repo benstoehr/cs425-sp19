@@ -181,7 +181,15 @@ class mp2Server(object):
 
 
     def read(self):
-        message = self.sock.recvfrom(1024)
+
+        try:
+            message, addr = self.sock.recvfrom(1024)
+            # firstMessageLength = self.serviceSocket.recv(1024)
+            # print("firstMessage: " +str(firstMessageLength))
+        except socket.error as error_msg:
+            # self.serviceSocket = None
+            print("No message to receive!")
+
         return message
 
 
