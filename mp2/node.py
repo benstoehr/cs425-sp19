@@ -70,6 +70,7 @@ class Node(Thread):
         self.serv.start()
 
     def shutdown(self):
+
         print(str(self.name) + " shutting down")
         self.serv.shutdown()
         self.file.close()
@@ -157,9 +158,10 @@ class Node(Thread):
 
             #time.sleep(0.2)
 
-        self.shutdown()
+
 
         print("Run event unset!")
+        self.shutdown()
 
 
 

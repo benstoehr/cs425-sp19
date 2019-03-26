@@ -34,8 +34,8 @@ run_event.set()
 def signal_handler(sig, frame):
     print("You pressed Control+C!")
     #client.shutdown()
-    for node in nodes:
-        node.shutdown()
+    # for node in nodes:
+    #     node.shutdown()
 
     run_event.clear()
     done = True
@@ -103,6 +103,9 @@ while(not done):
     shutdownCheck = True
 
     for node in nodes:
+        stat = node.status
+        print(str(node.name) + ": " +str(node.status))
+
         if(node.status == "shutdown"):
             pass
         else:
