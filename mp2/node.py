@@ -128,7 +128,7 @@ class Node(Thread):
         print("handleMessage: " + str(message))
         message = message.split()
         ip, port = message[0].split(":")
-        message2send = message[1]
+        message2send = message[1:]
 
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
