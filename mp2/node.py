@@ -65,6 +65,10 @@ class Node(Thread):
 
         while (self.event.is_set()):
             #print("Node DONE")
+
+            message = self.serv.read()
+            print(message)
+
             pass
 
 

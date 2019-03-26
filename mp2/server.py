@@ -177,6 +177,7 @@ class mp2Server(object):
 
     def read(self):
         message = self.sock.recvfrom(1024)
+        return message
 
 
 
