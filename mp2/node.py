@@ -124,13 +124,15 @@ class Node(Thread):
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
+
         print("handleMessage: " + str(message))
         message = message.split()
-        if ("TRANSACTION" in message):
-            print("~~got transaction from " +str(addr) + " ~~")
-            ip, port = message[0].split(":")
+        ip, port = message[0].split(":")
+        message2send = message[1]
 
-            message2send = message[1:]
+        if ("TRANSACTION" in message2send):
+            #print("~~got transaction from " +str(addr) + " ~~")
+
             self.transactionMessages.append(message2send)
 
             replyMessage = "REPLY "+str(self.ip)+":"+str(self.port)
@@ -138,10 +140,11 @@ class Node(Thread):
             self.liveAddresses.append((ip,int(port)))
 
         # Assume you will only get good messages
-        elif ("INTRODUCE" in message):
+        elif ("INTRODUCE" in message2send):
             self.introductionMessages.append(message)
-        elif ("REPLY" in message):
-            print("~~ got reply from " + str(addr) + "~~")
+        elif ("REPLY" in message2send):
+            #print("~~ got reply from " + str(addr) + "~~")
+            pass
 
 
     def serviceRead(self):
@@ -309,9 +312,9 @@ class Node(Thread):
                 print("transactionsToSend")
                 for t in transactionsToSend:
                     print(t)
-                print("readyTpSend")
+                print("readyToSend")
                 for ip in readyToSend:
-                    print(ip)
+                    print("\t" + str(ip))
 
                 for transMessage in transactionsToSend:
                     for address in readyToSend:
