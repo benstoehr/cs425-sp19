@@ -165,15 +165,13 @@ class mp2Server(object):
         try:
             self.serviceReadAttempts += 1
             message = (self.serviceSocket.recv(1024)).decode('utf-8')
-
-            print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
-
+            #print(str(self.name) + ": " + str(self.serviceMessageCount) + ": " + str(message))
             self.serviceMessageCount += 1
 
         # timeout, keep going
         except socket.error as error_msg:
             # print(error_msg)
-            print("No message from Service")
+            #print("No message from Service")
             return "0"
 
         return message
@@ -187,7 +185,7 @@ class mp2Server(object):
             # print("firstMessage: " +str(firstMessageLength))
         except socket.error as error_msg:
             # self.serviceSocket = None
-            print("No message to receive!")
+            #print("No message to receive!")
             return "0"
 
         return message
