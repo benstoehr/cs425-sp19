@@ -270,10 +270,12 @@ class Node(Thread):
                 transactionsToSend = sortedTranscations[-5:]
 
             print("transactionsToSend")
-            print(transactionsToSend)
+            for trans in transactionsToSend:
+                print(trans)
 
             print("IPs to receive messages")
-            print(readyToSend)
+            for ip in readyToSend:
+                print(ip)
 
 
             ######## WRITE TO OTHER NODES
