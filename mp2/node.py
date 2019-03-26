@@ -135,7 +135,7 @@ class Node(Thread):
 
         while (1):
 
-            if(self.event.is_set()):
+            if(self.event.isSet()):
                 break
 
             #print("Loop")
@@ -161,7 +161,7 @@ class Node(Thread):
                     break
 
             ######## WRITE TO OTHER NODES
-            time.sleep(0.001)
+            #time.sleep(0.001)
 
 
         print("Run event unset!")
