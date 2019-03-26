@@ -78,7 +78,8 @@ class Node(Thread):
                 #print("No message from Service")
                 pass
             else:
-                print("Service: " + str(messageFromService))
+                stripped = messageFromService.strip()
+                print(str(stripped))
                 self.file.write(messageFromService)
 
             message = self.serv.read()
@@ -86,7 +87,8 @@ class Node(Thread):
                 #print("No message from Nodes")
                 pass
             else:
-                print("New Message: " + str(message))
+                stripped = message.strip()
+                print("New Message: " + str(stripped))
                 self.file.write(message)
 
             time.sleep(0.5)
