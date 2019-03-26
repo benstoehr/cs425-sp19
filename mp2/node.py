@@ -161,7 +161,7 @@ class Node(Thread):
                     break
 
             ######## WRITE TO OTHER NODES
-            time.sleep(0.01)
+            time.sleep(0.001)
 
 
         print("Run event unset!")
