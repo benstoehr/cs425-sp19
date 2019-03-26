@@ -106,7 +106,6 @@ class Node(Thread):
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
 
-
 #### List manipulation
     def getNameAndPortFromIP(self):
         pass
