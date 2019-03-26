@@ -62,6 +62,7 @@ class Node(Thread):
 
     def shutdown(self):
         self.serv.shutdown()
+        self.file.close()
         print(str(self.name) + " Exiting")
 
     def run(self):
