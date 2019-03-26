@@ -122,7 +122,7 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             print("~~got transaction from " +str(addr) + " ~~")
             self.transactionMessages.append(message)
-            self.sock.sendto("REPLY\n", addr)
+            self.sock.sendto("REPLY \n".encode('utf-8'), addr)
         # Assume you will only get good messages
         elif ("INTRODUCE" in message):
             self.introductionMessages.append(message)
@@ -247,7 +247,7 @@ class Node(Thread):
             for address, count in self.pendingAddresses.items():
                 new_count = count + 1
                 # change this to be the number of rounds before addresses are "dead"
-                if (new_count > 10000000):
+                if (new_count > 100000):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
                     self.deadAddresses.append(address)
