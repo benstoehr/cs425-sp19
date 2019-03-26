@@ -104,7 +104,6 @@ while(not done):
 
     for node in nodes:
         stat = node.status
-        print(str(node.name) + ": " +str(node.status))
 
         if(node.status == "shutdown"):
             print(str(node.name) + ": " + str(node.status))
