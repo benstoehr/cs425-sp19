@@ -188,7 +188,7 @@ class Node(Thread):
         ## SERVICE STUFF
             ## Read until no messages
             while(1):
-                #print("serviceRead()")
+                print("serviceRead()")
                 serviceMessages = self.serviceRead()
                 if(serviceMessages is None):
                     break
@@ -213,7 +213,7 @@ class Node(Thread):
         ## NODE STUFF
             ## Read until no messages
             while(1):
-                #print("read()")
+                print("read()")
                 # addr = ipANDport = (ip, port)
                 message, addr = self.read()
                 messageType = self.messager.getMessageType(message)
