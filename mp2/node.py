@@ -59,6 +59,8 @@ class Node(Thread):
     unknownAddresses = []
 
     sentMessagesByAddress = dict()
+    receivedMessagesByAddress = dict()
+
     sock = None
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
@@ -132,6 +134,10 @@ class Node(Thread):
         port = int(port)
 
         message2send = message[1:]
+        if((ip,port) not in self.receivedMessagesByAddress.keys()):
+            self.receivedMessagesByAddress[(ip,port)] = message2send
+        else:
+            self.receivedMessagesByAddress[(ip, port)] += message2send
 
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
@@ -334,8 +340,9 @@ class Node(Thread):
 
                         else:
                             if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
-                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-                                self.sentMessagesByAddress[(ip, port)] += [transMessage]
+                                if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
+                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                    self.sentMessagesByAddress[(ip, port)] += [transMessage]
 
                 # only remove stuff if it was sent
                 for i in range(len(readyToSendLive)):
