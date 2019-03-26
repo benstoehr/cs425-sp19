@@ -118,12 +118,14 @@ class Node(Thread):
     def handleMessage(self, message, addr):
         message = message.split()
         if ("TRANSACTION" in message):
+            print("~~got transaction from " +str(addr) + " ~~")
             self.transactionMessages.append(message)
+            self.sock.sendto("REPLY\n", addr)
         # Assume you will only get good messages
         elif ("INTRODUCE" in message):
             self.introductionMessages.append(message)
         elif ("REPLY" in message):
-            #self.pendingAddresses.remove()
+            print("~~ got reply from " + str(addr) + " ~~")
             pass
 
     def serviceRead(self):
@@ -141,7 +143,7 @@ class Node(Thread):
     def handleServiceMessage(self, message):
         message = message.split()
         if ("TRANSACTION" in message):
-            print("~~got transaction~~")
+            print("~~got transaction from service~~")
             self.transactionMessages.append(message)
             return
         elif ("INTRODUCE" in message):
