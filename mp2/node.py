@@ -311,7 +311,7 @@ class Node(Thread):
             if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
                 print("transactionsToSend")
                 for t in transactionsToSend:
-                    print(t)
+                    print("\t" + str(t))
                 print("readyToSend")
                 for ip in readyToSend:
                     print("\t" + str(ip))
@@ -322,7 +322,7 @@ class Node(Thread):
                         port = int(port)
                         if(address not in self.sentMessagesByAddress.keys()):
                             transMessage = str(self.ip)+ ":" + str(self.port) + " " + str(" ".join(transMessage))
-                            print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
+                            print("!! " + str(transMessage[]) + " > " + str(address) + " !!")
                             self.sock.sendto(transMessage.encode('utf-8'), (ip, port))
                             self.sentMessagesByAddress[address] = [transMessage]
                         else:
