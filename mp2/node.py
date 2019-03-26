@@ -298,18 +298,15 @@ class Node(Thread):
 
             ######## WRITE TO OTHER NODES
             if(len(transactionsToSend) > 0):
-
-                print("transactionsToSend")
                 for transMessage in transactionsToSend:
-                    print(transMessage)
-
                     for address in readyToSend:
+
                         if(address not in self.sentMessagesByAddress.keys()):
-                            print("!! sending message to " + str(address) + " !!")
+                            print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage, address)
                             self.sentMessagesByAddress[address] = [transMessage]
                         else:
-                            print("!! sending message to " + str(address) + " !!")
+                            print("!! sending " + str(transMessage) + " to " + str(address) + " !!")
                             self.sock.sendto(transMessage, address)
                             self.sentMessagesByAddress[address] += [transMessage]
 
