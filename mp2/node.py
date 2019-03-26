@@ -132,7 +132,7 @@ class Node(Thread):
         self.startServer()
 
         self.status = "running"
-        
+
         while (self.event.is_set()):
 
             #print("Loop")
@@ -159,7 +159,6 @@ class Node(Thread):
 
 
             #time.sleep(0.2)
-
 
 
         print("Run event unset!")
