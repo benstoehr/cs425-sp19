@@ -42,6 +42,8 @@ class Node(Thread):
 
     transactionMessages = []
     introductionMessages = []
+    serviceIntroductionMessages = []
+
     replyMessages = []
 
     nameIPPortList = []
@@ -135,7 +137,7 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             self.transactionMessages.append(message)
         elif ("INTRODUCTION" in message):
-            self.introductionMessages.append(message)
+            self.serviceIntroductionMessages.append(message)
         elif ("QUIT" in message):
             #TODO:
             pass
@@ -170,6 +172,17 @@ class Node(Thread):
                 else:
                     break
 
+            ######## Update list of IPs from node messages
+            for serviceIntroMessage in self.serviceIntroductionMessages:
+                vmname = serviceIntroMessage[1]
+                vmIP = serviceIntroMessage[2]
+                vmPort = serviceIntroMessage[3]
+                if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
+                    # Put it in the dictionary with the name
+                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
+                    # put it in the list of live addresses
+                    self.liveAddresses.append((vmIP, vmPort))
+
             ## Read until no messages
             while(1):
                 #print("read()")
@@ -181,17 +194,14 @@ class Node(Thread):
                 else:
                     break
 
-            ######## Update list of IPs
+            ######## Update list of IPs from node messages
             for introMessage in self.introductionMessages:
                 vmname = introMessage[1]
                 vmIP = introMessage[2]
                 vmPort = introMessage[3]
                 if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
                     # Put it in the dictionary with the name
-                    self.ipAndport2Name[(vmIP, vmPort)] = vmname
-                    # maybe not?
-                    # put it in the list of live addresses
-                    #self.liveAddresses.append((vmIP, vmPort))
+                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
 
             self.introductionMessages = []
 
@@ -211,7 +221,7 @@ class Node(Thread):
             if (len(sortedTranscations) < 5):
                 transactionsToSend = sortedTranscations
             else:
-                transactionsToSend = sortedTranscations[:-5]
+                transactionsToSend = sortedTranscations[-5:]
 
             print("transactionsToSend")
             print(transactionsToSend)
