@@ -57,6 +57,7 @@ class Node(Thread):
     deadAddresses = []
     unknownAddresses = []
 
+    sentMessagesByAddress = dict()
     sock = None
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
@@ -258,22 +259,17 @@ class Node(Thread):
             else:
                 readyToSendLive = self.liveAddresses[:3]
 
-            for i in range(len(readyToSendLive)):
-                self.pendingAddresses[self.liveAddresses.pop()] = 0
-
             # from unknown addresses
             if(len(self.unknownAddresses) < 2):
                 readyToSendUnknown = self.unknownAddresses
             else:
                 readyToSendUnknown = self.unknownAddresses[:2]
 
-            for i in range(len(readyToSendUnknown)):
-                self.pendingAddresses[self.unknownAddresses.pop()] = 0
-
             readyToSend = readyToSendLive + readyToSendUnknown
 
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
+
             transactionsToSend = None
             if (len(sortedTranscations) < 5):
                 transactionsToSend = sortedTranscations
@@ -290,13 +286,22 @@ class Node(Thread):
 
 
             ######## WRITE TO OTHER NODES
-            for address in readyToSend:
+            if(len(transactionsToSend) > 0):
                 for transMessage in transactionsToSend:
-                    self.sock.sendto(transMessage, address)
+                    for address in readyToSend:
+                        if(transMessage not in self.sentMessagesByAddress[address]):
+                            self.sock.sendto(transMessage, address)
+                            self.sentMessagesByAddress[address] += [transMessage]
+
+                # only remove stuff if it was sent
+                for i in range(len(readyToSendLive)):
+                    self.pendingAddresses[self.liveAddresses.pop()] = 0
+                for i in range(len(readyToSendUnknown)):
+                    self.pendingAddresses[self.unknownAddresses.pop()] = 0
 
 
-            readyToSend = []
-            transactionsToSend = []
+                readyToSend = []
+                transactionsToSend = []
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
