@@ -1,4 +1,4 @@
-##import socketserver as ss
+import socketserver as ss
 import parser
 import socket
 
@@ -103,27 +103,8 @@ class mp2Server(object):
         except socket.error as error_msg:
             # print(error_msg)
             print("No message from Service")
-            pass
+            return "0"
 
-    def addNodes(self):
-
-        for introduction in self.introductionMessages:
-            ip = introduction.strip("\n").split(" ")[2]
-            port = int(introduction.strip("\n").split(" ")[3])
-
-            #TODO: Add ip and port to list of (active) connections
-
-
-    def sendToNodes(self, last5Messages):
-
-        for ip, (connection, port, num_reads, num_messages_read, num_sends, messages) in self.connections.items():
-
-            for message in last5Messages:
-                try:
-                    bytes_sent = connection.send(message.encode('utf-8'))
-                    num_sends += 1
-                except socket.error as error_msg:
-                    print(error_msg)
 
     def shutdown(self):
         #print("Server: shutdown")
@@ -141,7 +122,6 @@ class mp2Server(object):
         for ip, (connection, port, num_reads, num_messages_read, num_sends, messages) in self.connections.items():
             if(connection is not None):
                 print(str(ip) + ":" + str(port))
-
 
     def printMessages(self):
 
@@ -180,16 +160,14 @@ class mp2Server(object):
 
         messageCount = 0
 
+        while(self.serviceMessageCount < 3):
+            message = self.readFromService()
+            if(message == "0"):
+                break
+
 ##### MAIN LOOP #######
 
         while(self.event.is_set()):
-
-            # Listen for incoming connections
-            self.acceptConnection()
-
-            # try to read from service
-
-            self.readFromService()
 
             # try to read from nodes
             self.readFromNodes()

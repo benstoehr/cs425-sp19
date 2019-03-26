@@ -92,7 +92,7 @@ for i in range(NUM_NODES):
 
     new_node = Node(SERVICE_IP, SERVICE_PORT, nodeName, port, run_event)
     new_node.start()
-    #nodes.append(new_node)
+    nodes.append(new_node)
 
 
 print("main.py: DONE!")
