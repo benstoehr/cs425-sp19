@@ -102,7 +102,7 @@ while(not done):
     shutdownCheck = True
 
     for node in nodes:
-        
+
         stat = node.status
         if(node.status == "shutdown"):
             print(str(node.name) + ": " + str(node.status))
