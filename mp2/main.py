@@ -97,7 +97,19 @@ for i in range(NUM_NODES):
 
 done = False
 
+
 while(not done):
+
+    shutdownCheck = True
+
+    for node in nodes:
+        if(node.status == "Shutdown"):
+            pass
+        else:
+            shutdownCheck = False
+
+    if(shutdownCheck == True):
+        break
 
     pass
 

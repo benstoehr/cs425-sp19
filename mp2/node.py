@@ -33,6 +33,7 @@ class Node(Thread):
 
     file = None
 
+
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
 
@@ -65,6 +66,7 @@ class Node(Thread):
         self.serv.shutdown()
         self.file.close()
         print(str(self.name) + " Exiting")
+        self.status = "shutdown"
 
     def run(self):
 
