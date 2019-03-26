@@ -162,7 +162,7 @@ class Node(Thread):
             ############### READ ALL MESSAGES ###################
             ## Read until no messages
             while(1):
-                #print("serviceRead()")
+                print("serviceRead()")
                 serviceMessage = self.serviceRead()
                 serviceMessageType = self.messager.getMessageType(serviceMessage)
                 if(serviceMessageType is not None):
@@ -172,7 +172,7 @@ class Node(Thread):
 
             ## Read until no messages
             while(1):
-                #print("read()")
+                print("read()")
                 # addr = ipANDport = (ip, port)
                 message, addr = self.read()
                 messageType = self.messager.getMessageType(message)
@@ -238,7 +238,8 @@ class Node(Thread):
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
-            time.sleep(0.0001)
+            time.sleep(1)
+            #time.sleep(0.0001)
 
 
         print("Run event unset!")
