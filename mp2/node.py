@@ -131,6 +131,8 @@ class Node(Thread):
         self.initServer()
         self.startServer()
 
+        self.status = "running"
+        
         while (self.event.is_set()):
 
             #print("Loop")
