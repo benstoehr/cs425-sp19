@@ -28,16 +28,16 @@ import random
 c = threading.Lock()
 
 run_event = threading.Event()
-run_event.set()
+run_event.clear()
 
 ## Define Signal Handler
 def signal_handler(sig, frame):
     print("You pressed Control+C!")
     #client.shutdown()
     # for node in nodes:
-    #     node.shutdown()
+    #     node.event.clear()
 
-    run_event.clear()
+    run_event.set()
     done = True
     #exit(1)
 
@@ -97,6 +97,7 @@ for i in range(NUM_NODES):
 
 
 done = False
+
 while(not done):
 
     shutdownCheck = True

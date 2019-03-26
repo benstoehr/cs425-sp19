@@ -133,7 +133,7 @@ class Node(Thread):
 
         self.status = "running"
 
-        while (self.event.is_set()):
+        while (not self.event.is_set()):
 
             #print("Loop")
             ############### READ ALL MESSAGES ###################
