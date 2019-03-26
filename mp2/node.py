@@ -128,10 +128,12 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             print("~~got transaction from " +str(addr) + " ~~")
             ip, port = message[0].split(":")
-            message2send = message[1:]
 
+            message2send = message[1:]
             self.transactionMessages.append(message2send)
-            self.sock.sendto("REPLY \n".encode('utf-8'), (ip, int(port)))
+
+            replyMessage = "REPLY "+str(self.ip)+":"+str(self.port)
+            self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
         # Assume you will only get good messages
@@ -140,7 +142,6 @@ class Node(Thread):
         elif ("REPLY" in message):
             print("~~ got reply from " + str(addr) + "~~")
 
-            pass
 
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
