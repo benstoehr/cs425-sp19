@@ -107,6 +107,7 @@ class Node(Thread):
 
     def read(self):
         message, addr = self.serv.read()
+        print("read() -> got message, addr")
         if (message is not None):
             print("Got message in read() call!")
             stripped = message.strip()
