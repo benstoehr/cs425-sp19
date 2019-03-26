@@ -38,7 +38,8 @@ def signal_handler(sig, frame):
         node.shutdown()
 
     run_event.clear()
-    exit(1)
+    done = True
+    #exit(1)
 
 ## Setup Signal Handler for clean Exit
 signal.signal(signal.SIGINT, signal_handler)
@@ -94,12 +95,14 @@ for i in range(NUM_NODES):
     new_node.start()
     nodes.append(new_node)
 
+done = False
 
-
+while(not done):
+    pass
 
 print("main.py: DONE!")
 
-
+exit(1)
 
 
 
