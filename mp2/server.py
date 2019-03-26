@@ -169,7 +169,7 @@ class mp2Server(object):
         except socket.error as error_msg:
             # self.serviceSocket = None
             #print("No message to receive!")
-            return (None, None)
+            return None, None
 
         return (message, ipANDport)
 
