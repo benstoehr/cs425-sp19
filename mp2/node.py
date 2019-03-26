@@ -128,6 +128,9 @@ class Node(Thread):
         print("handleMessage: " + str(message))
         message = message.split()
         ip, port = message[0].split(":")
+        ip = str(ip)
+        port = int(port)
+
         message2send = message[1:]
 
         if ("TRANSACTION" in message2send):
@@ -319,6 +322,7 @@ class Node(Thread):
                     for address in readyToSend:
 
                         ip, port = address
+                        ip = str(ip)
                         port = int(port)
 
                         print("!! " + str(transMessage) + " > " + str(address) + " !!")
