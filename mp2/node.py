@@ -366,20 +366,18 @@ class Node(Thread):
                                     ######### SENDING SECTION #######
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
 
+                                    ### LOGGING STUFF ###
                                     toNode = ip
                                     sentTime = time.time()
                                     status = "alive"
                                     nodeNum = self.vmNumber
                                     bytes = len(message2send)
-
                                     fileString = str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
                                     print("filestring")
                                     print("\t" + str(fileString))
 
                                     self.file.write("%s", fileString)
-
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
-
                                     ipsToPending.add((ip,port))
 
 
