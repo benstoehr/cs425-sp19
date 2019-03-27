@@ -125,9 +125,13 @@ If the nodes are killed by the service, by "thanos", or a regular command, there
 
 - Propagation 50:
 
+Plot 1: x = time elapsed for half of nodes receiving the transaction, y = count/freq, color = node #
+
 ![Plot 1](img/plot01_hist_propagation_delay_half.png "Plot 1")
 
 - Propagation completed:
+
+Plot 2: x = time elapsed for all nodes receiving the transaction, y = count/freq, color = node # 
 
 ![Plot 2](img/plot02_hist_propagation_delay_all.png "Plot 2")
 
@@ -135,9 +139,13 @@ If the nodes are killed by the service, by "thanos", or a regular command, there
 
 Nodes: 20
 
+Plot 3: x = time, y = node # has received the transaction, color = transaction, nodes = 20
+
 ![Plot 3](img/plot03_line_tx_reached_20.png "Plot 3")
 
 Nodes: 100
+
+Plot 4: x = time, y = node # has received the transaction, color = transaction, nodes = 100
 
 ![Plot 4](img/plot04_line_tx_reached_100.png "Plot 4")
 
@@ -145,8 +153,12 @@ Nodes: 100
 
 Nodes: 20
 
+Plot 5: x = time, y = total bandwidth used, nodes = 20
+
 ![Plot 5](img/plot05_line_bandwidth_20.png "Plot 5")
 
 Nodes: 100
+
+Plot 6: x = time, y = total bandwidth used, nodes = 100
 
 ![Plot 6](img/plot06_line_bandwidth_100.png "Plot 6")
