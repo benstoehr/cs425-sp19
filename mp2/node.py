@@ -152,8 +152,9 @@ class Node(Thread):
             self.introductionMessages.append(message)
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
-            if((ip, port) in self.pendingAddresses.keys):
+            if((ip, port) in self.pendingAddresses.keys()):
                 del self.pendingAddresses[(ip,port)]
+                self.liveAddresses.append((ip, port))
 
 
     def serviceRead(self):
@@ -346,7 +347,7 @@ class Node(Thread):
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
-                            # Haven't received anything 
+                            # Haven't received anything
                             else:
                                 self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.sentMessagesByAddress[(ip, port)] = [transMessage]
