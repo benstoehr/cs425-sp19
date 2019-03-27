@@ -209,6 +209,7 @@ class Node(Thread):
 
     def handleServiceMessage(self, message):
 
+        print("handleService: " +str(message))
         bytes = len(message)
 
         message = message.split(" ")
