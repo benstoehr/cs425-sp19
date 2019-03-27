@@ -170,8 +170,8 @@ class Node(Thread):
             txID = logMessage[2]
             ttype = "TRANSACTION"
 
-            fromNode = ip
-            toNode = self.ip
+            fromNode = str(ip) + "," + str(port)
+            toNode = str(self.ip) + "," + str(self.port)
             sentTime = time.time()
             status = "alive"
             nodeNum = self.vmNumber
@@ -474,6 +474,7 @@ class Node(Thread):
                     if (ipPort in self.unknownAddresses):
                         self.unknownAddresses.remove(ipPort)
                         self.pendingAddresses[ipPort] = time.time()
+
 
 
 
