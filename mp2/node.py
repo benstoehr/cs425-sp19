@@ -230,8 +230,8 @@ class Node(Thread):
         if ("TRANSACTION" in message):
 
             ttype = "TRANSACTION"
-            timestamp_a = logMessage[2]
-            txID = logMessage[3]
+            timestamp_a = logMessage[1]
+            txID = logMessage[2]
 
             #print("~~got transaction from service~~")
             #print("\t" + str(message))
