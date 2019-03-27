@@ -244,7 +244,7 @@ class Node(Thread):
             print("~~got introduction~~")
             print("\t" + str(message))
             self.serviceIntroductionMessages.append(message)
-            self.introductionMessages.append()
+            self.introductionMessages.append(message)
 
 
         elif ("QUIT" in message):
