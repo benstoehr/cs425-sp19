@@ -473,13 +473,16 @@ class Node(Thread):
                                     self.sentMessagesByAddress[(ip, port)] += [transMessage]
                                     ipsToPending.add((ip, port))
 
-                for intro in introductionstionsToSend:
-                    for address in readyToSend:
-                        message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
-                        print("!! " + str(intro) + " > " + str(address) + " !!")
 
-                        ######### SENDING SECTION #######
-                        self.sock.sendto(message2send.encode('utf-8'), address)
+                ## EXTRA
+                if(introductionstionsToSend is not None):
+                    for intro in introductionstionsToSend:
+                        for address in readyToSend:
+                            message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
+                            print("!! " + str(intro) + " > " + str(address) + " !!")
+
+                            ######### SENDING SECTION #######
+                            self.sock.sendto(message2send.encode('utf-8'), address)
 
 
                 # only remove stuff if it was sent
