@@ -392,6 +392,10 @@ class Node(Thread):
 
 
         print("Run event unset!")
+
+        print("Final List")
+        for tm in self.transactionMessages:
+            print(tm)
         self.shutdown()
 
 
