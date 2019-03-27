@@ -142,8 +142,8 @@ class Node(Thread):
         message2send = message[1:]
 
         logMessage = message2send[:]
-        timestamp = message[1]
-        txID = message[2]
+        timestamp = logMessage[1]
+        txID = logMessage[2]
 
         fromNode = self.service_ip
         toNode = self.ip
