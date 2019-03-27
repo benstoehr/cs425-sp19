@@ -344,12 +344,10 @@ class Node(Thread):
 
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        splitM = transMessage.split(" ")
 
-
-                        timestamp = splitM[1]
+                        timestamp = transMessage[1]
                         type = "TRANSACTION"
-                        txID = splitM[2]
+                        txID = transMessage[2]
                         mess = str(" ".join(transMessage))
                         fromNode = self.hostname
 
@@ -372,7 +370,7 @@ class Node(Thread):
 
                                     fileString = str(timestamp) + " " + str(type) + " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
                                     self.file.write(fileString)
-                                    
+
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
                                     ipsToPending.add((ip,port))
