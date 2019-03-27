@@ -255,6 +255,8 @@ class Node(Thread):
 
 
         elif ("DIE" in message):
+            self.status = "shutdown"
+            time.sleep(0.05)
             exit(1)
             #print("@@ Got DIE command @@")
 
