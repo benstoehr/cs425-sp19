@@ -373,10 +373,10 @@ class Node(Thread):
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
-                    if(ipPort in self.liveAddresses)
+                    if(ipPort in self.liveAddresses):
                         self.liveAddresses.remove(ipPort)
                         self.pendingAddresses[ipPort] = time.time()
-                    if (ipPort in self.unknownAddresses)
+                    if (ipPort in self.unknownAddresses):
                         self.unknownAddresses.remove(ipPort)
                         self.pendingAddresses[ipPort] = time.time()
 
