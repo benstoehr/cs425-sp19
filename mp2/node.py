@@ -274,15 +274,14 @@ class Node(Thread):
 
         ## ADDRESS CLEAN UP
             ## Delete addresses that are stale
-            for address, count in self.pendingAddresses.items():
-                new_count = count + 1
-                # change this to be the number of rounds before addresses are "dead"
-                if (new_count > 10):
+            for address, time in self.pendingAddresses.items():
+                curr_time = time.time
+                diff = curr_time - time
+                # change this to be the timeout factor
+                if (diff > 10000):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
                     self.deadAddresses.append(address)
-                else:
-                    self.pendingAddresses[address] = new_count
 
     ## Figure out which addresses to send to
 
@@ -367,9 +366,9 @@ class Node(Thread):
 
                 # only remove stuff if it was sent
                 for i in range(len(readyToSendLive)):
-                    self.pendingAddresses[self.liveAddresses.pop()] = 0
+                    self.pendingAddresses[self.liveAddresses.pop()] = time.time()
                 for i in range(len(readyToSendUnknown)):
-                    self.pendingAddresses[self.unknownAddresses.pop()] = 0
+                    self.pendingAddresses[self.unknownAddresses.pop()] = time.time()
 
 
                 readyToSend = []

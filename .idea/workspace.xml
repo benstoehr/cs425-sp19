@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="" />
+    <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,8 +57,8 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="438">
-                  <caret line="173" column="34" lean-forward="false" selection-start-line="173" selection-start-column="34" selection-end-line="173" selection-end-column="34" />
+                <state relative-caret-position="321">
+                  <caret line="279" column="54" lean-forward="true" selection-start-line="279" selection-start-column="54" selection-end-line="279" selection-end-column="54" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#1058#1648#0" expanded="false" />
@@ -130,6 +132,7 @@
       <find>liveAdd</find>
       <find>open</find>
       <find>transMess</find>
+      <find>pendingAdd</find>
     </findStrings>
     <replaceStrings>
       <replace>58</replace>
@@ -609,8 +612,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="173" column="34" lean-forward="false" selection-start-line="173" selection-start-column="34" selection-end-line="173" selection-end-column="34" />
+        <state relative-caret-position="321">
+          <caret line="279" column="54" lean-forward="true" selection-start-line="279" selection-start-column="54" selection-end-line="279" selection-end-column="54" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1058#1648#0" expanded="false" />
