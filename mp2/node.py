@@ -147,7 +147,6 @@ class Node(Thread):
         logMessage = message2send[:]
         print(logMessage)
 
-
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip,port)] = [message2send]
         else:
@@ -215,7 +214,6 @@ class Node(Thread):
 
         logMessage = message[:]
 
-
         mess = str("_".join(logMessage))
         fromNode = str(self.service_ip) + str(self.service_port)
         toNode = str(self.ip) + str(self.ip)
@@ -243,9 +241,10 @@ class Node(Thread):
 
             ttype = "INTRODUCE"
 
-            #print("~~got introduction~~")
-            #print("\t" + str(message))
+            print("~~got introduction~~")
+            print("\t" + str(message))
             self.serviceIntroductionMessages.append(message)
+            self.introductionMessages.append()
 
 
         elif ("QUIT" in message):
@@ -477,6 +476,7 @@ class Node(Thread):
                 ## EXTRA
                 if(introductionstionsToSend is not None):
                     for intro in introductionstionsToSend:
+
                         for address in readyToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
                             print("!! " + str(intro) + " > " + str(address) + " !!")
