@@ -154,7 +154,7 @@ class Node(Thread):
             #print("~~ got reply from " + str(addr) + "~~")
             if((ip, port) in self.pendingAddresses.keys):
                 del self.pendingAddresses[(ip,port)]
-                
+
 
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
@@ -337,15 +337,25 @@ class Node(Thread):
                         print("!! " + str(transMessage) + " > " + str(address) + " !!")
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-
+                        # Haven't sent them anything yet
                         if((ip, port) not in self.sentMessagesByAddress.keys()):
-                            if ((ip, port) not in self.receivedMessagesByAddress.keys()):
+                            # Have received messages
+                            if ((ip, port) in self.receivedMessagesByAddress.keys()):
+                                # Haven't received this specific message
                                 if (transMessage not in self.receivedMessagesByAddress[(ip, port)]):
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
+                            # Haven't received anything 
+                            else:
+                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                self.sentMessagesByAddress[(ip, port)] = [transMessage]
+
+                        # Have sent them something
                         else:
+                            # Message hasn't been sent
                             if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
+                                # Message didn't come from them
                                 if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] += [transMessage]
