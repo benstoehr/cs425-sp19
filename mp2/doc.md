@@ -39,12 +39,13 @@ e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ### Node connectivity
 
-At the appearnace of an "Introduce" command from the service, the ip and port will be added to the list of live addresses, `liveAddresses`. 
+At the appearnace of an "Introduce" command from the service, the ip and port will be added to the list of live addresses, `liveAddresses`. This is because we assume any command from the service is correct.
 
 When "Introduce" messages are received from other nodes, they are placed onto the `unknownAddresses` list.
 
+In order to reduce the amount of connection checking, we opted to use UDP broadcasts to send all of our messages. 
 
-Once Then the node adds these address to `pending address list` and wait for their responses. Once it got the reply, it adds the address to `live address list`.
+After each group of messages are sent to each mode, there is a 10ms timeout that waits for a REPLY message. If this is not received, then the node is assumed to be dead and its address is moved out of the pendingAddresses list into the deadAddresses list.
 
 Please refer to:
 
@@ -56,7 +57,7 @@ class Node(Thread):
         ...
     def run(self):
         ...
-        ## NODE STUFF
+        ## Clean up IP list section
         ...
 ```
 
@@ -64,14 +65,13 @@ class Node(Thread):
 
 Every round, each node picks up to three nodes from its `liveAddresses` list, and up to 2 nodes from the `unknownAddresses` list.
 
-For each of these addresses (ip,port) pair,  
+For each of these addresses (ip,port) pair, up to 5 transaction messages and 2 introduction messages are sent to each address. 
 
-1. 5 latest transactions
-2, 
-2. 3 addresses from `liveAddresses` list
-3. 2 addresses from `unknownAddresses` list
+We simply send the original copy of the transaction or introduce message in order to reduce the amount of parsing and string manipulation.
 
-Every round a node randomly chooses 3 nodes from the `live address list` and sends recent 5 transactions to them. 
+In order to reduce the possibility of sending the same message over and over again, we have a dictionary that relates an address to a list of messages that have been sent, as well as a dictionary that relates a address to a list of messages that have been received. 
+
+After the random choice of transaction and introduction messages, before anything is sent, each message and address are cross-referenced with these dictionaries to ensure we only send each message to another node only once. 
 
 Please refer to:
 
@@ -102,15 +102,20 @@ If half of nodes fail, every round, in average, a node successfully sends recent
 
 The propagation time is roughly doubled when half nodes die in comparison to all nodes alive.
 
+We handle node failures through our REPLY methodology. When a node sends a message but does not receive a REPLY from the destination node. This node's address is removed from the list of live or unknown nodes.
+
+Because we only ever send one outbound INTRODUCE message for each known/recognized node, we will never send the same INTRODUCE message from one node to another after the initial INTRODUCE that was propogated throughout the nodes. 
+
+
+
 ### Node termination
 
-Please refer to:
+By the definitions in the MP assignment page, our nodes will react to the QUIT and DIE commands by either exiting gracefully, or simply calling exit. 
 
-```
-{node.py}
-class Node(Thread):
-    def handleServiceMessage(self, message):    
-```
+Our main program iterates all of the nodes, waiting for them to shutdown, and completes when the ctrl-c buttons are pressed. 
+
+If the nodes are killed by the service, by "thanos", or a regular command, there is either a socket closed which would lead to a socket.error, caught by the messageHandler, or the node simply declares itself dead and exits. 
+
 
 ## Analysis
 
