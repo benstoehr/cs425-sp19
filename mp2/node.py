@@ -159,22 +159,22 @@ class Node(Thread):
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
-            logMessage = message2send[:]
-            timestamp = logMessage[1]
-            txID = logMessage[2]
+            # logMessage = message2send[:]
+            # timestamp = logMessage[1]
+            # txID = logMessage[2]
+            #
+            # fromNode = self.service_ip
+            # toNode = self.ip
+            # sentTime = time.time()
+            # status = "alive"
+            # nodeNum = self.vmNumber
+            # mess = str(" ".join(logMessage))
+            #
+            # fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+            #     fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+            #     nodeNum) + " " + str(bytes) + "\n"
+            # logging.debug(fileString)
 
-            fromNode = self.service_ip
-            toNode = self.ip
-            sentTime = time.time()
-            status = "alive"
-            nodeNum = self.vmNumber
-            mess = str(" ".join(logMessage))
-
-            fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
-                fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-                nodeNum) + " " + str(bytes) + "\n"
-            logging.debug(fileString)
-            
         # Assume you will only get good messages
         elif ("INTRODUCE" in message2send):
             self.introductionMessages.append(message)
