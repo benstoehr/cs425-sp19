@@ -476,15 +476,82 @@ class Node(Thread):
                 ## EXTRA
                 if(introductionstionsToSend is not None):
                     for intro in introductionstionsToSend:
-                        intro_ip = intro[2]
-                        intro_port = int(intro[3])
 
                         for address in readyToSend:
-                            message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
-                            print("!! " + str(intro) + " > " + str(address) + " !!")
+                            ip, port = address
+                            ip = str(ip)
+                            port = int(port)
 
-                            ######### SENDING SECTION #######
-                            self.sock.sendto(message2send.encode('utf-8'), (intro_ip, intro_port))
+                            message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
+
+                            timestamp = None
+                            type = "INTRODUCTION"
+                            txID = None
+                            mess = str("_".join(intro))
+                            fromNode = str(self.ip) + "," + str(self.port)
+                            toNode = str(ip) + "," + str(port)
+                            status = "alive"
+                            nodeNum = self.vmNumber
+                            bytes = len(message2send)
+
+                            # Haven't sent them anything yet
+                            if ((ip, port) not in self.sentMessagesByAddress.keys()):
+                                # Have received messages
+                                if ((ip, port) in self.receivedMessagesByAddress.keys()):
+                                    # Haven't received this specific message
+                                    if (intro not in self.receivedMessagesByAddress[(ip, port)]):
+                                        print("!! " + str(intro) + " > " + str(address) + " !!")
+
+                                        ######### SENDING SECTION #######
+                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+
+                                        ### LOGGING STUFF ###
+                                        sentTime = time.time()
+                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(
+                                            txID) + " " + str(intro) + " " + str(fromNode) + " " + str(
+                                            toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+                                            nodeNum) + " " + str(bytes) + "\n"
+                                        logging.debug(fileString)
+
+                                        self.sentMessagesByAddress[(ip, port)] = [intro]
+
+
+                                # Haven't received anything
+                                else:
+                                    print("!! " + str(intro) + " > " + str(address) + " !!")
+
+                                    ######### SENDING SECTION #######
+                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+
+                                    ### LOGGING STUFF ###
+                                    sentTime = time.time()
+                                    fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
+                                        intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
+                                        sentTime) + " " + str(
+                                        status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
+                                    logging.debug(fileString)
+                                    self.sentMessagesByAddress[(ip, port)] = [intro]
+
+                            # Have sent them something
+                            else:
+                                # Message hasn't been sent
+                                if (intro not in self.sentMessagesByAddress[(ip, port)]):
+                                    # Message didn't come from them
+                                    if (intro not in self.receivedMessagesByAddress[(ip, port)]):
+                                        print("!! " + str(message2send) + " > " + str(address) + " !!")
+
+                                        ######### SENDING SECTION #######
+                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+
+                                        ### LOGGING STUFF ###
+                                        sentTime = time.time()
+                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(
+                                            txID) + " " + str(
+                                            intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
+                                            sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
+                                        logging.debug(fileString)
+
+                                        self.sentMessagesByAddress[(ip, port)] += [intro]
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
