@@ -85,8 +85,8 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="290">
-                  <caret line="349" column="46" lean-forward="true" selection-start-line="349" selection-start-column="46" selection-end-line="349" selection-end-column="46" />
+                <state relative-caret-position="293">
+                  <caret line="351" column="54" lean-forward="false" selection-start-line="351" selection-start-column="54" selection-end-line="351" selection-end-column="54" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#1782#1873#0" expanded="false" />
@@ -602,8 +602,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="349" column="46" lean-forward="true" selection-start-line="349" selection-start-column="46" selection-end-line="349" selection-end-column="46" />
+        <state relative-caret-position="293">
+          <caret line="351" column="54" lean-forward="false" selection-start-line="351" selection-start-column="54" selection-end-line="351" selection-end-column="54" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1782#1873#0" expanded="false" />

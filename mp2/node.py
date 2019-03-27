@@ -344,11 +344,12 @@ class Node(Thread):
 
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
+                        logMessage = transMessage.copy()
 
                         timestamp = transMessage[1]
                         type = "TRANSACTION"
                         txID = transMessage[2]
-                        mess = str(" ".join(transMessage))
+                        mess = str(" ".join(logMessage))
                         fromNode = self.hostname
 
                         # Haven't sent them anything yet
