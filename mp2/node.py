@@ -304,7 +304,7 @@ class Node(Thread):
                 print("Converting message to dictionary entry and adding to liveAddresses")
                 vmname = serviceIntroMessage[1]
                 vmIP = serviceIntroMessage[2]
-                vmPort = serviceIntroMessage[3]
+                vmPort = int(serviceIntroMessage[3])
                 if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
                     # Put it in the dictionary with the name
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
@@ -329,7 +329,7 @@ class Node(Thread):
             for introMessage in self.introductionMessages:
                 vmname = introMessage[1]
                 vmIP = introMessage[2]
-                vmPort = introMessage[3]
+                vmPort = int(introMessage[3])
                 if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
                     # Put it in the dictionary with the name
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")

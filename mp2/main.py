@@ -115,7 +115,7 @@ while(not done):
     if(shutdownCheck == True):
         break
 
-    time.sleep(0.1)
+    time.sleep(0.001)
 
 
 
