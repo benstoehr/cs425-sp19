@@ -3,8 +3,10 @@ import numpy as np
 import datetime as dt
 import seaborn as sns
 import matplotlib.pyplot as plt
+import re
 
 filename = "log.txt"
+HalfNodeNum = 3
 
 # Plan:
 # [the propagation delay]
@@ -72,12 +74,14 @@ def draw_line(df, y, color, output_filename):
 	fig.savefig(output)
 
 # Start to work
-raw = read_data(filename)
+raw_df = read_data(filename)
 
-df = raw_df[draw_dff.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
+df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
+df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
+df['timestampFromNode'] = pd.to_datetime(df['timestampFromNode'], unit='s')
 
 # calculate the time elaspsed from every pair of nodes
-df['timeElapsed'] = (df.timestamp - df.timestampFromNode).microseconds
+df['timeElapsed'] = (df.timestamp - df.timestampFromNode)
 
 # Plot 1
 # total elapsed time for each transaction forwarding to exact half of nodes
@@ -85,13 +89,13 @@ df['timeElapsed'] = (df.timestamp - df.timestampFromNode).microseconds
 df['rownumByMsg'] = df.sort_values(['timestamp'], ascending=True) \
              .groupby(['txID']) \
              .cumcount() + 1
-halfTime = df['rownumByMsg' > HalfNodeNum].group_by(['messageID']).sum(['timeElapsed'])
+halfTime = df[df.rownumByMsg > HalfNodeNum].groupby(['txID','nodeNum'])['timeElapsed'].sum()
 draw_hist(halfTime[halfTime.nodeNum == 20], halfTime[halfTime.nodeNum == 100], 'plot01_hist_propagation_delay_half.png')
 
 # Plot 2
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
-ttlTime = df.group_by(['txID']).sum(['timeElapsed']) 
+ttlTime = df.groupby(['txID','nodeNum'])['timeElapsed'].sum()
 draw_hist(ttlTime[ttlTime.nodeNum == 20], ttlTime[ttlTime.nodeNum == 100], 'plot02_hist_propagation_delay_all.png')
 
 # node# receiving a specific message -> x = timestamp, y = rownumByMsg, color = messageID
