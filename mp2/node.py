@@ -351,6 +351,8 @@ class Node(Thread):
                                 # Haven't received this specific message
                                 if (transMessage not in self.receivedMessagesByAddress[(ip, port)]):
                                     print("!! " + str(transMessage) + " > " + str(address) + " !!")
+
+                                    ######### SENDING SECTION #######
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
@@ -360,6 +362,8 @@ class Node(Thread):
                             # Haven't received anything
                             else:
                                 print("!! " + str(transMessage) + " > " + str(address) + " !!")
+
+                                ######### SENDING SECTION #######
                                 self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                 ipsToPending.add((ip, port))
@@ -370,6 +374,8 @@ class Node(Thread):
                                 # Message didn't come from them
                                 if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
                                     print("!! " + str(transMessage) + " > " + str(address) + " !!")
+
+                                    ######### SENDING SECTION #######
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] += [transMessage]
                                     ipsToPending.add((ip, port))
