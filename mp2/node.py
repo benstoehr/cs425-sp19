@@ -161,12 +161,12 @@ class Node(Thread):
 
             logMessage = message2send[:]
             print(logMessage)
-            # timestamp = logMessage[1]
-            # txID = logMessage[2]
+            timestamp = logMessage[1]
+            txID = logMessage[2]
             #
-            # fromNode = self.service_ip
-            # toNode = self.ip
-            # sentTime = time.time()
+            fromNode = ip
+            toNode = self.ip
+            sentTime = time.time()
             # status = "alive"
             # nodeNum = self.vmNumber
             # mess = str(" ".join(logMessage))
