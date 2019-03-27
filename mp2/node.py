@@ -215,8 +215,9 @@ class Node(Thread):
         message = message.split(" ")
 
         logMessage = message[:]
-        timestamp_a = logMessage[1]
-        txID = logMessage[2]
+
+        timestamp_a = logMessage[2]
+        txID = logMessage[3]
         mess = str(" ".join(logMessage))
         fromNode = self.service_ip
         toNode = self.ip
