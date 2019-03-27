@@ -80,7 +80,7 @@ raw_df20 = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df100 = read_data(filename100)
 raw_df100['nodeNum'] = 100
-raw_df = pd.concat([raw_df20, raw_df100])
+raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
 
 df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
