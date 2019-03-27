@@ -278,7 +278,7 @@ class Node(Thread):
                 curr_time = time.time()
                 diff = curr_time - sent_time
                 # change this to be the timeout factor
-                if (diff > 10000):
+                if (diff > 100):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
                     self.deadAddresses.append(address)
@@ -323,12 +323,12 @@ class Node(Thread):
             ######## WRITE TO OTHER NODES
             if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
 
-                print("transactionsToSend")
-                for t in transactionsToSend:
-                    print("\t" + str(t))
-                print("readyToSend")
-                for ip in readyToSend:
-                    print("\t" + str(ip))
+                # print("transactionsToSend")
+                # for t in transactionsToSend:
+                #     print("\t" + str(t))
+                # print("readyToSend")
+                # for ip in readyToSend:
+                #     print("\t" + str(ip))
 
                 ipsToPending = set()
 
