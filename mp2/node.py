@@ -322,12 +322,15 @@ class Node(Thread):
 
             ######## WRITE TO OTHER NODES
             if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
+
                 print("transactionsToSend")
                 for t in transactionsToSend:
                     print("\t" + str(t))
                 print("readyToSend")
                 for ip in readyToSend:
                     print("\t" + str(ip))
+
+                ipsToPending = set()
 
                 for transMessage in transactionsToSend:
                     for address in readyToSend:
@@ -348,12 +351,15 @@ class Node(Thread):
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
+                                    ipsToPending.add((ip,port))
+
+
                             # Haven't received anything
                             else:
                                 print("!! " + str(transMessage) + " > " + str(address) + " !!")
                                 self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.sentMessagesByAddress[(ip, port)] = [transMessage]
-
+                                ipsToPending.add((ip, port))
                         # Have sent them something
                         else:
                             # Message hasn't been sent
@@ -363,12 +369,17 @@ class Node(Thread):
                                     print("!! " + str(transMessage) + " > " + str(address) + " !!")
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                     self.sentMessagesByAddress[(ip, port)] += [transMessage]
+                                    ipsToPending.add((ip, port))
 
                 # only remove stuff if it was sent
-                for i in range(len(readyToSendLive)):
-                    self.pendingAddresses[self.liveAddresses.pop()] = time.time()
-                for i in range(len(readyToSendUnknown)):
-                    self.pendingAddresses[self.unknownAddresses.pop()] = time.time()
+                for ipPort in ipsToPending:
+                    if(ipPort in self.liveAddresses)
+                        self.liveAddresses.remove(ipPort)
+                        self.pendingAddresses[ipPort] = time.time()
+                    if (ipPort in self.unknownAddresses)
+                        self.unknownAddresses.remove(ipPort)
+                        self.pendingAddresses[ipPort] = time.time()
+
 
 
                 readyToSend = []
