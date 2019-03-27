@@ -4,6 +4,8 @@ import datetime as dt
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+filename = "log.txt"
+
 # Plan:
 # [the propagation delay]
 # 1. minimum, maximum, and median propagation delay
@@ -24,10 +26,11 @@ def read_data(filename):
 	with open(filename, 'r') as f:
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
+			del record[0]
 			raw.append(record)
 
 	# columns TBD
-	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNum', 'bytes']
+	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNumOnVm', 'bytes']
 	df = pd.DataFrame.from_records(raw, columns=labels)
 	return df
 
@@ -68,10 +71,10 @@ def draw_line(df, y, color, output_filename):
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 
-# TODO: total bandwidth
-# have to record how many bytes used in logging
+# Start to work
+raw = read_data(filename)
 
-df = raw_df[draw_dff.status == 'first-time' & draw_dff.type == 'TRANSACTION']
+df = raw_df[draw_dff.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 
 # calculate the time elaspsed from every pair of nodes
 df['timeElapsed'] = (df.timestamp - df.timestampFromNode).microseconds
