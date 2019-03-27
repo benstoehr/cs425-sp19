@@ -217,8 +217,8 @@ class Node(Thread):
 
 
         mess = str(" ".join(logMessage))
-        fromNode = self.service_ip
-        toNode = self.ip
+        fromNode = str(self.service_ip) + str(self.service_port)
+        toNode = str(self.ip) + str(self.ip)
         sentTime = time.time()
         status = "alive"
         nodeNum = self.vmNumber
@@ -267,8 +267,6 @@ class Node(Thread):
 
 
 #######################################
-
-
 
     def run(self):
 
@@ -321,11 +319,9 @@ class Node(Thread):
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)
-
-
-
                 else:
                     break
+
             ######## Update list of IPs from node messages
             for introMessage in self.introductionMessages:
                 vmname = introMessage[1]
