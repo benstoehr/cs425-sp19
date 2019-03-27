@@ -187,10 +187,13 @@ class Node(Thread):
             print("\t" + str(message))
             self.serviceIntroductionMessages.append(message)
             return
+
         elif ("QUIT" in message):
             print("## Got Quit command ##")
+            self.shutdown()
 
         elif ("DIE" in message):
+            exit(1)
             print("@@ Got DIE command @@")
 
 
@@ -350,7 +353,7 @@ class Node(Thread):
                         type = "TRANSACTION"
                         txID = transMessage[2]
                         mess = str(" ".join(logMessage))
-                        fromNode = self.hostname
+                        fromNode = self.ip
 
                         # Haven't sent them anything yet
                         if((ip, port) not in self.sentMessagesByAddress.keys()):
@@ -372,8 +375,8 @@ class Node(Thread):
                                     fileString = str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
                                     print("filestring")
                                     print("\t" + str(fileString))
-                                    
-                                    self.file.write(fileString)
+
+                                    self.file.write("%s", fileString)
 
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
