@@ -142,7 +142,7 @@ class Node(Thread):
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
 
-            self.transactionMessages.append(message2send)
+            self.transactionMessages.add(message2send)
 
             replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
             print("~~ sending REPLY ~~")
@@ -176,7 +176,7 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
             print("\t" + str(message))
-            self.transactionMessages.append(message)
+            self.transactionMessages.add(message)
             # for tm in self.transactionMessages:
             #     print(tm)
             return
