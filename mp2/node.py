@@ -126,7 +126,7 @@ class Node(Thread):
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
 
-        print("handleMessage: " + str(message))
+        print("\thandleMessage: " + str(message))
         message = message.split()
         ip, port = message[0].split(":")
         ip = str(ip)
@@ -144,6 +144,8 @@ class Node(Thread):
             self.transactionMessages.append(message2send)
 
             replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
+            print("~~ sending REPLY ~~")
+            print("\t" + str(replyMessage))
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
