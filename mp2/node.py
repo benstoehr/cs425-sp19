@@ -71,6 +71,7 @@ class Node(Thread):
         print("self.host: " + str(self.host))
 
         self.name = name
+        print("name: " +str(self.name))
         self.vmNumber = int(self.name[8])
 
         self.ip = socket.gethostbyname(self.host)
@@ -83,11 +84,13 @@ class Node(Thread):
         self.event = event
 
         filename = str(self.name) + ".txt"
-        self.file = open(filename, "w+")
+        #self.file = open(filename, "w+")
+        logging.basicConfig(filename=filename, level=logging.DEBUG)
 
         self.messager = Messager()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
 
     # TODO:
     # Initialize server
@@ -373,10 +376,13 @@ class Node(Thread):
                                     nodeNum = self.vmNumber
                                     bytes = len(message2send)
                                     fileString = str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
-                                    print("filestring")
-                                    print("\t" + str(fileString))
 
-                                    self.file.write(fileString)
+                                    #print("filestring")
+                                    #print("\t" + str(fileString))
+
+                                    #self.file.write(fileString)
+                                    logging.debug(fileString)
+                                    
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                     ipsToPending.add((ip,port))
 
