@@ -130,13 +130,29 @@ class Node(Thread):
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
 
+        bytes = len(message)
+
         print("\thandleMessage: " + str(message))
         message = message.split()
         ip, port = message[0].split(":")
         ip = str(ip)
         port = int(port)
 
+
+        timestamp = message[1]
+        txID = message[2]
+
+        fromNode = self.service_ip
+        toNode = self.ip
+        sentTime = time.time()
+        status = "alive"
+        nodeNum = self.vmNumber
+
         message2send = message[1:]
+
+        logMessage = message2send[:]
+        mess = str(" ".join(logMessage))
+
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip,port)] = [message2send]
         else:
@@ -163,7 +179,12 @@ class Node(Thread):
                 del self.pendingAddresses[(ip,port)]
                 self.liveAddresses.append((ip, port))
 
+        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+            nodeNum) + " " + str(bytes) + "\n"
+        logging.debug(fileString)
 
+##################################
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
         if (messageFromService is not None):
@@ -176,29 +197,58 @@ class Node(Thread):
         return None
 
     def handleServiceMessage(self, message):
+
+        bytes = len(message)
+
         message = message.split(" ")
+
+        logMessage = message[:]
+        timestamp = message[1]
+        txID = message[2]
+        mess = str(" ".join(logMessage))
+        fromNode = self.service_ip
+        toNode = self.ip
+        sentTime = time.time()
+        status = "alive"
+        nodeNum = self.vmNumber
+
+        type = None
         if ("TRANSACTION" in message):
-            print("~~got transaction from service~~")
-            print("\t" + str(message))
+
+            type = "TRANSACTION"
+
+            #print("~~got transaction from service~~")
+            #print("\t" + str(message))
             # Assume it hasn't been seen
             self.transactionMessages.append(message)
             # for tm in self.transactionMessages:
             #     print(tm)
-            return
+
         elif ("INTRODUCE" in message):
-            print("~~got introduction~~")
-            print("\t" + str(message))
+
+            type = "INTRODUCE"
+
+            #print("~~got introduction~~")
+            #print("\t" + str(message))
             self.serviceIntroductionMessages.append(message)
-            return
+
 
         elif ("QUIT" in message):
-            print("## Got Quit command ##")
-            self.shutdown()
+            #print("## Got Quit command ##")
+            type = "QUIT"
+
 
         elif ("DIE" in message):
             exit(1)
-            print("@@ Got DIE command @@")
+            #print("@@ Got DIE command @@")
 
+        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+            nodeNum) + " " + str(bytes) + "\n"
+        logging.debug(fileString)
+
+        if(type == "QUIT"):
+            self.shutdown()
 
 
 #######################################
@@ -266,6 +316,9 @@ class Node(Thread):
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)
+
+
+
                 else:
                     break
             ######## Update list of IPs from node messages
@@ -375,12 +428,7 @@ class Node(Thread):
                                     status = "alive"
                                     nodeNum = self.vmNumber
                                     bytes = len(message2send)
-                                    fileString = str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
-
-                                    #print("filestring")
-                                    #print("\t" + str(fileString))
-
-                                    #self.file.write(fileString)
+                                    fileString = " "+str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
                                     logging.debug(fileString)
 
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
