@@ -2,11 +2,6 @@
 
 Please submit CP1 using Gradescope. Your submission should include the following information:
 
-- The list of people in your group with names and NetIDs
-- The URL to your GitLab repository. You must use the Engineering GitLab server and give the course staff Reporter access to your repository.
-- Your group number
-- A description of how to compile (if needed) and run your nodes
-
 You should then have a description of the design of your MP2. Your description should explain:
 
 - How your nodes keep connectivity; how they discover nodes beyond the originally introduced ones, and how they detect failed nodes. **You should justify why you think your design is robust to failures.**
@@ -110,43 +105,34 @@ class Node(Thread):
 
 ## Analysis
 
-(Your CP1 report should include a graph of the propagation delay and bandwidth used by your system)
-(20 nodes / 1tx per sec - 100 nodes / 20tx per sec)
-
-We log 
-
-| timestamp   | b    | round  |formula of y      | ~y            |
-| --- |:----:|:------:|:----------------:|--------------:|
-| 1   | 3    | log(n) |(n+1)-1/n^(3-2)   | (n+1)-1/n     |
-
 ### Transaction propagation completed
 
 ### Propagation Speed
 
 - Propagation 50:
 
-![alt text](img/plot01_hist_propagation_delay_half.png "Plot 1")
+![Plot 1](img/plot01_hist_propagation_delay_half.png "Plot 1")
 
 - Propagation completed:
 
-![alt text](img/plot02_hist_propagation_delay_all.png "Plot 2")
+![Plot 2](img/plot02_hist_propagation_delay_all.png "Plot 2")
 
 - Transaction Propagation:
 
 Nodes: 20
 
-![alt text](img/plot03_line_tx_reached_20.png "Plot 3")
+![Plot 3](img/plot03_line_tx_reached_20.png "Plot 3")
 
 Nodes: 100
 
-![alt text](img/plot04_line_tx_reached_100.png "Plot 4")
+![Plot 4](img/plot04_line_tx_reached_100.png "Plot 4")
 
 ### Bandwidth
 
 Nodes: 20
 
-![alt text](img/plot05_line_bandwidth_20.png "Plot 5")
+![Plot 5](img/plot05_line_bandwidth_20.png "Plot 5")
 
 Nodes: 100
 
-![alt text](img/plot06_line_bandwidth_100.png "Plot 6")
+![Plot 6](img/plot06_line_bandwidth_100.png "Plot 6")
