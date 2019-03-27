@@ -344,6 +344,15 @@ class Node(Thread):
 
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
+                        splitM = transMessage.split(" ")
+
+
+                        timestamp = splitM[1]
+                        type = "TRANSACTION"
+                        txID = splitM[2]
+                        mess = str(" ".join(transMessage))
+                        fromNode = self.hostname
+
                         # Haven't sent them anything yet
                         if((ip, port) not in self.sentMessagesByAddress.keys()):
                             # Have received messages
@@ -354,6 +363,16 @@ class Node(Thread):
 
                                     ######### SENDING SECTION #######
                                     self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+
+                                    toNode = ip
+                                    sentTime = time.time()
+                                    status = "alive"
+                                    nodeNum = self.vmNumber
+                                    bytes = len(message2send)
+
+                                    fileString = str(timestamp) + " " + str(type) + " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
+                                    self.file.write(fileString)
+                                    
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
                                     ipsToPending.add((ip,port))
