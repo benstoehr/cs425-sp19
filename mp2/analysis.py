@@ -69,10 +69,9 @@ def draw_line(df, y, color, output_filename):
 	sns.set(style="whitegrid")
 	sns.despine(left=True)
 	if color != None:
-		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df)
+		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df, legend=False)
 	else:
-		sns_plot = sns.lineplot(x="timestamp", y=y, data=df)
-	sns_plot._legend.remove()
+		sns_plot = sns.lineplot(x="timestamp", y=y, data=df, legend=False)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 
@@ -81,7 +80,7 @@ raw_df20 = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df100 = read_data(filename100)
 raw_df100['nodeNum'] = 100
-raw_df = pd.concat([raw_df20, raw_df100])
+raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
 
 df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
