@@ -70,7 +70,10 @@ class Node(Thread):
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
 
+
+
         self.name = name
+        self.vmNumber = int(self.name[8])
 
         self.ip = socket.gethostbyname(self.host)
         print("self.ip:" + str(self.ip))
@@ -393,7 +396,10 @@ class Node(Thread):
 
         print("Run event unset!")
 
-        print("Final List")
+
+
+        print(str(self.vmNumber) + ": Final List")
+        time.sleep(self.vmNumber)
         for tm in self.transactionMessages:
             print(tm)
         self.shutdown()
