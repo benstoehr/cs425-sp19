@@ -81,6 +81,7 @@ class Node(Thread):
         self.service_ip = SERVICE_IP
 
         self.service_port = SERVICE_PORT
+
         self.event = event
 
         filename = str(self.name) + ".txt"
@@ -141,7 +142,6 @@ class Node(Thread):
 
         message2send = message[1:]
 
-
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip,port)] = [message2send]
         else:
@@ -159,7 +159,8 @@ class Node(Thread):
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
-            # logMessage = message2send[:]
+            logMessage = message2send[:]
+            print(logMessage)
             # timestamp = logMessage[1]
             # txID = logMessage[2]
             #
