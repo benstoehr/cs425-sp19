@@ -538,22 +538,24 @@ class Node(Thread):
                             else:
                                 # Message hasn't been sent
                                 if (intro not in self.sentMessagesByAddress[(ip, port)]):
-                                    # Message didn't come from them
-                                    if (intro not in self.receivedMessagesByAddress[(ip, port)]):
-                                        print("!! " + str(message2send) + " > " + str(address) + " !!")
+                                    # Have received messages
+                                    if ((ip, port) in self.receivedMessagesByAddress.keys()):
+                                        # Message didn't come from them
+                                        if (intro not in self.receivedMessagesByAddress[(ip, port)]):
+                                            print("!! " + str(message2send) + " > " + str(address) + " !!")
 
-                                        ######### SENDING SECTION #######
-                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                            ######### SENDING SECTION #######
+                                            self.sock.sendto(message2send.encode('utf-8'), (ip, port))
 
-                                        ### LOGGING STUFF ###
-                                        sentTime = time.time()
-                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(
-                                            txID) + " " + str(
-                                            intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                            sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                        logging.debug(fileString)
+                                            ### LOGGING STUFF ###
+                                            sentTime = time.time()
+                                            fileString = " " + str(timestamp) + " " + str(type) + " " + str(
+                                                txID) + " " + str(
+                                                intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
+                                                sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
+                                            logging.debug(fileString)
 
-                                        self.sentMessagesByAddress[(ip, port)] += [intro]
+                                            self.sentMessagesByAddress[(ip, port)] += [intro]
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
