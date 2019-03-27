@@ -134,9 +134,9 @@ class Node(Thread):
 
         message2send = message[1:]
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
-            self.receivedMessagesByAddress[(ip,port)] = message2send
+            self.receivedMessagesByAddress[(ip,port)] = [message2send]
         else:
-            self.receivedMessagesByAddress[(ip, port)] += message2send
+            self.receivedMessagesByAddress[(ip, port)] += [message2send]
 
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
@@ -171,7 +171,7 @@ class Node(Thread):
         return None
 
     def handleServiceMessage(self, message):
-        message = message.split()
+        message = message.split("")
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
             print("\t" + str(message))
