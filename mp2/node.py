@@ -143,11 +143,17 @@ class Node(Thread):
 
         message2send = message[1:]
 
+## LOGGING
+        logMessage = message2send[:]
+        print(logMessage)
+
+
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip,port)] = [message2send]
         else:
             self.receivedMessagesByAddress[(ip, port)] += [message2send]
 
+        ttype = None
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
 
@@ -160,10 +166,9 @@ class Node(Thread):
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
-            logMessage = message2send[:]
-            print(logMessage)
-            timestamp = logMessage[1]
+            timestamp_a = logMessage[1]
             txID = logMessage[2]
+            ttype = "TRANSACTION"
             #
             fromNode = ip
             toNode = self.ip
@@ -172,7 +177,7 @@ class Node(Thread):
             nodeNum = self.vmNumber
             mess = str(" ".join(logMessage))
             #
-            fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+            fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
                 fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
                 nodeNum) + " " + str(bytes) + "\n"
             logging.debug(fileString)
@@ -209,7 +214,7 @@ class Node(Thread):
         message = message.split(" ")
 
         logMessage = message[:]
-        timestamp = message[1]
+        timestamp_a = message[1]
         txID = message[2]
         mess = str(" ".join(logMessage))
         fromNode = self.service_ip
@@ -218,10 +223,10 @@ class Node(Thread):
         status = "alive"
         nodeNum = self.vmNumber
 
-        type = None
+        ttype = None
         if ("TRANSACTION" in message):
 
-            type = "TRANSACTION"
+            ttype = "TRANSACTION"
 
             #print("~~got transaction from service~~")
             #print("\t" + str(message))
@@ -230,9 +235,9 @@ class Node(Thread):
             # for tm in self.transactionMessages:
             #     print(tm)
 
-        elif ("INTRODUCE" in message):
+        elif("INTRODUCE" in message):
 
-            type = "INTRODUCE"
+            ttype = "INTRODUCE"
 
             #print("~~got introduction~~")
             #print("\t" + str(message))
@@ -241,14 +246,14 @@ class Node(Thread):
 
         elif ("QUIT" in message):
             #print("## Got Quit command ##")
-            type = "QUIT"
+            ttype = "QUIT"
 
 
         elif ("DIE" in message):
             exit(1)
             #print("@@ Got DIE command @@")
 
-        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
             fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
             nodeNum) + " " + str(bytes) + "\n"
         logging.debug(fileString)
