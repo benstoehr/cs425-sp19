@@ -476,14 +476,15 @@ class Node(Thread):
                 ## EXTRA
                 if(introductionstionsToSend is not None):
                     for intro in introductionstionsToSend:
+                        intro_ip = intro[2]
+                        intro_port = intro[3]
 
                         for address in readyToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
                             print("!! " + str(intro) + " > " + str(address) + " !!")
 
                             ######### SENDING SECTION #######
-                            self.sock.sendto(message2send.encode('utf-8'), address)
-
+                            self.sock.sendto(message2send.encode('utf-8'), (intro_ip, intro_port))
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
