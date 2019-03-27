@@ -376,7 +376,7 @@ class Node(Thread):
                                     print("filestring")
                                     print("\t" + str(fileString))
 
-                                    self.file.write("%s", fileString)
+                                    self.file.write(fileString)
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                     ipsToPending.add((ip,port))
 
