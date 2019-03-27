@@ -85,6 +85,7 @@ class Node(Thread):
         self.event = event
 
         filename = str(self.name) + ".txt"
+        print("logfile: " +str(filename))
         #self.file = open(filename, "w+")
         logging.basicConfig(filename=filename, level=logging.DEBUG)
 
@@ -167,14 +168,14 @@ class Node(Thread):
             fromNode = ip
             toNode = self.ip
             sentTime = time.time()
-            # status = "alive"
-            # nodeNum = self.vmNumber
-            # mess = str(" ".join(logMessage))
+            status = "alive"
+            nodeNum = self.vmNumber
+            mess = str(" ".join(logMessage))
             #
-            # fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
-            #     fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            #     nodeNum) + " " + str(bytes) + "\n"
-            # logging.debug(fileString)
+            fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+                fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+                nodeNum) + " " + str(bytes) + "\n"
+            logging.debug(fileString)
 
         # Assume you will only get good messages
         elif ("INTRODUCE" in message2send):
