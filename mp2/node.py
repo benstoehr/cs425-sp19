@@ -171,7 +171,7 @@ class Node(Thread):
         return None
 
     def handleServiceMessage(self, message):
-        message = message.split("")
+        message = message.split(" ")
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
             print("\t" + str(message))
