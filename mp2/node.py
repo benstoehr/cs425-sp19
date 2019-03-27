@@ -369,7 +369,10 @@ class Node(Thread):
                                     nodeNum = self.vmNumber
                                     bytes = len(message2send)
 
-                                    fileString = str(timestamp) + " " + str(type) + " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
+                                    fileString = str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
+                                    print("filestring")
+                                    print("\t" + str(fileString))
+                                    
                                     self.file.write(fileString)
 
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
