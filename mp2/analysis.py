@@ -5,8 +5,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import re
 
-filename = "log.txt"
-HalfNodeNum = 3
+filename20 = "log20.txt"
+filename100 = "log100.txt"
 
 # Plan:
 # [the propagation delay]
@@ -74,7 +74,11 @@ def draw_line(df, y, color, output_filename):
 	fig.savefig(output)
 
 # Start to work
-raw_df = read_data(filename)
+raw_df20 = read_data(filename20)
+raw_df20['nodeNum'] = 20
+raw_df100 = read_data(filename100)
+raw_df100['nodeNum'] = 100
+raw_df = pd.concat([raw_df20, raw_df100])
 
 df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
@@ -89,7 +93,7 @@ df['timeElapsed'] = (df.timestamp - df.timestampFromNode)
 df['rownumByMsg'] = df.sort_values(['timestamp'], ascending=True) \
              .groupby(['txID']) \
              .cumcount() + 1
-halfTime = df[df.rownumByMsg > HalfNodeNum].groupby(['txID','nodeNum'])['timeElapsed'].sum()
+halfTime = df[df.rownumByMsg > (df.nodeNum/2)].groupby(['txID','nodeNum'])['timeElapsed'].sum()
 draw_hist(halfTime[halfTime.nodeNum == 20], halfTime[halfTime.nodeNum == 100], 'plot01_hist_propagation_delay_half.png')
 
 # Plot 2
