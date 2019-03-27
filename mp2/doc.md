@@ -44,28 +44,43 @@ e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ### Node connectivity
 
-After the introduction of three existing nodes, the new node asks these nodes for their neighbor list and add them to its list. It keeps asking until having the information of all nodes in the cluster. 
+After the introduction of three existing nodes, the node adds these address to `unknown address list`. Every round, the node picks three to five nodes from its `live address list` and forward the following messages to these `live address` + all `unknown address`: 
+
+1. 5 latest transactions
+2. 3 address from `live address list`
+
+Then the node adds these address to `pending address list` and wait for their responses. Once it got the reply, it adds the address to `live address list`.
 
 Please refer to:
 
 ```
-{server.py}
-class mp2Server(object):
+{node.py}
+class Node(Thread):
     ...
-    def connectToNewNodes(self):
+    def handleMessage(self, message, addr):
         ...
-    def connect2Node(self, ip, port):
+    def run(self):
+        ...
+        ## NODE STUFF
         ...
 ```
 
 ### Transaction broadcast
 
-Every round a node randomly chooses 3 nodes from the all-nighbor list and sends recent 10 transactions to them. 
+Every round a node randomly chooses 3 nodes from the `live address list` and sends recent 5 transactions to them. 
 
 Please refer to:
 
 ```
-
+{node.py}
+class Node(Thread):
+    ...
+    def run(self):
+        ...
+        ## Figure out which addresses to send to
+        ...
+        ######## WRITE TO OTHER NODES
+        ...
 ```
 
 ### Failure handling
@@ -88,7 +103,9 @@ The propagation time is roughly doubled when half nodes die in comparison to all
 Please refer to:
 
 ```
-     
+{node.py}
+class Node(Thread):
+    def handleServiceMessage(self, message):    
 ```
 
 ## Analysis
