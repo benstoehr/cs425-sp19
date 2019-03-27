@@ -335,9 +335,12 @@ class Node(Thread):
                         print("!! " + str(transMessage) + " > " + str(address) + " !!")
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
+
                         if((ip, port) not in self.sentMessagesByAddress.keys()):
-                            self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-                            self.sentMessagesByAddress[(ip, port)] = [transMessage]
+                            if ((ip, port) not in self.receivedMessagesByAddress.keys()):
+                                if (transMessage not in self.receivedMessagesByAddress[(ip, port)]):
+                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                    self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
                         else:
                             if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
