@@ -87,7 +87,7 @@ class Node(Thread):
         filename = str(self.name) + ".txt"
         print("logfile: " +str(filename))
         #self.file = open(filename, "w+")
-        logging.basicConfig(filename=filename, level=logging.DEBUG)
+        logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
         self.messager = Messager()
 
