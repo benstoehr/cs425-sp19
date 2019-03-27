@@ -175,8 +175,8 @@ class Node(Thread):
             sentTime = time.time()
             status = "alive"
             nodeNum = self.vmNumber
-            mess = str(" ".join(logMessage))
-            #
+            mess = str("_".join(logMessage))
+
             fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
                 fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
                 nodeNum) + " " + str(bytes) + "\n"
@@ -216,7 +216,7 @@ class Node(Thread):
         logMessage = message[:]
 
 
-        mess = str(" ".join(logMessage))
+        mess = str("_".join(logMessage))
         fromNode = str(self.service_ip) + str(self.service_port)
         toNode = str(self.ip) + str(self.ip)
         sentTime = time.time()
@@ -331,7 +331,7 @@ class Node(Thread):
                     # Put it in the dictionary with the name
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")
                     self.unknownAddresses.append((vmIP, vmPort))
-            self.introductionMessages = []
+            #self.introductionMessages = []
 
     ## END OF READING
 
@@ -382,6 +382,13 @@ class Node(Thread):
             else:
                 transactionsToSend = sortedTranscations[-5:]
 
+            random.shuffle(self.introductionMessages)
+
+            introductionstionsToSend = None
+            if (len(self.introductionMessages) < 3):
+                introductionsToSend = self.introductionMessages
+            else:
+                introductionstionsToSend = self.introductionMessages[-3:]
 
             ######## WRITE TO OTHER NODES
             if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
@@ -402,7 +409,7 @@ class Node(Thread):
                         timestamp = transMessage[1]
                         type = "TRANSACTION"
                         txID = transMessage[2]
-                        mess = str(" ".join(logMessage))
+                        mess = str("_".join(logMessage))
                         fromNode = str(self.ip) + "," + str(self.port)
                         toNode = str(ip) + "," + str(port)
                         status = "alive"
@@ -465,6 +472,15 @@ class Node(Thread):
 
                                     self.sentMessagesByAddress[(ip, port)] += [transMessage]
                                     ipsToPending.add((ip, port))
+
+                for intro in introductionstionsToSend:
+                    for address in readyToSend:
+                        message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
+                        print("!! " + str(intro) + " > " + str(address) + " !!")
+
+                        ######### SENDING SECTION #######
+                        self.sock.sendto(message2send.encode('utf-8'), address)
+
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
