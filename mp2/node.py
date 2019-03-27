@@ -216,8 +216,7 @@ class Node(Thread):
 
         logMessage = message[:]
 
-        timestamp_a = logMessage[2]
-        txID = logMessage[3]
+
         mess = str(" ".join(logMessage))
         fromNode = self.service_ip
         toNode = self.ip
@@ -226,9 +225,13 @@ class Node(Thread):
         nodeNum = self.vmNumber
 
         ttype = None
+        timestamp_a = None
+        txID = None
         if ("TRANSACTION" in message):
 
             ttype = "TRANSACTION"
+            timestamp_a = logMessage[2]
+            txID = logMessage[3]
 
             #print("~~got transaction from service~~")
             #print("\t" + str(message))
