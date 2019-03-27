@@ -41,7 +41,7 @@ class Node(Thread):
     messager = None
 
     # []
-    transactionMessages = set()
+    transactionMessages = []
     introductionMessages = []
     serviceIntroductionMessages = []
 
@@ -142,7 +142,8 @@ class Node(Thread):
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
 
-            self.transactionMessages.add(message2send)
+            if(message2send not in self.transactionMessages):
+                self.transactionMessages.append(message2send)
 
             replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
             print("~~ sending REPLY ~~")
@@ -176,7 +177,8 @@ class Node(Thread):
         if ("TRANSACTION" in message):
             print("~~got transaction from service~~")
             print("\t" + str(message))
-            self.transactionMessages.add(message)
+            # Assume it hasn't been seen
+            self.transactionMessages.append(message)
             # for tm in self.transactionMessages:
             #     print(tm)
             return
@@ -395,10 +397,8 @@ class Node(Thread):
         print("Run event unset!")
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
-
         for tm in self.transactionMessages:
             print(tm)
-
         self.shutdown()
 
 
