@@ -152,7 +152,9 @@ class Node(Thread):
             self.introductionMessages.append(message)
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
-            pass
+            if((ip, port) in self.pendingAddresses.keys):
+                del self.pendingAddresses[(ip,port)]
+                
 
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
