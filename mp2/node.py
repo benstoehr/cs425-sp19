@@ -407,8 +407,8 @@ class Node(Thread):
                         type = "TRANSACTION"
                         txID = transMessage[2]
                         mess = str(" ".join(logMessage))
-                        fromNode = str(self.ip + "," + self.port)
-                        toNode = str(ip + "," + port)
+                        fromNode = str(self.ip) + "," + str(self.port)
+                        toNode = str(ip) + "," + str(port)
                         status = "alive"
                         nodeNum = self.vmNumber
                         bytes = len(message2send)
