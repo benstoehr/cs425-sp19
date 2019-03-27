@@ -94,14 +94,14 @@ df['timeElapsed'] = (df.timestamp - df.timestampFromNode)
 df['rownumByMsg'] = df.sort_values(['timestamp'], ascending=True) \
              .groupby(['txID']) \
              .cumcount() + 1
-halfTime = df[df.rownumByMsg > (df.nodeNum/2)].groupby(['txID','nodeNum'])['timeElapsed'].sum()
-draw_hist(halfTime[halfTime.nodeNum == 20], halfTime[halfTime.nodeNum == 100], 'plot01_hist_propagation_delay_half.png')
+halfTime = df[df.rownumByMsg > (df.nodeNum/2)].groupby(['txID','nodeNum'])['timeElapsed'].sum().reset_index()
+draw_hist(halfTime[halfTime.nodeNum == 20].values, halfTime[halfTime.nodeNum == 100].values, 'plot01_hist_propagation_delay_half.png')
 
 # Plot 2
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
-ttlTime = df.groupby(['txID','nodeNum'])['timeElapsed'].sum()
-draw_hist(ttlTime[ttlTime.nodeNum == 20], ttlTime[ttlTime.nodeNum == 100], 'plot02_hist_propagation_delay_all.png')
+ttlTime = df.groupby(['txID','nodeNum'])['timeElapsed'].sum().reset_index()
+draw_hist(ttlTime[ttlTime.nodeNum == 20].values, ttlTime[ttlTime.nodeNum == 100].values, 'plot02_hist_propagation_delay_all.png')
 
 # node# receiving a specific message -> x = timestamp, y = rownumByMsg, color = messageID
 draw_line(df[df.nodeNum == 20], 'rownumByMsg', 'txID', 'plot03_line_tx_reached_20.png')
