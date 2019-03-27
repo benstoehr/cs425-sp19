@@ -120,7 +120,7 @@ class Node(Thread):
             print("Got message in read() call!")
             stripped = message.strip()
             #print(str(self.name) + ": " + str(stripped))
-            self.file.write(message)
+            # self.file.write(message)
         return message, addr
 
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
@@ -168,7 +168,7 @@ class Node(Thread):
             for mess in messagesFromService:
                 stripped = messageFromService.strip()
                 #print(str(self.name) + ":" + str(stripped))
-                self.file.write(mess)
+                #self.file.write(mess)
             return messagesFromService
         return None
 
@@ -344,7 +344,7 @@ class Node(Thread):
 
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        logMessage = transMessage.copy()
+                        logMessage = transMessage[:]
 
                         timestamp = transMessage[1]
                         type = "TRANSACTION"
