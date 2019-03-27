@@ -48,10 +48,9 @@ def draw_hist(d20, d100, output_filename):
 
 	sns.set(style="whitegrid")
 	f, axes = plt.subplots(2, 1, figsize=(7, 7), sharex=True)
-	sns.despine(left=True)
 	sns.distplot(d20, kde=False, color="b", ax=axes[0])
 	sns.distplot(d100, kde=False, color="r", ax=axes[1])
-	plt.setp(axes, yticks=[])
+	plt.setp(axes)
 	#fig = plt.get_figure()
 	plt.savefig(output)
 	plt.close()
