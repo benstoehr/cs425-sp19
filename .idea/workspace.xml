@@ -83,13 +83,12 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="686">
-                  <caret line="384" column="36" lean-forward="false" selection-start-line="384" selection-start-column="36" selection-end-line="384" selection-end-column="36" />
+                <state relative-caret-position="299">
+                  <caret line="108" column="24" lean-forward="false" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="24" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#1892#1983#0" expanded="false" />
-                    <element signature="e#2072#2243#0" expanded="false" />
-                    <element signature="e#2312#2316#0" expanded="false" />
+                    <element signature="e#2313#2317#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -126,6 +125,7 @@
       <find>file</find>
       <find>copy</find>
       <find>file.write</find>
+      <find>close</find>
     </findStrings>
     <replaceStrings>
       <replace>58</replace>
@@ -329,8 +329,7 @@
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1892#1983#0" expanded="false" />
-            <element signature="e#2072#2243#0" expanded="false" />
-            <element signature="e#2312#2316#0" expanded="false" />
+            <element signature="e#2313#2317#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -599,13 +598,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="686">
-          <caret line="384" column="36" lean-forward="false" selection-start-line="384" selection-start-column="36" selection-end-line="384" selection-end-column="36" />
+        <state relative-caret-position="299">
+          <caret line="108" column="24" lean-forward="false" selection-start-line="108" selection-start-column="19" selection-end-line="108" selection-end-column="24" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1892#1983#0" expanded="false" />
-            <element signature="e#2072#2243#0" expanded="false" />
-            <element signature="e#2312#2316#0" expanded="false" />
+            <element signature="e#2313#2317#0" expanded="false" />
           </folding>
         </state>
       </provider>

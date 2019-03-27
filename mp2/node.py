@@ -106,7 +106,7 @@ class Node(Thread):
 
         print(str(self.name) + " shutting down")
         self.serv.shutdown()
-        self.file.close()
+        #self.file.close()
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
 
@@ -382,7 +382,7 @@ class Node(Thread):
 
                                     #self.file.write(fileString)
                                     logging.debug(fileString)
-                                    
+
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                     ipsToPending.add((ip,port))
 
