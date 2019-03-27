@@ -39,12 +39,10 @@ e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ### Node connectivity
 
-At the appearnace of an "Introduce" command from the service, the ip and port will be added to the list of live addresses, `liveAddresses`. When "Introduce" messages are received from After the introduction of three existing nodes, the node adds these address to `unknown address list`. Every round, the node picks three to five nodes from its `live address list` and forward the following messages to these `live address` + all `unknown address`: 
+At the appearnace of an "Introduce" command from the service, the ip and port will be added to the list of live addresses, `liveAddresses`. 
 
-1. 5 latest transactions
-2, 
-2. 3 addresses from `liveAddresses` list
-3. 2 addresses from `unknownAddresses` list
+When "Introduce" messages are received from other nodes, they are placed onto the `unknownAddresses` list.
+
 
 Once Then the node adds these address to `pending address list` and wait for their responses. Once it got the reply, it adds the address to `live address list`.
 
@@ -63,6 +61,15 @@ class Node(Thread):
 ```
 
 ### Transaction broadcast
+
+Every round, each node picks up to three nodes from its `liveAddresses` list, and up to 2 nodes from the `unknownAddresses` list.
+
+For each of these addresses (ip,port) pair,  
+
+1. 5 latest transactions
+2, 
+2. 3 addresses from `liveAddresses` list
+3. 2 addresses from `unknownAddresses` list
 
 Every round a node randomly chooses 3 nodes from the `live address list` and sends recent 5 transactions to them. 
 

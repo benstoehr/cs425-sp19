@@ -158,6 +158,7 @@ class Node(Thread):
 
             if(message2send not in self.transactionMessages):
                 self.transactionMessages.append(message2send)
+                self.receivedMessagesByAddress[(ip, port)] = [message2send]
 
             replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
             print("~~ sending REPLY ~~")
