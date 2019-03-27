@@ -134,11 +134,14 @@ class Node(Thread):
 
         print("\thandleMessage: " + str(message))
         message = message.split()
+
         ip, port = message[0].split(":")
         ip = str(ip)
         port = int(port)
 
+        message2send = message[1:]
 
+        logMessage = message2send[:]
         timestamp = message[1]
         txID = message[2]
 
@@ -148,9 +151,9 @@ class Node(Thread):
         status = "alive"
         nodeNum = self.vmNumber
 
-        message2send = message[1:]
 
-        logMessage = message2send[:]
+
+
         mess = str(" ".join(logMessage))
 
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
