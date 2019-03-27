@@ -120,7 +120,7 @@ class Node(Thread):
             print("Got message in read() call!")
             stripped = message.strip()
             #print(str(self.name) + ": " + str(stripped))
-            self.file.write(message)
+            # self.file.write(message)
         return message, addr
 
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
@@ -168,7 +168,7 @@ class Node(Thread):
             for mess in messagesFromService:
                 stripped = messageFromService.strip()
                 #print(str(self.name) + ":" + str(stripped))
-                self.file.write(mess)
+                #self.file.write(mess)
             return messagesFromService
         return None
 
@@ -344,13 +344,12 @@ class Node(Thread):
 
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        splitM = transMessage.split(" ")
+                        logMessage = transMessage[:]
 
-
-                        timestamp = splitM[1]
+                        timestamp = transMessage[1]
                         type = "TRANSACTION"
-                        txID = splitM[2]
-                        mess = str(" ".join(transMessage))
+                        txID = transMessage[2]
+                        mess = str(" ".join(logMessage))
                         fromNode = self.hostname
 
                         # Haven't sent them anything yet
@@ -372,7 +371,7 @@ class Node(Thread):
 
                                     fileString = str(timestamp) + " " + str(type) + " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
                                     self.file.write(fileString)
-                                    
+
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
 
                                     ipsToPending.add((ip,port))
