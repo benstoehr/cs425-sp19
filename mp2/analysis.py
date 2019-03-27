@@ -69,10 +69,9 @@ def draw_line(df, y, color, output_filename):
 	sns.set(style="whitegrid")
 	sns.despine(left=True)
 	if color != None:
-		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df)
+		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df, legend=False)
 	else:
-		sns_plot = sns.lineplot(x="timestamp", y=y, data=df)
-	sns_plot._legend.remove()
+		sns_plot = sns.lineplot(x="timestamp", y=y, data=df, legend=False)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 
