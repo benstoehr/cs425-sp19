@@ -183,7 +183,7 @@ class Node(Thread):
 
         # Assume you will only get good messages
         elif ("INTRODUCE" in message2send):
-            self.introductionMessages.append(message)
+            self.introductionMessages.append(message2send)
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
