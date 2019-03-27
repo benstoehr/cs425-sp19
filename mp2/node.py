@@ -141,20 +141,6 @@ class Node(Thread):
 
         message2send = message[1:]
 
-        logMessage = message2send[:]
-        timestamp = logMessage[1]
-        txID = logMessage[2]
-
-        fromNode = self.service_ip
-        toNode = self.ip
-        sentTime = time.time()
-        status = "alive"
-        nodeNum = self.vmNumber
-
-
-
-
-        mess = str(" ".join(logMessage))
 
         if((ip,port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip,port)] = [message2send]
@@ -173,19 +159,34 @@ class Node(Thread):
             self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
             self.liveAddresses.append((ip,int(port)))
 
+            logMessage = message2send[:]
+            timestamp = logMessage[1]
+            txID = logMessage[2]
+
+            fromNode = self.service_ip
+            toNode = self.ip
+            sentTime = time.time()
+            status = "alive"
+            nodeNum = self.vmNumber
+            mess = str(" ".join(logMessage))
+
+            fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
+                fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
+                nodeNum) + " " + str(bytes) + "\n"
+            logging.debug(fileString)
+            
         # Assume you will only get good messages
         elif ("INTRODUCE" in message2send):
             self.introductionMessages.append(message)
+
+
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
             if((ip, port) in self.pendingAddresses.keys()):
                 del self.pendingAddresses[(ip,port)]
                 self.liveAddresses.append((ip, port))
 
-        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
-        logging.debug(fileString)
+
 
 ##################################
     def serviceRead(self):
