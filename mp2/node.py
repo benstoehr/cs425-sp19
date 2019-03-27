@@ -185,6 +185,7 @@ class Node(Thread):
         elif ("INTRODUCE" in message2send):
             if(message2send not in self.introductionMessages):
                 self.introductionMessages.append(message2send)
+                self.receivedMessagesByAddress[(ip, port)] = [message2send]
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
