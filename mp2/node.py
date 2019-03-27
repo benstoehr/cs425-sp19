@@ -41,7 +41,7 @@ class Node(Thread):
     messager = None
 
     # []
-    transactionMessages = []
+    transactionMessages = set()
     introductionMessages = []
     serviceIntroductionMessages = []
 
@@ -69,8 +69,6 @@ class Node(Thread):
         self.status = "Initializing"
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
-
-
 
         self.name = name
         self.vmNumber = int(self.name[8])
@@ -395,13 +393,12 @@ class Node(Thread):
 
 
         print("Run event unset!")
-
-
-
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
+
         for tm in self.transactionMessages:
             print(tm)
+
         self.shutdown()
 
 
