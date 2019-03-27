@@ -439,7 +439,6 @@ class Node(Thread):
                                     self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                     ipsToPending.add((ip,port))
 
-
                             # Haven't received anything
                             else:
                                 print("!! " + str(transMessage) + " > " + str(address) + " !!")
@@ -456,27 +455,47 @@ class Node(Thread):
 
                                 self.sentMessagesByAddress[(ip, port)] = [transMessage]
                                 ipsToPending.add((ip, port))
+
                         # Have sent them something
                         else:
-                            # Message hasn't been sent
-                            if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
-                                # Message didn't come from them
-                                if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
-                                    print("!! " + str(transMessage) + " > " + str(address) + " !!")
+                            # Have received messages
+                            if ((ip, port) in self.receivedMessagesByAddress.keys()):
+                                # Message hasn't been sent
+                                if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
+                                    # Message didn't come from them
+                                    if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
+                                        print("!! " + str(transMessage) + " > " + str(address) + " !!")
 
-                                    ######### SENDING SECTION #######
-                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                        ######### SENDING SECTION #######
+                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
 
-                                    ### LOGGING STUFF ###
-                                    sentTime = time.time()
-                                    fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
-                                        mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                        sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                    logging.debug(fileString)
+                                        ### LOGGING STUFF ###
+                                        sentTime = time.time()
+                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
+                                            mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(
+                                            sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
+                                        logging.debug(fileString)
 
-                                    self.sentMessagesByAddress[(ip, port)] += [transMessage]
-                                    ipsToPending.add((ip, port))
+                                        self.sentMessagesByAddress[(ip, port)] += [transMessage]
+                                        ipsToPending.add((ip, port))
+                                        # Haven't received anything
+                            else:
+                                print("!! " + str(transMessage) + " > " + str(address) + " !!")
 
+                                ######### SENDING SECTION #######
+                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+
+                                ### LOGGING STUFF ###
+                                sentTime = time.time()
+                                fileString = " " + str(timestamp) + " " + str(type) + " " + str(
+                                    txID) + " " + str(
+                                    mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(
+                                    sentTime) + " " + str(
+                                    status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
+                                logging.debug(fileString)
+
+                                self.sentMessagesByAddress[(ip, port)] = [transMessage]
+                                ipsToPending.add((ip, port))
 
                 ## EXTRA
                 if(introductionstionsToSend is not None):
