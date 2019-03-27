@@ -29,8 +29,9 @@ def read_data(filename):
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
 			del record[0]
-			if record[1] == "TRANSACTION":
-				raw.append(record)
+			if len(record) > 2:
+				if record[1] == "TRANSACTION":
+					raw.append(record)
 
 	# columns TBD
 	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNumOnVm', 'bytes']
