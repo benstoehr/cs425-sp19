@@ -72,6 +72,7 @@ def draw_line(df, y, color, output_filename):
 		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df)
 	else:
 		sns_plot = sns.lineplot(x="timestamp", y=y, data=df)
+	sns_plot._legend.remove()
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 
