@@ -274,9 +274,9 @@ class Node(Thread):
 
         ## ADDRESS CLEAN UP
             ## Delete addresses that are stale
-            for address, time in self.pendingAddresses.items():
-                curr_time = time.time
-                diff = curr_time - time
+            for address, sent_time in self.pendingAddresses.items():
+                curr_time = time.time()
+                diff = curr_time - sent_time
                 # change this to be the timeout factor
                 if (diff > 10000):
                     print(str(address) + " is dead!")
