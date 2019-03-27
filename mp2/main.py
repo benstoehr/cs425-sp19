@@ -106,7 +106,8 @@ while(not done):
 
         stat = node.status
         if(node.status == "shutdown"):
-            print(str(node.name) + ": " + str(node.status))
+            #print(str(node.name) + ": " + str(node.status))
+            nodes.remove(node)
             pass
         else:
             shutdownCheck = False
