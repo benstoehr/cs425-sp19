@@ -16,7 +16,7 @@ import random
 
 from server import mp2Server
 from messager import Messager
-
+from logger import Logger
 
 def sortFunction(x):
     return x[1]
@@ -50,7 +50,7 @@ class Node(Thread):
     nameIPPortList = []
     ipAndport2Name = dict()
 
-    # (ip,port)
+    # (ip,(int) port) IMPORTANT
     liveAddresses = []
 
     # (ip, port) -> (name, status)
@@ -87,8 +87,9 @@ class Node(Thread):
         filename = str(self.name) + ".txt"
         print("logfile: " +str(filename))
         #self.file = open(filename, "w+")
-        logging.basicConfig(filename="log.txt", level=logging.DEBUG)
 
+        logging.basicConfig(filename="log.txt", level=logging.DEBUG)
+        self.logger = Logger(logging, self.ip, self.port, self.vmNumber)
         self.messager = Messager()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -111,6 +112,13 @@ class Node(Thread):
         #self.file.close()
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
+
+###
+    def sendReply(self, ip, port):
+        replyMessage = str(self.ip) + ":" + str(self.port) + " REPLY"
+        print("~~ sending REPLY ~~")
+        print("\t" + str(replyMessage))
+        self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
 
 #### List manipulation
     def getNameAndPortFromIP(self):
@@ -135,9 +143,10 @@ class Node(Thread):
         bytes = len(message)
 
         print("\thandleMessage: " + str(message))
+        # message = IP:Port messageContents
         message = message.split()
-
         ip, port = message[0].split(":")
+
         ip = str(ip)
         port = int(port)
 
@@ -153,17 +162,18 @@ class Node(Thread):
             self.receivedMessagesByAddress[(ip, port)] += [message2send]
 
         ttype = None
+
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
+
+            self.logger.logReceivedTransaction(ip, port, logMessage)
 
             if(message2send not in self.transactionMessages):
                 self.transactionMessages.append(message2send)
                 self.receivedMessagesByAddress[(ip, port)] = [message2send]
 
-            replyMessage = str(self.ip)+":"+str(self.port) + " REPLY"
-            print("~~ sending REPLY ~~")
-            print("\t" + str(replyMessage))
-            self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
+
+            self.sendReply(ip, port)
             self.liveAddresses.append((ip,int(port)))
 
             timestamp_a = logMessage[1]
@@ -210,7 +220,7 @@ class Node(Thread):
 
     def handleServiceMessage(self, message):
 
-        print("handleService: " +str(message))
+        print("handleServiceMessage: " +str(message))
         bytes = len(message)
 
         message = message.split(" ")
@@ -249,11 +259,9 @@ class Node(Thread):
             self.serviceIntroductionMessages.append(message)
             self.introductionMessages.append(message)
 
-
         elif ("QUIT" in message):
             #print("## Got Quit command ##")
             ttype = "QUIT"
-
 
         elif ("DIE" in message):
             self.status = "shutdown"
