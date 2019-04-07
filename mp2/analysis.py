@@ -29,8 +29,9 @@ def read_data(filename):
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
 			del record[0]
-			if record[1] == "TRANSACTION":
-				raw.append(record)
+			if len(record) > 2:
+				if record[1] == "TRANSACTION":
+					raw.append(record)
 
 	# columns TBD
 	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNumOnVm', 'bytes']
@@ -47,12 +48,12 @@ def draw_hist(d20, d100, output_filename):
 
 	sns.set(style="whitegrid")
 	f, axes = plt.subplots(2, 1, figsize=(7, 7), sharex=True)
-	sns.despine(left=True)
-	sns.distplot(d20, kde=False, color="b", ax=axes[0, 0])
-	sns.distplot(d100, kde=False, color="r", ax=axes[0, 0])
-	plt.setp(axes, yticks=[])
-	fig = plt.get_figure()
-	fig.savefig(output)
+	sns.distplot(d20, kde=False, color="b", ax=axes[0])
+	sns.distplot(d100, kde=False, color="r", ax=axes[1])
+	plt.setp(axes)
+	#fig = plt.get_figure()
+	plt.savefig(output)
+	plt.close()
 
 def draw_line(df, y, color, output_filename):
 	"""
@@ -68,9 +69,9 @@ def draw_line(df, y, color, output_filename):
 	sns.set(style="whitegrid")
 	sns.despine(left=True)
 	if color != None:
-		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df)
+		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df, legend=False)
 	else:
-		sns_plot = sns.lineplot(x="timestamp", y=y, data=df)
+		sns_plot = sns.lineplot(x="timestamp", y=y, data=df, legend=False)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 
@@ -79,14 +80,16 @@ raw_df20 = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df100 = read_data(filename100)
 raw_df100['nodeNum'] = 100
-raw_df = pd.concat([raw_df20, raw_df100])
+raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
 
 df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
 df['timestampFromNode'] = pd.to_datetime(df['timestampFromNode'], unit='s')
+df['bytes'] = df['bytes'].astype(int)
 
 # calculate the time elaspsed from every pair of nodes
 df['timeElapsed'] = (df.timestamp - df.timestampFromNode)
+df['timeElapsed'] = df['timeElapsed'].dt.microseconds.abs()
 
 # Plot 1
 # total elapsed time for each transaction forwarding to exact half of nodes
@@ -94,14 +97,15 @@ df['timeElapsed'] = (df.timestamp - df.timestampFromNode)
 df['rownumByMsg'] = df.sort_values(['timestamp'], ascending=True) \
              .groupby(['txID']) \
              .cumcount() + 1
-halfTime = df[df.rownumByMsg > (df.nodeNum/2)].groupby(['txID','nodeNum'])['timeElapsed'].sum()
-draw_hist(halfTime[halfTime.nodeNum == 20], halfTime[halfTime.nodeNum == 100], 'plot01_hist_propagation_delay_half.png')
+halfTime = df[df.rownumByMsg > (df.nodeNum/2)].groupby(['txID','nodeNum'])['timeElapsed'].sum().reset_index()
+# print(halfTime['timeElapsed'].values)
+draw_hist(halfTime[halfTime.nodeNum == 20]['timeElapsed'].values, halfTime[halfTime.nodeNum == 100]['timeElapsed'].values, 'plot01_hist_propagation_delay_half.png')
 
 # Plot 2
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
-ttlTime = df.groupby(['txID','nodeNum'])['timeElapsed'].sum()
-draw_hist(ttlTime[ttlTime.nodeNum == 20], ttlTime[ttlTime.nodeNum == 100], 'plot02_hist_propagation_delay_all.png')
+ttlTime = df.groupby(['txID','nodeNum'])['timeElapsed'].sum().reset_index()
+draw_hist(ttlTime[ttlTime.nodeNum == 20]['timeElapsed'].values, ttlTime[ttlTime.nodeNum == 100]['timeElapsed'].values, 'plot02_hist_propagation_delay_all.png')
 
 # node# receiving a specific message -> x = timestamp, y = rownumByMsg, color = messageID
 draw_line(df[df.nodeNum == 20], 'rownumByMsg', 'txID', 'plot03_line_tx_reached_20.png')
@@ -112,5 +116,6 @@ df20 = df[df.nodeNum == 20]
 df100 = df[df.nodeNum == 100]
 df20['cumBandwidth'] = df20['bytes'].cumsum()
 df100['cumBandwidth'] = df100['bytes'].cumsum()
-draw_line(df20, 'cumBandwidth', 'direction', 'plot05_line_bandwidth_20.png')
-draw_line(df100, 'cumBandwidth', 'direction', 'plot06_line_bandwidth_100.png')
+# print(df20)
+draw_line(df20, 'cumBandwidth', None, 'plot05_line_bandwidth_20.png')
+draw_line(df100, 'cumBandwidth', None, 'plot06_line_bandwidth_100.png')
