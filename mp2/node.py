@@ -43,7 +43,11 @@ class Node(Thread):
     # []
     transactionMessages = []
     introductionMessages = []
+    introductionMessages_Handled = []
+
+
     serviceIntroductionMessages = []
+    serviceTransactionMessages = []
 
     replyMessages = []
 
@@ -114,11 +118,78 @@ class Node(Thread):
         self.status = "shutdown"
 
 ###
+    def replyAndUpdateAddresses(self, ip, port):
+        # REPLY
+        self.sendReply(ip, port)
+        # KEEP THIS ADDRESS AS ALIVE
+        self.liveAddresses.append((ip, int(port)))
+
     def sendReply(self, ip, port):
         replyMessage = str(self.ip) + ":" + str(self.port) + " REPLY"
         print("~~ sending REPLY ~~")
         print("\t" + str(replyMessage))
         self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
+
+    def storeMessage(self, ip, port, message):
+        # STORE THE MESSAGE, MIGHT CHANGE THIS TO BE A HASH FOR SPACE SAVING
+        # HAVEN'T GOTTEN ANYTHING FROM THEM YET
+        if ((ip, port) not in self.receivedMessagesByAddress.keys()):
+            self.receivedMessagesByAddress[(ip, port)] = [message]
+            # GOT SOMETHING FROM THEM
+        else:
+            # BUT NOT THIS MESSAGE
+            if (message not in self.receivedMessagesByAddress[(ip, port)]):
+                # ADD THE MESSAGE
+                self.receivedMessagesByAddress[(ip, port)] += [message]
+
+    def clearIPPortFromAddresses(self, ip, port):
+        for introMessage in self.introductionMessages_Handled:
+            if(ip in introMessage and port in introMessage):
+                self.introductionMessages_Handled.remove(introMessage)
+
+
+    def getAddressesToSend(self):
+        # Shuffle the live addresses
+        random.shuffle(self.liveAddresses)
+
+        readyToSend = None
+        readyToSendLive = None
+        readyToSendUnknown = None
+
+        # from live addresses
+        if (len(self.liveAddresses) < 3):
+            readyToSendLive = self.liveAddresses
+        else:
+            readyToSendLive = self.liveAddresses[:3]
+
+        # from unknown addresses
+        if (len(self.unknownAddresses) < 2):
+            readyToSendUnknown = self.unknownAddresses
+        else:
+            readyToSendUnknown = self.unknownAddresses[:2]
+
+        readyToSend = readyToSendLive + readyToSendUnknown
+        return readyToSend
+
+
+    def okToSend(self, ip, port, message):
+
+        # Haven't sent them anything yet
+        if ((ip, port) not in self.sentMessagesByAddress.keys()):
+            self.sentMessagesByAddress[(ip, port)] = []
+
+        if ((ip, port) not in self.receivedMessagesByAddress.keys()):
+            self.receivedMessagesByAddress[(ip, port)] = []
+
+        # Haven't sent or received this message from this ip, port
+        if (message not in self.sentMessagesByAddress[(ip, port)]):
+            if (message not in self.receivedMessagesByAddress[(ip, port)]):
+                return True
+
+        return False
+
+    def addMessagetoSentMessages(self, ip, port, message):
+        self.sentMessagesByAddress[(ip, port)] += [message]
 
 #### List manipulation
     def getNameAndPortFromIP(self):
@@ -133,70 +204,40 @@ class Node(Thread):
             print("Got message in read() call!")
             stripped = message.strip()
             #print(str(self.name) + ": " + str(stripped))
-            # self.file.write(message)
+        # RETURNS MESSAGE AS A STRING, ADDR AS (IP, PORT), DOESN'T MATTER THO BECAUSE THE IP AND PORT ARE IN THE MESSAGE
         return message, addr
 
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
-
-        bytes = len(message)
-
         print("\thandleMessage: " + str(message))
-        # message = IP:Port messageContents
+
+        # message = IP:Port messageContents[]
         message = message.split()
         ip, port = message[0].split(":")
-
         ip = str(ip)
         port = int(port)
-
         message2send = message[1:]
 
-## LOGGING
-        logMessage = message2send[:]
-        print(logMessage)
 
-        if((ip,port) not in self.receivedMessagesByAddress.keys()):
-            self.receivedMessagesByAddress[(ip,port)] = [message2send]
-        else:
-            self.receivedMessagesByAddress[(ip, port)] += [message2send]
-
-        ttype = None
 
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
-
-            self.logger.logReceivedTransaction(ip, port, logMessage)
-
+            self.logger.logReceivedTransaction(message)
+            # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
                 self.transactionMessages.append(message2send)
-                self.receivedMessagesByAddress[(ip, port)] = [message2send]
 
+            self.storeMessage(ip, port, message2send)
+            self.replyAndUpdateAddresses(ip, port)
 
-            self.sendReply(ip, port)
-            self.liveAddresses.append((ip,int(port)))
-
-            timestamp_a = logMessage[1]
-            txID = logMessage[2]
-            ttype = "TRANSACTION"
-
-            fromNode = str(ip) + "," + str(port)
-            toNode = str(self.ip) + "," + str(self.port)
-            sentTime = time.time()
-            status = "alive"
-            nodeNum = self.vmNumber
-            mess = str("_".join(logMessage))
-
-            fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-                fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-                nodeNum) + " " + str(bytes) + "\n"
-            logging.debug(fileString)
-
-        # Assume you will only get good messages
         elif ("INTRODUCE" in message2send):
+            self.logger.logReceivedIntroduction(message)
             if(message2send not in self.introductionMessages):
                 self.introductionMessages.append(message2send)
-                self.receivedMessagesByAddress[(ip, port)] = [message2send]
+
+            self.storeMessage(ip, port, message2send)
+            self.replyAndUpdateAddresses(ip, port)
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
@@ -207,6 +248,8 @@ class Node(Thread):
 
 
 ##################################
+
+    # READ FROM THE SERVICE
     def serviceRead(self):
         messageFromService = self.serv.readFromService()
         if (messageFromService is not None):
@@ -218,46 +261,43 @@ class Node(Thread):
             return messagesFromService
         return None
 
+    # HANDLE THE SERVICE MESSAGE, MESSAGE COMES IN AS A STRING
+
     def handleServiceMessage(self, message):
 
+        # Print the message to console
         print("handleServiceMessage: " +str(message))
         bytes = len(message)
 
+        # MESSAGE IS NOW AN ARRAY
         message = message.split(" ")
 
         logMessage = message[:]
 
         mess = str("_".join(logMessage))
         fromNode = str(self.service_ip) + str(self.service_port)
-        toNode = str(self.ip) + str(self.ip)
+        toNode = str(self.ip) + str(self.port)
         sentTime = time.time()
         status = "alive"
         nodeNum = self.vmNumber
-
         ttype = None
         timestamp_a = None
         txID = None
+
         if ("TRANSACTION" in message):
-
-            ttype = "TRANSACTION"
-            timestamp_a = logMessage[1]
-            txID = logMessage[2]
-
             #print("~~got transaction from service~~")
             #print("\t" + str(message))
             # Assume it hasn't been seen
+            self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
-            # for tm in self.transactionMessages:
-            #     print(tm)
 
         elif("INTRODUCE" in message):
-
-            ttype = "INTRODUCE"
-
-            print("~~got introduction~~")
-            print("\t" + str(message))
+            #print("~~got introduction~~")
+            #print("\t" + str(message))
+            self.logger.logServiceIntroduction(self.service_ip, self.service_port, message)
             self.serviceIntroductionMessages.append(message)
             self.introductionMessages.append(message)
+
 
         elif ("QUIT" in message):
             #print("## Got Quit command ##")
@@ -290,25 +330,27 @@ class Node(Thread):
         self.status = "running"
 
         while (1):
-
             if(self.event.isSet()):
                 break
 
-            #print("Loop")
-    ############### READ ALL MESSAGES ###################
-        ## SERVICE STUFF
+
+    ############### STEP 1: READ ALL MESSAGES ###################
+        ## 1.A -- READ ALL MESSAGES FROM SERVICE
             ## Read until no messages
             while(1):
                 #print("serviceRead()")
                 serviceMessages = self.serviceRead()
                 if(serviceMessages is None):
+                    # NOTHING TO READ MOVE ON
                     break
                 for serviceMessage in serviceMessages:
                     serviceMessageType = self.messager.getMessageType(serviceMessage)
+                    # FOR EVERY GOOD MESSAGE, HANDLE IT
                     if(serviceMessageType is not None):
                         self.handleServiceMessage(serviceMessage)
 
             ######## Update list of IPs from node messages
+            # serviceIntroMessage = ['INTRODUCE', 'node2', '172.22.156.3', '4567']
             for serviceIntroMessage in self.serviceIntroductionMessages:
                 print("Converting message to dictionary entry and adding to liveAddresses")
                 vmname = serviceIntroMessage[1]
@@ -319,9 +361,10 @@ class Node(Thread):
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "alive")
                     # put it in the list of live addresses
                     self.liveAddresses.append((vmIP, vmPort))
+            # EMPTY THE QUEUE
             self.serviceIntroductionMessages = []
 
-        ## NODE STUFF
+        ## 1.B -- READ ALL MESSAGES FROM NODES
             ## Read until no messages
             while(1):
                 #print("read()")
@@ -343,11 +386,13 @@ class Node(Thread):
                     # Put it in the dictionary with the name
                     self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")
                     self.unknownAddresses.append((vmIP, vmPort))
-            #self.introductionMessages = []
+                # Move the message to a "HANDLED" array
+                self.introductionMessages_Handled.append(introMessage)
+            self.introductionMessages = []
 
-    ## END OF READING
+    ## END OF READING ##########
 
-        ## ADDRESS CLEAN UP
+        ## 2.A -- ADDRESS CLEAN UP
             ## Delete addresses that are stale
             for address, sent_time in self.pendingAddresses.items():
                 curr_time = time.time()
@@ -356,236 +401,68 @@ class Node(Thread):
                 if (diff > 100):
                     print(str(address) + " is dead!")
                     del self.pendingAddresses[address]
+                    vmname, status = self.ipAndport2Name[address]
+                    self.ipAndport2Name[address] = (vmname, "dead")
                     self.deadAddresses.append(address)
+                    self.clearIPPortFromAddresses(ip, port)
 
     ## Figure out which addresses to send to
 
-            # print("liveAddresses")
-            # for add in self.liveAddresses:
-            #     print(add)
+            addresses = self.getAddressesToSend()
 
-            # Shuffle the live addresses
-            random.shuffle(self.liveAddresses)
-
-            readyToSend = None
-            readyToSendLive = None
-            readyToSendUnknown = None
-
-            # from live addresses
-            if(len(self.liveAddresses) < 3):
-                readyToSendLive = self.liveAddresses
-            else:
-                readyToSendLive = self.liveAddresses[:3]
-
-            # from unknown addresses
-            if(len(self.unknownAddresses) < 2):
-                readyToSendUnknown = self.unknownAddresses
-            else:
-                readyToSendUnknown = self.unknownAddresses[:2]
-
-            readyToSend = readyToSendLive + readyToSendUnknown
 
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
-
             transactionsToSend = None
             if (len(sortedTranscations) < 5):
                 transactionsToSend = sortedTranscations
             else:
                 transactionsToSend = sortedTranscations[-5:]
 
-            random.shuffle(self.introductionMessages)
 
+            random.shuffle(self.introductionMessages)
             introductionstionsToSend = None
             if (len(self.introductionMessages) < 3):
                 introductionsToSend = self.introductionMessages
             else:
                 introductionstionsToSend = self.introductionMessages[-3:]
 
-            ######## WRITE TO OTHER NODES
-            if(len(transactionsToSend) > 0 and len(readyToSend) > 0):
 
-                ipsToPending = set()
+            ######## WRITE TO OTHER NODES ######
+            ipsToPending = set()
 
-                for transMessage in transactionsToSend:
-                    for address in readyToSend:
 
-                        ip, port = address
-                        ip = str(ip)
-                        port = int(port)
+            if(len(transactionsToSend) > 0 and len(addresses) > 0):
+                for address in addresses:
 
+                    ip, port = address
+                    ip = str(ip)
+                    port = int(port)
+
+                    # TRANSACTIONS
+                    for transMessage in transactionsToSend:
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        logMessage = transMessage[:]
+                        if(self.okToSend(ip, port, message2send)):
+                            print("!! " + str(message2send) + " > " + str(address) + " !!")
+                            ######### SENDING SECTION #######
+                            self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                            self.logger.logSentTransaction(ip, port, message2send)
+                            self.addMessagetoSentMessages(ip, port, transMessage)
+                            ipsToPending.add((ip, port))
 
-                        timestamp = transMessage[1]
-                        type = "TRANSACTION"
-                        txID = transMessage[2]
-                        mess = str("_".join(logMessage))
-                        fromNode = str(self.ip) + "," + str(self.port)
-                        toNode = str(ip) + "," + str(port)
-                        status = "alive"
-                        nodeNum = self.vmNumber
-                        bytes = len(message2send)
-
-                        # Haven't sent them anything yet
-                        if((ip, port) not in self.sentMessagesByAddress.keys()):
-                            # Have received messages
-                            if ((ip, port) in self.receivedMessagesByAddress.keys()):
-                                # Haven't received this specific message
-                                if (transMessage not in self.receivedMessagesByAddress[(ip, port)]):
-                                    print("!! " + str(transMessage) + " > " + str(address) + " !!")
-
-                                    ######### SENDING SECTION #######
-                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                    ### LOGGING STUFF ###
-                                    sentTime = time.time()
-                                    fileString = " "+str(timestamp)+" "+str(type)+ " "+str(txID)+" "+str(mess)+" "+str(fromNode)+" "+str(toNode)+" "+str(sentTime)+" "+str(status)+" "+str(nodeNum)+" "+str(bytes)+"\n"
-                                    logging.debug(fileString)
-
-                                    self.sentMessagesByAddress[(ip, port)] = [transMessage]
-                                    ipsToPending.add((ip,port))
-
-                            # Haven't received anything
-                            else:
-                                print("!! " + str(transMessage) + " > " + str(address) + " !!")
-
-                                ######### SENDING SECTION #######
-                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                ### LOGGING STUFF ###
-                                sentTime = time.time()
-                                fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
-                                    mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(
-                                    status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                logging.debug(fileString)
-
-                                self.sentMessagesByAddress[(ip, port)] = [transMessage]
-                                ipsToPending.add((ip, port))
-
-                        # Have sent them something
-                        else:
-                            # Have received messages
-                            if ((ip, port) in self.receivedMessagesByAddress.keys()):
-                                # Message hasn't been sent
-                                if (transMessage not in self.sentMessagesByAddress[(ip, port)]):
-                                    # Message didn't come from them
-                                    if(transMessage not in self.receivedMessagesByAddress[(ip,port)]):
-                                        print("!! " + str(transMessage) + " > " + str(address) + " !!")
-
-                                        ######### SENDING SECTION #######
-                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                        ### LOGGING STUFF ###
-                                        sentTime = time.time()
-                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
-                                            mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                            sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                        logging.debug(fileString)
-
-                                        self.sentMessagesByAddress[(ip, port)] += [transMessage]
-                                        ipsToPending.add((ip, port))
-                                        # Haven't received anything
-                            else:
-                                print("!! " + str(transMessage) + " > " + str(address) + " !!")
-
-                                ######### SENDING SECTION #######
-                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                ### LOGGING STUFF ###
-                                sentTime = time.time()
-                                fileString = " " + str(timestamp) + " " + str(type) + " " + str(
-                                    txID) + " " + str(
-                                    mess) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                    sentTime) + " " + str(
-                                    status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                logging.debug(fileString)
-
-                                self.sentMessagesByAddress[(ip, port)] = [transMessage]
-                                ipsToPending.add((ip, port))
-
-                ## EXTRA
-                if(introductionstionsToSend is not None):
-                    for intro in introductionstionsToSend:
-
-                        for address in readyToSend:
-                            ip, port = address
-                            ip = str(ip)
-                            port = int(port)
-
+                    ## INTRODUCTIONS
+                    if(introductionstionsToSend is not None):
+                        for intro in introductionstionsToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
 
-                            timestamp = None
-                            type = "INTRODUCTION"
-                            txID = None
-                            mess = str("_".join(intro))
-                            fromNode = str(self.ip) + "," + str(self.port)
-                            toNode = str(ip) + "," + str(port)
-                            status = "alive"
-                            nodeNum = self.vmNumber
-                            bytes = len(message2send)
-
-                            # Haven't sent them anything yet
-                            if ((ip, port) not in self.sentMessagesByAddress.keys()):
-                                # Have received messages
-                                if ((ip, port) in self.receivedMessagesByAddress.keys()):
-                                    # Haven't received this specific message
-                                    if (intro not in self.receivedMessagesByAddress[(ip, port)]):
-                                        print("!! " + str(intro) + " > " + str(address) + " !!")
-
-                                        ######### SENDING SECTION #######
-                                        self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                        ### LOGGING STUFF ###
-                                        sentTime = time.time()
-                                        fileString = " " + str(timestamp) + " " + str(type) + " " + str(
-                                            txID) + " " + str(intro) + " " + str(fromNode) + " " + str(
-                                            toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-                                            nodeNum) + " " + str(bytes) + "\n"
-                                        logging.debug(fileString)
-
-                                        self.sentMessagesByAddress[(ip, port)] = [intro]
-
-
-                                # Haven't received anything
-                                else:
-                                    print("!! " + str(intro) + " > " + str(address) + " !!")
-
-                                    ######### SENDING SECTION #######
-                                    self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                    ### LOGGING STUFF ###
-                                    sentTime = time.time()
-                                    fileString = " " + str(timestamp) + " " + str(type) + " " + str(txID) + " " + str(
-                                        intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                        sentTime) + " " + str(
-                                        status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                    logging.debug(fileString)
-                                    self.sentMessagesByAddress[(ip, port)] = [intro]
-
-                            # Have sent them something
-                            else:
-                                # Message hasn't been sent
-                                if (intro not in self.sentMessagesByAddress[(ip, port)]):
-                                    # Have received messages
-                                    if ((ip, port) in self.receivedMessagesByAddress.keys()):
-                                        # Message didn't come from them
-                                        if (intro not in self.receivedMessagesByAddress[(ip, port)]):
-                                            print("!! " + str(message2send) + " > " + str(address) + " !!")
-
-                                            ######### SENDING SECTION #######
-                                            self.sock.sendto(message2send.encode('utf-8'), (ip, port))
-
-                                            ### LOGGING STUFF ###
-                                            sentTime = time.time()
-                                            fileString = " " + str(timestamp) + " " + str(type) + " " + str(
-                                                txID) + " " + str(
-                                                intro) + " " + str(fromNode) + " " + str(toNode) + " " + str(
-                                                sentTime) + " " + str(status) + " " + str(nodeNum) + " " + str(bytes) + "\n"
-                                            logging.debug(fileString)
-
-                                            self.sentMessagesByAddress[(ip, port)] += [intro]
+                            if (self.okToSend(ip, port, message2send)):
+                                print("!! " + str(message2send) + " > " + str(address) + " !!")
+                                ######### SENDING SECTION #######
+                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
+                                self.logger.logSentIntroduction(ip, port, message2send)
+                                self.addMessagetoSentMessages(ip, port, intro)
+                                ipsToPending.add((ip, port))
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
