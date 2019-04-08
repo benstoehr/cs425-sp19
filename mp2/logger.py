@@ -21,8 +21,12 @@ class Logger():
 
         return ip, port, message[1:], bytes
 
+    def pullIPoffOutgoing(self, message):
+        bytes = len(message)
+        message = message.split()
+        return message[1:], bytes
 
-## SERVICE MESSAGES
+    ## SERVICE MESSAGES
     def logServiceTransaction(self, ip, port, message):
 
         timestamp_a = message[1]
@@ -89,10 +93,13 @@ class Logger():
         self.masterLogging.debug(fileString)
 
     def logSentTransaction(self, ip, port, message):
-        timestamp_a = message[1]
+
+        pureMessage, bytes = self.pullIPoffOutgoing(message)
+
+        timestamp_a = pureMessage[1]
         ttype = "TRANSACTION"
-        txID = message[2]
-        mess = str("_".join(message))
+        txID = pureMessage[2]
+        mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
         sentTime = time.time()
@@ -124,16 +131,17 @@ class Logger():
 
     def logSentIntroduction(self, ip, port, message):
 
+        pureMessage, bytes = self.pullIPoffOutgoing(message)
+
         timestamp_a = None
         ttype = "INTRODUCE"
         txID = None
-        mess = str("_".join(message))
+        mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
         sentTime = time.time()
         status = "alive"
         nodeNum = self.vmNumber
-        bytes = len(mess)
 
         fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
             fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
