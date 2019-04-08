@@ -181,7 +181,7 @@ class Node(Thread):
 
     def storeMessage(self, ip, port, message):
         self.receivedMessagesByAddress[(ip, port)] += [message]
-        
+
 #### List manipulation
     def getNameAndPortFromIP(self):
         pass
@@ -404,12 +404,12 @@ class Node(Thread):
                 transactionsToSend = sortedTranscations[-5:]
 
 
-            random.shuffle(self.introductionMessages)
-            introductionstionsToSend = None
-            if (len(self.introductionMessages) < 3):
-                introductionsToSend = self.introductionMessages
+            random.shuffle(self.introductionMessages_Handled)
+            introductionsToSend = None
+            if (len(self.introductionMessages_Handled) < 3):
+                introductionsToSend = self.introductionMessages_Handled
             else:
-                introductionstionsToSend = self.introductionMessages[-3:]
+                introductionsToSend = self.introductionMessages_Handled[-3:]
 
 
             ######## WRITE TO OTHER NODES ######
@@ -436,8 +436,8 @@ class Node(Thread):
                             ipsToPending.add((ip, port))
 
                     ## INTRODUCTIONS
-                    if(introductionstionsToSend is not None):
-                        for intro in introductionstionsToSend:
+                    if(introductionsToSend is not None):
+                        for intro in introductionsToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
 
                             if (self.okToSend(ip, port, intro)):
