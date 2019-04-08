@@ -29,14 +29,14 @@ class Logger():
     ## SERVICE MESSAGES
     def logServiceTransaction(self, ip, port, message):
 
-        timestamp_a = message[1]
+        timestamp_a = time.time()
         ttype = "TRANSACTION"
         txID = message[2]
         mess = str("_".join(message))
         bytes = len(mess)
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
-        sentTime = time.time()
+        sentTime = message[1]
         status = "alive"
         nodeNum = self.vmNumber
         bytes = len(mess)
@@ -49,7 +49,7 @@ class Logger():
 
     def logServiceIntroduction(self, ip, port, message):
 
-        timestamp_a = None
+        timestamp_a = time.time()
         ttype = "INTRODUCE"
         txID = None
         mess = str("_".join(message))
@@ -77,13 +77,14 @@ class Logger():
     def logReceivedTransaction(self, message):
 
         ip, port, message, bytes = self.getIPandPort(message)
-        timestamp_a = message[1]
+
+        timestamp_a = time.time()
         ttype = "TRANSACTION"
         txID = message[2]
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
-        sentTime = time.time()
+        sentTime = message[1]
         status = "alive"
         nodeNum = self.vmNumber
 
@@ -96,13 +97,13 @@ class Logger():
 
         pureMessage, bytes = self.pullIPoffOutgoing(message)
 
-        timestamp_a = pureMessage[1]
+        timestamp_a = time.time()
         ttype = "TRANSACTION"
         txID = pureMessage[2]
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
-        sentTime = time.time()
+        sentTime = pureMessage[1]
         status = "alive"
         nodeNum = self.vmNumber
 
@@ -114,13 +115,14 @@ class Logger():
     def logReceivedIntroduction(self, message):
 
         ip, port, message, bytes = self.getIPandPort(message)
-        timestamp_a = None
+
+        timestamp_a = time.time()
         ttype = "INTRODUCE"
         txID = None
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
-        sentTime = time.time()
+        sentTime = message[1]
         status = "alive"
         nodeNum = self.vmNumber
 
@@ -133,13 +135,13 @@ class Logger():
 
         pureMessage, bytes = self.pullIPoffOutgoing(message)
 
-        timestamp_a = None
+        timestamp_a = time.time()
         ttype = "INTRODUCE"
         txID = None
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
-        sentTime = time.time()
+        sentTime = pureMessage[1]
         status = "alive"
         nodeNum = self.vmNumber
 
