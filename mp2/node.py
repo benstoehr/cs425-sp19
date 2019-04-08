@@ -82,8 +82,8 @@ class Node(Thread):
         print("self.ip:" + str(self.ip))
 
         self.port = MY_PORT
-        self.service_ip = SERVICE_IP
 
+        self.service_ip = SERVICE_IP
         self.service_port = SERVICE_PORT
 
         self.event = event
@@ -130,23 +130,12 @@ class Node(Thread):
         print("\t" + str(replyMessage))
         self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
 
-    def storeMessage(self, ip, port, message):
-        # STORE THE MESSAGE, MIGHT CHANGE THIS TO BE A HASH FOR SPACE SAVING
-        # HAVEN'T GOTTEN ANYTHING FROM THEM YET
-        if ((ip, port) not in self.receivedMessagesByAddress.keys()):
-            self.receivedMessagesByAddress[(ip, port)] = [message]
-            # GOT SOMETHING FROM THEM
-        else:
-            # BUT NOT THIS MESSAGE
-            if (message not in self.receivedMessagesByAddress[(ip, port)]):
-                # ADD THE MESSAGE
-                self.receivedMessagesByAddress[(ip, port)] += [message]
+
 
     def clearIPPortFromAddresses(self, ip, port):
         for introMessage in self.introductionMessages_Handled:
             if(ip in introMessage and port in introMessage):
                 self.introductionMessages_Handled.remove(introMessage)
-
 
     def getAddressesToSend(self):
         # Shuffle the live addresses
@@ -171,7 +160,6 @@ class Node(Thread):
         readyToSend = readyToSendLive + readyToSendUnknown
         return readyToSend
 
-
     def okToSend(self, ip, port, message):
 
         # Haven't sent them anything yet
@@ -191,6 +179,9 @@ class Node(Thread):
     def addMessagetoSentMessages(self, ip, port, message):
         self.sentMessagesByAddress[(ip, port)] += [message]
 
+    def storeMessage(self, ip, port, message):
+        self.receivedMessagesByAddress[(ip, port)] += [message]
+        
 #### List manipulation
     def getNameAndPortFromIP(self):
         pass
