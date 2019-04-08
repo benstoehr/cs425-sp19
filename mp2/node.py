@@ -177,10 +177,17 @@ class Node(Thread):
         return False
 
     def addMessagetoSentMessages(self, ip, port, message):
-        self.sentMessagesByAddress[(ip, port)] += [message]
+        # Haven't sent them anything yet
+        if ((ip, port) not in self.sentMessagesByAddress.keys()):
+            self.sentMessagesByAddress[(ip, port)] = [message]
+        else:
+            self.sentMessagesByAddress[(ip, port)] += [message]
 
     def storeMessage(self, ip, port, message):
-        self.receivedMessagesByAddress[(ip, port)] += [message]
+        if ((ip, port) not in self.receivedMessagesByAddress.keys()):
+            self.receivedMessagesByAddress[(ip, port)] = [message]
+        else:
+            self.receivedMessagesByAddress[(ip, port)] += [message]
 
 #### List manipulation
     def getNameAndPortFromIP(self):
