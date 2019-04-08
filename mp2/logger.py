@@ -141,7 +141,7 @@ class Logger():
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
-        sentTime = pureMessage[1]
+        sentTime = None
         status = "OutgoingNodeIntroduction"
         nodeNum = self.vmNumber
 
