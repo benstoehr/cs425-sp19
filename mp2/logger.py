@@ -41,7 +41,7 @@ class Logger():
         nodeNum = self.vmNumber
         bytes = len(mess)
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(ttype) + " " + str(txID) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(ttype) + " " + str(txID) + " " + str(
             fromNode) + " " + str(toNode) + " " + str(sentTime)  + "\n"
         self.masterLogging.debug(fileString)
 
@@ -59,7 +59,7 @@ class Logger():
         nodeNum = self.vmNumber
         bytes = len(mess)
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
@@ -85,7 +85,7 @@ class Logger():
         status = "IncomingNodeTransaction"
         nodeNum = self.vmNumber
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
@@ -103,7 +103,7 @@ class Logger():
         status = "OutgoingNodeTransaction"
         nodeNum = self.vmNumber
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
@@ -121,7 +121,7 @@ class Logger():
         status = "IncomingNodeIntroduction"
         nodeNum = self.vmNumber
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
@@ -139,7 +139,7 @@ class Logger():
         status = "OutgoingNodeIntroduction"
         nodeNum = self.vmNumber
 
-        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
