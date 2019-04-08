@@ -93,7 +93,7 @@ class Node(Thread):
         #self.file = open(filename, "w+")
 
         logging.basicConfig(filename="log.txt", format='%(message)s', level=logging.DEBUG)
-        self.logger = Logger(logging, self.ip, self.port, self.vmNumber)
+        self.logger = Logger(logging, self.ip, self.port, self.vmNumber, self.name)
         self.messager = Messager()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

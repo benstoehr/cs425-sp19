@@ -2,12 +2,12 @@ import time
 
 class Logger():
 
-    def __init__(self, logger, myIP, myPort, vmNumber):
+    def __init__(self, logger, myIP, myPort, vmNumber, name):
         self.masterLogging = logger
         self.ip = myIP
         self.port = myPort
         self.vmNumber = vmNumber
-
+        self.name = name
 
     ## ONLY FOR MESSAGES FROM OTHER NODES
     def getIPandPort(self, message):
@@ -41,9 +41,8 @@ class Logger():
         nodeNum = self.vmNumber
         bytes = len(mess)
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(ttype) + " " + str(txID) + " " + str(
+            fromNode) + " " + str(toNode) + " " + str(sentTime)  + "\n"
         self.masterLogging.debug(fileString)
 
 
@@ -60,10 +59,8 @@ class Logger():
         nodeNum = self.vmNumber
         bytes = len(mess)
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
-
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
 
@@ -88,9 +85,8 @@ class Logger():
         status = "IncomingNodeTransaction"
         nodeNum = self.vmNumber
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logSentTransaction(self, ip, port, message):
@@ -107,9 +103,8 @@ class Logger():
         status = "OutgoingNodeTransaction"
         nodeNum = self.vmNumber
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logReceivedIntroduction(self, message):
@@ -126,9 +121,8 @@ class Logger():
         status = "IncomingNodeIntroduction"
         nodeNum = self.vmNumber
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logSentIntroduction(self, ip, port, message):
@@ -145,9 +139,8 @@ class Logger():
         status = "OutgoingNodeIntroduction"
         nodeNum = self.vmNumber
 
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
+        fileString = str(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
 
