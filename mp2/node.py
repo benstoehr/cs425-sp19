@@ -132,7 +132,8 @@ class Node(Thread):
 
 
 
-    def clearIPPortFromAddresses(self, ip, port):
+    def clearIPPortFromAddresses(self, address):
+        ip, port = address
         for introMessage in self.introductionMessages_Handled:
             if(ip in introMessage and port in introMessage):
                 self.introductionMessages_Handled.remove(introMessage)
@@ -396,7 +397,7 @@ class Node(Thread):
                     vmname, status = self.ipAndport2Name[address]
                     self.ipAndport2Name[address] = (vmname, "dead")
                     self.deadAddresses.append(address)
-                    self.clearIPPortFromAddresses(ip, port)
+                    self.clearIPPortFromAddresses(address)
 
     ## Figure out which addresses to send to
 
