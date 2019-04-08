@@ -220,8 +220,6 @@ class Node(Thread):
         port = int(port)
         message2send = message[1:]
 
-
-
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
             self.logger.logReceivedTransaction(' '.join(message))
@@ -262,8 +260,8 @@ class Node(Thread):
             return messagesFromService
         return None
 
-    # HANDLE THE SERVICE MESSAGE, MESSAGE COMES IN AS A STRING
 
+    # HANDLE THE SERVICE MESSAGE, MESSAGE COMES IN AS A STRING
     def handleServiceMessage(self, message):
 
         # Print the message to console
@@ -309,11 +307,6 @@ class Node(Thread):
             time.sleep(0.05)
             exit(1)
             #print("@@ Got DIE command @@")
-
-        fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
-            fromNode) + " " + str(toNode) + " " + str(sentTime) + " " + str(status) + " " + str(
-            nodeNum) + " " + str(bytes) + "\n"
-        logging.debug(fileString)
 
         if(type == "QUIT"):
             self.shutdown()
@@ -430,7 +423,6 @@ class Node(Thread):
 
             ######## WRITE TO OTHER NODES ######
             ipsToPending = set()
-
 
             if(len(transactionsToSend) > 0 and len(addresses) > 0):
 
