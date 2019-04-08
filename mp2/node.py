@@ -411,7 +411,6 @@ class Node(Thread):
 
             addresses = self.getAddressesToSend()
 
-
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
             transactionsToSend = None
@@ -434,6 +433,7 @@ class Node(Thread):
 
 
             if(len(transactionsToSend) > 0 and len(addresses) > 0):
+
                 for address in addresses:
 
                     ip, port = address
@@ -444,7 +444,7 @@ class Node(Thread):
                     for transMessage in transactionsToSend:
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
 
-                        if(self.okToSend(ip, port, message2send)):
+                        if(self.okToSend(ip, port, transMessage)):
                             print("!! " + str(message2send) + " > " + str(address) + " !!")
                             ######### SENDING SECTION #######
                             self.sock.sendto(message2send.encode('utf-8'), (ip, port))
@@ -457,7 +457,7 @@ class Node(Thread):
                         for intro in introductionstionsToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
 
-                            if (self.okToSend(ip, port, message2send)):
+                            if (self.okToSend(ip, port, intro)):
                                 print("!! " + str(message2send) + " > " + str(address) + " !!")
                                 ######### SENDING SECTION #######
                                 self.sock.sendto(message2send.encode('utf-8'), (ip, port))
