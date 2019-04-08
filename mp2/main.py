@@ -107,18 +107,17 @@ while(not done):
         if(node.status == "shutdown"):
             #print(str(node.name) + ": " + str(node.status))
             nodes.remove(node)
-            pass
         else:
             shutdownCheck = False
 
     if(shutdownCheck == True):
         break
 
-    time.sleep(0.001)
+    time.sleep(0.0001)
 
 
 
-time.sleep(10)
+time.sleep(NUM_NODES + 2)
 print("main.py: DONE!")
 exit(1)
 
