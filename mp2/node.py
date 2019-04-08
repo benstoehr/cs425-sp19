@@ -210,6 +210,7 @@ class Node(Thread):
     # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
+
         print("\thandleMessage: " + str(message))
 
         # message = IP:Port messageContents[]
@@ -223,7 +224,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
-            self.logger.logReceivedTransaction(message)
+            self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
                 self.transactionMessages.append(message2send)
@@ -232,7 +233,7 @@ class Node(Thread):
             self.replyAndUpdateAddresses(ip, port)
 
         elif ("INTRODUCE" in message2send):
-            self.logger.logReceivedIntroduction(message)
+            self.logger.logReceivedIntroduction(' '.join(message))
             if(message2send not in self.introductionMessages):
                 self.introductionMessages.append(message2send)
 

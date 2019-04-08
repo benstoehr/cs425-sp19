@@ -9,7 +9,9 @@ class Logger():
         self.vmNumber = vmNumber
 
 
+    ## ONLY FOR MESSAGES FROM OTHER NODES
     def getIPandPort(self, message):
+
         bytes = len(message)
         message = message.split()
         ip, port = message[0].split(":")
@@ -103,6 +105,7 @@ class Logger():
         self.masterLogging.debug(fileString)
 
     def logReceivedIntroduction(self, message):
+
         ip, port, message, bytes = self.getIPandPort(message)
         timestamp_a = None
         ttype = "INTRODUCE"
