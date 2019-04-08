@@ -126,11 +126,9 @@ class Node(Thread):
 
     def sendReply(self, ip, port):
         replyMessage = str(self.ip) + ":" + str(self.port) + " REPLY"
-        print("~~ sending REPLY ~~")
-        print("\t" + str(replyMessage))
+        #print("~~ sending REPLY ~~")
+        #print("\t" + str(replyMessage))
         self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
-
-
 
     def clearIPPortFromAddresses(self, address):
         ip, port = address
@@ -200,7 +198,7 @@ class Node(Thread):
         message, addr = self.serv.read()
         #print("read() -> got message, addr")
         if (message is not None):
-            print("Got message in read() call!")
+            #print("Got message in read() call!")
             stripped = message.strip()
             #print(str(self.name) + ": " + str(stripped))
         # RETURNS MESSAGE AS A STRING, ADDR AS (IP, PORT), DOESN'T MATTER THO BECAUSE THE IP AND PORT ARE IN THE MESSAGE
@@ -210,7 +208,7 @@ class Node(Thread):
     # INTRODUCE node12 172.22.156.12 4444
     def handleMessage(self, message, addr):
 
-        print("\thandleMessage: " + str(message))
+        #print("\thandleMessage: " + str(message))
 
         # message = IP:Port messageContents[]
         message = message.split()
@@ -264,23 +262,11 @@ class Node(Thread):
     def handleServiceMessage(self, message):
 
         # Print the message to console
-        print("handleServiceMessage: " +str(message))
+        #print("handleServiceMessage: " +str(message))
         bytes = len(message)
 
         # MESSAGE IS NOW AN ARRAY
         message = message.split(" ")
-
-        logMessage = message[:]
-
-        mess = str("_".join(logMessage))
-        fromNode = str(self.service_ip) + str(self.service_port)
-        toNode = str(self.ip) + str(self.port)
-        sentTime = time.time()
-        status = "alive"
-        nodeNum = self.vmNumber
-        ttype = None
-        timestamp_a = None
-        txID = None
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
@@ -474,7 +460,7 @@ class Node(Thread):
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
             #time.sleep(1)
-            time.sleep(0.001)
+            time.sleep(0.00001)
 
 
         print("Run event unset!")
