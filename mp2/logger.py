@@ -37,7 +37,7 @@ class Logger():
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
         sentTime = message[1]
-        status = "alive"
+        status = "ServiceTransaction"
         nodeNum = self.vmNumber
         bytes = len(mess)
 
@@ -56,7 +56,7 @@ class Logger():
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
         sentTime = None
-        status = "alive"
+        status = "ServiceIntroduction"
         nodeNum = self.vmNumber
         bytes = len(mess)
 
@@ -85,7 +85,7 @@ class Logger():
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
         sentTime = message[1]
-        status = "alive"
+        status = "IncomingNodeTransaction"
         nodeNum = self.vmNumber
 
         fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
@@ -104,7 +104,7 @@ class Logger():
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
         sentTime = pureMessage[1]
-        status = "alive"
+        status = "OutgoingNodeTransaction"
         nodeNum = self.vmNumber
 
         fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
@@ -123,7 +123,7 @@ class Logger():
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
         sentTime = message[1]
-        status = "alive"
+        status = "IncomingNodeIntroduction"
         nodeNum = self.vmNumber
 
         fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
@@ -142,7 +142,7 @@ class Logger():
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
         sentTime = pureMessage[1]
-        status = "alive"
+        status = "OutgoingNodeIntroduction"
         nodeNum = self.vmNumber
 
         fileString = " " + str(timestamp_a) + " " + str(ttype) + " " + str(txID) + " " + str(mess) + " " + str(
