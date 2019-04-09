@@ -23,6 +23,8 @@ class Messager(object):
             return "DIE"
         elif ("REPLY" in message):
             return "REPLY"
+        else:
+            return "WOOP"
 
 
 

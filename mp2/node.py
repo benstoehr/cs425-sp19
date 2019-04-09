@@ -18,6 +18,10 @@ from server import mp2Server
 from messager import Messager
 from logger import Logger
 
+from block import Block
+from BlockManager import BlockManager
+
+
 def sortFunction(x):
     return x[1]
 
@@ -98,6 +102,9 @@ class Node(Thread):
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+        self.blockManager = BlockManager()
+        self.currentHash = None
+        self.pendingHash = None
 
     # TODO:
     # Initialize server
@@ -109,10 +116,13 @@ class Node(Thread):
     def startServer(self):
         self.serv.start()
 
+    def closeServiceConnection(self):
+        self.serv.shutdown()
+
     def shutdown(self):
 
         print(str(self.name) + " shutting down")
-        self.serv.shutdown()
+
         #self.file.close()
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
@@ -223,6 +233,10 @@ class Node(Thread):
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
                 self.transactionMessages.append(message2send)
+                ## ADD IT TO THE BLOCK MANAGER
+                hash = self.blockManager.appendTransactionToCurrentBlock(message2send)
+                if(hash is not None):
+                    self.currentHash = hash
 
             self.storeMessage(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
@@ -274,6 +288,10 @@ class Node(Thread):
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
+            ## ADD IT TO THE BLOCK MANAGER
+            hash = self.blockManager.appendTransactionToCurrentBlock(message)
+            if (hash is not None):
+                self.currentHash = hash
 
         elif("INTRODUCE" in message):
             #print("~~got introduction~~")
@@ -282,6 +300,15 @@ class Node(Thread):
             self.serviceIntroductionMessages.append(message)
             self.introductionMessages.append(message)
 
+        elif("SOLVE" in message):
+            print("~~got Solve~~")
+            print("\t" + str(message))
+            pass
+
+        elif("VERIFY" in message):
+            print("~~got Verify~~")
+            print("\t" + str(message))
+            pass
 
         elif ("QUIT" in message):
             #print("## Got Quit command ##")
@@ -308,8 +335,12 @@ class Node(Thread):
 
         self.status = "running"
 
+
+
         while (1):
+
             if(self.event.isSet()):
+                self.closeServiceConnection()
                 break
 
 
@@ -435,7 +466,7 @@ class Node(Thread):
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
 
                             if (self.okToSend(ip, port, intro)):
-                                print("!! " + str(message2send) + " > " + str(address) + " !!")
+                                #print("!! " + str(message2send) + " > " + str(address) + " !!")
                                 ######### SENDING SECTION #######
                                 self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.logger.logSentIntroduction(ip, port, message2send)
@@ -451,11 +482,20 @@ class Node(Thread):
                         self.unknownAddresses.remove(ipPort)
                         self.pendingAddresses[ipPort] = time.time()
 
-
-
-
                 readyToSend = []
                 transactionsToSend = []
+
+            ## CP2
+
+            if(self.currentHash is not None):
+                string = "SOLVE "
+                string += self.currentHash
+                string += "\n"
+                print(string)
+                self.serv.serviceSocket.send(string.encode('utf-8'))
+                self.pendingHash = self.currentHash
+                self.currentHash = None
+
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE

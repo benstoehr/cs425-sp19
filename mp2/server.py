@@ -88,7 +88,7 @@ class mp2Server(object):
 
 ################################
     def shutdown(self):
-        self.serviceSocket.send(("").encode('utf-8'))
+        #self.serviceSocket.send(("").encode('utf-8'))
         self.serviceSocket.close()
         self.sock.close()
 
