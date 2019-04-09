@@ -284,7 +284,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            #print("\t" + str(message))
+            print("\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
@@ -300,8 +300,8 @@ class Node(Thread):
             self.serviceIntroductionMessages.append(message)
             self.introductionMessages.append(message)
 
-        elif("SOLVE" in message):
-            print("~~got Solve~~")
+        elif("SOLVED" in message):
+            print("~~ got Solved ~~")
             print("\t" + str(message))
             pass
 
