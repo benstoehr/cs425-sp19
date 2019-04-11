@@ -106,6 +106,7 @@ class BlockManager(object):
             self.waitingForPuzzle = False
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level] = self.currentBlock
+            self.waitingForPuzzle = False
             return True
         return False
 
