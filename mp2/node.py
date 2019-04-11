@@ -300,6 +300,8 @@ class Node(Thread):
             #self.logger.logReceivedBlock(' '.join(message)
 
             blockWord, blockString = message2send
+            self.addAddresstoRecievedBlocks(blockString, ip, port)
+            
             # if level is greater, you have to ask for the whole blockchain
 
             if(self.blockManager.betterBlock(ip, port, blockString)):
@@ -571,8 +573,9 @@ class Node(Thread):
                 readyToSend = []
                 transactionsToSend = []
 
-            ## CP2
+            ## CP2 #########################
 
+            ## SENDING NEWEST HASH FOR SOLVING
             if(self.blockManager.currentHash is not None):
                 if(self.blockManager.currentHash not in self.hashesSentToService):
                     self.hashesSentToService.append(self.blockManager.currentHash)
@@ -583,9 +586,8 @@ class Node(Thread):
                     string += "\n"
                     print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                     self.serv.serviceSocket.send(string.encode('utf-8'))
-                    self.pendingHash = self.currentHash
-                    self.currentHash = None
 
+            ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
                 blockString = self.blockManager.lastSuccessfulBlock.toMessage()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(blockString))
