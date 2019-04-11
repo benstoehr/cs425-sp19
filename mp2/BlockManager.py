@@ -236,8 +236,19 @@ class BlockManager(object):
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
         # Clean up pending transactions
-        self.clearPendingTransactionsOnBlockChain()
-        self.removeAddedTransactionsFromPending()
+        if(not self.waitingForBlockChain):
+            self.rebuildBank()
+            self.clearPendingTransactionsOnBlockChain()
+            self.removeAddedTransactionsFromPending()
+
+    def rebuildBank(self):
+        self.bank = dict()
+        for blockHash, block in self.blockchain.values():
+            for transaction in block.getTransactions():
+                fromAccount = int(transaction[3])
+                toAccount = int(transaction[4])
+                amount = int(transaction[5])
+                self.executeTrade(fromAccount, toAccount, amount)
 
     # Maybe make this by block for speed
     def clearPendingTransactionsOnBlockChain(self):
