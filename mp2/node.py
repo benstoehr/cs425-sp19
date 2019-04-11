@@ -229,7 +229,7 @@ class Node(Thread):
         else:
             self.sentAddressesByBlock[block] += [(ip, int(port))]
 
-    def addAddresstoRecievedBlocks(self, block, ip, port):
+    def addAddresstoReceivedBlocks(self, block, ip, port):
         if ((ip, port) not in self.receivedAddressesByBlock.keys()):
             self.receivedAddressesByBlock[block] = [(ip, int(port))]
         else:
@@ -299,8 +299,8 @@ class Node(Thread):
 
             #self.logger.logReceivedBlock(' '.join(message)
 
-            blockWord, blockString = message2send
-            self.addAddresstoRecievedBlocks(blockString, ip, port)
+            #blockWord, blockString = message2send
+            self.addAddresstoReceivedBlocks(message2send, ip, port)
 
             # if level is greater, you have to ask for the whole blockchain
 
