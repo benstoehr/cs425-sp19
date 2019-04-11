@@ -64,6 +64,7 @@ class Block(object):
         else:
             string += "0$"
         string += str(self.level)
+        string += "$"
         for transaction in self.transactions[:-1]:
             string += "_".join(transaction)
             string += "*"
