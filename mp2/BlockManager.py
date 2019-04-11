@@ -85,7 +85,29 @@ class BlockManager(object):
 
         print("\t" + str(transaction))
 
-        ## TODO: For a transaction, if it works with the self.bank dictionary, then
+        ## TODO: reject the bad transaction
+        # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
+        splitTxMsg = transaction.split(' ')
+        fromAccount = splitTxMsg[3]
+        toAccount = splitTxMsg[4]
+        amount = splitTxMsg[5]
+        if (fromAccount == 0):
+            if (toAccount not in self.bank):
+                self.bank[toAccount] = amount
+            else:
+                self.bank[toAccount] += amount
+        elif (fromAccount not in self.bank):
+            # reject this transaction
+        else:
+            if (self.bank[fromAccount] >= amount):
+                self.bank[fromAccount] -= amount
+                if (toAccount not in self.bank):
+                    self.bank[toAccount] = amount
+                else:
+                    self.bank[toAccount] += amount
+            else:
+                # reject this transaction 
+
 
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
