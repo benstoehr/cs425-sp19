@@ -309,8 +309,8 @@ class Node(Thread):
 
         elif("BLOCKCHAIN" in message2send):
             # Pass on individual block to build chain
-            print("Building new chain with block")
-            print(message)
+            #print("Building new chain with block")
+            #print(message)
             if(self.blockManager.waitingForBlockChainFrom == (ip, port)):
                 self.blockManager.buildChain(message2send)
                 pass
@@ -607,10 +607,13 @@ class Node(Thread):
         print("Run event unset!")
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
-        for tm in self.transactionMessages:
-            print(tm)
-        print("")
+        #for tm in self.transactionMessages:
+        #    print(tm)
+        #print("")
 
+        accounts = sorted(self.blockManager.bank.keys())
+        for account in accounts:
+            print(str(account) + " " + str(self.blockManager.bank[account]))
         for i in range(self.blockManager.blockLevel):
             blockHash, block = self.blockManager.blockchain[i+1]
             block.printSelf()
