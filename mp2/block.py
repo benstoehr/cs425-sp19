@@ -58,7 +58,7 @@ class Block(object):
         return string
 
     def toMessageWithHash(self):
-        string = ""
+        string = "BLOCK "
         if(self.previousBlockHash is not None):
             string += self.previousBlockHash + "$"
         else:
