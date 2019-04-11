@@ -300,8 +300,10 @@ class Node(Thread):
             #self.logger.logReceivedBlock(' '.join(message)
             print(' '.join(message))
 
+            blockWord, blockString = message
             # if level is greater, you have to ask for the whole blockchain
-            if(self.blockManager.betterBlock(ip, port, message2send)):
+
+            if(self.blockManager.betterBlock(ip, port, blockString)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send

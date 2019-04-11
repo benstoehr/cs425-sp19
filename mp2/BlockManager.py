@@ -12,7 +12,7 @@ class BlockManager(object):
 
     def __init__(self):
 
-        self.blockLevel = 0
+        self.blockLevel = 1
         self.bank = dict()
 
         self.blockchain = dict()
@@ -106,10 +106,9 @@ class BlockManager(object):
 
 ##############
 
-    def betterBlock(self, ip, port, message):
-        [blockWORD, blockString] = message
+    def betterBlock(self, ip, port, blockString):
         block = self.singleBlockFromMessage(blockString)
-        if(block.level > self.currentBlock.level):
+        if(block.level > self.blockLevel):
 
             # set level so other blocks don't interfere
             self.blockLevel = block.level
