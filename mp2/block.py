@@ -69,6 +69,8 @@ class Block(object):
         string += "^"
         return string
 
+    def getTransactions(self):
+        return self.transactions
 
     def printSelf(self):
         print("[BLOCK " + str(self.level) + " " + str(self.selfHash) + "]")

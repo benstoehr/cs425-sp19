@@ -146,6 +146,10 @@ class Node(Thread):
         #print("\t" + str(replyMessage))
         self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
 
+    def requestChain(self, ip, port):
+        requestChainMessage = str(self.ip) + ":" + str(self.port) + " REQUESTCHAIN" + "\n"
+        self.sock.sendto(requestChainMessage.encode('utf-8'), (ip, int(port)))
+
 ##############
     def clearIPPortFromAddresses(self, address):
         ip, port = address
@@ -301,19 +305,18 @@ class Node(Thread):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
-                self.incomingBlockChainIP = (ip, port)
                 pass
 
             # if level is the same, do nothing
-                else:
-                #self.requestChain(ip, port)
-                    pass
+            else:
+                self.requestChain(ip, port)
 
         elif("BLOCKCHAIN" in message2send):
             # Pass on individual block to build chain
             print("Building new chain with block")
             print(message)
-            if(self.incomingBlockChainIP == (ip, port)):
+            if(self.blockManager.incomingBlockChainIP == (ip, port)):
+                self.blockManager.buildChain(message2send)
                 pass
 
 

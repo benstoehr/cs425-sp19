@@ -109,6 +109,13 @@ class BlockManager(object):
     def betterBlock(self, ip, port, message):
         block = self.singleBlockFromMessage(message)
         if(block.level > self.currentBlock.level):
+
+            # set level so other blocks don't interfere
+            self.blockLevel = block.level
+            for transaction in self.currentBlock.getTransactions():
+                self.appendTransactionsToPending(transaction)
+
+            self.blockchain = dict()
             self.currentBlock = None
             self.lastSuccessfulHash = None
             self.lastSuccessfulBlock = None
@@ -130,6 +137,7 @@ class BlockManager(object):
         #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock.selfHash == hashOfBlock):
             print("BLOCK SUCCESS")
+            self.blockLevel = self.currentBlock.level
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
             self.lastSuccessfulHash = hashOfBlock
@@ -152,10 +160,24 @@ class BlockManager(object):
 
 ###### Messages to Blocks #####
 
+    def buildChain(self, message):
+        wordBLOCKCHAIN, blockString = message.split(" ")
+        block = self.singleBlockFromMessage(blockString)
+        self.blockchain[block.level, block.selfHash] = block
+        if(block.level == self.blockLevel):
+            self.waitingForBlockChain = False
+            self.clearPendingTransactionsOnBlockChain()
+
+    def clearPendingTransactionsOnBlockChain(self):
+        for block in self.blockchain.values():
+            for transaction in block.getTransactions():
+                if(transaction in self.pendingTransactions):
+                    self.pendingTransactions.remove(transaction)
+
     def singleBlockFromMessage(self, byteString):
-        block = Block()
+
         hash, level, content = byteString.split("$")
-        block.previousBlock = hash
+        block = Block(level=level, previousBlock=hash)
 
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
