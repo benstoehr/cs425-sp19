@@ -109,7 +109,6 @@ class BlockManager(object):
         fromAccount = int(transaction[3])
         toAccount = int(transaction[4])
         amount = int(transaction[5])
-
         self.addAccounts(fromAccount, toAccount)
 
         if(self.waitingForPuzzle or self.waitingForBlockChain):
@@ -230,7 +229,6 @@ class BlockManager(object):
     def fillNewBlock(self):
         #print("fillNewBlock()")
         self.appendPendingTransactionsToNewBlock()
-        self.removeAddedTransactionsFromPending()
 
 ###### Messages to Blocks #####
 
