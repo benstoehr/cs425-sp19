@@ -293,6 +293,7 @@ class Node(Thread):
 
             blockKey = ' '.join(message2send)
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
+            print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
 
             # if level is greater, you have to ask for the whole blockchain
 
@@ -575,7 +576,7 @@ class Node(Thread):
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and
-                    (self.blockManager.lastSuccessfulHash is not None and self.blockManager.lastSuccessfulHash != "0")
+                    (self.blockManager.lastSuccessfulHash is not None)
                     ):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()

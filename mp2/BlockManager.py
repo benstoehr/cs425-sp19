@@ -24,7 +24,7 @@ class BlockManager(object):
 
         self.currentBlock = Block(level=1, previousHash="0")
 
-        self.lastSuccessfulHash = "0"
+        self.lastSuccessfulHash = None
         self.lastSuccessfulBlock = None
 
         self.currentBlockCount = 0
@@ -243,6 +243,7 @@ class BlockManager(object):
             self.waitingForPuzzle = False
             # Set this up so new block pulls the correct one.
             self.currentBlock = block
+
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
             print("NEW CHAIN COMPLETE!!!")
