@@ -613,9 +613,8 @@ class Node(Thread):
             print(tm)
         print("")
 
-        print("BLOCKCHAIN")
-        blockchain = self.blockManager.blockchain.items()
-        for level, block in sorted(blockchain, key=lambda x: x[0][1]):
+        for i in range(self.blockManager.blockLevel):
+            block = self.blockManager.blockchain[i+1]
             block.printSelf()
             print("")
 

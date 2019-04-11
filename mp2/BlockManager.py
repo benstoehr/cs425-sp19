@@ -164,7 +164,7 @@ class BlockManager(object):
                 print("CONSECUTIVE BLOCK SUCCESS")
                 self.blockLevel = self.currentBlock.level
                 self.currentBlock.puzzleAnswer = puzzleAnswer
-                self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
+                self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.lastSuccessfulHash = hashOfBlock
                 self.waitingForPuzzle = False
                 return True
@@ -187,7 +187,7 @@ class BlockManager(object):
     def buildChain(self, message):
         wordBLOCKCHAIN, blockString = message
         block = self.singleBlockFromMessage(blockString)
-        self.blockchain[block.level, block.selfHash] = block
+        self.blockchain[block.level] = (block.selfHash, copy.deepcopy(self.currentBlock))
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
         self.clearPendingTransactionsOnBlockChain()
