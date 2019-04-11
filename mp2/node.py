@@ -607,8 +607,8 @@ class Node(Thread):
         print("Run event unset!")
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
-        # for tm in self.transactionMessages:
-        #     print(tm)
+        for tm in self.transactionMessages:
+            print(tm)
 
         for level, block in self.blockManager.blockchain.items():
             block.printSelf()
