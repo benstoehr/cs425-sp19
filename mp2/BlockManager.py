@@ -111,7 +111,7 @@ class BlockManager(object):
         amount = int(transaction[5])
 
         self.addAccounts(fromAccount, toAccount)
-        
+
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
                 print("\t\tP" + str(transaction))
@@ -158,6 +158,8 @@ class BlockManager(object):
         block = self.singleBlockFromMessage(blockString)
 
         if(block.level > self.blockLevel):
+
+            block.printSelf()
 
             # set level so other blocks don't interfere
             self.blockLevel = block.level
