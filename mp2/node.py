@@ -583,7 +583,8 @@ class Node(Thread):
             if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
                 print("GONNA SEND MY BLOCK TO NODES")
                 blockString = self.blockManager.lastSuccessfulBlock.toMessage()
-                blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(blockString))
+                blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
+                print(blockMessage2send)
 
                 for address in addresses:
                     ip, port = address
