@@ -145,19 +145,54 @@ class Logger():
 
 
     ## CP2
+    # add blockhash
 
     def logReceivedBlock(self):
-        pass
+        
+        ip, port, message, bytes = self.getIPandPort(message)
+
+        timestamp_a = time.time()
+        ttype = "BLOCK"
+        txID = None
+        blockHash = None # wait for check
+        mess = str("_".join(message))
+        fromNode = str(ip) + "," + str(port)
+        toNode = str(self.ip) + "," + str(self.port)
+        sentTime = message[1]
+        status = "IncomingBlock"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
 
     def logSentBlock(self):
-        pass
 
+        pureMessage, bytes = self.pullIPoffOutgoing(message)
+
+        timestamp_a = time.time()
+        ttype = "BLOCK"
+        txID = None
+        blockHash = None # wait for check
+        mess = str("_".join(pureMessage))
+        fromNode = str(self.ip) + "," + str(self.port)
+        toNode = str(ip) + "," + str(port)
+        sentTime = pureMessage[1]
+        status = "OutgoingBlock"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
+
+    # Node to Service about personal block
     def logReceivedPuzzle(self):
         pass
 
     def logSentPuzzle(self):
         pass
 
+    # Node to Service about incoming block
     def logReceivedVerify(self):
         pass
 
