@@ -593,8 +593,8 @@ class Node(Thread):
                     ip, port = address
                     ip = str(ip)
                     port = int(port)
-                    if(self.okToSendBlock(blockString, ip,port)):
-                        self.sock.sendto(blockMessage2send, ip, port)
+                    if(self.okToSendBlock(blockString, ip, port)):
+                        self.sock.sendto(blockMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
 
