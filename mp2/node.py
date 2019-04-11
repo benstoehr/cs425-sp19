@@ -620,4 +620,8 @@ class Node(Thread):
         for pt in self.blockManager.pendingTransactions:
             print(pt)
 
+        print("\nTRANSACTIONS IN CURRENT BLOCK")
+        for t in self.blockManager.currentBlock.getTransactions():
+            print(t)
+
         self.shutdown()
