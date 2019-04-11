@@ -574,7 +574,9 @@ class Node(Thread):
                         self.serv.serviceSocket.send(string.encode('utf-8'))
 
             ## SENDING BLOCK TO OTHER NODES
-            if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
+            if(not self.blockManager.waitingForBlockChain and
+                    (self.blockManager.lastSuccessfulHash is not None or self.blockManager.lastSuccessfulHash != "0")
+                    ):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
