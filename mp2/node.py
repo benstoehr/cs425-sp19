@@ -298,9 +298,8 @@ class Node(Thread):
             print(message2send)
 
             #self.logger.logReceivedBlock(' '.join(message)
-            print(' '.join(message))
 
-            blockWord, blockString = message
+            blockWord, blockString = message2send
             # if level is greater, you have to ask for the whole blockchain
 
             if(self.blockManager.betterBlock(ip, port, blockString)):
