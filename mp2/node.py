@@ -294,6 +294,7 @@ class Node(Thread):
             blockKey = ' '.join(message2send)
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
             print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
+            print("\n")
 
             # if level is greater, you have to ask for the whole blockchain
 
@@ -571,7 +572,7 @@ class Node(Thread):
                         string = "SOLVE "
                         string += self.blockManager.currentBlock.selfHash
                         string += "\n"
-                        print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+                        #print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                         self.serv.serviceSocket.send(string.encode('utf-8'))
 
             ## SENDING BLOCK TO OTHER NODES

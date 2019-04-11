@@ -156,19 +156,23 @@ class BlockManager(object):
         block = self.singleBlockFromMessage(blockString)
 
         if(block.level > self.blockLevel):
-
-            block.printSelf()
+            print("New block has higher level!")
+            #block.printSelf()
 
             # set level so other blocks don't interfere
             self.blockLevel = block.level
+
             if(self.currentBlock is not None):
                 for transaction in self.currentBlock.getTransactions():
                     self.appendTransactionsToPending(transaction)
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
-                    print("CONSECUTIVE BLOCK SUCCESS")
+                    print("CONSECUTIVE BETTER BLOCK SUCCESS")
+
+                    self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
+
                     # Create new block
-                    self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.previousBlockHash)
+                    self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.selfHash)
                     # Move pending transactions to it
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
@@ -182,6 +186,7 @@ class BlockManager(object):
                 else:
                     self.obsoleteHashes += [self.currentBlock.selfHash]
 
+            ## Reset stuff in anticipation of new chain coming in!
             self.blockchain = dict()
             self.currentBlock = None
             self.lastSuccessfulHash = None
