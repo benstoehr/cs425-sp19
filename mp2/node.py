@@ -355,7 +355,7 @@ class Node(Thread):
         elif("SOLVED" in message):
             print("~~ got Solved ~~")
             print(str(message))
-            print("\t\t\t\t\t\t\t\t\t[RECEIVING]")
+            print("\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
@@ -572,7 +572,7 @@ class Node(Thread):
                     string = "SOLVE "
                     string += self.blockManager.currentHash
                     string += "\n"
-                    print("\t\t\t\t\t\t\t\t\t[RECEIVING]")
+                    print("\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                     self.serv.serviceSocket.send(string.encode('utf-8'))
                     self.pendingHash = self.currentHash
                     self.currentHash = None
@@ -587,8 +587,12 @@ class Node(Thread):
         print("Run event unset!")
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
-        for tm in self.transactionMessages:
-            print(tm)
+        # for tm in self.transactionMessages:
+        #     print(tm)
+
+        for level, block in self.blockManager.blockchain:
+            print("[BLOCK " + str(level) + "]")
+            block.printSelf()
 
         self.shutdown()
 
