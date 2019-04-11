@@ -31,6 +31,7 @@ class BlockManager(object):
 
         self.committedTransactions = []
         self.pendingTransactions = []
+        self.pendingTransactionsToRemove = []
 
         self.waitingForPuzzle = False
         self.waitingForBlockChain = False
@@ -89,10 +90,10 @@ class BlockManager(object):
             return
 
         print("\t" + str(transaction))
-        if (transaction in self.pendingTransactions):
-            self.pendingTransactions.remove(transaction)
-        self.currentBlock.addTransactionToBlock(transaction)
 
+        self.currentBlock.addTransactionToBlock(transaction)
+        if (transaction in self.pendingTransactions):
+            self.pendingTransactionsToRemove.append(transaction)
 
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
@@ -107,6 +108,11 @@ class BlockManager(object):
         print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             self.appendTransactionToCurrentBlock(pt)
+
+    def removeAddedTransactionsFromPending(self):
+        for transactionToRemove in self.pendingTransactionsToRemove:
+            self.pendingTransactions.remove(transactionToRemove)
+        self.pendingTransactionsToRemove = []
 
 ##############
 
@@ -134,6 +140,8 @@ class BlockManager(object):
     def fillNewBlock(self):
         print("fillNewBlock()")
         self.appendPendingTransactionsToNewBlock()
+        self.removeAddedTransactionsFromPending()
+
 
 
 
