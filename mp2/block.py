@@ -74,10 +74,3 @@ class Block(object):
         print("[BLOCK " + str(self.level) + " " + str(self.selfHash) + "]")
         for t in self.transactions:
             print(str(t))
-
-
-
-
-
-
-

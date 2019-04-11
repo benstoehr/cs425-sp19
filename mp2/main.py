@@ -120,10 +120,3 @@ while(not done):
 time.sleep(NUM_NODES + 2)
 print("main.py: DONE!")
 exit(1)
-
-
-
-
-
-
-

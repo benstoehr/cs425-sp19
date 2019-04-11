@@ -602,6 +602,3 @@ class Node(Thread):
             block.printSelf()
 
         self.shutdown()
-
-
-
