@@ -82,7 +82,7 @@ class BlockManager(object):
     def appendTransactionToCurrentBlock(self, transaction):
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
-                print("\t\t" + str(transaction))
+                print("\t\tP" + str(transaction))
                 self.appendTransactionsToPending(transaction)
             return
 
@@ -120,6 +120,7 @@ class BlockManager(object):
         self.currentHash = None
 
     def fillNewBlock(self):
+        print("fillNewBlock()")
         self.appendPendingTransactionsToNewBlock()
 
 

@@ -354,17 +354,19 @@ class Node(Thread):
 
         elif("SOLVED" in message):
             print("\n~~ got Solved ~~")
-            print(str(message))
+            print(str(message[0]))
+            print(str(message[1]))
+
 
             print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
-                ## make all of the pending transactions go into new block
-
 
                 self.blockManager.newBlock()
+                ## make all of the pending transactions go into new block
                 self.blockManager.fillNewBlock()
+
             else:
                 self.currentBlockString = ""
 
