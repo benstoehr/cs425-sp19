@@ -214,7 +214,7 @@ class BlockManager(object):
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
             block.txIDs.append(splitTransaction[2])
-            block.transactions.append(transaction.replace("_"," "))
+            block.transactions.append(splitTransaction)
         return block
 
     def multipleBlocksFromMessage(self, longByteString):
