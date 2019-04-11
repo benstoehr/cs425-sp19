@@ -91,7 +91,9 @@ class BlockManager(object):
 
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
+            blockHash = self.hashCurrentBlock()
             self.currentHash = self.hashCurrentBlock()
+            self.currentBlock.selfHash = self.hashCurrentBlock()
             self.currentBlockCount = 0
             self.numTransactionsBeforeHash = int(random.random() * self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
@@ -106,6 +108,7 @@ class BlockManager(object):
     def successfulBlock(self, message):
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
         print("BLOCK MANAGER currentHash: " + str(self.currentHash))
+        print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentHash))
         print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock.selfHash == hashOfBlock):
             print("BLOCK SUCCESS")
