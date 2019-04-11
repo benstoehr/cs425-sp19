@@ -102,6 +102,7 @@ class BlockManager(object):
                 self.bank[toAccount] += amount
         elif (fromAccount not in self.bank):
             # reject this transaction
+            pass
         else:
             if (self.bank[fromAccount] >= amount):
                 self.bank[fromAccount] -= amount
