@@ -597,7 +597,7 @@ class Node(Thread):
         # for tm in self.transactionMessages:
         #     print(tm)
 
-        for level, block in self.blockManager.blockchain:
+        for level, block in self.blockManager.blockchain.items():
             print("[BLOCK " + str(level) + "]")
             block.printSelf()
 
