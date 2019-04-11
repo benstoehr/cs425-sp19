@@ -137,7 +137,7 @@ class BlockManager(object):
         #print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
         #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock.selfHash == hashOfBlock):
-            print("BLOCK SUCCESS")
+            #print("BLOCK SUCCESS")
             self.blockLevel = self.currentBlock.level
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
@@ -147,7 +147,7 @@ class BlockManager(object):
         return False
 
     def newBlock(self):
-        print("newBlock()")
+        #print("newBlock()")
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
         self.lastSuccessfulBlock = copy.deepcopy(self.currentBlock)
@@ -155,7 +155,7 @@ class BlockManager(object):
         self.currentHash = None
 
     def fillNewBlock(self):
-        print("fillNewBlock()")
+        #print("fillNewBlock()")
         self.appendPendingTransactionsToNewBlock()
         self.removeAddedTransactionsFromPending()
 
@@ -178,7 +178,7 @@ class BlockManager(object):
     def singleBlockFromMessage(self, byteString):
 
         hash, level, content = byteString.split("$")
-        block = Block(level=level, previousBlock=hash)
+        block = Block(level=level, previousHash=hash)
 
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
