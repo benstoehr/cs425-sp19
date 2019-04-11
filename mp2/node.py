@@ -311,7 +311,7 @@ class Node(Thread):
             # Pass on individual block to build chain
             print("Building new chain with block")
             print(message)
-            if(self.blockManager.incomingBlockChainIP == (ip, port)):
+            if(self.blockManager.waitingForBlockChainFrom == (ip, port)):
                 self.blockManager.buildChain(message2send)
                 pass
 
@@ -585,7 +585,7 @@ class Node(Thread):
                     port = int(port)
                     if(self.okToSendBlock(blockString, ip, port)):
                         print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
-                        print(blockMessage2send)
+                        self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
                         self.sock.sendto(blockMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)

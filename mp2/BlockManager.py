@@ -124,7 +124,7 @@ class BlockManager(object):
             self.lastSuccessfulBlock = None
             self.waitingForBlockChain = True
 
-            self.incomingBlockChainIP = (ip, port)
+            self.waitingForBlockChainFrom = (ip, port)
 
             self.numBlocksToWaitFor = block.level
             self.committedTransactions = []
