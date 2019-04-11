@@ -292,8 +292,6 @@ class Node(Thread):
             #self.logger.logReceivedBlock(' '.join(message)
 
             blockKey = ' '.join(message2send)
-            print("blockKey: ")
-            print(blockKey)
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
 
             # if level is greater, you have to ask for the whole blockchain
