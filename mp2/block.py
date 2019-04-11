@@ -68,6 +68,7 @@ class Block(object):
             string += "_".join(transaction)
             string += "*"
         string += "_".join(self.transactions[-1])
+        string += "$"
         string += str(self.puzzleAnswer)
         string += "^"
         return string
