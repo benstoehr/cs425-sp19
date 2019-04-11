@@ -119,8 +119,6 @@ class BlockManager(object):
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
-
-
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
             #print("\tInvalid:\t" + str(transaction))
