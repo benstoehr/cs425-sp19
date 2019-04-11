@@ -104,7 +104,7 @@ raw_df['sentTime'] = pd.to_datetime(raw_df['sentTime'], unit='s')
 raw_df['bytes'] = raw_df['bytes'].astype(int)
 
 # transactions for plots in CP1
-tx_df = raw_df[raw_df.status == 'IncomingNodeTransaction'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
+tx_df = raw_df[raw_df.status == 'IncomingNodeTransaction'].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
 
 # calculate the time elaspsed from every pair of nodes
 tx_df['timeElapsed'] = (tx_df.timestamp - tx_df.sentTime)
