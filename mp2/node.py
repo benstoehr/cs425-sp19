@@ -360,10 +360,10 @@ class Node(Thread):
                 ## make all of the pending transactions go into new block
 
 
-                self.blockManager.setCurrentBlockFinalHash()
-            self.currentBlockString = self.blockManager.currentBlockAsStringWithHash()
-            print(self.currentBlockString)
-            pass
+                self.blockManager.newBlock()
+                #self.blockManager.fillNewBlock()
+            else:
+                self.currentBlockString = ""
 
         elif("VERIFY OK" in message):
             print("~~ got Good Verify ~~")

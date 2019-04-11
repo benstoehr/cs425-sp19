@@ -72,7 +72,7 @@ class Block(object):
 
     def printSelf(self):
         for t in self.transactions:
-            print(str(t))
+            print("\t" + str(t))
 
 
 

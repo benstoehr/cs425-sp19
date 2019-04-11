@@ -1,5 +1,6 @@
 import hashlib
 import random
+import copy
 
 from block import Block
 
@@ -21,6 +22,8 @@ class BlockManager(object):
         self.currentBlock = Block(level=1)
         self.currentHash = None
         self.successfulHash = None
+
+        self.lastCommittedBlock = None
 
         self.currentBlockCount = 0
 
@@ -88,6 +91,10 @@ class BlockManager(object):
             self.numTransactionsBeforeHash = int(random.random() * 20)
             self.waitingForPuzzle = True
 
+    def appendPendingTransactionsToNewBlock(self):
+        for p in self.pendingTransactions:
+            pass
+    
 ##############
 
     def successfulBlock(self, message):
@@ -96,14 +103,17 @@ class BlockManager(object):
             self.waitingForPuzzle = False
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level] = self.currentBlock
-            previousLevel = self.currentBlock.level
-            previousHash = self.currentBlock.selfHash
-            self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
-
             return True
         return False
 
-###### Sending STUFF #####
+    def newBlock(self):
+        previousLevel = self.currentBlock.level
+        previousHash = self.currentBlock.selfHash
+        self.lastCommittedBlock = copy.deepcopy(self.currentBlock)
+
+        self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
+
+###### Messages to Blocks #####
 
     def singleBlockFromMessage(self, byteString):
         block = Block()
