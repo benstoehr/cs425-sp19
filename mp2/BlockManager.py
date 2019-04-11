@@ -63,7 +63,7 @@ class BlockManager(object):
         if (fromAccount == 0):
             self.bank[toAccount] = toAccountValue + amount
             return True
-        
+
         if(amount > fromAccountValue):
             print("Invalid Transaction: Not enought funds!")
             return False
@@ -117,9 +117,9 @@ class BlockManager(object):
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
-        fromAccount = transaction[3]
-        toAccount = transaction[4]
-        amount = transaction[5]
+        fromAccount = int(transaction[3])
+        toAccount = int(transaction[4])
+        amount = int(transaction[5])
 
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
