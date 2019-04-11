@@ -110,7 +110,8 @@ class BlockManager(object):
                 else:
                     self.bank[toAccount] += amount
             else:
-                # reject this transaction 
+                # reject this transaction
+                pass
 
 
         self.currentBlock.addTransactionToBlock(transaction)
