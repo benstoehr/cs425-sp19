@@ -137,8 +137,8 @@ tx100_firstSent = tx100_df.groupby(['tID'])['sentTime'].min().to_dict()
 
 tx20_df['firstSent'] = tx20_df.tID.map(tx20_firstSent)
 tx100_df['firstSent'] = tx100_df.tID.map(tx100_firstSent)
-tx20_df['timestamp'] = tx20_df.timestamp - tx20_df.firstSent
-tx100_df['timestamp'] = tx100_df.timestamp - tx100_df.firstSent
+tx20_df['timestamp'] = (tx20_df.timestamp - tx20_df.firstSent)
+tx100_df['timestamp'] = (tx100_df.timestamp - tx100_df.firstSent)
 tx20_df['timestamp'] = tx20_df['timestamp'].dt.microseconds.abs()
 tx100_df['timestamp'] = tx100_df['timestamp'].dt.microseconds.abs()
 
