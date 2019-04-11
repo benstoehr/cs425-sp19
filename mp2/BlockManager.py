@@ -22,11 +22,15 @@ class BlockManager(object):
 
 #############
     def hashCurrentBlock(self):
-        self.hash.update(self.currentBlockAsString().encode('utf-8'))
+        h = self.hash.update(self.currentBlockAsString().encode('utf-8'))
+        self.currentBlock.selfHash = h
         return self.hash.hexdigest()
 
     def currentBlockAsString(self):
         return self.currentBlock.toMessage()
+
+    def currentBlockAsStringWithHash(self):
+        return self.currentBlock.toMessageWithHash()
 
 
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives
