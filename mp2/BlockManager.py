@@ -165,7 +165,7 @@ class BlockManager(object):
 ###### Messages to Blocks #####
 
     def buildChain(self, message):
-        wordBLOCKCHAIN, blockString = message.split(" ")
+        wordBLOCKCHAIN, blockString = message
         block = self.singleBlockFromMessage(blockString)
         self.blockchain[block.level, block.selfHash] = block
         if(block.level == self.blockLevel):
