@@ -354,7 +354,7 @@ class Node(Thread):
 
         elif("SOLVED" in message):
             print("~~ got Solved ~~")
-            print("\t" + str(message))
+            print(str(message))
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
