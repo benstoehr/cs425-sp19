@@ -419,7 +419,33 @@ class Node(Thread):
                 break
 
     ############### STEP 1: READ ALL MESSAGES ###################
-        ## 1.A -- READ ALL MESSAGES FROM SERVICE
+            ## 1.B -- READ ALL MESSAGES FROM NODES
+            ## Read until no messages
+            while (1):
+                # print("read()")
+                # addr = ipANDport = (ip, port)
+                message, addr = self.read()
+                # print("post read()")
+                messageType = self.messager.getMessageType(message)
+                if (messageType is not None):
+                    self.handleMessage(message, addr)
+                else:
+                    break
+
+            ######## Update list of IPs from node messages
+            for introMessage in self.introductionMessages:
+                vmname = introMessage[1]
+                vmIP = introMessage[2]
+                vmPort = int(introMessage[3])
+                if ((vmIP, vmPort) not in self.ipAndport2Name.keys()):
+                    # Put it in the dictionary with the name
+                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")
+                    self.unknownAddresses.append((vmIP, vmPort))
+                # Move the message to a "HANDLED" array
+                self.introductionMessages_Handled.append(introMessage)
+            self.introductionMessages = []
+
+            ## 1.A -- READ ALL MESSAGES FROM SERVICE
             ## Read until no messages
             while(1):
                 #print("serviceRead()")
@@ -448,31 +474,6 @@ class Node(Thread):
             # EMPTY THE QUEUE
             self.serviceIntroductionMessages = []
 
-        ## 1.B -- READ ALL MESSAGES FROM NODES
-            ## Read until no messages
-            while(1):
-                #print("read()")
-                # addr = ipANDport = (ip, port)
-                message, addr = self.read()
-                #print("post read()")
-                messageType = self.messager.getMessageType(message)
-                if (messageType is not None):
-                    self.handleMessage(message, addr)
-                else:
-                    break
-
-            ######## Update list of IPs from node messages
-            for introMessage in self.introductionMessages:
-                vmname = introMessage[1]
-                vmIP = introMessage[2]
-                vmPort = int(introMessage[3])
-                if((vmIP, vmPort) not in self.ipAndport2Name.keys()):
-                    # Put it in the dictionary with the name
-                    self.ipAndport2Name[(vmIP, vmPort)] = (vmname, "unknown")
-                    self.unknownAddresses.append((vmIP, vmPort))
-                # Move the message to a "HANDLED" array
-                self.introductionMessages_Handled.append(introMessage)
-            self.introductionMessages = []
 
     ## END OF READING ##########
 
