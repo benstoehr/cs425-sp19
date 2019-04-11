@@ -286,8 +286,8 @@ class Node(Thread):
 
         # CP 2
         elif("BLOCK" in message2send):
-            print("Received block from " + str(ip) + " " +str(port))
-            print(message2send)
+            print("Received block from " + str(ip) + " " +str(port) + "\n")
+            #print(message2send)
 
             #self.logger.logReceivedBlock(' '.join(message)
 
@@ -597,8 +597,6 @@ class Node(Thread):
                         print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()
-                        print("blockString")
-                        print(blockString)
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
