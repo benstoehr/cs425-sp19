@@ -581,16 +581,18 @@ class Node(Thread):
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
-                print("GONNA SEND MY BLOCK TO NODES")
+
                 blockString = self.blockManager.lastSuccessfulBlock.toMessage()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
-                print(blockMessage2send)
+
 
                 for address in addresses:
                     ip, port = address
                     ip = str(ip)
                     port = int(port)
                     if(self.okToSendBlock(blockString, ip, port)):
+                        print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
+                        print(blockMessage2send)
                         self.sock.sendto(blockMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
