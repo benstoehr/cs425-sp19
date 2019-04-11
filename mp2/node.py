@@ -614,7 +614,7 @@ class Node(Thread):
         print("")
 
         for i in range(self.blockManager.blockLevel):
-            block = self.blockManager.blockchain[i+1]
+            blockHash, block = self.blockManager.blockchain[i+1]
             block.printSelf()
             print("")
 

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/mp2/BlockManager.py" afterPath="$PROJECT_DIR$/mp2/BlockManager.py" />
       <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -44,8 +43,8 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="688">
-                  <caret line="616" column="52" lean-forward="false" selection-start-line="616" selection-start-column="52" selection-end-line="616" selection-end-column="52" />
+                <state relative-caret-position="658">
+                  <caret line="614" column="0" lean-forward="true" selection-start-line="614" selection-start-column="0" selection-end-line="614" selection-end-column="0" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#1139#2206#0" expanded="false" />
@@ -915,8 +914,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="616" column="52" lean-forward="false" selection-start-line="616" selection-start-column="52" selection-end-line="616" selection-end-column="52" />
+        <state relative-caret-position="658">
+          <caret line="614" column="0" lean-forward="true" selection-start-line="614" selection-start-column="0" selection-end-line="614" selection-end-column="0" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1139#2206#0" expanded="false" />
