@@ -160,8 +160,8 @@ class BlockManager(object):
             self.blockLevel = block.level
             if(self.currentBlock is not None):
                 for transaction in self.currentBlock.getTransactions():
-
                     self.appendTransactionsToPending(transaction)
+
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     print("CONSECUTIVE BLOCK SUCCESS")
                     # Create new block
@@ -217,6 +217,7 @@ class BlockManager(object):
         #print("newBlock()")
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
+        self.lastSuccessfulHash = copy.deepcopy(self.currentBlock.selfHash)
         self.lastSuccessfulBlock = copy.deepcopy(self.currentBlock)
         self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
 
@@ -237,6 +238,7 @@ class BlockManager(object):
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
             self.waitingForPuzzle = False
+            # Set this up so new block pulls the correct one.
             self.currentBlock = block
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
