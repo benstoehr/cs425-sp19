@@ -47,6 +47,23 @@ class BlockManager(object):
 
 #############
 
+    def executeTrade(self, fromAccount, toAccount, amount):
+        if (fromAccount not in self.bank.keys()):
+            self.bank[fromAccount] = 0
+        if (toAccount not in self.bank.keys()):
+            self.bank[toAccount] = 0
+
+        fromAccountValue = self.bank[fromAccount]
+        toAccountValue = self.bank[toAccount]
+
+        if(amount > fromAccountValue):
+            print("Invalid Transaction: Not enought funds!")
+            return False
+        else:
+            self.bank[fromAccount] = fromAccountValue - amount
+            self.bank[toAccount] = toAccountValue + amount
+            return True
+
 
     def readIncomingBlockChain(self, message):
         block = self.singleBlockFromMessage(message)
@@ -81,6 +98,7 @@ class BlockManager(object):
 
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
+
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
                 print("\t\tP" + str(transaction))
@@ -91,35 +109,19 @@ class BlockManager(object):
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
-        splitTxMsg = transaction.split(' ')
-        fromAccount = splitTxMsg[3]
-        toAccount = splitTxMsg[4]
-        amount = splitTxMsg[5]
-        if (fromAccount == 0):
-            if (toAccount not in self.bank):
-                self.bank[toAccount] = amount
-            else:
-                self.bank[toAccount] += amount
-        elif (fromAccount not in self.bank):
-            # reject this transaction
-            pass
-        else:
-            if (self.bank[fromAccount] >= amount):
-                self.bank[fromAccount] -= amount
-                if (toAccount not in self.bank):
-                    self.bank[toAccount] = amount
-                else:
-                    self.bank[toAccount] += amount
-            else:
-                # reject this transaction
-                pass
+        fromAccount = transaction[3]
+        toAccount = transaction[4]
+        amount = transaction[5]
 
+        tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
+        if(not tradeExecuted):
+            return
 
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
             self.pendingTransactionsToRemove.append(transaction)
-
         self.currentBlockCount += 1
+
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
             self.currentBlock.selfHash = blockHash
