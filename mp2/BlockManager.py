@@ -75,8 +75,6 @@ class BlockManager(object):
 
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
-
-
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
                 print("\t\tP" + str(transaction))
@@ -121,7 +119,7 @@ class BlockManager(object):
             self.blockLevel = block.level
             if(self.currentBlock is not None):
                 for transaction in self.currentBlock.getTransactions():
-                    
+
                     self.appendTransactionsToPending(transaction)
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     print("CONSECUTIVE BLOCK SUCCESS")
@@ -129,8 +127,9 @@ class BlockManager(object):
                     self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.previousBlockHash)
                     # Move pending transactions to it
                     self.clearPendingTransactionsOnBlockChain()
-                    self.appendPendingTransactionsToNewBlock()
                     self.removeAddedTransactionsFromPending()
+                    self.appendPendingTransactionsToNewBlock()
+
                     # Update stuff
                     self.lastSuccessfulHash = block.selfHash
                     self.lastSuccessfulBlock = copy.deepcopy(block)
@@ -188,19 +187,25 @@ class BlockManager(object):
 
     def buildChain(self, message):
         wordBLOCKCHAIN, blockString = message
+        # Get the block
         block = self.singleBlockFromMessage(blockString)
+        # Put it in the blockchain variable
         self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
+        # At this point, you are done
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
+        # Clean up pending transactions
         self.clearPendingTransactionsOnBlockChain()
+        self.removeAddedTransactionsFromPending()
 
     # Maybe make this by block for speed
     def clearPendingTransactionsOnBlockChain(self):
         for blockHash, block in self.blockchain.values():
             for transaction in block.getTransactions():
                 if(transaction in self.pendingTransactions):
-                    self.pendingTransactions.remove(transaction)
+                    self.pendingTransactionsToRemove += [transaction]
 
+###################################################
     def singleBlockFromMessage(self, byteString):
 
         hash, level, content = byteString.split("$")
@@ -211,7 +216,6 @@ class BlockManager(object):
             block.txIDs.append(splitTransaction[2])
             block.transactions.append(transaction.replace("_"," "))
         return block
-
 
     def multipleBlocksFromMessage(self, longByteString):
         blocks = []
