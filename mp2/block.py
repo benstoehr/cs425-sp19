@@ -41,7 +41,7 @@ class Block(object):
 
 
     #TODO:
-    #BLOCK MESSAGE = [ <previous hash> $ <level> $ <transactions> ^ ]
+    #BLOCK MESSAGE = [ BLOCK <previous hash>$<level>$<transactions>^]
     def toMessage(self):
         string = "BLOCK "
         if(self.previousBlockHash is not None):

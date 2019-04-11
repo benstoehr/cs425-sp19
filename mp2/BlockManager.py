@@ -59,6 +59,12 @@ class BlockManager(object):
         self.currentBlock.selfHash = hh
         return hh
 
+    def hashBlock(self, block):
+        h = self.hash.update(block.toMessage().encode('utf-8'))
+        hh = self.hash.hexdigest()
+        self.currentBlock.selfHash = hh
+        return hh
+
 #############
 
     def currentBlockAsString(self):
@@ -92,6 +98,7 @@ class BlockManager(object):
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
+            self.currentBlock.selfHash = blockHash
             self.currentBlockCount = 0
             self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
@@ -210,7 +217,7 @@ class BlockManager(object):
 
         hash, level, content = byteString.split("$")
         block = Block(level=int(level), previousHash=hash)
-
+        block.selfHash = self.hashBlock(block)
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
             block.txIDs.append(splitTransaction[2])
