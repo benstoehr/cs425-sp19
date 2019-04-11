@@ -14,7 +14,7 @@ class BlockManager(object):
 
         self.pendingBlocks = []
 
-        self.currentBlock = None
+        self.currentBlock = Block(level=1)
         self.currentHash = None
         self.successfulHash = None
 

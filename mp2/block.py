@@ -12,9 +12,9 @@ class Block(object):
     def returnTxIDs(self):
         return self.txIDs
 
-    def __init__(self):
+    def __init__(self, level=None):
 
-        self.level = None
+        self.level = level
 
         # String Hash
         self.previousBlockHash = None
