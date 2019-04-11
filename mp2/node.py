@@ -355,8 +355,8 @@ class Node(Thread):
 
         elif("SOLVED" in message):
             print("\n~~ got Solved ~~")
-            print(str(message[0]))
             print(str(message[1]))
+            print(str(message[2]))
 
 
             print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")

@@ -113,6 +113,7 @@ class BlockManager(object):
         return False
 
     def newBlock(self):
+        print("newBlock()")
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
         self.lastCommittedBlock = copy.deepcopy(self.currentBlock)
