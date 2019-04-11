@@ -8,6 +8,16 @@ import re
 filename20 = "log20.txt"
 filename100 = "log100.txt"
 
+# TODO:
+# 1. How long does each transaction take to appear in a block? Are there congestion delays?
+#    -> block - tx data, t(tx first appeared) - t(block is mined) is the delay
+# 2. How long does a block propagate throughout the entire network?
+#    -> can be achieved by current log
+# 3. How often do chain splits (i.e., two blocks mined at the same height) occur? 
+#    -> need to log the height of blocks & their id
+# How long is the longest split you observed? 
+# (i.e., smallest distance to least common ancestor of two nodes)
+
 # Plan:
 # [the propagation delay]
 # 1. minimum, maximum, and median propagation delay
@@ -34,7 +44,12 @@ def read_data(filename):
 					raw.append(record)
 
 	# columns TBD
-	labels = ['timestamp', 'type', 'txID', 'message', 'fromNode', 'toNode', 'timestampFromNode', 'status', 'nodeNumOnVm', 'bytes']
+	# fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " 
+	# + str(bytes) + " " + str(ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) 
+	# + " " + str(sentTime)  + "\n"
+	# name: vm[#]node[i]
+	# ttype: TRANSACTION/BLOCK/...etc
+	labels = ['timestamp', 'name', 'status', 'bytes', 'ttype', 'txID', 'fromNode', 'toNode', 'sentTime']
 	df = pd.DataFrame.from_records(raw, columns=labels)
 	return df
 
@@ -82,7 +97,7 @@ raw_df100 = read_data(filename100)
 raw_df100['nodeNum'] = 100
 raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
 
-df = raw_df[raw_df.type == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
+df = raw_df[raw_df.ttype == 'TRANSACTION'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
 df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
 df['timestampFromNode'] = pd.to_datetime(df['timestampFromNode'], unit='s')
 df['bytes'] = df['bytes'].astype(int)
