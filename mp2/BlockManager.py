@@ -107,7 +107,8 @@ class BlockManager(object):
 ##############
 
     def betterBlock(self, ip, port, message):
-        block = self.singleBlockFromMessage(message)
+        [blockWORD, blockString] = message
+        block = self.singleBlockFromMessage(blockString)
         if(block.level > self.currentBlock.level):
 
             # set level so other blocks don't interfere
