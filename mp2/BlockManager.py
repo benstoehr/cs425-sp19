@@ -48,14 +48,22 @@ class BlockManager(object):
 #############
 
     def executeTrade(self, fromAccount, toAccount, amount):
+
+        ## ADD THEM TO THE BANK
         if (fromAccount not in self.bank.keys()):
             self.bank[fromAccount] = 0
         if (toAccount not in self.bank.keys()):
             self.bank[toAccount] = 0
 
+        # GET ACCOUNT BALANCE
         fromAccountValue = self.bank[fromAccount]
         toAccountValue = self.bank[toAccount]
 
+        ## IF IT'S ACCOUNT ZERO THEY'RE GOLDEN
+        if (fromAccount == 0):
+            self.bank[toAccount] = toAccountValue + amount
+            return True
+        
         if(amount > fromAccountValue):
             print("Invalid Transaction: Not enought funds!")
             return False
