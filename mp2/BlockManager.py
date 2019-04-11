@@ -47,14 +47,14 @@ class BlockManager(object):
 
 #############
 
-    def executeTrade(self, fromAccount, toAccount, amount):
-
+    def addAccounts(self, account1, account2):
         ## ADD THEM TO THE BANK
-        if (fromAccount not in self.bank.keys()):
-            self.bank[fromAccount] = 0
-        if (toAccount not in self.bank.keys()):
-            self.bank[toAccount] = 0
+        if (account1 not in self.bank.keys()):
+            self.bank[account1] = 0
+        if (account2 not in self.bank.keys()):
+            self.bank[account2] = 0
 
+    def executeTrade(self, fromAccount, toAccount, amount):
         # GET ACCOUNT BALANCE
         fromAccountValue = self.bank[fromAccount]
         toAccountValue = self.bank[toAccount]
@@ -106,6 +106,12 @@ class BlockManager(object):
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
 
+        fromAccount = int(transaction[3])
+        toAccount = int(transaction[4])
+        amount = int(transaction[5])
+
+        self.addAccounts(fromAccount, toAccount)
+        
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
                 print("\t\tP" + str(transaction))
@@ -116,9 +122,6 @@ class BlockManager(object):
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
-        fromAccount = int(transaction[3])
-        toAccount = int(transaction[4])
-        amount = int(transaction[5])
 
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
