@@ -373,7 +373,7 @@ class Node(Thread):
                 ## make all of the pending transactions go into new block
                 self.blockManager.fillNewBlock()
             else:
-                self.currentBlockString = ""
+                print("Ignoring SOLVED Message")
 
             print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
