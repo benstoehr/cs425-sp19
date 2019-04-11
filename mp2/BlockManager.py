@@ -94,6 +94,7 @@ class BlockManager(object):
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
+        print("appendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             self.appendTransactionToCurrentBlock(pt)
 

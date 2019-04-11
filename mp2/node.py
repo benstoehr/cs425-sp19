@@ -362,7 +362,7 @@ class Node(Thread):
 
 
                 self.blockManager.newBlock()
-                #self.blockManager.fillNewBlock()
+                self.blockManager.fillNewBlock()
             else:
                 self.currentBlockString = ""
 
