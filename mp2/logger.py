@@ -31,7 +31,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "TRANSACTION"
-        txID = message[2]
+        tID = message[2]
         mess = str("_".join(message))
         bytes = len(mess)
         fromNode = str(ip) + "," + str(port)
@@ -41,7 +41,7 @@ class Logger():
         nodeNum = self.vmNumber
         bytes = len(mess)
 
-        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(ttype) + " " + str(txID) + " " + str(
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(ttype) + " " + str(tID) + " " + str(
             fromNode) + " " + str(toNode) + " " + str(sentTime)  + "\n"
         self.masterLogging.debug(fileString)
 
@@ -50,7 +50,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "INTRODUCE"
-        txID = None
+        tID = None
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
@@ -60,7 +60,7 @@ class Logger():
         bytes = len(mess)
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
 
@@ -77,7 +77,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "TRANSACTION"
-        txID = message[2]
+        tID = message[2]
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
@@ -86,7 +86,7 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logSentTransaction(self, ip, port, message):
@@ -95,7 +95,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "TRANSACTION"
-        txID = pureMessage[2]
+        tID = pureMessage[2]
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
@@ -104,7 +104,7 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logReceivedIntroduction(self, message):
@@ -113,7 +113,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "INTRODUCE"
-        txID = None
+        tID = None
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
@@ -122,7 +122,7 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     def logSentIntroduction(self, ip, port, message):
@@ -131,7 +131,7 @@ class Logger():
 
         timestamp_a = time.time()
         ttype = "INTRODUCE"
-        txID = None
+        tID = None
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
@@ -140,21 +140,19 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
 
     ## CP2
-    # add blockhash
 
-    def logReceivedBlock(self):
+    def logReceivedBlock(self, selfHash):
         
         ip, port, message, bytes = self.getIPandPort(message)
 
         timestamp_a = time.time()
         ttype = "BLOCK"
-        txID = None
-        blockHash = None # wait for check
+        tID = selfHash
         mess = str("_".join(message))
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
@@ -163,17 +161,16 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
-    def logSentBlock(self):
+    def logSentBlock(self, selfHash):
 
         pureMessage, bytes = self.pullIPoffOutgoing(message)
 
         timestamp_a = time.time()
         ttype = "BLOCK"
-        txID = None
-        blockHash = None # wait for check
+        tID = selfHash
         mess = str("_".join(pureMessage))
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
@@ -182,21 +179,81 @@ class Logger():
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
-            ttype) + " " + str(txID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
     # Node to Service about personal block
-    def logReceivedPuzzle(self):
-        pass
+    def logReceivedPuzzle(self, message):
 
-    def logSentPuzzle(self):
-        pass
+        ip, port, message, bytes = self.getIPandPort(message)
+
+        timestamp_a = time.time()
+        ttype = "SOLVED"
+        tID = message[1]
+        mess = str("_".join(message))
+        fromNode = str(ip) + "," + str(port)
+        toNode = str(self.ip) + "," + str(self.port)
+        sentTime = None
+        status = "IncomingSolvedPuzzle"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
+
+    def logSentPuzzle(self, message):
+
+        pureMessage, bytes = self.pullIPoffOutgoing(message)
+
+        timestamp_a = time.time()
+        ttype = "SOLVE"
+        tID = pureMessage[1]
+        mess = str("_".join(pureMessage))
+        fromNode = str(self.ip) + "," + str(self.port)
+        toNode = str(ip) + "," + str(port)
+        sentTime = None
+        status = "OutgoingPuzzle"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
 
     # Node to Service about incoming block
     def logReceivedVerify(self):
-        pass
+
+        ip, port, message, bytes = self.getIPandPort(message)
+
+        timestamp_a = time.time()
+        ttype = "VERIFY" + "-" + message[1] # OK or FAIL
+        tID = pureMessage[1] + "_" + pureMessage[2]
+        mess = str("_".join(message))
+        fromNode = str(ip) + "," + str(port)
+        toNode = str(self.ip) + "," + str(self.port)
+        sentTime = None
+        status = "IncomingVerify"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
 
     def logSentVerify(self):
-        pass
+        
+        pureMessage, bytes = self.pullIPoffOutgoing(message)
+
+        timestamp_a = time.time()
+        ttype = "VERIFY"
+        tID = pureMessage[1] + "_" + pureMessage[2]
+        mess = str("_".join(pureMessage))
+        fromNode = str(self.ip) + "," + str(self.port)
+        toNode = str(ip) + "," + str(port)
+        sentTime = None
+        status = "OutgoingVerify"
+        nodeNum = self.vmNumber
+
+        fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
+            ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
+        self.masterLogging.debug(fileString)
 
 
