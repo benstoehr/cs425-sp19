@@ -98,6 +98,7 @@ class Block(object):
 
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")
-        print("[HASH:" + str(self.selfHash) +  " PUZZLE: " + str(self.puzzleAnswer) + "]")
+        print("[HASH:" + str(self.selfHash) + "]")
+        print("[PUZZLE: " + str(self.puzzleAnswer) + "]")
         for t in self.transactions:
             print(str(t))

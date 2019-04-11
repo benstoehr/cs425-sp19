@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/mp2/block.py" afterPath="$PROJECT_DIR$/mp2/block.py" />
       <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
     </list>
@@ -45,8 +44,8 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="526">
-                  <caret line="295" column="26" lean-forward="false" selection-start-line="295" selection-start-column="26" selection-end-line="295" selection-end-column="26" />
+                <state relative-caret-position="576">
+                  <caret line="599" column="25" lean-forward="false" selection-start-line="599" selection-start-column="25" selection-end-line="599" selection-end-column="25" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#1139#2206#0" expanded="false" />
@@ -104,12 +103,11 @@
           <file leaf-file-name="block.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/block.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="822">
-                  <caret line="100" column="87" lean-forward="false" selection-start-line="100" selection-start-column="87" selection-end-line="100" selection-end-column="87" />
+                <state relative-caret-position="498">
+                  <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
                   <folding>
                     <element signature="e#1100#1528#0" expanded="false" />
                     <element signature="e#1571#2062#0" expanded="false" />
-                    <element signature="e#2102#2598#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -899,20 +897,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/block.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="822">
-          <caret line="100" column="87" lean-forward="false" selection-start-line="100" selection-start-column="87" selection-end-line="100" selection-end-column="87" />
+        <state relative-caret-position="498">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
           <folding>
             <element signature="e#1100#1528#0" expanded="false" />
             <element signature="e#1571#2062#0" expanded="false" />
-            <element signature="e#2102#2598#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="295" column="26" lean-forward="false" selection-start-line="295" selection-start-column="26" selection-end-line="295" selection-end-column="26" />
+        <state relative-caret-position="576">
+          <caret line="599" column="25" lean-forward="false" selection-start-line="599" selection-start-column="25" selection-end-line="599" selection-end-column="25" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#1139#2206#0" expanded="false" />

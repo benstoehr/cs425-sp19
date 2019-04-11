@@ -595,7 +595,10 @@ class Node(Thread):
                 for ip, port in self.ipsToSendChain:
                     for blockHash, block in self.blockManager.blockchain.values():
                         print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
-                        blockString = block.toChainMessage()
+                        blockString = block.toMessageWithHash()
+                        blockChainString = block.toChainMessage()
+                        print("blockString")
+                        print(blockString)
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
