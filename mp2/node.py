@@ -218,22 +218,22 @@ class Node(Thread):
         if(blockString not in self.receivedAddressesByBlock.keys()):
             self.receivedAddressesByBlock[blockString] = []
 
-        if((ip,port) not in self.sentAddressesByBlock[blockString]):
-            if((ip, port) not in self.receivedAddressesByBlock[blockString]):
+        if((ip,int(port)) not in self.sentAddressesByBlock[blockString]):
+            if((ip, int(port)) not in self.receivedAddressesByBlock[blockString]):
                 return True
         return False
 
     def addAddresstoSentBlocks(self, block, ip, port):
         if ((ip, port) not in self.sentAddressesByBlock.keys()):
-            self.sentAddressesByBlock[block] = [(ip, port)]
+            self.sentAddressesByBlock[block] = [(ip, int(port))]
         else:
-            self.sentAddressesByBlock[block] += [(ip, port)]
+            self.sentAddressesByBlock[block] += [(ip, int(port))]
 
     def addAddresstoRecievedBlocks(self, block, ip, port):
         if ((ip, port) not in self.receivedAddressesByBlock.keys()):
-            self.receivedAddressesByBlock[block] = [(ip, port)]
+            self.receivedAddressesByBlock[block] = [(ip, int(port))]
         else:
-            self.receivedAddressesByBlock[block] += [(ip, port)]
+            self.receivedAddressesByBlock[block] += [(ip, int(port))]
 
 
 #### List manipulation
