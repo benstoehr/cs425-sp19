@@ -38,8 +38,9 @@ class BlockManager(object):
 
         self.waitingForBlockChainFrom = None
 
+        self.minTransactionsBeforeHash = 5
         self.maxTransactionsBeforeHash = 10
-        self.numTransactionsBeforeHash = int(random.random() * self.maxTransactionsBeforeHash)
+        self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
     def betterBlock(self, ip, port, message):
@@ -89,14 +90,16 @@ class BlockManager(object):
 
         print("\t" + str(transaction))
         self.currentBlock.addTransactionToBlock(transaction)
-
+        if(transaction in self.pendingTransactions):
+            self.pendingTransactions.remove(transaction)
+            
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
             self.currentHash = blockHash
             self.currentBlock.selfHash = blockHash
             self.currentBlockCount = 0
-            self.numTransactionsBeforeHash = int(random.random() * self.maxTransactionsBeforeHash)
+            self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
@@ -108,9 +111,9 @@ class BlockManager(object):
 
     def successfulBlock(self, message):
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
-        print("BLOCK MANAGER currentHash: " + str(self.currentHash))
-        print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
-        print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
+        #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
+        #print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
+        #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock.selfHash == hashOfBlock):
             print("BLOCK SUCCESS")
             self.currentBlock.puzzleAnswer = puzzleAnswer
