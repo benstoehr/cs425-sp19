@@ -279,6 +279,9 @@ class Node(Thread):
             self.replyAndUpdateAddresses(ip, port)
 
         elif("BLOCK" in message2send):
+            print("Received block from " + str(ip) + " " +str(port))
+            print(message2send)
+
             #self.logger.logReceivedBlock(' '.join(message)
             print(' '.join(message))
             # if level is the same, do nothing
@@ -294,9 +297,10 @@ class Node(Thread):
 
         elif("BLOCKCHAIN" in message2send):
             # Pass on individual block to build chain
+            print("Building new chain with block")
+            print(message)
             if(self.incomingBlockChainIP == (ip, port)):
-                self.blockManager.
-            pass
+                pass
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
