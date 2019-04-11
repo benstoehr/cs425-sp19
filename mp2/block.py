@@ -15,6 +15,7 @@ class Block(object):
     def __init__(self):
 
         self.level = None
+
         # String Hash
         self.previousBlockHash = None
         self.selfHash = None
@@ -29,11 +30,12 @@ class Block(object):
 
         # Array of arrays [[TRANSACTION, 1554767825.606276, 6d46d036a7276ae3753da0adca3120cc, 708914, 967451, 15]]
         self.transactions = []
-
+        self.transactionCount = 0
 
     #TODO:
     #transaction will be an array
     def addTransactionToBlock(self, transaction):
+        self.transactionCount += 1
         self.transactions.append(transaction)
         self.transactions.sort(key=sortFunction)
 

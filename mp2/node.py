@@ -102,7 +102,7 @@ class Node(Thread):
         # Should only ever be a string with a hash
         self.currentHash = None
         self.currentBlockString = None
-
+        self.hashesSentToService = []
 
         self.fullBlockChainString = None
         self.currentPuzzle = None
@@ -561,14 +561,15 @@ class Node(Thread):
 
             ## CP2
 
-            if(self.currentHash is not None):
-                string = "SOLVE "
-                string += self.currentHash
-                string += "\n"
-                print(string)
-                self.serv.serviceSocket.send(string.encode('utf-8'))
-                self.pendingHash = self.currentHash
-                self.currentHash = None
+            if(self.blockManager.currentHash is not None):
+                if(self.blockManager.currentHash not in self.hashesSentToService):
+                    string = "SOLVE "
+                    string += self.currentHash
+                    string += "\n"
+                    print(string)
+                    self.serv.serviceSocket.send(string.encode('utf-8'))
+                    self.pendingHash = self.currentHash
+                    self.currentHash = None
 
 
             ## IDK WHY THIS IS NECESSARY

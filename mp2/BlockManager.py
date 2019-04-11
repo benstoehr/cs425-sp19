@@ -1,4 +1,6 @@
 import hashlib
+import random
+
 from block import Block
 
 class BlockManager(object):
@@ -12,7 +14,10 @@ class BlockManager(object):
 
         self.pendingBlocks = []
 
-        self.currentBlock = Block()
+        self.currentBlock = None
+        self.currentHash = None
+        self.successfulHash = None
+
         self.currentBlockCount = 0
 
         self.hash = hashlib.sha256()
@@ -20,8 +25,12 @@ class BlockManager(object):
         self.pendingTransactions = []
 
         self.waitingForPuzzle = False
+        self.waitingForBlockChain = False
+        self.numBlocksToWaitFor = 0
 
         self.waitingForBlockChainFrom = None
+
+        self.numTransactionsBeforeHash = int(random.random() * 20)
 
 #############
     def betterBlock(self, ip, port, message):
@@ -29,8 +38,10 @@ class BlockManager(object):
         if(block.level > self.level):
             self.currentBlock = None
             self.incomingBlockChainIP = (ip, port)
-
+            self.waitingForBlockChain = True
+            self.numBlocksToWaitFor = block.level
             return True
+
         return False
 
     def readIncomingBlockChain(self, message):
@@ -42,19 +53,31 @@ class BlockManager(object):
         self.currentBlock.selfHash = h
         return self.hash.hexdigest()
 
+#############
+
     def currentBlockAsString(self):
         return self.currentBlock.toMessage()
 
     def currentBlockAsStringWithHash(self):
         return self.currentBlock.toMessageWithHash()
 
+##############
 
-    # Adds one transaction to the current block, only happens if transaction is possible (no negatives
+    def appendTransactionsToPending(self, transaction):
+        self.pendingTransactions += [transaction
+                                     ]
+    # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
+        if(self.waitingForPuzzle or self.waitingForBlockChain):
+            self.appendTransactionsToPending(transaction)
+            return
+
         self.currentBlock.addTransactionToBlock(transaction)
         self.currentBlockCount += 1
-        if(self.currentBlockCount == 10):
+        if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
+            self.currentHash = self.hashCurrentBlock()
             self.currentBlockCount = 0
+            self.numTransactionsBeforeHash = int(random.random() * 20)
             self.waitingForPuzzle = True
 
 
