@@ -194,7 +194,7 @@ class BlockManager(object):
 
     # Maybe make this by block for speed
     def clearPendingTransactionsOnBlockChain(self):
-        for block in self.blockchain.values():
+        for blockHash, block in self.blockchain.values():
             for transaction in block.getTransactions():
                 if(transaction in self.pendingTransactions):
                     self.pendingTransactions.remove(transaction)
