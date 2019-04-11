@@ -113,21 +113,20 @@ class BlockManager(object):
 
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
-                print("\t\tP" + str(transaction))
+                #print("\t\tP" + str(transaction))
                 self.appendTransactionsToPending(transaction)
             return
-
-
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
 
+
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
-            print("\tInvalid:\t" + str(transaction))
+            #print("\tInvalid:\t" + str(transaction))
             return
 
-        print("\t" + str(transaction))
+        #print("\t" + str(transaction))
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
             self.pendingTransactionsToRemove.append(transaction)
@@ -140,14 +139,15 @@ class BlockManager(object):
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
-        print("\tappendPendingTransactionsToNewBlock()")
+        #print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             self.appendTransactionToCurrentBlock(pt)
 
 
     def removeAddedTransactionsFromPending(self):
         for transactionToRemove in self.pendingTransactionsToRemove:
-            self.pendingTransactions.remove(transactionToRemove)
+            if(transactionToRemove in self.pendingTransactions):
+                self.pendingTransactions.remove(transactionToRemove)
         self.pendingTransactionsToRemove = []
 
 ##############
@@ -229,6 +229,7 @@ class BlockManager(object):
     def fillNewBlock(self):
         #print("fillNewBlock()")
         self.appendPendingTransactionsToNewBlock()
+        self.removeAddedTransactionsFromPending()
 
 ###### Messages to Blocks #####
 
