@@ -337,10 +337,11 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            #print("\t" + str(message))
+            print("\t\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
+
             ## ADD IT TO THE BLOCK MANAGER
             self.blockManager.appendTransactionToCurrentBlock(message)
 

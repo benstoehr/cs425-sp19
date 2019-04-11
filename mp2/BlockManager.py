@@ -94,7 +94,7 @@ class BlockManager(object):
     def appendPendingTransactionsToNewBlock(self):
         for p in self.pendingTransactions:
             pass
-    
+
 ##############
 
     def successfulBlock(self, message):
