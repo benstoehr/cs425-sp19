@@ -54,6 +54,23 @@ class Block(object):
             string += "_".join(transaction)
             string += "*"
         string += "_".join(self.transactions[-1])
+        string += "$"
+        string += self.puzzleAnswer
+        string += "^"
+        return string
+
+    def toMessageWithHash(self):
+        string = ""
+        if(self.previousBlockHash is not None):
+            string += self.previousBlockHash + "$"
+        else:
+            string += "0$"
+        string += str(self.level)
+        for transaction in self.transactions[:-1]:
+            string += "_".join(transaction)
+            string += "*"
+        string += "_".join(self.transactions[-1])
+        string += self.puzzleAnswer
         string += "^"
         return string
 
@@ -72,19 +89,7 @@ class Block(object):
         string += "^"
         return string
 
-    def toMessageWithHash(self):
-        string = ""
-        if(self.previousBlockHash is not None):
-            string += self.previousBlockHash + "$"
-        else:
-            string += "0$"
-        string += str(self.level)
-        for transaction in self.transactions:
-            string += "_".join(transaction)
-            string += "*"
-        string += self.selfHash
-        string += "^"
-        return string
+
 
     def getTransactions(self):
         return self.transactions

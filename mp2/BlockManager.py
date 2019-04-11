@@ -59,8 +59,8 @@ class BlockManager(object):
         self.currentBlock.selfHash = hh
         return hh
 
-    def hashBlock(self, block):
-        h = self.hash.update(block.toMessage().encode('utf-8'))
+    def hashBlockString(self, blockString):
+        h = self.hash.update(blockString.encode('utf-8'))
         hh = self.hash.hexdigest()
         self.currentBlock.selfHash = hh
         return hh
@@ -213,16 +213,19 @@ class BlockManager(object):
                     self.pendingTransactionsToRemove += [transaction]
 
 ###################################################
-    def singleBlockFromMessage(self, byteString):
+    def singleBlockFromMessage(self, blockString):
 
-        hash, level, content = byteString.split("$")
-        block = Block(level=int(level), previousHash=hash)
-        block.selfHash = self.hashBlock(block)
+        hash, level, content, puzzle = blockString.split("$")
+        newBlock = Block(level=int(level), previousHash=hash)
+
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
-            block.txIDs.append(splitTransaction[2])
-            block.transactions.append(splitTransaction)
-        return block
+            newBlock.txIDs.append(splitTransaction[2])
+            newBlock.transactions.append(splitTransaction)
+
+        newBlock.selfHash = self.hashBlockString(newBlock.toMessage())
+
+        return newBlock
 
     def multipleBlocksFromMessage(self, longByteString):
         blocks = []
