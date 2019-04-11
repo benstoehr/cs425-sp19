@@ -99,9 +99,9 @@ raw_df100['nodeNum'] = 100
 
 # deal with timestamp
 raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
-raw_df['timestamp'] = pd.to_datetime(df['timestamp'], unit='s')
-raw_df['sentTime'] = pd.to_datetime(df['sentTime'], unit='s')
-raw_df['bytes'] = df['bytes'].astype(int)
+raw_df['timestamp'] = pd.to_datetime(raw_df['timestamp'], unit='s')
+raw_df['sentTime'] = pd.to_datetime(raw_df['sentTime'], unit='s')
+raw_df['bytes'] = raw_df['bytes'].astype(int)
 
 # transactions for plots in CP1
 tx_df = raw_df[raw_df.status == 'IncomingNodeTransaction'].sort_values(by=['timestamp']).drop_duplicates(subset=['txID', 'toNode'], keep="first")
