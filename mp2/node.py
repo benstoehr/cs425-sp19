@@ -598,7 +598,7 @@ class Node(Thread):
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
-
+                self.ipsToSendChain = []
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
