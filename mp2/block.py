@@ -53,7 +53,7 @@ class Block(object):
         for transaction in self.transactions[:-1]:
             string += "_".join(transaction)
             string += "*"
-        string += "_".join(transactions[-1])
+        string += "_".join(self.transactions[-1])
         string += "^"
         return string
 
