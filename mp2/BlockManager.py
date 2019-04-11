@@ -38,7 +38,8 @@ class BlockManager(object):
 
         self.waitingForBlockChainFrom = None
 
-        self.numTransactionsBeforeHash = int(random.random() * 20)
+        self.maxTransactionsBeforeHash = 10
+        self.numTransactionsBeforeHash = int(random.random() * self.maxTransactionsBeforeHash)
 
 #############
     def betterBlock(self, ip, port, message):
@@ -88,7 +89,7 @@ class BlockManager(object):
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             self.currentHash = self.hashCurrentBlock()
             self.currentBlockCount = 0
-            self.numTransactionsBeforeHash = int(random.random() * 20)
+            self.numTransactionsBeforeHash = int(random.random() * self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
