@@ -614,7 +614,8 @@ class Node(Thread):
         print("")
 
         print("BLOCKCHAIN")
-        for level, block in self.blockManager.blockchain.items():
+        blockchain = self.blockManager.blockchain.items()
+        for level, block in sorted(blockchain, key=lambda x: x[0][1]):
             block.printSelf()
             print("")
 

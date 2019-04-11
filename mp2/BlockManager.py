@@ -13,6 +13,7 @@ class BlockManager(object):
     def __init__(self):
 
         self.blockLevel = 0
+
         self.bank = dict()
 
         self.blockchain = dict()
@@ -74,6 +75,8 @@ class BlockManager(object):
 
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
+
+
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
                 print("\t\tP" + str(transaction))
@@ -81,6 +84,8 @@ class BlockManager(object):
             return
 
         print("\t" + str(transaction))
+
+        ## TODO: For a transaction, if it works with the self.bank dictionary, then
 
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
@@ -156,7 +161,7 @@ class BlockManager(object):
         #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock is not None):
             if(self.currentBlock.selfHash == hashOfBlock):
-                #print("BLOCK SUCCESS")
+                print("CONSECUTIVE BLOCK SUCCESS")
                 self.blockLevel = self.currentBlock.level
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
