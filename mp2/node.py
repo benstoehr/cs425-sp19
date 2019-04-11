@@ -585,7 +585,7 @@ class Node(Thread):
                     self.pendingHash = self.currentHash
                     self.currentHash = None
 
-            if(not self.blockManager.waitingForBlockChain and self.blockManager.successfulHash is not None):
+            if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
                 blockString = self.blockManager.lastSuccessfulBlock.toMessage()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(blockString))
 
