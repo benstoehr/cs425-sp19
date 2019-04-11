@@ -591,6 +591,7 @@ class Node(Thread):
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
+                print("GONNA SEND MY BLOCK TO NODES")
                 blockString = self.blockManager.lastSuccessfulBlock.toMessage()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(blockString))
 
@@ -606,7 +607,7 @@ class Node(Thread):
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
             #time.sleep(1)
-            time.sleep(0.00001)
+            time.sleep(0.0000001)
 
 
         print("Run event unset!")
@@ -616,6 +617,7 @@ class Node(Thread):
             print(tm)
         print("")
 
+        print("BLOCKCHAIN")
         for level, block in self.blockManager.blockchain.items():
             block.printSelf()
             print("")

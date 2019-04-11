@@ -12,7 +12,7 @@ class BlockManager(object):
 
     def __init__(self):
 
-        self.blockLevel = 1
+        self.blockLevel = 0
         self.bank = dict()
 
         self.blockchain = dict()
@@ -127,6 +127,7 @@ class BlockManager(object):
             self.numBlocksToWaitFor = block.level
             self.committedTransactions = []
             return True
+
         return False
 
 ##############
