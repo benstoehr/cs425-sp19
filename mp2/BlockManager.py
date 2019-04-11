@@ -105,7 +105,8 @@ class BlockManager(object):
 
 ##############
 
-    def betterBlock(self, ip, port, blockString):
+    def betterBlock(self, ip, port, blockMessage):
+        [blockWord, blockString] = blockMessage
         block = self.singleBlockFromMessage(blockString)
         if(block.level > self.blockLevel):
             self.obsoleteHashes += [self.currentBlock.selfHash]

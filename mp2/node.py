@@ -300,11 +300,11 @@ class Node(Thread):
             #self.logger.logReceivedBlock(' '.join(message)
 
             #blockWord, blockString = message2send
-            self.addAddresstoReceivedBlocks(message2send, ip, port)
+            self.addAddresstoReceivedBlocks(' '.join(message2send), ip, port)
 
             # if level is greater, you have to ask for the whole blockchain
 
-            if(self.blockManager.betterBlock(ip, port, blockString)):
+            if(self.blockManager.betterBlock(ip, port, message2send)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
 
                 #self.blockManager.updateBlock()
@@ -551,16 +551,6 @@ class Node(Thread):
                                 self.logger.logSentIntroduction(ip, port, message2send)
                                 self.addMessagetoSentMessages(ip, port, intro)
                                 ipsToPending.add((ip, port))
-            ## 4.C
-                    ## Send out a Block
-                    if(self.currentBlockString is not None):
-                        if(self.okToSendBlock(self.currentBlockString, ip, port)):
-                            block2send = str(self.ip) + ":" + str(self.port) + " BLOCK " + self.currentBlockString
-                            self.sock.sendto(block2send.encode('utf-8'), (ip, port))
-                            #self.logger.logSentIntroduction(ip, port, message2send)
-                            self.addAddresstoSentBlocks(self.currentBlockString, ip, port)
-                            ipsToPending.add((ip, port))
-
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
