@@ -106,6 +106,7 @@ class BlockManager(object):
     def successfulBlock(self, message):
         wordBLOCK, hashOfBlock, puzzleAnswer = message
         if(self.currentBlock.selfHash == hashOfBlock):
+            print("BLOCK SUCCESS")
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level] = self.currentBlock
             self.waitingForPuzzle = False

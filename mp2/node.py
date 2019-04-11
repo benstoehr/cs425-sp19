@@ -359,7 +359,7 @@ class Node(Thread):
             print(str(message[2]))
 
 
-            print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
@@ -370,6 +370,8 @@ class Node(Thread):
 
             else:
                 self.currentBlockString = ""
+
+            print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
         elif("VERIFY OK" in message):
             print("~~ got Good Verify ~~")
