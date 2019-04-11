@@ -286,6 +286,7 @@ class Node(Thread):
             print(' '.join(message))
             # if level is the same, do nothing
             if(self.blockManager.betterBlock(ip, port, message2send)):
+                print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
                 self.incomingBlockChainIP = (ip, port)
