@@ -577,8 +577,6 @@ class Node(Thread):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
-
-
                 for address in addresses:
                     ip, port = address
                     ip = str(ip)

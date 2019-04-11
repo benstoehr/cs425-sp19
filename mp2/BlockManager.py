@@ -65,7 +65,7 @@ class BlockManager(object):
             return True
 
         if(amount > fromAccountValue):
-            print("Invalid Transaction: Not enought funds!")
+            #print("Invalid Transaction: Not enought funds!")
             return False
         else:
             self.bank[fromAccount] = fromAccountValue - amount
@@ -87,7 +87,6 @@ class BlockManager(object):
     def hashBlockString(self, blockString):
         h = self.hash.update(blockString.encode('utf-8'))
         hh = self.hash.hexdigest()
-        self.currentBlock.selfHash = hh
         return hh
 
 #############
@@ -113,7 +112,7 @@ class BlockManager(object):
                 self.appendTransactionsToPending(transaction)
             return
 
-        print("\t" + str(transaction))
+
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
@@ -123,8 +122,10 @@ class BlockManager(object):
 
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
+            print("\tInvalid:\t" + str(transaction))
             return
 
+        print("\t" + str(transaction))
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
             self.pendingTransactionsToRemove.append(transaction)
