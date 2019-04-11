@@ -134,7 +134,6 @@ class BlockManager(object):
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
             self.currentBlock.selfHash = blockHash
-            self.currentBlockCount = 0
             self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
 
@@ -211,6 +210,7 @@ class BlockManager(object):
                 self.lastSuccessfulHash = hashOfBlock
                 self.waitingForPuzzle = False
                 return True
+
         return False
 
     def newBlock(self):
@@ -236,8 +236,11 @@ class BlockManager(object):
         # At this point, you are done
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
+            self.waitingForPuzzle = False
+
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
+            print("NEW CHAIN COMPLETE!!!")
             self.rebuildBank()
             self.clearPendingTransactionsOnBlockChain()
             self.removeAddedTransactionsFromPending()
