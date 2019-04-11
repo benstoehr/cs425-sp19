@@ -195,7 +195,7 @@ class BlockManager(object):
     def singleBlockFromMessage(self, byteString):
 
         hash, level, content = byteString.split("$")
-        block = Block(level=level, previousHash=hash)
+        block = Block(level=int(level), previousHash=hash)
 
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
