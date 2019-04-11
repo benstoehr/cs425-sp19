@@ -50,9 +50,10 @@ class Block(object):
             string += "0$"
         string += str(self.level)
         string += "$"
-        for transaction in self.transactions:
+        for transaction in self.transactions[:-1]:
             string += "_".join(transaction)
             string += "*"
+        string += "_".join(transactions[-1])
         string += "^"
         return string
 
