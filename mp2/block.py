@@ -70,6 +70,12 @@ class Block(object):
         return string
 
 
+    def printSelf(self):
+        for t in self.transactions:
+            print(str(t))
+
+
+
 
 
 

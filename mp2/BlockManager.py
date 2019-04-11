@@ -110,3 +110,9 @@ class BlockManager(object):
             blocks.append(self.singleBlockFromMessage(block))
         return blocks
 
+################# Console Logging
+
+    def printCurrentBlock(self):
+        if(self.currentBlock is not None):
+            self.currentBlock.printSelf()
+
