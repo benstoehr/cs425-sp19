@@ -21,7 +21,7 @@ class BlockManager(object):
 
         self.obsoleteHashes = []
 
-        self.currentBlock = Block(level=1, previousBlockHash="0")
+        self.currentBlock = Block(level=1, previousHash="0")
 
         self.lastSuccessfulHash = None
         self.lastSuccessfulBlock = None

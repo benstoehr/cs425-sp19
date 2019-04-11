@@ -17,7 +17,7 @@ class Block(object):
         self.level = level
 
         # String Hash
-        self.previousBlockHash = None
+        self.previousBlockHash = previousHash
         self.selfHash = None
         self.puzzleAnswer = None
 
