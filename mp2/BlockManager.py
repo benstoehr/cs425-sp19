@@ -81,7 +81,8 @@ class BlockManager(object):
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
         if(self.waitingForPuzzle or self.waitingForBlockChain):
-            self.appendTransactionsToPending(transaction)
+            if (transaction not in self.pendingTransactions):
+                self.appendTransactionsToPending(transaction)
             return
 
         self.currentBlock.addTransactionToBlock(transaction)
@@ -93,8 +94,8 @@ class BlockManager(object):
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
-        for p in self.pendingTransactions:
-            pass
+        for pt in self.pendingTransactions:
+            self.appendTransactionToCurrentBlock(pt)
 
 ##############
 
@@ -111,8 +112,13 @@ class BlockManager(object):
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
         self.lastCommittedBlock = copy.deepcopy(self.currentBlock)
-
         self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
+        self.currentHash = None
+
+    def fillNewBlock(self):
+        self.appendPendingTransactionsToNewBlock()
+
+
 
 ###### Messages to Blocks #####
 
