@@ -64,7 +64,7 @@ def draw_hist(d, output_filename):
 	output = output_path + output_filename
 
 	sns.set(style="whitegrid")
-	sns.distplot(d, kde=False, color="b")
+	sns_plot = sns.distplot(d, kde=False, color="b")
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 	plt.clf()
