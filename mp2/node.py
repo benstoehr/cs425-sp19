@@ -286,7 +286,7 @@ class Node(Thread):
 
         # CP 2
         elif("BLOCK" in message2send):
-            print("Received block from " + str(ip) + " " +str(port) + "\n")
+            print("Received block from " + str(ip) + " " +str(port))
             #print(message2send)
 
             #self.logger.logReceivedBlock(' '.join(message)

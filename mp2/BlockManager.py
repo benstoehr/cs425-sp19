@@ -274,7 +274,7 @@ class BlockManager(object):
     def singleBlockFromMessage(self, blockString):
 
         hash, level, content, puzzle = blockString.split("$")
-        newBlock = Block(level=int(level), previousHash=hash)
+        newBlock = Block(level=int(level), previousHash=hash, puzzle=puzzle)
 
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
