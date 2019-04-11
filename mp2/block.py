@@ -19,7 +19,7 @@ class Block(object):
         # String Hash
         self.previousBlockHash = previousHash
         self.selfHash = None
-        self.puzzleAnswer = None
+        self.puzzleAnswer = puzzle
 
         # Floats with 6 decimals
         self.firstTransactionTime = None
