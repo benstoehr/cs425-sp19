@@ -299,7 +299,7 @@ class Node(Thread):
             if(self.blockManager.betterBlock(ip, port, message2send)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 self.requestChain(ip, port)
-                print("Waiting for chain from: " + str(self.blockManager.waitingForBlockChainFrom))
+                print("Requested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
 

@@ -24,7 +24,7 @@ class BlockManager(object):
 
         self.currentBlock = Block(level=1, previousHash="0")
 
-        self.lastSuccessfulHash = None
+        self.lastSuccessfulHash = "0"
         self.lastSuccessfulBlock = None
 
         self.currentBlockCount = 0
