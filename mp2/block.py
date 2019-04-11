@@ -51,7 +51,7 @@ class Block(object):
         string += str(self.level)
         for transaction in self.transactions:
             string += "_".join(transaction)
-            string += ":"
+            string += "*"
         string += "^"
         return string
 
@@ -64,7 +64,7 @@ class Block(object):
         string += str(self.level)
         for transaction in self.transactions:
             string += "_".join(transaction)
-            string += ":"
+            string += "*"
         string += self.selfHash
         string += "^"
         return string

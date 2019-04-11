@@ -21,9 +21,9 @@ class BlockManager(object):
 
         self.currentBlock = Block(level=1)
         self.currentHash = None
-        self.successfulHash = None
 
-        self.lastCommittedBlock = None
+        self.lastSuccessfulHash = None
+        self.lastSuccessfulBlock = None
 
         self.currentBlockCount = 0
 
@@ -44,17 +44,7 @@ class BlockManager(object):
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
-    def betterBlock(self, ip, port, message):
-        block = self.singleBlockFromMessage(message)
-        if(block.level > self.level):
-            self.currentBlock = None
-            self.incomingBlockChainIP = (ip, port)
-            self.waitingForBlockChain = True
-            self.numBlocksToWaitFor = block.level
-            self.committedTransactions = []
-            return True
 
-        return False
 
     def readIncomingBlockChain(self, message):
         block = self.singleBlockFromMessage(message)
@@ -75,7 +65,7 @@ class BlockManager(object):
     def currentBlockAsStringWithHash(self):
         return self.currentBlock.toMessageWithHash()
 
-    ##############
+##############
 
     def appendTransactionsToPending(self, transaction):
         self.pendingTransactions += [transaction]
@@ -116,6 +106,23 @@ class BlockManager(object):
 
 ##############
 
+    def betterBlock(self, ip, port, message):
+        block = self.singleBlockFromMessage(message)
+        if(block.level > self.currentBlock.level):
+            self.currentBlock = None
+            self.lastSuccessfulHash = None
+            self.lastSuccessfulBlock = None
+            self.waitingForBlockChain = True
+
+            self.incomingBlockChainIP = (ip, port)
+
+            self.numBlocksToWaitFor = block.level
+            self.committedTransactions = []
+            return True
+        return False
+
+##############
+
     def successfulBlock(self, message):
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
         #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
@@ -124,7 +131,8 @@ class BlockManager(object):
         if(self.currentBlock.selfHash == hashOfBlock):
             print("BLOCK SUCCESS")
             self.currentBlock.puzzleAnswer = puzzleAnswer
-            self.blockchain[self.currentBlock.level] = self.currentBlock
+            self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
+            self.lastSuccessfulHash = hashOfBlock
             self.waitingForPuzzle = False
             return True
         return False
@@ -133,7 +141,7 @@ class BlockManager(object):
         print("newBlock()")
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
-        self.lastCommittedBlock = copy.deepcopy(self.currentBlock)
+        self.lastSuccessfulBlock = copy.deepcopy(self.currentBlock)
         self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
         self.currentHash = None
 
@@ -142,9 +150,6 @@ class BlockManager(object):
         self.appendPendingTransactionsToNewBlock()
         self.removeAddedTransactionsFromPending()
 
-
-
-
 ###### Messages to Blocks #####
 
     def singleBlockFromMessage(self, byteString):
@@ -152,7 +157,7 @@ class BlockManager(object):
         hash, level, content = byteString.split("$")
         block.previousBlock = hash
 
-        for transaction in content.split(":"):
+        for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
             block.txIDs.append(splitTransaction[2])
             block.transactions.append(transaction.replace("_"," "))

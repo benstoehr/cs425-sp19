@@ -133,7 +133,7 @@ class Node(Thread):
         print(str(self.name) + " Exiting")
         self.status = "shutdown"
 
-###
+############
     def replyAndUpdateAddresses(self, ip, port):
         # REPLY
         self.sendReply(ip, port)
@@ -146,6 +146,7 @@ class Node(Thread):
         #print("\t" + str(replyMessage))
         self.sock.sendto(replyMessage.encode('utf-8'), (ip, int(port)))
 
+##############
     def clearIPPortFromAddresses(self, address):
         ip, port = address
         for introMessage in self.introductionMessages_Handled:
@@ -191,17 +192,7 @@ class Node(Thread):
 
         return False
 
-    def okToSendBlock(self, blockString, ip, port):
-        if(blockString not in self.sentAddressesByBlock.keys()):
-            self.sentAddressesByBlock[blockString] = []
 
-        if(blockString not in self.receivedAddressesByBlock.keys()):
-            self.receivedAddressesByBlock[blockString] = []
-
-        if((ip,port) not in self.sentAddressesByBlock[blockString]):
-            if((ip, port) not in self.receivedAddressesByBlock[blockString]):
-                return True
-        return False
 
     def addMessagetoSentMessages(self, ip, port, message):
         # Haven't sent them anything yet
@@ -215,6 +206,18 @@ class Node(Thread):
             self.receivedMessagesByAddress[(ip, port)] = [message]
         else:
             self.receivedMessagesByAddress[(ip, port)] += [message]
+
+    def okToSendBlock(self, blockString, ip, port):
+        if(blockString not in self.sentAddressesByBlock.keys()):
+            self.sentAddressesByBlock[blockString] = []
+
+        if(blockString not in self.receivedAddressesByBlock.keys()):
+            self.receivedAddressesByBlock[blockString] = []
+
+        if((ip,port) not in self.sentAddressesByBlock[blockString]):
+            if((ip, port) not in self.receivedAddressesByBlock[blockString]):
+                return True
+        return False
 
     def addAddresstoSentBlocks(self, block, ip, port):
         if ((ip, port) not in self.sentAddressesByBlock.keys()):
@@ -258,6 +261,7 @@ class Node(Thread):
         port = int(port)
         message2send = message[1:]
 
+        ## CP 1
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
             self.logger.logReceivedTransaction(' '.join(message))
@@ -278,23 +282,32 @@ class Node(Thread):
             self.addMessagetoReceivedMessages(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
 
+        elif ("REPLY" in message2send):
+            #print("~~ got reply from " + str(addr) + "~~")
+            if((ip, port) in self.pendingAddresses.keys()):
+                del self.pendingAddresses[(ip,port)]
+                self.liveAddresses.append((ip, port))
+
+        # CP 2
         elif("BLOCK" in message2send):
             print("Received block from " + str(ip) + " " +str(port))
             print(message2send)
 
             #self.logger.logReceivedBlock(' '.join(message)
             print(' '.join(message))
-            # if level is the same, do nothing
+
+            # if level is greater, you have to ask for the whole blockchain
             if(self.blockManager.betterBlock(ip, port, message2send)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
                 self.incomingBlockChainIP = (ip, port)
                 pass
-            # if level is greater, you have to ask for the whole blockchain
-            else:
+
+            # if level is the same, do nothing
+                else:
                 #self.requestChain(ip, port)
-                pass
+                    pass
 
         elif("BLOCKCHAIN" in message2send):
             # Pass on individual block to build chain
@@ -303,11 +316,7 @@ class Node(Thread):
             if(self.incomingBlockChainIP == (ip, port)):
                 pass
 
-        elif ("REPLY" in message2send):
-            #print("~~ got reply from " + str(addr) + "~~")
-            if((ip, port) in self.pendingAddresses.keys()):
-                del self.pendingAddresses[(ip,port)]
-                self.liveAddresses.append((ip, port))
+
 
 
 
@@ -358,17 +367,11 @@ class Node(Thread):
             #print(message)
             print(str(message[1]))
             print(str(message[2]))
-
-
-
-
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
-
                 self.blockManager.newBlock()
                 ## make all of the pending transactions go into new block
                 self.blockManager.fillNewBlock()
-
             else:
                 self.currentBlockString = ""
 
@@ -409,13 +412,11 @@ class Node(Thread):
 
         self.status = "running"
 
-
+        # Check if ctrl + C was pressed
         while (1):
-
             if(self.event.isSet()):
                 self.closeServiceConnection()
                 break
-
 
     ############### STEP 1: READ ALL MESSAGES ###################
         ## 1.A -- READ ALL MESSAGES FROM SERVICE
@@ -511,15 +512,12 @@ class Node(Thread):
             else:
                 introductionsToSend = self.introductionMessages_Handled[-3:]
 
-
-
             ######## WRITE TO OTHER NODES ######
             ipsToPending = set()
 
             if(len(transactionsToSend) > 0 and len(addresses) > 0):
 
                 for address in addresses:
-
                     ip, port = address
                     ip = str(ip)
                     port = int(port)
@@ -583,6 +581,18 @@ class Node(Thread):
                     self.serv.serviceSocket.send(string.encode('utf-8'))
                     self.pendingHash = self.currentHash
                     self.currentHash = None
+
+            if(not self.blockManager.waitingForBlockChain and self.blockManager.successfulHash is not None):
+                blockString = self.blockManager.lastSuccessfulBlock.toMessage()
+                blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(blockString))
+
+                for address in addresses:
+                    ip, port = address
+                    ip = str(ip)
+                    port = int(port)
+                    if(self.okToSendBlock(blockString, ip,port)):
+                        self.sock.sendto(blockMessage2send, ip, port)
+                        self.addAddresstoSentBlocks(blockString, ip, port)
 
 
             ## IDK WHY THIS IS NECESSARY
