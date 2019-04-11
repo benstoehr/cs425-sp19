@@ -577,16 +577,17 @@ class Node(Thread):
             ## CP2 #########################
 
             ## SENDING NEWEST HASH FOR SOLVING
-            if(self.blockManager.currentBlock.selfHash is not None):
-                if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
-                    self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
-                    print("SOLVE:")
-                    self.blockManager.printCurrentBlock()
-                    string = "SOLVE "
-                    string += self.blockManager.currentBlock.selfHash
-                    string += "\n"
-                    print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
-                    self.serv.serviceSocket.send(string.encode('utf-8'))
+            if(self.blockManager.currentBlock is not None):
+                if(self.blockManager.currentBlock.selfHash is not None):
+                    if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
+                        self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
+                        print("SOLVE:")
+                        self.blockManager.printCurrentBlock()
+                        string = "SOLVE "
+                        string += self.blockManager.currentBlock.selfHash
+                        string += "\n"
+                        print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+                        self.serv.serviceSocket.send(string.encode('utf-8'))
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and self.blockManager.lastSuccessfulHash is not None):
