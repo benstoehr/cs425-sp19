@@ -237,13 +237,15 @@ class BlockManager(object):
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
             self.waitingForPuzzle = False
-
+            self.currentBlock = block
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
             print("NEW CHAIN COMPLETE!!!")
             self.rebuildBank()
             self.clearPendingTransactionsOnBlockChain()
             self.removeAddedTransactionsFromPending()
+            self.newBlock()
+            self.fillNewBlock()
 
     def rebuildBank(self):
         self.bank = dict()
