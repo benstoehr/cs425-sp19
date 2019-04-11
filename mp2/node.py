@@ -563,6 +563,7 @@ class Node(Thread):
 
             if(self.blockManager.currentHash is not None):
                 if(self.blockManager.currentHash not in self.hashesSentToService):
+                    self.hashesSentToService.append(self.blockManager.currentHash)
                     print("SOLVE:")
                     self.blockManager.printCurrentBlock()
                     string = "SOLVE "
