@@ -337,7 +337,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            print("\t\t" + str(message))
+            #print("\t\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
@@ -353,9 +353,10 @@ class Node(Thread):
             self.introductionMessages.append(message)
 
         elif("SOLVED" in message):
-            print("~~ got Solved ~~")
+            print("\n~~ got Solved ~~")
             print(str(message))
-            print("\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+
+            print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
@@ -572,7 +573,7 @@ class Node(Thread):
                     string = "SOLVE "
                     string += self.blockManager.currentHash
                     string += "\n"
-                    print("\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+                    print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                     self.serv.serviceSocket.send(string.encode('utf-8'))
                     self.pendingHash = self.currentHash
                     self.currentHash = None

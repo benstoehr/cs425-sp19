@@ -82,10 +82,13 @@ class BlockManager(object):
     def appendTransactionToCurrentBlock(self, transaction):
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
+                print("\t\t" + str(transaction))
                 self.appendTransactionsToPending(transaction)
             return
 
+        print("\t" + str(transaction))
         self.currentBlock.addTransactionToBlock(transaction)
+
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             self.currentHash = self.hashCurrentBlock()
@@ -103,7 +106,6 @@ class BlockManager(object):
     def successfulBlock(self, message):
         wordBLOCK, hashOfBlock, puzzleAnswer = message
         if(self.currentBlock.selfHash == hashOfBlock):
-            self.waitingForPuzzle = False
             self.currentBlock.puzzleAnswer = puzzleAnswer
             self.blockchain[self.currentBlock.level] = self.currentBlock
             self.waitingForPuzzle = False

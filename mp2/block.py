@@ -73,7 +73,7 @@ class Block(object):
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")
         for t in self.transactions:
-            print("\t" + str(t))
+            print(str(t))
 
 
 
