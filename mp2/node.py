@@ -344,6 +344,7 @@ class Node(Thread):
             print("~~ got Solved ~~")
             print("\t" + str(message))
             self.currentBlockString = self.blockManager.currentBlockAsStringWithHash()
+            print(self.currentBlockString)
             pass
 
         elif("VERIFY OK" in message):
@@ -500,7 +501,7 @@ class Node(Thread):
                     for transMessage in transactionsToSend:
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
                         if(self.okToSend(ip, port, transMessage)):
-                            print("!! " + str(message2send) + " > " + str(address) + " !!")
+                            #print("!! " + str(message2send) + " > " + str(address) + " !!")
                             ######### SENDING SECTION #######
                             self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                             self.logger.logSentTransaction(ip, port, message2send)
