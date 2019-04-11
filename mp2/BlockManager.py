@@ -121,8 +121,10 @@ class BlockManager(object):
             self.blockLevel = block.level
             if(self.currentBlock is not None):
                 for transaction in self.currentBlock.getTransactions():
+                    
                     self.appendTransactionsToPending(transaction)
                 if (block.previousBlockHash == self.lastSuccessfulHash):
+                    print("CONSECUTIVE BLOCK SUCCESS")
                     # Create new block
                     self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.previousBlockHash)
                     # Move pending transactions to it
