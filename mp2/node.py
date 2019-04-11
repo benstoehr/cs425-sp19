@@ -563,11 +563,12 @@ class Node(Thread):
 
             if(self.blockManager.currentHash is not None):
                 if(self.blockManager.currentHash not in self.hashesSentToService):
+                    print("SOLVE:")
                     self.blockManager.printCurrentBlock()
                     string = "SOLVE "
-                    string += self.currentHash
+                    string += self.blockManager.currentHash
                     string += "\n"
-                    print(string)
+
                     self.serv.serviceSocket.send(string.encode('utf-8'))
                     self.pendingHash = self.currentHash
                     self.currentHash = None
