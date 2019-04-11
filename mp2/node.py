@@ -301,11 +301,12 @@ class Node(Thread):
 
             blockWord, blockString = message2send
             self.addAddresstoRecievedBlocks(blockString, ip, port)
-            
+
             # if level is greater, you have to ask for the whole blockchain
 
             if(self.blockManager.betterBlock(ip, port, blockString)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
+
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
                 pass
@@ -576,13 +577,13 @@ class Node(Thread):
             ## CP2 #########################
 
             ## SENDING NEWEST HASH FOR SOLVING
-            if(self.blockManager.currentHash is not None):
-                if(self.blockManager.currentHash not in self.hashesSentToService):
-                    self.hashesSentToService.append(self.blockManager.currentHash)
+            if(self.blockManager.currentBlock.selfHash is not None):
+                if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
+                    self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
                     print("SOLVE:")
                     self.blockManager.printCurrentBlock()
                     string = "SOLVE "
-                    string += self.blockManager.currentHash
+                    string += self.blockManager.currentBlock.selfHash
                     string += "\n"
                     print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                     self.serv.serviceSocket.send(string.encode('utf-8'))

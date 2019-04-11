@@ -19,8 +19,9 @@ class BlockManager(object):
 
         self.pendingBlocks = []
 
+        self.obsoleteHashes = []
+
         self.currentBlock = Block(level=1)
-        self.currentHash = None
 
         self.lastSuccessfulHash = None
         self.lastSuccessfulBlock = None
@@ -88,8 +89,6 @@ class BlockManager(object):
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
-            self.currentHash = blockHash
-            self.currentBlock.selfHash = blockHash
             self.currentBlockCount = 0
             self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
             self.waitingForPuzzle = True
@@ -109,6 +108,7 @@ class BlockManager(object):
     def betterBlock(self, ip, port, blockString):
         block = self.singleBlockFromMessage(blockString)
         if(block.level > self.blockLevel):
+            self.obsoleteHashes += [self.currentBlock.selfHash]
 
             # set level so other blocks don't interfere
             self.blockLevel = block.level
@@ -136,14 +136,15 @@ class BlockManager(object):
         #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
         #print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
         #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
-        if(self.currentBlock.selfHash == hashOfBlock):
-            #print("BLOCK SUCCESS")
-            self.blockLevel = self.currentBlock.level
-            self.currentBlock.puzzleAnswer = puzzleAnswer
-            self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
-            self.lastSuccessfulHash = hashOfBlock
-            self.waitingForPuzzle = False
-            return True
+        if(self.currentBlock is not None):
+            if(self.currentBlock.selfHash == hashOfBlock):
+                #print("BLOCK SUCCESS")
+                self.blockLevel = self.currentBlock.level
+                self.currentBlock.puzzleAnswer = puzzleAnswer
+                self.blockchain[self.currentBlock.level, hashOfBlock] = copy.deepcopy(self.currentBlock)
+                self.lastSuccessfulHash = hashOfBlock
+                self.waitingForPuzzle = False
+                return True
         return False
 
     def newBlock(self):
@@ -152,7 +153,6 @@ class BlockManager(object):
         previousHash = self.currentBlock.selfHash
         self.lastSuccessfulBlock = copy.deepcopy(self.currentBlock)
         self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
-        self.currentHash = None
 
     def fillNewBlock(self):
         #print("fillNewBlock()")
