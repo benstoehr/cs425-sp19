@@ -184,8 +184,9 @@ class BlockManager(object):
         self.blockchain[block.level, block.selfHash] = block
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
-            self.clearPendingTransactionsOnBlockChain()
+        self.clearPendingTransactionsOnBlockChain()
 
+    # Maybe make this by block for speed
     def clearPendingTransactionsOnBlockChain(self):
         for block in self.blockchain.values():
             for transaction in block.getTransactions():
