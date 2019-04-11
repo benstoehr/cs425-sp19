@@ -30,16 +30,6 @@ class Node(Thread):
 
     #global run_event
 
-    status = None
-    hostname = None
-    service_ip = None
-    service_port = None
-
-    connections = dict()
-
-    name = None
-    port = None
-    serv = None
 
     file = None
     messager = None
@@ -72,46 +62,55 @@ class Node(Thread):
     sentAddressesByBlock = dict()
     receivedAddressesByBlock = dict()
 
-    sock = None
 
-    # Should only ever be a string with a hash
-    currentBlockString = None
-    fullBlockChainString = None
+
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
 
+        # Socket to send stuff
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        # self identification
         self.status = "Initializing"
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
-
         self.name = name
         print("name: " +str(self.name))
         self.vmNumber = int(self.name[8])
-
+        # Networking
         self.ip = socket.gethostbyname(self.host)
         print("self.ip:" + str(self.ip))
-
         self.port = MY_PORT
-
         self.service_ip = SERVICE_IP
         self.service_port = SERVICE_PORT
 
-        self.event = event
+        # server
+        self.serv = None
 
-        filename = str(self.name) + ".txt"
-        print("logfile: " +str(filename))
-        #self.file = open(filename, "w+")
+        self.event = event
 
         logging.basicConfig(filename="log.txt", format='%(message)s', level=logging.DEBUG)
         self.logger = Logger(logging, self.ip, self.port, self.vmNumber, self.name)
         self.messager = Messager()
 
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+        ## CP2
         self.blockManager = BlockManager()
+
+        self.currentBlockHash = None
+
+        # Should only ever be a string with a hash
         self.currentHash = None
+        self.currentBlockString = None
+
+
+        self.fullBlockChainString = None
+        self.currentPuzzle = None
+
         self.pendingHash = None
+
+        self.incomingBlockChainIP = None
+
 
     # TODO:
     # Initialize server
@@ -267,8 +266,6 @@ class Node(Thread):
                 self.transactionMessages.append(message2send)
                 ## ADD IT TO THE BLOCK MANAGER
                 hash = self.blockManager.appendTransactionToCurrentBlock(message2send)
-                if(hash is not None):
-                    self.currentHash = hash
 
             self.addMessagetoReceivedMessages(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
@@ -283,11 +280,23 @@ class Node(Thread):
 
         elif("BLOCK" in message2send):
             #self.logger.logReceivedBlock(' '.join(message)
-            print(message2send)
-            #if(self.blockManager.betterBlock(message2send)):
+            print(' '.join(message))
+            # if level is the same, do nothing
+            if(self.blockManager.betterBlock(ip, port, message2send)):
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
-                #pass
+                self.incomingBlockChainIP = (ip, port)
+                pass
+            # if level is greater, you have to ask for the whole blockchain
+            else:
+                #self.requestChain(ip, port)
+                pass
+
+        elif("BLOCKCHAIN" in message2send):
+            # Pass on individual block to build chain
+            if(self.incomingBlockChainIP == (ip, port)):
+                self.blockManager.
+            pass
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
@@ -329,9 +338,7 @@ class Node(Thread):
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
             ## ADD IT TO THE BLOCK MANAGER
-            hash = self.blockManager.appendTransactionToCurrentBlock(message)
-            if (hash is not None):
-                self.currentHash = hash
+            self.blockManager.appendTransactionToCurrentBlock(message)
 
         elif("INTRODUCE" in message):
             #print("~~got introduction~~")
@@ -343,6 +350,12 @@ class Node(Thread):
         elif("SOLVED" in message):
             print("~~ got Solved ~~")
             print("\t" + str(message))
+
+            if(self.blockManager.successfulBlock(message)):
+                self.currentBlockString = self.blockManager.currentBlockAsString()
+
+
+                self.blockManager.setCurrentBlockFinalHash()
             self.currentBlockString = self.blockManager.currentBlockAsStringWithHash()
             print(self.currentBlockString)
             pass
