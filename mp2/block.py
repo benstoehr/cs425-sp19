@@ -16,7 +16,9 @@ class Block(object):
 
         self.level = None
         # String Hash
-        self.previousBlock = None
+        self.previousBlockHash = None
+        self.selfHash = None
+        self.puzzleAnswer = None
 
         # Floats with 6 decimals
         self.firstTransactionTime = None
@@ -35,16 +37,33 @@ class Block(object):
         self.transactions.append(transaction)
         self.transactions.sort(key=sortFunction)
 
+
     #TODO:
+    #BLOCK MESSAGE = [ <previous hash> $ <level> $ <transactions> ^ ]
     def toMessage(self):
         string = ""
-        if(self.previousBlock is not None):
-            string += self.previousBlock + "$"
+        if(self.previousBlockHash is not None):
+            string += self.previousBlockHash + "$"
         else:
             string += "0$"
+        string += self.level
         for transaction in self.transactions:
             string += "_".join(transaction)
             string += ":"
+        string += "^"
+        return string
+
+    def toMessageWithHash(self):
+        string = ""
+        if(self.previousBlockHash is not None):
+            string += self.previousBlockHash + "$"
+        else:
+            string += "0$"
+        string += self.level
+        for transaction in self.transactions:
+            string += "_".join(transaction)
+            string += ":"
+        string += self.selfHash
         string += "^"
         return string
 

@@ -18,15 +18,35 @@ class BlockManager(object):
         self.hash = hashlib.sha256()
 
         self.pendingTransactions = []
+
         self.waitingForPuzzle = False
+
+        self.waitingForBlockChainFrom = None
+
+#############
+    def betterBlock(self, ip, port, message):
+        block = self.singleBlockFromMessage(message)
+        if(block.level > self.level):
+            self.currentBlock = None
+            self.incomingBlockChainIP = (ip, port)
+
+            return True
+        return False
+
+    def readIncomingBlockChain(self, message):
+        block = self.singleBlockFromMessage(message)
 
 #############
     def hashCurrentBlock(self):
-        self.hash.update(self.currentBlockAsString().encode('utf-8'))
+        h = self.hash.update(self.currentBlockAsString().encode('utf-8'))
+        self.currentBlock.selfHash = h
         return self.hash.hexdigest()
 
     def currentBlockAsString(self):
         return self.currentBlock.toMessage()
+
+    def currentBlockAsStringWithHash(self):
+        return self.currentBlock.toMessageWithHash()
 
 
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives
@@ -36,17 +56,23 @@ class BlockManager(object):
         if(self.currentBlockCount == 10):
             self.currentBlockCount = 0
             self.waitingForPuzzle = True
-            return self.hashCurrentBlock()
-        else:
-            return None
 
 
 ###### Sending STUFF #####
 
+    def successfulBlock(self, message):
+        wordBLOCK, hashOfBlock, puzzleAnswer = message.split(' ')
+        if(self.currentBlock.selfHash == hashOfBlock):
+            self.currentBlock.puzzleAnswer = puzzleAnswer
+            return True
+        return False
+
+
     def singleBlockFromMessage(self, byteString):
         block = Block()
-        hash, content = byteString.split("$")
+        hash, level, content = byteString.split("$")
         block.previousBlock = hash
+
         for transaction in content.split(":"):
             splitTransaction = transaction.split("_")
             block.txIDs.append(splitTransaction[2])

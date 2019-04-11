@@ -30,16 +30,6 @@ class Node(Thread):
 
     #global run_event
 
-    status = None
-    hostname = None
-    service_ip = None
-    service_port = None
-
-    connections = dict()
-
-    name = None
-    port = None
-    serv = None
 
     file = None
     messager = None
@@ -69,42 +59,58 @@ class Node(Thread):
     sentMessagesByAddress = dict()
     receivedMessagesByAddress = dict()
 
-    sock = None
+    sentAddressesByBlock = dict()
+    receivedAddressesByBlock = dict()
+
+
+
 
     def __init__(self, SERVICE_IP, SERVICE_PORT, name, MY_PORT, event):
         Thread.__init__(self)
 
+        # Socket to send stuff
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        # self identification
         self.status = "Initializing"
         self.host = socket.gethostname()
         print("self.host: " + str(self.host))
-
         self.name = name
         print("name: " +str(self.name))
         self.vmNumber = int(self.name[8])
-
+        # Networking
         self.ip = socket.gethostbyname(self.host)
         print("self.ip:" + str(self.ip))
-
         self.port = MY_PORT
-
         self.service_ip = SERVICE_IP
         self.service_port = SERVICE_PORT
 
-        self.event = event
+        # server
+        self.serv = None
 
-        filename = str(self.name) + ".txt"
-        print("logfile: " +str(filename))
-        #self.file = open(filename, "w+")
+        self.event = event
 
         logging.basicConfig(filename="log.txt", format='%(message)s', level=logging.DEBUG)
         self.logger = Logger(logging, self.ip, self.port, self.vmNumber, self.name)
         self.messager = Messager()
 
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+        ## CP2
         self.blockManager = BlockManager()
+
+        self.currentBlockHash = None
+
+        # Should only ever be a string with a hash
         self.currentHash = None
+        self.currentBlockString = None
+
+
+        self.fullBlockChainString = None
+        self.currentPuzzle = None
+
         self.pendingHash = None
+
+        self.incomingBlockChainIP = None
+
 
     # TODO:
     # Initialize server
@@ -185,6 +191,18 @@ class Node(Thread):
 
         return False
 
+    def okToSendBlock(self, blockString, ip, port):
+        if(blockString not in self.sentAddressesByBlock.keys()):
+            self.sentAddressesByBlock[blockString] = []
+
+        if(blockString not in self.receivedAddressesByBlock.keys()):
+            self.receivedAddressesByBlock[blockString] = []
+
+        if((ip,port) not in self.sentAddressesByBlock[blockString]):
+            if((ip, port) not in self.receivedAddressesByBlock[blockString]):
+                return True
+        return False
+
     def addMessagetoSentMessages(self, ip, port, message):
         # Haven't sent them anything yet
         if ((ip, port) not in self.sentMessagesByAddress.keys()):
@@ -192,11 +210,24 @@ class Node(Thread):
         else:
             self.sentMessagesByAddress[(ip, port)] += [message]
 
-    def storeMessage(self, ip, port, message):
+    def addMessagetoReceivedMessages(self, ip, port, message):
         if ((ip, port) not in self.receivedMessagesByAddress.keys()):
             self.receivedMessagesByAddress[(ip, port)] = [message]
         else:
             self.receivedMessagesByAddress[(ip, port)] += [message]
+
+    def addAddresstoSentBlocks(self, block, ip, port):
+        if ((ip, port) not in self.sentAddressesByBlock.keys()):
+            self.sentAddressesByBlock[block] = [(ip, port)]
+        else:
+            self.sentAddressesByBlock[block] += [(ip, port)]
+
+    def addAddresstoRecievedBlocks(self, block, ip, port):
+        if ((ip, port) not in self.receivedAddressesByBlock.keys()):
+            self.receivedAddressesByBlock[block] = [(ip, port)]
+        else:
+            self.receivedAddressesByBlock[block] += [(ip, port)]
+
 
 #### List manipulation
     def getNameAndPortFromIP(self):
@@ -235,10 +266,8 @@ class Node(Thread):
                 self.transactionMessages.append(message2send)
                 ## ADD IT TO THE BLOCK MANAGER
                 hash = self.blockManager.appendTransactionToCurrentBlock(message2send)
-                if(hash is not None):
-                    self.currentHash = hash
 
-            self.storeMessage(ip, port, message2send)
+            self.addMessagetoReceivedMessages(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
 
         elif ("INTRODUCE" in message2send):
@@ -246,8 +275,28 @@ class Node(Thread):
             if(message2send not in self.introductionMessages):
                 self.introductionMessages.append(message2send)
 
-            self.storeMessage(ip, port, message2send)
+            self.addMessagetoReceivedMessages(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
+
+        elif("BLOCK" in message2send):
+            #self.logger.logReceivedBlock(' '.join(message)
+            print(' '.join(message))
+            # if level is the same, do nothing
+            if(self.blockManager.betterBlock(ip, port, message2send)):
+                #self.blockManager.updateBlock()
+                #self.currentBlockString = message2send
+                self.incomingBlockChainIP = (ip, port)
+                pass
+            # if level is greater, you have to ask for the whole blockchain
+            else:
+                #self.requestChain(ip, port)
+                pass
+
+        elif("BLOCKCHAIN" in message2send):
+            # Pass on individual block to build chain
+            if(self.incomingBlockChainIP == (ip, port)):
+                self.blockManager.
+            pass
 
         elif ("REPLY" in message2send):
             #print("~~ got reply from " + str(addr) + "~~")
@@ -284,14 +333,12 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            print("\t" + str(message))
+            #print("\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
             ## ADD IT TO THE BLOCK MANAGER
-            hash = self.blockManager.appendTransactionToCurrentBlock(message)
-            if (hash is not None):
-                self.currentHash = hash
+            self.blockManager.appendTransactionToCurrentBlock(message)
 
         elif("INTRODUCE" in message):
             #print("~~got introduction~~")
@@ -303,10 +350,23 @@ class Node(Thread):
         elif("SOLVED" in message):
             print("~~ got Solved ~~")
             print("\t" + str(message))
+
+            if(self.blockManager.successfulBlock(message)):
+                self.currentBlockString = self.blockManager.currentBlockAsString()
+
+
+                self.blockManager.setCurrentBlockFinalHash()
+            self.currentBlockString = self.blockManager.currentBlockAsStringWithHash()
+            print(self.currentBlockString)
             pass
 
-        elif("VERIFY" in message):
-            print("~~got Verify~~")
+        elif("VERIFY OK" in message):
+            print("~~ got Good Verify ~~")
+            print("\t" + str(message))
+            pass
+
+        elif("VERIFY FAIL" in message):
+            print("~~ got Bad Verify ~~")
             print("\t" + str(message))
             pass
 
@@ -334,7 +394,6 @@ class Node(Thread):
         self.startServer()
 
         self.status = "running"
-
 
 
         while (1):
@@ -416,9 +475,10 @@ class Node(Thread):
                     self.deadAddresses.append(address)
                     self.clearIPPortFromAddresses(address)
 
-    ## Figure out which addresses to send to
+    ## 3.A -- Figure out which addresses to send to
 
             addresses = self.getAddressesToSend()
+    ## 3.B -- Figure out transactions to send
 
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
@@ -428,6 +488,7 @@ class Node(Thread):
             else:
                 transactionsToSend = sortedTranscations[-5:]
 
+    ## 3.C -- Figure out which random introductions to send
 
             random.shuffle(self.introductionMessages_Handled)
             introductionsToSend = None
@@ -435,6 +496,7 @@ class Node(Thread):
                 introductionsToSend = self.introductionMessages_Handled
             else:
                 introductionsToSend = self.introductionMessages_Handled[-3:]
+
 
 
             ######## WRITE TO OTHER NODES ######
@@ -447,24 +509,22 @@ class Node(Thread):
                     ip, port = address
                     ip = str(ip)
                     port = int(port)
-
+            ## 4.A
                     # TRANSACTIONS
                     for transMessage in transactionsToSend:
                         message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(transMessage))
-
                         if(self.okToSend(ip, port, transMessage)):
-                            print("!! " + str(message2send) + " > " + str(address) + " !!")
+                            #print("!! " + str(message2send) + " > " + str(address) + " !!")
                             ######### SENDING SECTION #######
                             self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                             self.logger.logSentTransaction(ip, port, message2send)
                             self.addMessagetoSentMessages(ip, port, transMessage)
                             ipsToPending.add((ip, port))
-
+            ## 4.B
                     ## INTRODUCTIONS
                     if(introductionsToSend is not None):
                         for intro in introductionsToSend:
                             message2send = str(self.ip) + ":" + str(self.port) + " " + str(" ".join(intro))
-
                             if (self.okToSend(ip, port, intro)):
                                 #print("!! " + str(message2send) + " > " + str(address) + " !!")
                                 ######### SENDING SECTION #######
@@ -472,6 +532,16 @@ class Node(Thread):
                                 self.logger.logSentIntroduction(ip, port, message2send)
                                 self.addMessagetoSentMessages(ip, port, intro)
                                 ipsToPending.add((ip, port))
+            ## 4.C
+                    ## Send out a Block
+                    if(self.currentBlockString is not None):
+                        if(self.okToSendBlock(self.currentBlockString, ip, port)):
+                            block2send = str(self.ip) + ":" + str(self.port) + " BLOCK " + self.currentBlockString
+                            self.sock.sendto(block2send.encode('utf-8'), (ip, port))
+                            #self.logger.logSentIntroduction(ip, port, message2send)
+                            self.addAddresstoSentBlocks(self.currentBlockString, ip, port)
+                            ipsToPending.add((ip, port))
+
 
                 # only remove stuff if it was sent
                 for ipPort in ipsToPending:
