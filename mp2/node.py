@@ -355,6 +355,7 @@ class Node(Thread):
         elif("SOLVED" in message):
             print("~~ got Solved ~~")
             print(str(message))
+            print("\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
@@ -571,7 +572,7 @@ class Node(Thread):
                     string = "SOLVE "
                     string += self.blockManager.currentHash
                     string += "\n"
-
+                    print("\t\t\t\t\t\t\t\t\t[RECEIVING]")
                     self.serv.serviceSocket.send(string.encode('utf-8'))
                     self.pendingHash = self.currentHash
                     self.currentHash = None
