@@ -112,8 +112,9 @@ class BlockManager(object):
 
             # set level so other blocks don't interfere
             self.blockLevel = block.level
-            for transaction in self.currentBlock.getTransactions():
-                self.appendTransactionsToPending(transaction)
+            if(self.currentBlock is not None):
+                for transaction in self.currentBlock.getTransactions():
+                    self.appendTransactionsToPending(transaction)
 
             self.blockchain = dict()
             self.currentBlock = None

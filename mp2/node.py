@@ -610,6 +610,7 @@ class Node(Thread):
         time.sleep(self.vmNumber)
         for tm in self.transactionMessages:
             print(tm)
+        print("")
 
         for level, block in self.blockManager.blockchain.items():
             block.printSelf()
