@@ -213,10 +213,10 @@ class Node(Thread):
 
     def okToSendBlock(self, blockString, ip, port):
         if(blockString not in self.sentAddressesByBlock.keys()):
-            self.sentAddressesByBlock[blockString] = []
+            self.sentAddressesByBlock[blockString] = [(self.ip, self.port)]
 
         if(blockString not in self.receivedAddressesByBlock.keys()):
-            self.receivedAddressesByBlock[blockString] = []
+            self.receivedAddressesByBlock[blockString] = [(self.ip, self.port)]
 
         if((ip,int(port)) not in self.sentAddressesByBlock[blockString]):
             if((ip, int(port)) not in self.receivedAddressesByBlock[blockString]):
