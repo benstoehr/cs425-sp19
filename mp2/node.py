@@ -598,7 +598,7 @@ class Node(Thread):
         #     print(tm)
 
         for level, block in self.blockManager.blockchain.items():
-            print("[BLOCK " + str(level) + "]")
             block.printSelf()
+            print("")
 
         self.shutdown()

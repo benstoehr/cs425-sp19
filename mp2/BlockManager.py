@@ -92,7 +92,7 @@ class BlockManager(object):
         self.currentBlock.addTransactionToBlock(transaction)
         if(transaction in self.pendingTransactions):
             self.pendingTransactions.remove(transaction)
-            
+
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
             blockHash = self.hashCurrentBlock()
@@ -103,7 +103,7 @@ class BlockManager(object):
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
-        print("appendPendingTransactionsToNewBlock()")
+        print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             self.appendTransactionToCurrentBlock(pt)
 
