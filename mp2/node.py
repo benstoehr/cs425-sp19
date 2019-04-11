@@ -575,7 +575,7 @@ class Node(Thread):
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and
-                    (self.blockManager.lastSuccessfulHash is not None or self.blockManager.lastSuccessfulHash != "0")
+                    (self.blockManager.lastSuccessfulHash is not None and self.blockManager.lastSuccessfulHash != "0")
                     ):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()
