@@ -12,7 +12,7 @@ class Block(object):
     def returnTxIDs(self):
         return self.txIDs
 
-    def __init__(self, level=None):
+    def __init__(self, level=None, previousHash=None):
 
         self.level = level
 

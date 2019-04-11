@@ -357,6 +357,7 @@ class Node(Thread):
 
             if(self.blockManager.successfulBlock(message)):
                 self.currentBlockString = self.blockManager.currentBlockAsString()
+                ## make all of the pending transactions go into new block
 
 
                 self.blockManager.setCurrentBlockFinalHash()

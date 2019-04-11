@@ -3,6 +3,10 @@ import random
 
 from block import Block
 
+
+def sortFunction(x):
+    return x[1]
+
 class BlockManager(object):
 
     def __init__(self):
@@ -22,6 +26,7 @@ class BlockManager(object):
 
         self.hash = hashlib.sha256()
 
+        self.committedTransactions = []
         self.pendingTransactions = []
 
         self.waitingForPuzzle = False
@@ -40,6 +45,7 @@ class BlockManager(object):
             self.incomingBlockChainIP = (ip, port)
             self.waitingForBlockChain = True
             self.numBlocksToWaitFor = block.level
+            self.committedTransactions = []
             return True
 
         return False
@@ -48,6 +54,7 @@ class BlockManager(object):
         block = self.singleBlockFromMessage(message)
 
 #############
+
     def hashCurrentBlock(self):
         h = self.hash.update(self.currentBlockAsString().encode('utf-8'))
         self.currentBlock.selfHash = h
@@ -61,11 +68,12 @@ class BlockManager(object):
     def currentBlockAsStringWithHash(self):
         return self.currentBlock.toMessageWithHash()
 
-##############
+    ##############
 
     def appendTransactionsToPending(self, transaction):
-        self.pendingTransactions += [transaction
-                                     ]
+        self.pendingTransactions += [transaction]
+        self.pendingTransactions.sort(key=sortFunction)
+
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
         if(self.waitingForPuzzle or self.waitingForBlockChain):
@@ -80,16 +88,22 @@ class BlockManager(object):
             self.numTransactionsBeforeHash = int(random.random() * 20)
             self.waitingForPuzzle = True
 
-
-###### Sending STUFF #####
+##############
 
     def successfulBlock(self, message):
-        wordBLOCK, hashOfBlock, puzzleAnswer = message.split(' ')
+        wordBLOCK, hashOfBlock, puzzleAnswer = message
         if(self.currentBlock.selfHash == hashOfBlock):
+            self.waitingForPuzzle = False
             self.currentBlock.puzzleAnswer = puzzleAnswer
+            self.blockchain[self.currentBlock.level] = self.currentBlock
+            previousLevel = self.currentBlock.level
+            previousHash = self.currentBlock.selfHash
+            self.currentBlock = Block(level=(previousLevel + 1), previousHash=previousHash)
+
             return True
         return False
 
+###### Sending STUFF #####
 
     def singleBlockFromMessage(self, byteString):
         block = Block()
@@ -110,7 +124,7 @@ class BlockManager(object):
             blocks.append(self.singleBlockFromMessage(block))
         return blocks
 
-################# Console Logging
+################# Console Logging #################
 
     def printCurrentBlock(self):
         if(self.currentBlock is not None):
