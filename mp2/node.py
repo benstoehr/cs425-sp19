@@ -592,7 +592,7 @@ class Node(Thread):
 
 
                 for ip, port in self.ipsToSendChain:
-                    for block in self.blockManager.blockchain.values():
+                    for blockHash, block in self.blockManager.blockchain.values():
                         print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
                         blockString = block.toChainMessage()
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
@@ -613,9 +613,8 @@ class Node(Thread):
             print(tm)
         print("")
 
-        print("BLOCKCHAIN")
-        blockchain = self.blockManager.blockchain.items()
-        for level, block in sorted(blockchain, key=lambda x: x[0][1]):
+        for i in range(self.blockManager.blockLevel):
+            blockHash, block = self.blockManager.blockchain[i+1]
             block.printSelf()
             print("")
 
