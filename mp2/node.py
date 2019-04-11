@@ -368,7 +368,7 @@ class Node(Thread):
             print(str(message[1]))
             print(str(message[2]))
             if(self.blockManager.successfulBlock(message)):
-                self.currentBlockString = self.blockManager.currentBlockAsString()
+                #self.currentBlockString = self.blockManager.currentBlockAsString()
                 self.blockManager.newBlock()
                 ## make all of the pending transactions go into new block
                 self.blockManager.fillNewBlock()

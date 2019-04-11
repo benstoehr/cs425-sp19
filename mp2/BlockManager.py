@@ -142,10 +142,9 @@ class BlockManager(object):
 
     def appendPendingTransactionsToNewBlock(self):
         print("\tappendPendingTransactionsToNewBlock()")
-
         for pt in self.pendingTransactions:
-
             self.appendTransactionToCurrentBlock(pt)
+
 
     def removeAddedTransactionsFromPending(self):
         for transactionToRemove in self.pendingTransactionsToRemove:
