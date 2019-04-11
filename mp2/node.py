@@ -601,4 +601,8 @@ class Node(Thread):
             block.printSelf()
             print("")
 
+        print("\n[PENDING TRANSACTIONS]")
+        for pt in self.blockManager.pendingTransactions:
+            print(pt)
+
         self.shutdown()
