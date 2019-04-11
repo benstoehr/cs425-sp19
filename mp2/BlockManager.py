@@ -89,9 +89,10 @@ class BlockManager(object):
             return
 
         print("\t" + str(transaction))
-        self.currentBlock.addTransactionToBlock(transaction)
-        if(transaction in self.pendingTransactions):
+        if (transaction in self.pendingTransactions):
             self.pendingTransactions.remove(transaction)
+        self.currentBlock.addTransactionToBlock(transaction)
+
 
         self.currentBlockCount += 1
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
