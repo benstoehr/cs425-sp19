@@ -105,6 +105,8 @@ class BlockManager(object):
 
     def successfulBlock(self, message):
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
+        print("BLOCK MANAGER currentHash: " + str(self.currentHash))
+        print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock.selfHash == hashOfBlock):
             print("BLOCK SUCCESS")
             self.currentBlock.puzzleAnswer = puzzleAnswer
