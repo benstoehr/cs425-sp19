@@ -57,6 +57,21 @@ class Block(object):
         string += "^"
         return string
 
+    def toChainMessage(self):
+        string = "BLOCKCHAIN "
+        if(self.previousBlockHash is not None):
+            string += self.previousBlockHash + "$"
+        else:
+            string += "0$"
+        string += str(self.level)
+        string += "$"
+        for transaction in self.transactions[:-1]:
+            string += "_".join(transaction)
+            string += "*"
+        string += "_".join(self.transactions[-1])
+        string += "^"
+        return string
+
     def toMessageWithHash(self):
         string = ""
         if(self.previousBlockHash is not None):
