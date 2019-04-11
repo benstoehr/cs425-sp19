@@ -21,7 +21,7 @@ class BlockManager(object):
 
         self.obsoleteHashes = []
 
-        self.currentBlock = Block(level=1)
+        self.currentBlock = Block(level=1, previousBlockHash="0")
 
         self.lastSuccessfulHash = None
         self.lastSuccessfulBlock = None
@@ -106,6 +106,7 @@ class BlockManager(object):
 ##############
 
     def betterBlock(self, ip, port, blockMessage):
+
         [wordBLOCK, blockString] = blockMessage
         block = self.singleBlockFromMessage(blockString)
 
@@ -120,12 +121,12 @@ class BlockManager(object):
                     # Create new block
                     self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.previousBlockHash)
                     # Move pending transactions to it
+                    self.clearPendingTransactionsOnBlockChain()
                     self.appendPendingTransactionsToNewBlock()
                     self.removeAddedTransactionsFromPending()
                     # Update stuff
                     self.lastSuccessfulHash = block.selfHash
                     self.lastSuccessfulBlock = copy.deepcopy(block)
-
                     return False
 
                 else:
