@@ -48,7 +48,7 @@ class Block(object):
             string += self.previousBlockHash + "$"
         else:
             string += "0$"
-        string += self.level
+        string += str(self.level)
         for transaction in self.transactions:
             string += "_".join(transaction)
             string += ":"
@@ -61,7 +61,7 @@ class Block(object):
             string += self.previousBlockHash + "$"
         else:
             string += "0$"
-        string += self.level
+        string += str(self.level)
         for transaction in self.transactions:
             string += "_".join(transaction)
             string += ":"

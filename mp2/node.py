@@ -583,6 +583,7 @@ class Node(Thread):
         time.sleep(self.vmNumber)
         for tm in self.transactionMessages:
             print(tm)
+
         self.shutdown()
 
 
