@@ -187,7 +187,7 @@ class BlockManager(object):
     def buildChain(self, message):
         wordBLOCKCHAIN, blockString = message
         block = self.singleBlockFromMessage(blockString)
-        self.blockchain[block.level] = (block.selfHash, copy.deepcopy(self.currentBlock))
+        self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False
         self.clearPendingTransactionsOnBlockChain()
