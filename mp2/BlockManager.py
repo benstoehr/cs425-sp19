@@ -179,15 +179,13 @@ class BlockManager(object):
                     self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
 
                     # Create new block
-                    self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.selfHash)
+                    self.currentBlock = copy.deepcopy(block)
                     # Move pending transactions to it
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
+                    self.newBlock()
                     self.appendPendingTransactionsToNewBlock()
 
-                    # Update stuff
-                    self.lastSuccessfulHash = block.selfHash
-                    self.lastSuccessfulBlock = copy.deepcopy(block)
                     return False
 
                 else:
