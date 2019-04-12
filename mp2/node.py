@@ -621,6 +621,8 @@ class Node(Thread):
         accounts = sorted(self.blockManager.bank.keys())
         for account in accounts:
             print(str(account) + " " + str(self.blockManager.bank[account]))
+
+        print(self.blockManager.blockchain)
         for i in range(self.blockManager.blockLevel):
             blockHash, block = self.blockManager.blockchain[i+1]
             block.printSelf()

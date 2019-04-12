@@ -24,7 +24,7 @@ class BlockManager(object):
 
         self.currentBlock = Block(level=1, previousHash="0")
 
-        self.lastSuccessfulHash = None
+        self.lastSuccessfulHash = "None"
         self.lastSuccessfulBlock = None
 
         self.currentBlockCount = 0
@@ -158,13 +158,16 @@ class BlockManager(object):
         if(block.level > self.blockLevel):
             print("New block has higher level!")
             #block.printSelf()
-
+            print("Higher Level previousHash: " + block.previousBlockHash)
             # set level so other blocks don't interfere
             self.blockLevel = block.level
 
             if(self.currentBlock is not None):
                 for transaction in self.currentBlock.getTransactions():
                     self.appendTransactionsToPending(transaction)
+
+                if(block.previousBlockHash == "None"):
+                    print("Found First block from friend!")
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     print("CONSECUTIVE BETTER BLOCK SUCCESS")
