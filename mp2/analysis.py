@@ -261,3 +261,6 @@ duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
 
 # if empty, we have no splits!
 print(duplicatedChain20_df)
+
+# if not empty, check how long the splits are:
+duplicateLevels = duplicatedChain20_df.levels.values()
