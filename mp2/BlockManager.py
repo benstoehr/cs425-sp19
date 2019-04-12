@@ -214,6 +214,7 @@ class BlockManager(object):
             #print("Higher Level previousHash: " + block.previousBlockHash)
             #print("Higher Level selfHash: " + block.selfHash)
             # set level so other blocks don't interfere
+            print("[NEW BLOCK LEVEL " + str(block.level) + "]")
             self.blockLevel = block.level
 
             if(self.currentBlock is not None):
