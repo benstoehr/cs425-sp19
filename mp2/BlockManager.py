@@ -268,6 +268,7 @@ class BlockManager(object):
 
             return True
 
+        print("Ignoring Block")
         return False
 
 ##############

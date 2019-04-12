@@ -312,7 +312,7 @@ class Node(Thread):
 
             # if level is the same, do nothing
             else:
-                print("Ignoring Block")
+
                 pass
 
         elif("BLOCKCHAIN" in message2send):
