@@ -2,12 +2,14 @@ import time
 
 class Logger():
 
-    def __init__(self, logger, myIP, myPort, vmNumber, name):
+    def __init__(self, logger, myIP, myPort, vmNumber, name, serviceIP, servicePort):
         self.masterLogging = logger
         self.ip = myIP
         self.port = myPort
         self.vmNumber = vmNumber
         self.name = name
+        self.serviceIP = serviceIP
+        self.servicePort = servicePort
 
     ## ONLY FOR MESSAGES FROM OTHER NODES
     def getIPandPort(self, message):
@@ -25,6 +27,8 @@ class Logger():
         bytes = len(message)
         message = message.split()
         return message[1:], bytes
+
+
 
     ## SERVICE MESSAGES
     def logServiceTransaction(self, ip, port, message):
@@ -145,37 +149,39 @@ class Logger():
 
 
     ## CP2
-
-    def logReceivedBlock(self, selfHash):
+    # Passed in as string
+    def logReceivedBlock(self, selfHash, fullMessage):
         
-        ip, port, message, bytes = self.getIPandPort(message)
+        ip, port, message, bytes = self.getIPandPort(fullMessage)
 
         timestamp_a = time.time()
+        status = "IncomingBlock"
         ttype = "BLOCK"
         tID = selfHash
-        mess = str("_".join(message))
+        mess = message
         fromNode = str(ip) + "," + str(port)
         toNode = str(self.ip) + "," + str(self.port)
-        sentTime = message[1]
-        status = "IncomingBlock"
+        sentTime = None
+
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
-    def logSentBlock(self, selfHash):
+    def logSentBlock(self, selfHash, message, ip, port):
 
         pureMessage, bytes = self.pullIPoffOutgoing(message)
 
         timestamp_a = time.time()
+        status = "OutgoingBlock"
         ttype = "BLOCK"
         tID = selfHash
-        mess = str("_".join(pureMessage))
+        mess = pureMessage
         fromNode = str(self.ip) + "," + str(self.port)
         toNode = str(ip) + "," + str(port)
-        sentTime = pureMessage[1]
-        status = "OutgoingBlock"
+        sentTime = None
+
         nodeNum = self.vmNumber
 
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
@@ -183,15 +189,14 @@ class Logger():
         self.masterLogging.debug(fileString)
 
     # Node to Service about personal block
-    def logReceivedPuzzle(self, message):
 
-        ip, port, message, bytes = self.getIPandPort(message)
+    def logReceivedPuzzle(self, message):
 
         timestamp_a = time.time()
         ttype = "SOLVED"
         tID = message[1]
         mess = str("_".join(message))
-        fromNode = str(ip) + "," + str(port)
+        fromNode = str(self.serviceIP) + "," + str(self.servicePort)
         toNode = str(self.ip) + "," + str(self.port)
         sentTime = None
         status = "IncomingSolvedPuzzle"
@@ -203,14 +208,16 @@ class Logger():
 
     def logSentPuzzle(self, message):
 
-        pureMessage, bytes = self.pullIPoffOutgoing(message)
+        solveWord, hash = message.split(" ")
 
         timestamp_a = time.time()
+        status = None
+        bytes = len(message)
         ttype = "SOLVE"
-        tID = pureMessage[1]
-        mess = str("_".join(pureMessage))
+        tID = hash
+        mess = message
         fromNode = str(self.ip) + "," + str(self.port)
-        toNode = str(ip) + "," + str(port)
+        toNode = str(self.serviceIP) + "," + str(self.servicePort)
         sentTime = None
         status = "OutgoingPuzzle"
         nodeNum = self.vmNumber
@@ -220,6 +227,8 @@ class Logger():
         self.masterLogging.debug(fileString)
 
     # Node to Service about incoming block
+    # OOPSEY
+
     def logReceivedVerify(self):
 
         ip, port, message, bytes = self.getIPandPort(message)

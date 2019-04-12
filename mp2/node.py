@@ -91,7 +91,7 @@ class Node(Thread):
         self.event = event
 
         logging.basicConfig(filename="log.txt", format='%(message)s', level=logging.DEBUG)
-        self.logger = Logger(logging, self.ip, self.port, self.vmNumber, self.name)
+        self.logger = Logger(logging, self.ip, self.port, self.vmNumber, self.name, self.service_ip, self.service_port)
         self.messager = Messager()
 
         ## CP2
@@ -290,9 +290,11 @@ class Node(Thread):
             #print("Received block from " + str(ip) + " " +str(port))
             #print(message2send)
 
-            #self.logger.logReceivedBlock(' '.join(message)
+            block = self.blockManager.singleBlockFromMessage(' '.join(message2send))
+            self.logger.logReceivedBlock(block.selfHash, ' '.join(message))
 
             blockKey = ' '.join(message2send)
+
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
             #print("Received block")
             #print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
@@ -374,6 +376,7 @@ class Node(Thread):
             #print(str(message[1]))
             #print(str(message[2]))
             #print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
+            self.logger.logReceivedPuzzle(message)
             if(self.blockManager.successfulBlock(message)):
                 #self.currentBlockString = self.blockManager.currentBlockAsString()
                 pass
@@ -579,12 +582,13 @@ class Node(Thread):
                     if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
                         self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
                         print("SOLVE:")
-                        self.blockManager.printCurrentBlock()
+                        #self.blockManager.printCurrentBlock()
                         string = "SOLVE "
                         string += self.blockManager.currentBlock.selfHash
                         string += "\n"
                         #print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
                         self.serv.serviceSocket.send(string.encode('utf-8'))
+                        self.logger.logSentPuzzle(string)
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and
@@ -593,6 +597,7 @@ class Node(Thread):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
+                hash = self.blockManager.lastSuccessfulBlock.selfHash
                 for address in addresses:
                     ip, port = address
                     ip = str(ip)
@@ -605,6 +610,7 @@ class Node(Thread):
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
                         self.sock.sendto(blockMessage2send, (ip, port))
+                        self.logger.logSentBlock(hash, blockMessage2send, ip, port)
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
 
