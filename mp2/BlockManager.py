@@ -124,7 +124,7 @@ class BlockManager(object):
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
-            #print("\tInvalid:\t" + str(transaction))
+            print("\tInvalid:\t" + str(transaction))
             return
 
         #print("\t" + str(transaction))
@@ -143,6 +143,7 @@ class BlockManager(object):
     def appendPendingTransactionsToNewBlock(self):
         print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
+            print(pt)
             self.appendTransactionToCurrentBlock(pt)
 
 
@@ -152,6 +153,9 @@ class BlockManager(object):
                 self.pendingTransactions.remove(transactionToRemove)
         self.pendingTransactionsToRemove = []
 
+    def printPendingTransactions(self):
+        for pt in self.pendingTransactions:
+            print(pt)
 ##############
 
     def betterBlock(self, ip, port, blockMessage):
@@ -188,10 +192,12 @@ class BlockManager(object):
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
 
+
                     self.rebuildBank()
                     self.committedBank = copy.deepcopy(self.bank)
 
                     self.newBlock()
+                    self.printPendingTransactions()
                     self.appendPendingTransactionsToNewBlock()
 
 
@@ -239,6 +245,7 @@ class BlockManager(object):
                 self.removeAddedTransactionsFromPending()
                 #self.lastSuccessfulHash = hashOfBlock
                 self.newBlock()
+                self.printPendingTransactions()
                 self.appendPendingTransactionsToNewBlock()
                 self.waitingForPuzzle = False
 
