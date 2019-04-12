@@ -160,8 +160,9 @@ class BlockManager(object):
         if(block.level > self.blockLevel):
             print("New block has higher level!" + str(block.level))
             block.printSelf()
-            print("Higher Level previousHash: " + block.previousBlockHash)
-            print("Higher Level selfHash: " + block.selfHash)
+
+            #print("Higher Level previousHash: " + block.previousBlockHash)
+            #print("Higher Level selfHash: " + block.selfHash)
             # set level so other blocks don't interfere
             self.blockLevel = block.level
 
@@ -187,6 +188,7 @@ class BlockManager(object):
                     self.newBlock()
                     self.appendPendingTransactionsToNewBlock()
 
+                    print("")
                     return False
 
                 else:
