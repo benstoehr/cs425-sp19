@@ -631,7 +631,7 @@ class Node(Thread):
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
             #time.sleep(1)
-            time.sleep(0.00000000001)
+            time.sleep(0.00000001)
 
 
         print("Run event unset!")

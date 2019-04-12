@@ -125,7 +125,7 @@ class BlockManager(object):
 
         self.sortPendingTransactions()
         # try to reduce number of invalid by including old
-        for pt in self.pendingTransactions[:2]:
+        for pt in self.pendingTransactions[:5]:
             if(pt != transaction):
                 # If pending transaction has lower timestamp than most recent one, maybe look at it
                 if(pt[1] < transaction[1]):
