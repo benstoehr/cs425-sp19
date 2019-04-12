@@ -98,7 +98,7 @@ def draw_hist(d, output_filename):
 	output = output_path + output_filename
 
 	sns.set(style="whitegrid")
-	sns_plot = sns.distplot(d, kde=False, color="b")
+	sns_plot = sns.distplot(d, kde=False, color="b", bins=15)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 	plt.clf()
@@ -233,16 +233,18 @@ draw_hist(blockTx100_df['timeElapsed'].dropna().values, 'plot08_hist_propagation
 # histogram (propagation time)
 
 # blocks take how long to propagate to all nodes
-block20_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 20].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
-block100_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 100].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block20_df = raw_df[(raw_df.status == 'IncomingBlock') & (raw_df.nodeNum == 20)].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block100_df = raw_df[(raw_df.status == 'IncomingBlock') & (raw_df.nodeNum == 100)].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
 
 # calculate the time elaspsed from solved to all nodes
-block20_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 20].groupby(['tID'])['timestamp'].min().reset_index()
-block100_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 100].groupby(['tID'])['timestamp'].min().reset_index()
-block20_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
-block100_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
-block20_df['sentTime'] = tx20_df.tID.apply(lambda x: block20_solved[x])
-block100_df['sentTime'] = tx100_df.tID.apply(lambda x: block100_solved[x])
+# block20_solved_df = raw_df[(raw_df.ttype == 'BLOCK') & (raw_df.nodeNum == 20)].groupby(['tID'])['timestamp'].min().reset_index()
+# block100_solved_df = raw_df[(raw_df.ttype == 'BLOCK') & (raw_df.nodeNum == 100)].groupby(['tID'])['timestamp'].min().reset_index()
+block20_solved_df = raw_df[(raw_df.nodeNum == 20)].groupby(['tID'])['timestamp'].min().reset_index()
+block100_solved_df = raw_df[(raw_df.nodeNum == 100)].groupby(['tID'])['timestamp'].min().reset_index()
+block20_solved = pd.Series(block20_solved_df.timestamp.values,index=block20_solved_df.tID).to_dict()
+block100_solved = pd.Series(block20_solved_df.timestamp.values,index=block20_solved_df.tID).to_dict()
+block20_df['sentTime'] = block20_df.tID.apply(lambda x: block20_solved[x])
+block100_df['sentTime'] = block100_df.tID.apply(lambda x: block100_solved[x])
 ##### record the solved time
 block20_df['timeElapsed'] = (block20_df.timestamp - block20_df.sentTime)
 block100_df['timeElapsed'] = (block100_df.timestamp - block100_df.sentTime)
@@ -260,11 +262,15 @@ draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_
 # Splits, how often, the longest split (height)
 # scatter: x=time, y=split height
 
+chain20_df['blockHashStr'] = chain20_df.blockHashList.apply(lambda x: "".join(x))
+chain20_df['sameLevelHash'] = chain20_df.duplicated(subset=["level", "blockHashStr"], keep=False)
 chain20_df['sameLevel'] = chain20_df.duplicated(subset="level", keep=False)
-duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
+print(chain20_df.groupby(['sameLevelHash']).sum())
+print(chain20_df.groupby(['sameLevel']).sum())
+# duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
 
 # if empty, we have no splits!
-print(duplicatedChain20_df)
+# print(duplicatedChain20_df)
 
 # if not empty, check how long the splits are:
-duplicateLevels = duplicatedChain20_df.levels.values()
+# duplicateLevels = duplicatedChain20_df.level.values
