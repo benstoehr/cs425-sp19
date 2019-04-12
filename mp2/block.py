@@ -91,14 +91,14 @@ class Block(object):
         string += "^"
         return string
 
-
-
     def getTransactions(self):
         return self.transactions
 
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")
+        print("[PREVIOUS: " + str(self.previousBlockHash) + "]")
         print("[HASH:" + str(self.selfHash) + "]")
         print("[PUZZLE: " + str(self.puzzleAnswer) + "]")
         for t in self.transactions:
             print(str(t))
+        print("\n")
