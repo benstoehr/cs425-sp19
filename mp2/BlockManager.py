@@ -237,10 +237,8 @@ class BlockManager(object):
 
                 self.clearPendingTransactionsOnBlockChain()
                 self.removeAddedTransactionsFromPending()
-
                 #self.lastSuccessfulHash = hashOfBlock
                 self.newBlock()
-
                 self.appendPendingTransactionsToNewBlock()
                 self.waitingForPuzzle = False
 
@@ -291,7 +289,7 @@ class BlockManager(object):
             self.removeAddedTransactionsFromPending()
 
             self.newBlock()
-            self.fillNewBlock()
+            self.appendPendingTransactionsToNewBlock()
 
     def rebuildBank(self):
         self.bank = dict()
