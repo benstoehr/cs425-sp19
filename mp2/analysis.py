@@ -203,8 +203,19 @@ draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cum
 blockTx20_df = read_blockTx(filenameBlockTx20)
 blockTx100_df = read_blockTx(filenameBlockTx100)
 
+txts_df = tx_df.groupby(['tID'])['timestamp'].min().reset_index()
+blockts_df = raw_df[raw_df.status == 'IncomingBlock']groupby(['tID'])['timestamp'].min().reset_index()
+blockTx20_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes : ('', '_tx'))
+blockTx20_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes : ('', '_block'))
+blockTx100_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes : ('', '_tx'))
+blockTx100_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes : ('', '_block'))
+blockTx20_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx20_df.timestamp_tx)
+blockTx100_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx100_df.timestamp_tx)
+blockTx20_df['timeElapsed'] = blockTx20_df['timeElapsed'].dt.microseconds.abs()
+blockTx100_df['timeElapsed'] = blockTx100_df['timeElapsed'].dt.microseconds.abs()
 
-
+draw_hist(blockTx20_df['timeElapsed'].values, 'plot07_hist_propagation_delay_tx_block_20.png')
+draw_hist(blockTx100_df['timeElapsed'].values, 'plot08_hist_propagation_delay_tx_block_100.png')
 
 # Plot 9 & 10
 # block propagation
