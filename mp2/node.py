@@ -647,11 +647,17 @@ class Node(Thread):
         #     print(str(account) + " " + str(self.blockManager.committedBank[account]))
         #
         #print(self.blockManager.blockchain)
+
+        totalTransactions = len(self.transactionMessages)
+        storedTransactions = 0
         for i in range(self.blockManager.blockLevel):
             blockHash, block = self.blockManager.blockchain[i+1]
             block.printSelf()
-            print("")
 
+            storedTransactions += len(block.getTransactions())
+
+
+        storedTransactions += len(self.blockManager.pendingTransactions)
         print("\n[PENDING TRANSACTIONS]")
         for pt in self.blockManager.pendingTransactions:
             print(pt)
@@ -659,5 +665,12 @@ class Node(Thread):
         print("\nTRANSACTIONS IN CURRENT BLOCK")
         for t in self.blockManager.currentBlock.getTransactions():
             print(t)
+            storedTransactions += 1
+
+
+        print("Total Transactions: " + str(totalTransactions))
+        print("Stored Transactions: " + str(storedTransactions))
+        if(totalTransactions == storedTransactions):
+            print("GREAT SUCCESS")
 
         self.shutdown()
