@@ -660,9 +660,9 @@ class Node(Thread):
             logString = str(block.selfHash)
             logString += " "
             txIDs = block.gettxIDs()
-            print(txIDs)
-            #logString += " ".join()
 
+            logString += " ".join(txIDs)
+            print(logString)
             self.logger.plainLog(logString)
 
         storedTransactions += len(self.blockManager.pendingTransactions)
