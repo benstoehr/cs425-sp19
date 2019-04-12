@@ -1,6 +1,7 @@
 import hashlib
 import random
 import copy
+import time
 
 from block import Block
 
@@ -10,8 +11,9 @@ def sortFunction(x):
 
 class BlockManager(object):
 
-    def __init__(self):
+    def __init__(self, logger):
 
+        self.logger = logger
         self.blockLevel = 0
 
         self.bank = dict()
@@ -185,6 +187,16 @@ class BlockManager(object):
 
 ##############
 
+    def logChain(self):
+        logString = str(time.time())
+        logString += " "
+        logString += self.blockLevel
+        logString += " "
+        for blockHash, block in self.blockchain.values():
+            logString += str(blockHash)
+            logString += " "
+        self.logger.plainLog(logString)
+
     def betterBlock(self, ip, port, blockMessage):
 
         [wordBLOCK, blockString] = blockMessage
@@ -212,6 +224,8 @@ class BlockManager(object):
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
                     self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
+
+                    self.logChain()
 
                     # Create new block
                     self.currentBlock = copy.deepcopy(block)

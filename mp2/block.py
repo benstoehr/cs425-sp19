@@ -94,6 +94,11 @@ class Block(object):
     def getTransactions(self):
         return self.transactions
 
+    def gettxIDs(self):
+        txIDs = []
+        for t in self.transactions:
+            txIDs += [t[2]]
+
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")
         print("[PREVIOUS:" + str(self.previousBlockHash) + "]")

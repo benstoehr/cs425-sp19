@@ -88,7 +88,7 @@ def read_blockLog(filename):
 				record_list = []
 				for blockhash in len(record)-2
 					i = blockhash + 2
-					hash_list.append(reocrd[i]) # hash
+					hash_list.append(record[i]) # hash
 				record_list.append(record[0]) # timestamp
 				record_list.append(record[1]) # level
 				record_list.append(hash_list)

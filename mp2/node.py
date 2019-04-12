@@ -95,7 +95,7 @@ class Node(Thread):
         self.messager = Messager()
 
         ## CP2
-        self.blockManager = BlockManager()
+        self.blockManager = BlockManager(self.logger)
 
         self.ipsToSendChain = []
 
@@ -651,11 +651,18 @@ class Node(Thread):
         totalTransactions = len(self.transactionMessages)
         storedTransactions = 0
         for i in range(self.blockManager.blockLevel):
+
             blockHash, block = self.blockManager.blockchain[i+1]
+
             block.printSelf()
 
             storedTransactions += len(block.getTransactions())
 
+            logString = str(block.selfHash)
+            logString += " "
+            logString += " ".join(block.gettxIDs())
+
+            self.logger.plainLog(logString)
 
         storedTransactions += len(self.blockManager.pendingTransactions)
         print("\n[PENDING TRANSACTIONS]")
