@@ -129,6 +129,7 @@ class BlockManager(object):
             if(pt != transaction):
                 # If pending transaction has lower timestamp than most recent one, maybe look at it
                 if(pt[1] < transaction[1]):
+                    print("RETRY\t\t" + str(transaction[1]) + " " + str(transaction[2]))
                     fA, tA, a = self.getAccountAccountAmount(pt)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(transaction)
