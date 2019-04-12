@@ -379,8 +379,7 @@ class Node(Thread):
                 self.blockManager.fillNewBlock()
             else:
                 print("Ignoring SOLVED Message")
-
-            print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
+            #print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
 
         elif("VERIFY OK" in message):
             print("~~ got Good Verify ~~")

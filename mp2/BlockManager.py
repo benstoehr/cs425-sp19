@@ -161,6 +161,7 @@ class BlockManager(object):
             print("New block has higher level!" + str(block.level))
             #block.printSelf()
             print("Higher Level previousHash: " + block.previousBlockHash)
+            print("Higher Level selfHash: " + block.selfHash)
             # set level so other blocks don't interfere
             self.blockLevel = block.level
 
@@ -222,9 +223,9 @@ class BlockManager(object):
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
-
                 self.lastSuccessfulHash = hashOfBlock
                 self.waitingForPuzzle = False
+
                 return True
 
         return False
