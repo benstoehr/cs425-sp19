@@ -188,7 +188,7 @@ class BlockManager(object):
                     self.removeAddedTransactionsFromPending()
 
                     self.rebuildBank()
-                    
+
                     self.newBlock()
                     self.appendPendingTransactionsToNewBlock()
 
@@ -290,6 +290,7 @@ class BlockManager(object):
                 fromAccount = int(transaction[3])
                 toAccount = int(transaction[4])
                 amount = int(transaction[5])
+                self.addAccounts(fromAccount, toAccount)
                 self.executeTrade(fromAccount, toAccount, amount)
 
     # Maybe make this by block for speed
