@@ -110,6 +110,15 @@ If the nodes are killed by the service, by "thanos", or a regular command, there
 
 `block.py` and `BlockManager.py` take care of most block activities.
 
+We moved all of the block handling to a separate class in order to reduce the amount of variables in the node that relate to the current chain. 
+
+Once a block is hashed, the BlockManager goes into a waiting state where all incoming Transaction Messages are deferred to the "pendingTransactions" list.
+
+From here, two things can happen. First, a successful block can be returned by the service, which will kick off the creation of a new block, as well as creating a durable list of all committed blocks. After this, the block will be sent out once the node gets to the sending portion of its while loop
+
+The other possibility is that of a new block coming in from a node. When this happens, the block levels of the current block in the BlockManakger and the incoming block are compared. If they have the same level, the incoming block is discarded. If the new block has the same previous hash as the current block, the new block is accepted, added to the chain, and transactions from the node's current block are compared, discarding any that are found in the incoming block. If the new block has a higher level and a different previous hash, the BlockManager enters the "waitingForChain" phase. It holds an IP and Port that the node can access in order to pass on pieces of the chain that are received. 
+
+
 ###
 
 ## Analysis
