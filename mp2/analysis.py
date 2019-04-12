@@ -17,7 +17,7 @@ filenameBlockLog100 = "block100.txt"
 
 # Log File
 # bloxk-tx: [blockHash tx1 tx2 tx3 tx4] (log when node terminates?)
-# block level: [timestamp level hash1 hash2 hash3 hash4] (log the current chain when new block created?)
+# block level: [timestamp level hash1 hash2 hash3 hash4] (log the current chain when new block created?-	)
 
 # TODO:
 # 1. How long does each transaction take to appear in a block? Are there congestion delays?
@@ -282,3 +282,8 @@ draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_
 blockLog20 = read_blockLog(filenameBlockLog20)
 blockLog100 = read_blockLog(filenameBlockLog100)
 
+for i in len(blockLog20)-1:
+	curTimestamp = blockLog20[i][0]
+	curLevel = blockLog20[i][1]
+	nextTimestamp = blockLog20[i+1][0]
+	nextLevel = blockLog20[i+1][1]
