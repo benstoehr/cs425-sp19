@@ -54,7 +54,15 @@ def read_data(filename):
 				if record[0] == "BLOCK-TX":
 					blockTx.append(record[1:])
 				elif record[0] == "CHAIN":
-					chain.append(record[1:])
+					hash_list = []
+					record_list = []
+					for blockhash in len(record)-2
+						i = blockhash + 2
+						hash_list.append(record[i]) # hash
+					record_list.append(record[0]) # timestamp
+					record_list.append(record[1]) # level
+					record_list.append(hash_list)
+					chain.append(record_list)
 				elif record[4] in ttype_list:
 					raw.append(record)
 
@@ -69,40 +77,8 @@ def read_data(filename):
 
 	labels_blockTx = ['blockHash', 'txID']
 	df_blockTx = pd.DataFrame.from_records(blockTx, columns=labels)
-	
+
 	return df, df_blockTx, chain
-
-def read_blockTx(filename):
-	raw = []
-	with open(filename, 'r') as f:
-		for line in f:
-			record = line.split(' ') # separating sign to be checked
-			if len(record) >= 2:
-				raw.append(record)
-			
-	labels = ['blockHash', 'txID']
-	df = pd.DataFrame.from_records(raw, columns=labels)
-	return df
-
-def read_blockLog(filename):
-	raw = []
-	with open(filename, 'r') as f:
-		for line in f:
-			record = line.split(' ') # separating sign to be checked
-			if len(record) >= 2:
-				hash_list = []
-				record_list = []
-				for blockhash in len(record)-2
-					i = blockhash + 2
-					hash_list.append(record[i]) # hash
-				record_list.append(record[0]) # timestamp
-				record_list.append(record[1]) # level
-				record_list.append(hash_list)
-				raw.append(record_list)
-
-	# labels = ['timestamp', 'level', 'blockHashList']
-	# df = pd.DataFrame.from_records(raw, columns=labels)
-	return raw
 
 def check_split(recordList):
 	"""
