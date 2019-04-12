@@ -374,9 +374,9 @@ class Node(Thread):
             #print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
             if(self.blockManager.successfulBlock(message)):
                 #self.currentBlockString = self.blockManager.currentBlockAsString()
-                self.blockManager.newBlock()
+                pass
                 ## make all of the pending transactions go into new block
-                self.blockManager.fillNewBlock()
+
             else:
                 print("Ignoring SOLVED Message")
             #print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")

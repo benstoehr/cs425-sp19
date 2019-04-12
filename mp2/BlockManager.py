@@ -159,7 +159,7 @@ class BlockManager(object):
 
         if(block.level > self.blockLevel):
             print("New block has higher level!" + str(block.level))
-            #block.printSelf()
+            block.printSelf()
             print("Higher Level previousHash: " + block.previousBlockHash)
             print("Higher Level selfHash: " + block.selfHash)
             # set level so other blocks don't interfere
@@ -224,6 +224,9 @@ class BlockManager(object):
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
                 self.lastSuccessfulHash = hashOfBlock
+                self.newBlock()
+
+                self.fillNewBlock()
                 self.waitingForPuzzle = False
 
                 return True
