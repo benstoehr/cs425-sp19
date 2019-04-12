@@ -56,7 +56,7 @@ def read_data(filename):
 				elif record[0] == "CHAIN":
 					hash_list = []
 					record_list = []
-					for blockhash in len(record)-2
+					for blockhash in (len(record)-2):
 						i = blockhash + 2
 						hash_list.append(record[i]) # hash
 					record_list.append(record[0]) # timestamp
@@ -76,14 +76,12 @@ def read_data(filename):
 	df_log = pd.DataFrame.from_records(raw, columns=labels_log)
 
 	labels_blockTx = ['blockHash', 'txID']
-	df_blockTx = pd.DataFrame.from_records(blockTx, columns=labels)
+	df_blockTx = pd.DataFrame.from_records(blockTx, columns=labels_blockTx)
 
-	return df, df_blockTx, chain
+	labels_chain = ['timestamp', 'level', 'blockHashList']
+	df_chain = pd.DataFrame.from_records(chain, columns=labels_chain).sort_values(by=['timestamp']).reset_index()
 
-def check_split(recordList):
-	"""
-	recordList: [ts, level, hashList]
-	"""
+	return df_log, df_blockTx, df_chain
 
 def draw_hist(d, output_filename):
 	"""
@@ -122,12 +120,12 @@ def draw_line(df, x, y, color, output_filename):
 	plt.clf()
 
 # Start to work
-raw_df20,  = read_data(filename20)
+raw_df20, blockTx20_df, chain20_df = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df20['bytes'] = raw_df20['bytes'].astype(int)
 raw_df20['timestamp'] = pd.to_datetime(raw_df20['timestamp'], unit='s')
 raw_df20['sentTime'] = pd.to_datetime(raw_df20['sentTime'], unit='s')
-raw_df100 = read_data(filename100)
+raw_df100, blockTx100_df, chain100_df = read_data(filename100)
 raw_df100['nodeNum'] = 100
 raw_df100['bytes'] = raw_df100['bytes'].astype(int)
 raw_df100['timestamp'] = pd.to_datetime(raw_df100['timestamp'], unit='s')
@@ -203,7 +201,6 @@ bw20_df = raw_df20[raw_df20.flow == "Incoming"]
 bw100_df = raw_df100[raw_df100.flow == "Incoming"]
 bw20_df['cumBandwidth'] = bw20_df['bytes'].cumsum()
 bw100_df['cumBandwidth'] = bw100_df['bytes'].cumsum()
-print(raw_df20.head(5))
 draw_line(bw20_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot05_line_bandwidth_20.png')
 draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot06_line_bandwidth_100.png')
 
@@ -211,15 +208,14 @@ draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cum
 # the congestion delays (tx in block)
 # histogram (delay)
 
-blockTx20_df = read_blockTx(filenameBlockTx20)
-blockTx100_df = read_blockTx(filenameBlockTx100)
-
 txts_df = tx_df.groupby(['tID'])['timestamp'].min().reset_index()
-blockts_df = raw_df[raw_df.status == 'IncomingBlock']groupby(['tID'])['timestamp'].min().reset_index()
-blockTx20_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes : ('', '_tx'))
-blockTx20_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes : ('', '_block'))
-blockTx100_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes : ('', '_tx'))
-blockTx100_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes : ('', '_block'))
+blockts_df = raw_df[raw_df.status == 'IncomingBlock'].groupby(['tID'])['timestamp'].min().reset_index()
+print(raw_df[raw_df.status == 'IncomingBlock'].head(5))
+blockTx20_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
+blockTx20_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
+blockTx100_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
+blockTx100_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
+print(blockTx20_df.head(5))
 blockTx20_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx20_df.timestamp_tx)
 blockTx100_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx100_df.timestamp_tx)
 blockTx20_df['timeElapsed'] = blockTx20_df['timeElapsed'].dt.microseconds.abs()
@@ -260,15 +256,8 @@ draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_
 # Splits, how often, the longest split (height)
 # scatter: x=time, y=split height
 
-# recordList: [ts, level, hashList]
-blockLog20 = read_blockLog(filenameBlockLog20)
-blockLog100 = read_blockLog(filenameBlockLog100)
+chain20_df['sameLevel'] = chain20_df.duplicated(subset="level", keep=False)
+duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
 
-for i in len(blockLog20)-1:
-	curTimestamp = blockLog20[i][0]
-	curLevel = blockLog20[i][1]
-	curBlocks = blockLog20[i][2]
-	nextTimestamp = blockLog20[i+1][0]
-	nextLevel = blockLog20[i+1][1]
-	newBlocks = blockLog20[i+1][2]
-
+# if empty, we have no splits!
+print(duplicatedChain20_df)
