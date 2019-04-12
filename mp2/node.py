@@ -300,7 +300,7 @@ class Node(Thread):
             # if level is greater, you have to ask for the whole blockchain
 
             if(self.blockManager.betterBlock(ip, port, message2send)):
-                print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
+                print("!! BETTER BLOCK == TRUE. GET READY FOR NEW CHAIN  !! ")
                 self.requestChain(ip, port)
                 print("\nRequested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
                 #self.blockManager.updateBlock()

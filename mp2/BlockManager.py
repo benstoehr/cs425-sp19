@@ -284,8 +284,8 @@ class BlockManager(object):
 ###################################################
     def singleBlockFromMessage(self, blockString):
 
-        print("singleBlockFromMessage()")
-        print(blockString)
+        #print("singleBlockFromMessage()")
+        #print(blockString)
         # Remove the end character
         blockString = blockString.strip("^")
 
@@ -309,8 +309,8 @@ class BlockManager(object):
 
         # Get hash of new block
         newBlock.selfHash = self.hashBlockString(newBlock.toMessage())
-        newBlock.printSelf()
-        
+        #newBlock.printSelf()
+
         return newBlock
 
     def multipleBlocksFromMessage(self, longByteString):
