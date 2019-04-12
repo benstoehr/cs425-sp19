@@ -373,12 +373,13 @@ class Node(Thread):
             self.introductionMessages.append(message)
 
         elif("SOLVED" in message):
+            self.logger.logReceivedPuzzle(message)
             print("\n~~ got Solved ~~")
             print(message)
             #print(str(message[1]))
             #print(str(message[2]))
             #print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
-            self.logger.logReceivedPuzzle(message)
+
             if(self.blockManager.successfulBlock(message)):
                 #self.currentBlockString = self.blockManager.currentBlockAsString()
                 pass
