@@ -36,6 +36,7 @@ class Block(object):
     #transaction will be an array
     def addTransactionToBlock(self, transaction):
         self.transactionCount += 1
+        self.txIDs.append(transaction[2])
         self.transactions.append(transaction)
         self.transactions.sort(key=sortFunction)
 
@@ -55,7 +56,7 @@ class Block(object):
             string += "*"
         string += "_".join(self.transactions[-1])
         string += "^"
-        return string 
+        return string
 
     def toMessageWithHash(self):
         string = "BLOCK "
@@ -95,9 +96,7 @@ class Block(object):
         return self.transactions
 
     def gettxIDs(self):
-        txIDs = []
-        for t in self.transactions:
-            txIDs += [str(t[2])]
+        return self.txIDs
 
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")
