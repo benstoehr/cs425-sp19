@@ -133,6 +133,7 @@ class BlockManager(object):
                 if(pt[1] < transaction[1]):
                     print("RETRY\t\t" + str(pt))
                     fA, tA, a = self.getAccountAccountAmount(pt)
+                    self.addAccounts(fA, tA)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(pt)
                     self.pendingTransactionsToRemove.append(pt)
@@ -145,6 +146,7 @@ class BlockManager(object):
             print("\tInvalid:\t" + str(transaction))
             if(transaction not in self.pendingTransactions):
                 self.appendTransactionsToPending(transaction)
+            self.removeAddedTransactionsFromPending()
             return
 
         print("BM:S\t" + str(transaction))
