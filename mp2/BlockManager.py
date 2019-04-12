@@ -188,7 +188,7 @@ class BlockManager(object):
 
 
 ##############
-
+ 
     def logChain(self):
         logString = "CHAIN "
         logString += str(time.time())
