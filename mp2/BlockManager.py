@@ -133,6 +133,7 @@ class BlockManager(object):
         self.currentBlockCount += 1
 
         if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
+            print("\n~~~~~~~MAKING NEW HASH~~~~~~~~\n")
             blockHash = self.hashCurrentBlock()
             self.currentBlock.selfHash = blockHash
             self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
