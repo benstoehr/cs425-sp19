@@ -622,7 +622,7 @@ class Node(Thread):
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
 
-                        self.sock.sendto(blockMessage2send, (ip, port))
+                        self.sock.sendto(blockMessage2send.encode('utf-8'), (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
 
