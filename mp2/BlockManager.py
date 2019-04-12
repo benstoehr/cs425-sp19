@@ -18,6 +18,8 @@ class BlockManager(object):
 
         self.blockchain = dict()
 
+        self.blockchainBySelfHash = dict()
+
         self.pendingBlocks = []
 
         self.obsoleteHashes = []
@@ -174,6 +176,7 @@ class BlockManager(object):
                     print("I AM SLOW")
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
+                    self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
 
                     # Create new block
                     self.currentBlock = Block(level=(self.blockLevel+1), previousHash=block.selfHash)
@@ -192,6 +195,7 @@ class BlockManager(object):
 
             ## Reset stuff in anticipation of new chain coming in!
             self.blockchain = dict()
+            self.blockchainBySelfHash = dict()
             self.currentBlock = None
             self.lastSuccessfulHash = None
             self.lastSuccessfulBlock = None
@@ -219,6 +223,8 @@ class BlockManager(object):
                 self.blockLevel = self.currentBlock.level
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
+                self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
+
                 self.lastSuccessfulHash = hashOfBlock
                 self.waitingForPuzzle = False
                 return True
@@ -249,6 +255,7 @@ class BlockManager(object):
 
         # Put it in the blockchain variable
         self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
+        self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
         # At this point, you are done
         if(block.level == self.blockLevel):
             self.waitingForBlockChain = False

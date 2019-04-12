@@ -369,8 +369,9 @@ class Node(Thread):
         elif("SOLVED" in message):
             print("\n~~ got Solved ~~")
             #print(message)
-            print(str(message[1]))
-            print(str(message[2]))
+            #print(str(message[1]))
+            #print(str(message[2]))
+            print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
             if(self.blockManager.successfulBlock(message)):
                 #self.currentBlockString = self.blockManager.currentBlockAsString()
                 self.blockManager.newBlock()
@@ -572,8 +573,8 @@ class Node(Thread):
                 if(self.blockManager.currentBlock.selfHash is not None):
                     if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
                         self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
-                        print("SOLVE:")
-                        self.blockManager.printCurrentBlock()
+                        #print("SOLVE:")
+                        #self.blockManager.printCurrentBlock()
                         string = "SOLVE "
                         string += self.blockManager.currentBlock.selfHash
                         string += "\n"
