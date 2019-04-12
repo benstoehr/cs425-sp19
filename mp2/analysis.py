@@ -15,9 +15,13 @@ filenameBlockTx100 = "blockTx100.txt"
 filenameBlockLog20 = "block20.txt"
 filenameBlockLog100 = "block100.txt"
 
+# Log File
+# bloxk-tx: [blockHash tx1 tx2 tx3 tx4] (log when node terminates?)
+# block level: [timestamp level hash1 hash2 hash3 hash4] (log the current chain when new block created?)
+
 # TODO:
 # 1. How long does each transaction take to appear in a block? Are there congestion delays?
-#    -> block - tx data, t(tx first appeared) - t(block is mined) is the delay -> {block: [tx1, tx2, ..]} -> block1 tx1, block1 tx2, block2 tx3
+#    -> block - tx data, t(tx first appeared) - t(block is mined) is the delay -> [blockHash tx1 tx2 tx3 tx4]
 # 2. How long does a block propagate throughout the entire network?
 #    -> can be achieved by current log
 # 3. How often do chain splits (i.e., two blocks mined at the same height) occur? 
@@ -74,23 +78,30 @@ def read_blockTx(filename):
 	df = pd.DataFrame.from_records(raw, columns=labels)
 	return df
 
-def read_blockSplit(filename):
+def read_blockLog(filename):
 	raw = []
 	with open(filename, 'r') as f:
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
 			if len(record) >= 2:
+				hash_list = []
+				record_list = []
 				for blockhash in len(record)-2
-					i = block + 2
-					tmp_list = []
-					tmp_list.append(record[0]) # timestamp
-					tmp_list.append(record[1]) # level
-					tmp_list.append(reocrd[i]) # hash
-					raw.append(tmp_list)
+					i = blockhash + 2
+					hash_list.append(reocrd[i]) # hash
+				record_list.append(record[0]) # timestamp
+				record_list.append(record[1]) # level
+				record_list.append(hash_list)
+				raw.append(record_list)
 
-	labels = ['timestamp', 'level', 'blockHash']
-	df = pd.DataFrame.from_records(raw, columns=labels)
-	return df
+	# labels = ['timestamp', 'level', 'blockHashList']
+	# df = pd.DataFrame.from_records(raw, columns=labels)
+	return raw
+
+def check_split(recordList):
+	"""
+	recordList: [ts, level, hashList]
+	"""
 
 def draw_hist(d, output_filename):
 	"""
@@ -267,7 +278,7 @@ draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_
 # Splits, how often, the longest split (height)
 # scatter: x=time, y=split height
 
-blockLog = {}
+# recordList: [ts, level, hashList]
+blockLog20 = read_blockLog(filenameBlockLog20)
+blockLog100 = read_blockLog(filenameBlockLog100)
 
-with open(filenameBlockLog) as json_file:  
-    blockLog = json.load(json_file)
