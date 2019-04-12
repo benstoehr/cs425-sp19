@@ -79,13 +79,15 @@ class BlockManager(object):
 #############
 
     def hashCurrentBlock(self):
-        h = hashlib.sha256().update(self.currentBlockAsString().encode('utf-8'))
+        h = hashlib.sha256()
+        h.update(self.currentBlockAsString().encode('utf-8'))
         hh = h.hexdigest()
         #self.currentBlock.selfHash = hh
         return hh
 
     def hashBlockString(self, blockString):
-        h = hashlib.sha256().update(blockString.encode('utf-8'))
+        h = hashlib.sha256()
+        h.update(blockString.encode('utf-8'))
         hh = h.hexdigest()
         return hh
 
