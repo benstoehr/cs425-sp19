@@ -164,7 +164,7 @@ class mp2Server(object):
         try:
             # addr = (IP, PORT)
             #print("about to recvfrom")
-            message, ipANDport = self.sock.recvfrom(1024)
+            message, ipANDport = self.sock.recvfrom(32768)
             message = str(message.decode('utf-8'))
             #print("after recvfrom")
             # firstMessageLength = self.serviceSocket.recv(1024)
