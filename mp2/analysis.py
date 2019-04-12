@@ -10,10 +10,6 @@ benslog = "log.txt"
 
 filename20 = "log20.txt"
 filename100 = "log100.txt"
-filenameBlockTx20 = "blockTx20.txt"
-filenameBlockTx100 = "blockTx100.txt"
-filenameBlockLog20 = "block20.txt"
-filenameBlockLog100 = "block100.txt"
 
 # Log File
 # bloxk-tx: [blockHash tx1 tx2 tx3 tx4] (log when node terminates?)
@@ -48,12 +44,18 @@ filenameBlockLog100 = "block100.txt"
 
 def read_data(filename):
 	raw = []
+	blockTx = []
+	chain = []
 	ttype_list = ['TRANSACTION', 'BLOCK', 'SOLVED']
 	with open(filename, 'r') as f:
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
 			if len(record) > 2:
-				if record[4] in ttype_list:
+				if record[0] == "BLOCK-TX":
+					blockTx.append(record[1:])
+				elif record[0] == "CHAIN":
+					chain.append(record[1:])
+				elif record[4] in ttype_list:
 					raw.append(record)
 
 	# fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) +
@@ -62,9 +64,13 @@ def read_data(filename):
 	# name: vm[#]node[i]
 	# ttype: TRANSACTION/BLOCK/...etc
 	# tID: Tx: txID/Block: selfHash/Puzzle: hash/Verify: hash_solution
-	labels = ['timestamp', 'name', 'status', 'bytes', 'ttype', 'tID', 'fromNode', 'toNode', 'sentTime']
-	df = pd.DataFrame.from_records(raw, columns=labels)
-	return df
+	labels_log = ['timestamp', 'name', 'status', 'bytes', 'ttype', 'tID', 'fromNode', 'toNode', 'sentTime']
+	df_log = pd.DataFrame.from_records(raw, columns=labels_log)
+
+	labels_blockTx = ['blockHash', 'txID']
+	df_blockTx = pd.DataFrame.from_records(blockTx, columns=labels)
+	
+	return df, df_blockTx, chain
 
 def read_blockTx(filename):
 	raw = []
@@ -140,7 +146,7 @@ def draw_line(df, x, y, color, output_filename):
 	plt.clf()
 
 # Start to work
-raw_df20 = read_data(filename20)
+raw_df20,  = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df20['bytes'] = raw_df20['bytes'].astype(int)
 raw_df20['timestamp'] = pd.to_datetime(raw_df20['timestamp'], unit='s')
@@ -285,5 +291,8 @@ blockLog100 = read_blockLog(filenameBlockLog100)
 for i in len(blockLog20)-1:
 	curTimestamp = blockLog20[i][0]
 	curLevel = blockLog20[i][1]
+	curBlocks = blockLog20[i][2]
 	nextTimestamp = blockLog20[i+1][0]
 	nextLevel = blockLog20[i+1][1]
+	newBlocks = blockLog20[i+1][2]
+
