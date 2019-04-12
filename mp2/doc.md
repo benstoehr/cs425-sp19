@@ -131,14 +131,24 @@ The other possibility is that of a new block coming in from a node. When this ha
 
 Plot 1: x = time elapsed for half of nodes receiving the transaction, y = count/freq, color = node #
 
+Nodes: 20
+
 ![Plot 1-2](img/plot01-1_hist_propagation_delay_half_20.png "Plot 1-1")
+
+Nodes: 100
+
 ![Plot 1-2](img/plot01-2_hist_propagation_delay_half_100.png "Plot 1-2")
 
 - Propagation completed:
 
 Plot 2: x = time elapsed for all nodes receiving the transaction, y = count/freq, color = node # 
 
+Nodes: 20
+
 ![Plot 2-1](img/plot02-1_hist_propagation_delay_all_20.png "Plot 2-1")
+
+Nodes: 100
+
 ![Plot 2-2](img/plot02-2_hist_propagation_delay_all_100.png "Plot 2-2")
 
 - Transaction Propagation:
