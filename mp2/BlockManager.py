@@ -133,9 +133,7 @@ class BlockManager(object):
                     fA, tA, a = self.getAccountAccountAmount(pt)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(pt)
-                        self.pendingTransactionsToRemove.append(pt)
-                    else:
-                        pass
+                    self.pendingTransactionsToRemove.append(pt)
         self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
