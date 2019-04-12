@@ -260,6 +260,7 @@ class Node(Thread):
         ## CP 1
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
+            print("\t\t\t\t" + str(message2send))
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
