@@ -161,7 +161,7 @@ class BlockManager(object):
 
         if(block.level > self.blockLevel):
             print("New block has higher level!" + str(block.level))
-            block.printSelf()
+            #block.printSelf()
 
             #print("Higher Level previousHash: " + block.previousBlockHash)
             #print("Higher Level selfHash: " + block.selfHash)
@@ -224,8 +224,8 @@ class BlockManager(object):
         #block = self.singleBlockFromMessage(message)
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
         #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
-        print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
-        print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
+        #print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
+        #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock is not None):
             if(self.currentBlock.selfHash == hashOfBlock):
                 print("CONSECUTIVE BLOCK SUCCESS")
@@ -249,7 +249,7 @@ class BlockManager(object):
         return False
 
     def newBlock(self):
-        print("newBlock()")
+        #print("newBlock()")
         previousLevel = self.currentBlock.level
         previousHash = self.currentBlock.selfHash
         self.lastSuccessfulHash = copy.deepcopy(self.currentBlock.selfHash)
@@ -268,7 +268,7 @@ class BlockManager(object):
         # Get the block
         block = self.singleBlockFromMessage(blockString)
         print("Adding Block to Chain")
-        block.printSelf()
+        #block.printSelf()
 
         # Put it in the blockchain variable
         self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
@@ -339,7 +339,7 @@ class BlockManager(object):
         print("singleBlock hash")
 
         h = self.hashBlockString(newBlock.toMessage())
-        print(h)
+        #print(h)
         newBlock.selfHash = h
         #newBlock.printSelf()
 

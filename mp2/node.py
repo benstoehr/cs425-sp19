@@ -598,10 +598,10 @@ class Node(Thread):
                     ip = str(ip)
                     port = int(port)
                     if(self.okToSendBlock(blockString, ip, port)):
-                        print("\nblock about to send")
-                        self.blockManager.lastSuccessfulBlock.printSelf()
+                        #print("\nblock about to send")
+                        #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
-                        print(blockString)
+                        #print(blockString)
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
                         self.sock.sendto(blockMessage2send, (ip, port))
