@@ -214,7 +214,7 @@ class BlockManager(object):
 ##############
 
     def successfulBlock(self, message):
-        block = self.singleBlockFromMessage(message)
+        #block = self.singleBlockFromMessage(message)
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
         #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
         print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
