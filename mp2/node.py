@@ -630,26 +630,26 @@ class Node(Thread):
         print("Run event unset!")
         print(str(self.vmNumber) + ": Final List")
         time.sleep(self.vmNumber)
-        #for tm in self.transactionMessages:
-        #    print(tm)
-        #print("")
+        for tm in self.transactionMessages:
+           print(tm)
+        print("")
 
-        accounts = sorted(self.blockManager.committedBank.keys())
-        for account in accounts:
-            print(str(account) + " " + str(self.blockManager.committedBank[account]))
-
-        #print(self.blockManager.blockchain)
-        for i in range(self.blockManager.blockLevel):
-            blockHash, block = self.blockManager.blockchain[i+1]
-            block.printSelf()
-            print("")
-
-        print("\n[PENDING TRANSACTIONS]")
-        for pt in self.blockManager.pendingTransactions:
-            print(pt)
-
-        print("\nTRANSACTIONS IN CURRENT BLOCK")
-        for t in self.blockManager.currentBlock.getTransactions():
-            print(t)
+        # accounts = sorted(self.blockManager.committedBank.keys())
+        # for account in accounts:
+        #     print(str(account) + " " + str(self.blockManager.committedBank[account]))
+        #
+        # #print(self.blockManager.blockchain)
+        # for i in range(self.blockManager.blockLevel):
+        #     blockHash, block = self.blockManager.blockchain[i+1]
+        #     block.printSelf()
+        #     print("")
+        #
+        # print("\n[PENDING TRANSACTIONS]")
+        # for pt in self.blockManager.pendingTransactions:
+        #     print(pt)
+        #
+        # print("\nTRANSACTIONS IN CURRENT BLOCK")
+        # for t in self.blockManager.currentBlock.getTransactions():
+        #     print(t)
 
         self.shutdown()
