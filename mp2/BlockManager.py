@@ -127,7 +127,7 @@ class BlockManager(object):
             print("\tInvalid:\t" + str(transaction))
             return
 
-        #print("\t" + str(transaction))
+        #print("\t" + str(transaction ))
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
             self.pendingTransactionsToRemove.append(transaction)
