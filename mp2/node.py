@@ -288,7 +288,7 @@ class Node(Thread):
 
         # CP 2
         elif("BLOCK" in message2send):
-            #print("Received block from " + str(ip) + " " +str(port))
+            print("Received block from " + str(ip) + " " +str(port))
             #print(message2send)
 
             block = self.blockManager.singleBlockFromMessage(' '.join(message2send))
@@ -298,7 +298,7 @@ class Node(Thread):
 
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
             #print("Received block")
-            #print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
+            print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
             #print("\n")
 
             # if level is greater, you have to ask for the whole blockchain
