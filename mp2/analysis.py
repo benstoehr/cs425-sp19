@@ -8,12 +8,14 @@ import json
 
 filename20 = "log20.txt"
 filename100 = "log100.txt"
-filenameBlockTx = "blockTx.json"
-filenameBlockLog = "block.json"
+filenameBlockTx20 = "blockTx20.txt"
+filenameBlockTx100 = "blockTx100.txt"
+filenameBlockLog20 = "block20.txt"
+filenameBlockLog100 = "block100.txt"
 
 # TODO:
 # 1. How long does each transaction take to appear in a block? Are there congestion delays?
-#    -> block - tx data, t(tx first appeared) - t(block is mined) is the delay -> {block: [tx1, tx2, ..]}
+#    -> block - tx data, t(tx first appeared) - t(block is mined) is the delay -> {block: [tx1, tx2, ..]} -> block1 tx1, block1 tx2, block2 tx3
 # 2. How long does a block propagate throughout the entire network?
 #    -> can be achieved by current log
 # 3. How often do chain splits (i.e., two blocks mined at the same height) occur? 
@@ -40,7 +42,7 @@ filenameBlockLog = "block.json"
 
 def read_data(filename):
 	raw = []
-	ttype_list = ['TRANSACTION', 'BLOCK']
+	ttype_list = ['TRANSACTION', 'BLOCK', 'SOLVED']
 	with open(filename, 'r') as f:
 		for line in f:
 			record = line.split(' ') # separating sign to be checked
@@ -55,6 +57,18 @@ def read_data(filename):
 	# ttype: TRANSACTION/BLOCK/...etc
 	# tID: Tx: txID/Block: selfHash/Puzzle: hash/Verify: hash_solution
 	labels = ['timestamp', 'name', 'status', 'bytes', 'ttype', 'tID', 'fromNode', 'toNode', 'sentTime']
+	df = pd.DataFrame.from_records(raw, columns=labels)
+	return df
+
+def read_blockTx(filename):
+	raw = []
+	with open(filename, 'r') as f:
+		for line in f:
+			record = line.split(' ') # separating sign to be checked
+			if len(record) >= 2:
+				raw.append(record)
+			
+	labels = ['blockHash', 'txID']
 	df = pd.DataFrame.from_records(raw, columns=labels)
 	return df
 
@@ -184,30 +198,39 @@ draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cum
 # the congestion delays (tx in block)
 # histogram (delay)
 
-blockTx = {}
-
-#with open(filenameBlockTx) as json_file:  
-#    blockTx = json.load(json_file)
+blockTx20_df = read_blockTx(filenameBlockTx20)
+blockTx100_df = read_blockTx(filenameBlockTx100)
 
 
-    
+
 
 # Plot 9 & 10
 # block propagation
 # histogram (propagation time)
 
 # blocks take how long to propagate to all nodes
-block_df = raw_df[raw_df.status == 'IncomingBlock'].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block20_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 20].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block100_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 100].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
 
-# calculate the time elaspsed from every pair of nodes
-block_df['timeElapsed'] = (block_df.timestamp - block_df.sentTime)
-block_df['timeElapsed'] = block_df['timeElapsed'].dt.microseconds.abs()
+# calculate the time elaspsed from solved to all nodes
+block20_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 20].groupby(['tID'])['timestamp'].min().reset_index()
+block100_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 100].groupby(['tID'])['timestamp'].min().reset_index()
+block20_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
+block100_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
+block20_df['sentTime'] = tx20_df.tID.apply(lambda x: block20_solved[x])
+block100_df['sentTime'] = tx100_df.tID.apply(lambda x: block100_solved[x])
+##### record the solved time
+block20_df['timeElapsed'] = (block20_df.timestamp - block20_df.sentTime)
+block100_df['timeElapsed'] = (block100_df.timestamp - block100_df.sentTime)
+block20_df['timeElapsed'] = block20_df['timeElapsed'].dt.microseconds.abs()
+block100_df['timeElapsed'] = block100_df['timeElapsed'].dt.microseconds.abs()
 
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
-ttlTimeBlock = block_df.groupby(['tID','nodeNum'])['timeElapsed'].sum().reset_index()
-draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 20]['timeElapsed'].values, 'plot09_hist_block_propagation_delay_all_20.png')
-draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 100]['timeElapsed'].values, 'plot10_hist_block_propagation_delay_all_100.png')
+ttlTimeBlock20 = block_df.groupby(['tID'])['timeElapsed'].max().reset_index()
+ttlTimeBlock100 = block_df.groupby(['tID'])['timeElapsed'].max().reset_index()
+draw_hist(ttlTimeBlock20['timeElapsed'].values, 'plot09_hist_block_propagation_delay_all_20.png')
+draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_delay_all_100.png')
 
 # Plot 11 & 12
 # Splits, how often, the longest split (height)
@@ -215,5 +238,5 @@ draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 100]['timeElapsed'].values, 'plot
 
 blockLog = {}
 
-#with open(filenameBlockLog) as json_file:  
-#    blockLog = json.load(json_file)
+with open(filenameBlockLog) as json_file:  
+    blockLog = json.load(json_file)
