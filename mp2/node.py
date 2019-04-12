@@ -600,7 +600,7 @@ class Node(Thread):
                     if(self.okToSendBlock(blockString, ip, port)):
                         #print("\nblock about to send")
                         #self.blockManager.lastSuccessfulBlock.printSelf()
-                        #print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
+                        print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
                         #print(blockString)
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
@@ -616,6 +616,7 @@ class Node(Thread):
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockChainString)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
+
                 self.ipsToSendChain = []
 
             ## IDK WHY THIS IS NECESSARY
