@@ -186,8 +186,12 @@ class BlockManager(object):
                     # Move pending transactions to it
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
+
+                    self.rebuildBank()
+                    
                     self.newBlock()
                     self.appendPendingTransactionsToNewBlock()
+
 
                     print("")
                     return False
