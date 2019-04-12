@@ -101,4 +101,4 @@ class Block(object):
         print("[PUZZLE: " + str(self.puzzleAnswer) + "]")
         for t in self.transactions:
             print(str(t))
-        print("\n")
+        print("")
