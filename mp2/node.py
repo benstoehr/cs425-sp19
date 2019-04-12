@@ -302,7 +302,7 @@ class Node(Thread):
             if(self.blockManager.betterBlock(ip, port, message2send)):
                 print("NODE CALLED BETTER BLOCK AND IT WAS TRUE")
                 self.requestChain(ip, port)
-                print("Requested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
+                print("\nRequested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
 
@@ -315,6 +315,7 @@ class Node(Thread):
             #print("Building new chain with block")
             #print(message)
             if(self.blockManager.waitingForBlockChainFrom == (ip, port)):
+                print("[RECEIVED PIECE OF CHAIN]")
                 self.blockManager.buildChain(message2send)
                 pass
 
@@ -600,7 +601,7 @@ class Node(Thread):
                         print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()
-                        blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
+                        blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockChainString)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
                 self.ipsToSendChain = []

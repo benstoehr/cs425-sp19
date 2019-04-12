@@ -22,7 +22,7 @@ class BlockManager(object):
 
         self.obsoleteHashes = []
 
-        self.currentBlock = Block(level=1, previousHash="0")
+        self.currentBlock = Block(level=1, previousHash="None")
 
         self.lastSuccessfulHash = "None"
         self.lastSuccessfulBlock = None
@@ -41,8 +41,8 @@ class BlockManager(object):
 
         self.waitingForBlockChainFrom = None
 
-        self.minTransactionsBeforeHash = 3
-        self.maxTransactionsBeforeHash = 8
+        self.minTransactionsBeforeHash = 2
+        self.maxTransactionsBeforeHash = 6
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
@@ -244,6 +244,9 @@ class BlockManager(object):
         wordBLOCKCHAIN, blockString = message
         # Get the block
         block = self.singleBlockFromMessage(blockString)
+        print("Adding Block to Chain")
+        block.printSelf()
+
         # Put it in the blockchain variable
         self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
         # At this point, you are done
