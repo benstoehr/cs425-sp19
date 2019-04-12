@@ -123,6 +123,7 @@ class BlockManager(object):
 
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
+                #print("\tP" + str(transaction))
                 self.appendTransactionsToPending(transaction)
             return
 
