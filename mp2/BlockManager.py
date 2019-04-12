@@ -215,20 +215,19 @@ class BlockManager(object):
 
     def successfulBlock(self, message):
         block = self.singleBlockFromMessage(message)
-        block.printSelf()
         [wordBLOCK, hashOfBlock, puzzleAnswer] = message
         #print("BLOCK MANAGER currentHash: " + str(self.currentHash))
-        #print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
-        #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
+        print("BLOCK MANAGER currentBlock.selfHash: " + str(self.currentBlock.selfHash))
+        print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock is not None):
-            if(self.currentBlock.selfHash == block.selfHash):
+            if(self.currentBlock.selfHash == hashOfBlock):
                 print("CONSECUTIVE BLOCK SUCCESS")
 
                 self.blockLevel = self.currentBlock.level
-                self.currentBlock.puzzleAnswer = block.puzzleAnswer
-                self.blockchain[self.currentBlock.level] = (block.selfHash, copy.deepcopy(self.currentBlock))
+                self.currentBlock.puzzleAnswer = puzzleAnswer
+                self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
-                self.lastSuccessfulHash = block.selfHash
+                self.lastSuccessfulHash = hashOfBlock
                 self.newBlock()
 
                 self.fillNewBlock()
