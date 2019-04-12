@@ -512,10 +512,10 @@ class Node(Thread):
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
             transactionsToSend = None
-            if (len(sortedTranscations) < 5):
+            if (len(sortedTranscations) < 10):
                 transactionsToSend = sortedTranscations
             else:
-                transactionsToSend = sortedTranscations[-5:]
+                transactionsToSend = sortedTranscations[-10:]
 
     ## 3.C -- Figure out which random introductions to send
 
@@ -618,6 +618,8 @@ class Node(Thread):
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
                 self.ipsToSendChain = []
+
+            ################################
 
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
