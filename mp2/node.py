@@ -444,17 +444,19 @@ class Node(Thread):
             while (1):
                 # print("read()")
                 # addr = ipANDport = (ip, port)
+                if (readCount == 10):
+                    readCount = 0
+                    break
                 message, addr = self.read()
                 # print("post read()")
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)
                     readCount += 1
-                    if(readCount == 10):
-                        readCount = 0
-                        break
+
                 else:
                     break
+            readCount = 0
 
             ######## Update list of IPs from node messages
             for introMessage in self.introductionMessages:
