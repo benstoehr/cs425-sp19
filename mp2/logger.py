@@ -191,7 +191,7 @@ class Logger():
     # Node to Service about personal block
 
     def logReceivedPuzzle(self, message):
-
+        print("logReceivedPuzzle()")
         timestamp_a = time.time()
         ttype = "SOLVED"
         tID = message[1]

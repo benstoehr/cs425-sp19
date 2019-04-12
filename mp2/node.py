@@ -589,8 +589,9 @@ class Node(Thread):
                         string += self.blockManager.currentBlock.selfHash
                         string += "\n"
                         #print("\n\t\t\t\t\t\t\t\t\t\t\t\t\t[RECEIVING]")
-                        self.serv.serviceSocket.send(string.encode('utf-8'))
                         self.logger.logSentPuzzle(string)
+                        self.serv.serviceSocket.send(string.encode('utf-8'))
+
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and
@@ -622,6 +623,7 @@ class Node(Thread):
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockChainString)
+                        self.logger.logSentBlock(hash, blockMessage2send, ip, port)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
