@@ -4,9 +4,12 @@ import datetime as dt
 import seaborn as sns
 import matplotlib.pyplot as plt
 import re
+import json
 
 filename20 = "log20.txt"
 filename100 = "log100.txt"
+filenameBlockTx = "blockTx.json"
+filenameBlockLog = "block.json"
 
 # TODO:
 # 1. How long does each transaction take to appear in a block? Are there congestion delays?
@@ -166,20 +169,28 @@ print("done 3 & 4")
 # Plot 5 & 6
 # total bandwidth (all messages includes tx, block, solve, verify)
 # sent: Outgoing*, received: Incoming*
-# raw_df20['flow'] = raw_df20.status.apply(lambda x: x[:8])
-# raw_df100['flow'] = raw_df100.status.apply(lambda x: x[:8])
+raw_df20['flow'] = raw_df20.status.apply(lambda x: x[:8])
+raw_df100['flow'] = raw_df100.status.apply(lambda x: x[:8])
 
-raw_df20['cumBandwidth'] = raw_df20['bytes'].cumsum()
-raw_df100['cumBandwidth'] = raw_df100['bytes'].cumsum()
+bw20_df = raw_df20[raw_df20.flow == "Incoming"]
+bw100_df = raw_df100[raw_df100.flow == "Incoming"]
+bw20_df['cumBandwidth'] = bw20_df['bytes'].cumsum()
+bw100_df['cumBandwidth'] = bw100_df['bytes'].cumsum()
 print(raw_df20.head(5))
-draw_line(raw_df20.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot05_line_bandwidth_20.png')
-draw_line(raw_df100.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot06_line_bandwidth_100.png')
+draw_line(bw20_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot05_line_bandwidth_20.png')
+draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot06_line_bandwidth_100.png')
 
 # Plot 7 & 8
 # the congestion delays (tx in block)
 # histogram (delay)
 
+blockTx = {}
 
+#with open(filenameBlockTx) as json_file:  
+#    blockTx = json.load(json_file)
+
+
+    
 
 # Plot 9 & 10
 # block propagation
@@ -192,15 +203,17 @@ block_df = raw_df[raw_df.status == 'IncomingBlock'].sort_values(by=['timestamp']
 block_df['timeElapsed'] = (block_df.timestamp - block_df.sentTime)
 block_df['timeElapsed'] = block_df['timeElapsed'].dt.microseconds.abs()
 
-
-# Plot 2
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
 ttlTimeBlock = block_df.groupby(['tID','nodeNum'])['timeElapsed'].sum().reset_index()
 draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 20]['timeElapsed'].values, 'plot09_hist_block_propagation_delay_all_20.png')
 draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 100]['timeElapsed'].values, 'plot10_hist_block_propagation_delay_all_100.png')
 
-
 # Plot 11 & 12
 # Splits, how often, the longest split (height)
 # scatter: x=time, y=split height
+
+blockLog = {}
+
+#with open(filenameBlockLog) as json_file:  
+#    blockLog = json.load(json_file)

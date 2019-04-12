@@ -21,7 +21,7 @@ e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ## Commit Hash
 
-8a52670fc4b4ab8e94ca0a1e5b5bf086e3d766de
+[I'm the commit hash]
 
 ## Design Document
 
