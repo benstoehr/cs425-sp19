@@ -79,7 +79,6 @@ class BlockManager(object):
             self.bank[toAccount] = toAccountValue + amount
             return True
 
-
     def readIncomingBlockChain(self, message):
         block = self.singleBlockFromMessage(message)
 
@@ -117,6 +116,7 @@ class BlockManager(object):
 
         print("BM\t\t" + str(transaction[2]))
 
+
         fromAccount, toAccount, amount = self.getAccountAccountAmount(transaction)
         self.addAccounts(fromAccount, toAccount)
 
@@ -125,18 +125,18 @@ class BlockManager(object):
                 self.appendTransactionsToPending(transaction)
             return
 
-        # try to reduce number of invalid
-        if(self.blockLevel == 0):
-            for pt in self.pendingTransactions:
-                # If pending transaction has lower timestamp than most recent one, maybe look at it
-                if(pt[1] < transaction[1]):
-                    fA, tA, a = self.getAccountAccountAmount(pt)
-                    if(self.executeTrade(fA, tA, a)):
-                        self.currentBlock.addTransactionToBlock(transaction)
-                        self.pendingTransactionsToRemove.append(transaction)
-                    else:
-                        pass
-            self.removeAddedTransactionsFromPending()
+        self.sortPendingTransactions()
+        # try to reduce number of invalid by including old
+        for pt in self.pendingTransactions:
+            # If pending transaction has lower timestamp than most recent one, maybe look at it
+            if(pt[1] < transaction[1]):
+                fA, tA, a = self.getAccountAccountAmount(pt)
+                if(self.executeTrade(fA, tA, a)):
+                    self.currentBlock.addTransactionToBlock(transaction)
+                    self.pendingTransactionsToRemove.append(transaction)
+                else:
+                    pass
+        self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
@@ -151,9 +151,8 @@ class BlockManager(object):
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
             self.pendingTransactionsToRemove.append(transaction)
-        self.currentBlockCount += 1
 
-        if(self.currentBlock.transactionCount == self.numTransactionsBeforeHash):
+        if(self.currentBlock.transactionCount >= self.numTransactionsBeforeHash):
             print("\n~~~~~~~MAKING NEW HASH~~~~~~~~\n")
             blockHash = self.hashCurrentBlock()
             self.currentBlock.selfHash = blockHash
