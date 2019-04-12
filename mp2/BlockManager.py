@@ -294,18 +294,16 @@ class BlockManager(object):
                 self.removeAddedTransactionsFromPending()
                 self.sortPendingTransactions()
 
-
                 self.rebuildBank()
                 self.committedBank = copy.deepcopy(self.bank)
 
                 self.newBlock()
-
                 #self.printPendingTransactions()
 
                 self.appendPendingTransactionsToNewBlock()
 
                 self.waitingForPuzzle = False
-                self.waitingForBlockChain = False
+                #self.waitingForBlockChain = False
 
                 return True
 
