@@ -578,8 +578,8 @@ class Node(Thread):
 
             ## SENDING BLOCK TO OTHER NODES
             if(not self.blockManager.waitingForBlockChain and
-                    (self.blockManager.lastSuccessfulHash is not None)
-                    ):
+                    (self.blockManager.lastSuccessfulHash is not "None" and
+                    self.blockManager.lastSuccessfulHash is not None)):
 
                 blockString = self.blockManager.lastSuccessfulBlock.toMessageWithHash()
                 blockMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockString)
