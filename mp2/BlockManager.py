@@ -277,14 +277,22 @@ class BlockManager(object):
 ###################################################
     def singleBlockFromMessage(self, blockString):
 
+        # Remove the end character
+        blockString = blockString.strip("^")
+
+        # Split into different parts
         hash, level, content, puzzle = blockString.split("$")
+
+        # Create the new block
         newBlock = Block(level=int(level), previousHash=hash, puzzle=puzzle)
 
+        # Add transactions and txIDs
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
             newBlock.txIDs.append(splitTransaction[2])
             newBlock.transactions.append(splitTransaction)
 
+        # Get hash of new block
         newBlock.selfHash = self.hashBlockString(newBlock.toMessage())
 
         return newBlock

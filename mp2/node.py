@@ -293,6 +293,7 @@ class Node(Thread):
 
             blockKey = ' '.join(message2send)
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
+            print("Received block")
             print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
             print("\n")
 
