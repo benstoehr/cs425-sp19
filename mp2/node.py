@@ -264,7 +264,7 @@ class Node(Thread):
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
-                print("NODE\t" + str(message2send))
+                print("hM\t" + str(message2send))
                 self.transactionMessages.append(message2send)
                 ## ADD IT TO THE BLOCK MANAGER
                 self.blockManager.appendTransactionToCurrentBlock(message2send)
@@ -355,7 +355,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            print("SERVICE\t" + str(message[1]) + " " + str(message[2]))
+            print("SERVICE\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             if(message not in self.transactionMessages):
