@@ -55,7 +55,7 @@ class Block(object):
             string += "*"
         string += "_".join(self.transactions[-1])
         string += "^"
-        return string
+        return string 
 
     def toMessageWithHash(self):
         string = "BLOCK "

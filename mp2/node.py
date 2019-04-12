@@ -653,7 +653,6 @@ class Node(Thread):
         for i in range(self.blockManager.blockLevel):
 
             blockHash, block = self.blockManager.blockchain[i+1]
-
             block.printSelf()
 
             storedTransactions += len(block.getTransactions())
