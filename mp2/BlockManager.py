@@ -115,8 +115,6 @@ class BlockManager(object):
     def appendTransactionToCurrentBlock(self, transaction):
 
         print("BM\t\t" + str(transaction[2]))
-
-
         fromAccount, toAccount, amount = self.getAccountAccountAmount(transaction)
         self.addAccounts(fromAccount, toAccount)
 
@@ -127,15 +125,16 @@ class BlockManager(object):
 
         self.sortPendingTransactions()
         # try to reduce number of invalid by including old
-        for pt in self.pendingTransactions:
-            # If pending transaction has lower timestamp than most recent one, maybe look at it
-            if(pt[1] < transaction[1]):
-                fA, tA, a = self.getAccountAccountAmount(pt)
-                if(self.executeTrade(fA, tA, a)):
-                    self.currentBlock.addTransactionToBlock(transaction)
-                    self.pendingTransactionsToRemove.append(transaction)
-                else:
-                    pass
+        for pt in self.pendingTransactions[:2]:
+            if(pt != transaction)
+                # If pending transaction has lower timestamp than most recent one, maybe look at it
+                if(pt[1] < transaction[1]):
+                    fA, tA, a = self.getAccountAccountAmount(pt)
+                    if(self.executeTrade(fA, tA, a)):
+                        self.currentBlock.addTransactionToBlock(transaction)
+                        self.pendingTransactionsToRemove.append(transaction)
+                    else:
+                        pass
         self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
@@ -143,8 +142,9 @@ class BlockManager(object):
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
             print("\tInvalid:\t" + str(transaction))
-            if(self.blockLevel == 0):
+            if(transaction not in self.pendingTransactions):
                 self.appendTransactionsToPending(transaction)
+
             return
 
         #print("\t" + str(transaction ))
