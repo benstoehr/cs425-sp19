@@ -264,7 +264,7 @@ class Node(Thread):
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
-                print("NODE\t" + str(message2send[1]) + " " + str(message2send[2]))
+                print("NODE\t" + str(message2send))
                 self.transactionMessages.append(message2send)
                 ## ADD IT TO THE BLOCK MANAGER
                 self.blockManager.appendTransactionToCurrentBlock(message2send)

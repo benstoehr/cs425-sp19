@@ -114,7 +114,7 @@ class BlockManager(object):
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
 
-        print("BM\t\t" + str(transaction[2]))
+
         fromAccount, toAccount, amount = self.getAccountAccountAmount(transaction)
         self.addAccounts(fromAccount, toAccount)
 
@@ -129,7 +129,7 @@ class BlockManager(object):
             if(pt != transaction):
                 # If pending transaction has lower timestamp than most recent one, maybe look at it
                 if(pt[1] < transaction[1]):
-                    print("RETRY\t\t" + str(transaction[1]) + " " + str(transaction[2]))
+                    print("RETRY\t\t" + str(transaction))
                     fA, tA, a = self.getAccountAccountAmount(pt)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(transaction)
@@ -147,6 +147,7 @@ class BlockManager(object):
                 self.appendTransactionsToPending(transaction)
             return
 
+        print("BM:S\t" + str(transaction))
         #print("\t" + str(transaction ))
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
