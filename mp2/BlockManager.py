@@ -290,7 +290,12 @@ class BlockManager(object):
         blockString = blockString.strip("^")
 
         # Split into different parts
-        hash, level, content, puzzle = blockString.split("$")
+        [hash, level, content, puzzle] = blockString.split("$")
+
+        print("hash: " + str(hash))
+        print("level: " + str(level))
+        print("content: " + str(content))
+        print("puzzle: " + str(puzzle))
 
         # Create the new block
         newBlock = Block(level=int(level), previousHash=hash, puzzle=puzzle)

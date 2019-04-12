@@ -117,8 +117,8 @@
           <file leaf-file-name="BlockManager.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/BlockManager.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="295">
-                  <caret line="287" column="25" lean-forward="false" selection-start-line="287" selection-start-column="25" selection-end-line="287" selection-end-column="25" />
+                <state relative-caret-position="364">
+                  <caret line="303" column="46" lean-forward="false" selection-start-line="303" selection-start-column="46" selection-end-line="303" selection-end-column="46" />
                   <folding>
                     <element signature="e#0#14#0" expanded="true" />
                     <element signature="e#1363#1929#0" expanded="false" />
@@ -132,8 +132,8 @@
                     <element signature="e#8275#8400#0" expanded="false" />
                     <element signature="e#9419#9760#0" expanded="false" />
                     <element signature="e#9863#10099#0" expanded="false" />
-                    <element signature="e#11011#11187#0" expanded="false" />
-                    <element signature="e#11283#11359#0" expanded="false" />
+                    <element signature="e#11170#11346#0" expanded="false" />
+                    <element signature="e#11442#11518#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -947,8 +947,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp2/BlockManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="287" column="25" lean-forward="false" selection-start-line="287" selection-start-column="25" selection-end-line="287" selection-end-column="25" />
+        <state relative-caret-position="364">
+          <caret line="303" column="46" lean-forward="false" selection-start-line="303" selection-start-column="46" selection-end-line="303" selection-end-column="46" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#1363#1929#0" expanded="false" />
@@ -962,8 +962,8 @@
             <element signature="e#8275#8400#0" expanded="false" />
             <element signature="e#9419#9760#0" expanded="false" />
             <element signature="e#9863#10099#0" expanded="false" />
-            <element signature="e#11011#11187#0" expanded="false" />
-            <element signature="e#11283#11359#0" expanded="false" />
+            <element signature="e#11170#11346#0" expanded="false" />
+            <element signature="e#11442#11518#0" expanded="false" />
           </folding>
         </state>
       </provider>
