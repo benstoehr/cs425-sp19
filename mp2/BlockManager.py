@@ -247,6 +247,7 @@ class BlockManager(object):
                     self.appendPendingTransactionsToNewBlock()
 
 
+
                     print("")
                     return False
 
@@ -298,9 +299,13 @@ class BlockManager(object):
                 self.committedBank = copy.deepcopy(self.bank)
 
                 self.newBlock()
-                self.printPendingTransactions()
+
+                #self.printPendingTransactions()
+
                 self.appendPendingTransactionsToNewBlock()
+
                 self.waitingForPuzzle = False
+                self.waitingForBlockChain = False
 
                 return True
 
