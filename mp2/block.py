@@ -106,3 +106,7 @@ class Block(object):
         for t in self.transactions:
             print(str(t))
         print("")
+
+    def printNumberHash(self):
+        print("[BLOCK " + str(self.level) + "]")
+        print("[HASH:" + str(self.selfHash) + "]")

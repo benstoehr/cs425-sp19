@@ -655,6 +655,7 @@ class Node(Thread):
 
             blockHash, block = self.blockManager.blockchain[i+1]
             #block.printSelf()
+            block.printNumberHash()
 
             storedTransactions += len(block.getTransactions())
 
