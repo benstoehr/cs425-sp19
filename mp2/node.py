@@ -355,7 +355,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            print("SERVICE\t" + str(message))
+            print("SERVICE\t" + str(message[2]))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             if(message not in self.transactionMessages):
@@ -646,18 +646,18 @@ class Node(Thread):
         # for account in accounts:
         #     print(str(account) + " " + str(self.blockManager.committedBank[account]))
         #
-        # #print(self.blockManager.blockchain)
-        # for i in range(self.blockManager.blockLevel):
-        #     blockHash, block = self.blockManager.blockchain[i+1]
-        #     block.printSelf()
-        #     print("")
-        #
-        # print("\n[PENDING TRANSACTIONS]")
-        # for pt in self.blockManager.pendingTransactions:
-        #     print(pt)
-        #
-        # print("\nTRANSACTIONS IN CURRENT BLOCK")
-        # for t in self.blockManager.currentBlock.getTransactions():
-        #     print(t)
+        #print(self.blockManager.blockchain)
+        for i in range(self.blockManager.blockLevel):
+            blockHash, block = self.blockManager.blockchain[i+1]
+            block.printSelf()
+            print("")
+
+        print("\n[PENDING TRANSACTIONS]")
+        for pt in self.blockManager.pendingTransactions:
+            print(pt)
+
+        print("\nTRANSACTIONS IN CURRENT BLOCK")
+        for t in self.blockManager.currentBlock.getTransactions():
+            print(t)
 
         self.shutdown()

@@ -48,6 +48,12 @@ class BlockManager(object):
 
 #############
 
+    def getAccountAccountAmount(self, transaction):
+        fromAccount = int(transaction[3])
+        toAccount = int(transaction[4])
+        amount = int(transaction[5])
+        return fromAccount, toAccount, amount
+
     def addAccounts(self, account1, account2):
         ## ADD THEM TO THE BANK
         if (account1 not in self.bank.keys()):
@@ -109,23 +115,36 @@ class BlockManager(object):
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
 
-        print("BM\t\t" + str(transaction))
-        fromAccount = int(transaction[3])
-        toAccount = int(transaction[4])
-        amount = int(transaction[5])
+        print("BM\t\t" + str(transaction[2]))
+
+        fromAccount, toAccount, amount = self.getAccountAccountAmount(transaction)
         self.addAccounts(fromAccount, toAccount)
 
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
-
                 self.appendTransactionsToPending(transaction)
             return
+
+        # try to reduce number of invalid
+        if(self.blockLevel == 0):
+            for pt in self.pendingTransactions:
+                # If pending transaction has lower timestamp than most recent one, maybe look at it
+                if(pt[1] < transaction[1]):
+                    fA, tA, a = self.getAccountAccountAmount(pt)
+                    if(self.executeTrade(fA, tA, a)):
+                        self.currentBlock.addTransactionToBlock(transaction)
+                        self.pendingTransactionsToRemove.append(transaction)
+                    else:
+                        pass
+            self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
             print("\tInvalid:\t" + str(transaction))
+            if(self.blockLevel == 0):
+                self.appendTransactionsToPending(transaction)
             return
 
         #print("\t" + str(transaction ))
@@ -146,7 +165,6 @@ class BlockManager(object):
         for pt in self.pendingTransactions:
             print(pt)
             self.appendTransactionToCurrentBlock(pt)
-
 
     def removeAddedTransactionsFromPending(self):
         for transactionToRemove in self.pendingTransactionsToRemove:
