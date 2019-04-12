@@ -134,7 +134,7 @@ class BlockManager(object):
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(pt)
                     self.pendingTransactionsToRemove.append(pt)
-        self.removeAddedTransactionsFromPending()
+        #self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
