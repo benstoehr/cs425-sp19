@@ -156,6 +156,10 @@ class BlockManager(object):
     def printPendingTransactions(self):
         for pt in self.pendingTransactions:
             print(pt)
+
+    def sortPendingTransactions(self):
+        self.pendingTransactions.sort(key=sortFunction)
+
 ##############
 
     def betterBlock(self, ip, port, blockMessage):
@@ -191,7 +195,7 @@ class BlockManager(object):
                     # Move pending transactions to it
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
-
+                    self.sortPendingTransactions()
 
                     self.rebuildBank()
                     self.committedBank = copy.deepcopy(self.bank)
@@ -243,7 +247,8 @@ class BlockManager(object):
 
                 self.clearPendingTransactionsOnBlockChain()
                 self.removeAddedTransactionsFromPending()
-                #self.lastSuccessfulHash = hashOfBlock
+                self.sortPendingTransactions()
+
 
                 self.rebuildBank()
                 self.committedBank = copy.deepcopy(self.bank)
@@ -298,7 +303,8 @@ class BlockManager(object):
 
             self.clearPendingTransactionsOnBlockChain()
             self.removeAddedTransactionsFromPending()
-
+            self.sortPendingTransactions()
+            
             self.newBlock()
             self.appendPendingTransactionsToNewBlock()
 
