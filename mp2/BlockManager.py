@@ -284,6 +284,8 @@ class BlockManager(object):
 ###################################################
     def singleBlockFromMessage(self, blockString):
 
+        print("singleBlockFromMessage()")
+        print(blockString)
         # Remove the end character
         blockString = blockString.strip("^")
 
