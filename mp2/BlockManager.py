@@ -31,8 +31,6 @@ class BlockManager(object):
 
         self.currentBlockCount = 0
 
-        self.hash = hashlib.sha256()
-
         self.committedTransactions = []
         self.pendingTransactions = []
         self.pendingTransactionsToRemove = []
@@ -81,14 +79,14 @@ class BlockManager(object):
 #############
 
     def hashCurrentBlock(self):
-        h = self.hash.update(self.currentBlockAsString().encode('utf-8'))
-        hh = self.hash.hexdigest()
-        self.currentBlock.selfHash = hh
+        h = hashlib.sha256().update(self.currentBlockAsString().encode('utf-8'))
+        hh = h.hexdigest()
+        #self.currentBlock.selfHash = hh
         return hh
 
     def hashBlockString(self, blockString):
-        h = self.hash.update(blockString.encode('utf-8'))
-        hh = self.hash.hexdigest()
+        h = hashlib.sha256().update(blockString.encode('utf-8'))
+        hh = h.hexdigest()
         return hh
 
 #############
@@ -314,7 +312,6 @@ class BlockManager(object):
         # Create the new block
         newBlock = Block(level=int(level), previousHash=hash, puzzle=puzzle)
 
-
         # Add transactions and txIDs
         for transaction in content.split("*"):
             splitTransaction = transaction.split("_")
@@ -322,10 +319,15 @@ class BlockManager(object):
             newBlock.transactions.append(splitTransaction)
 
         # Get hash of new block
-        newBlock.selfHash = self.hashBlockString(newBlock.toMessage())
+        print("singleBlock hash")
+
+        h = self.hashBlockString(newBlock.toMessage())
+        print(h)
+        newBlock.selfHash = h
         #newBlock.printSelf()
 
         return newBlock
+
 
     def multipleBlocksFromMessage(self, longByteString):
         blocks = []
