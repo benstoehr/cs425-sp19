@@ -259,7 +259,7 @@ class Node(Thread):
 
         ## CP 1
         if ("TRANSACTION" in message2send):
-            #print("~~got transaction from " +str(addr) + " ~~")
+            print("~~got transaction from " +str(addr) + " ~~")
             print("\t\t\t" + str(message2send))
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
@@ -351,8 +351,8 @@ class Node(Thread):
         message = message.split(" ")
 
         if ("TRANSACTION" in message):
-            #print("~~got transaction from service~~")
-            #print("\t\t" + str(message))
+            print("~~got transaction from service~~")
+            print("\t\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             self.transactionMessages.append(message)
@@ -369,7 +369,7 @@ class Node(Thread):
 
         elif("SOLVED" in message):
             print("\n~~ got Solved ~~")
-            #print(message)
+            print(message)
             #print(str(message[1]))
             #print(str(message[2]))
             #print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
@@ -423,13 +423,14 @@ class Node(Thread):
         # Check if ctrl + C was pressed
         while (1):
 
-            print(time.time())
+            #print(time.time())
 
             if(self.event.isSet()):
                 self.closeServiceConnection()
                 break
 
     ############### STEP 1: READ ALL MESSAGES ###################
+
             ## 1.B -- READ ALL MESSAGES FROM NODES
             ## Read until no messages
             while (1):
