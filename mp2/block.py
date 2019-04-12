@@ -97,7 +97,7 @@ class Block(object):
     def gettxIDs(self):
         txIDs = []
         for t in self.transactions:
-            txIDs += [t[2]]
+            txIDs += [str(t[2])]
 
     def printSelf(self):
         print("[BLOCK " + str(self.level) + "]")

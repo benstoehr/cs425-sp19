@@ -660,7 +660,9 @@ class Node(Thread):
 
             logString = str(block.selfHash)
             logString += " "
-            logString += " ".join(block.gettxIDs())
+            txIDs = block.gettxIDs()
+            print(txIDs)
+            #logString += " ".join()
 
             self.logger.plainLog(logString)
 
