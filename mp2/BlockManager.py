@@ -135,7 +135,7 @@ class BlockManager(object):
                         self.pendingTransactionsToRemove.append(transaction)
                     else:
                         pass
-
+        self.removeAddedTransactionsFromPending()
 
         ## TODO: reject the bad transaction
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
@@ -159,7 +159,7 @@ class BlockManager(object):
             self.waitingForPuzzle = True
         self.removeAddedTransactionsFromPending()
 
-        
+
     def appendPendingTransactionsToNewBlock(self):
         print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
@@ -177,8 +177,8 @@ class BlockManager(object):
             print(pt)
 
     def sortPendingTransactions(self):
-        s = set(self.pendingTransactions)
-        self.pendingTransactions = list(s)
+        #s = set(self.pendingTransactions)
+        #self.pendingTransactions = list(s)
         self.pendingTransactions.sort(key=sortFunction)
 
 
