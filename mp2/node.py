@@ -216,13 +216,13 @@ class Node(Thread):
         return False
 
     def addAddresstoSentBlocks(self, block, ip, port):
-        if ((ip, port) not in self.sentAddressesByBlock.keys()):
+        if (block not in self.sentAddressesByBlock.keys()):
             self.sentAddressesByBlock[block] = [(ip, int(port))]
         else:
             self.sentAddressesByBlock[block] += [(ip, int(port))]
 
     def addAddresstoReceivedBlocks(self, block, ip, port):
-        if ((ip, port) not in self.receivedAddressesByBlock.keys()):
+        if (block not in self.receivedAddressesByBlock.keys()):
             self.receivedAddressesByBlock[block] = [(ip, int(port))]
         else:
             self.receivedAddressesByBlock[block] += [(ip, int(port))]
