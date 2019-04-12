@@ -192,7 +192,7 @@ class BlockManager(object):
     def logChain(self):
         logString = str(time.time())
         logString += " "
-        logString += self.blockLevel
+        logString += str(self.blockLevel)
         logString += " "
         for blockHash, block in self.blockchain.values():
             logString += str(blockHash)
@@ -226,7 +226,6 @@ class BlockManager(object):
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
                     self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
-
                     self.logChain()
 
                     # Create new block
@@ -284,6 +283,7 @@ class BlockManager(object):
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
+                self.logChain()
 
                 self.clearPendingTransactionsOnBlockChain()
                 self.removeAddedTransactionsFromPending()
@@ -337,6 +337,7 @@ class BlockManager(object):
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
             print("NEW CHAIN COMPLETE!!!")
+            self.logChain()
 
             self.rebuildBank()
             self.committedBank = copy.deepcopy(self.bank)
@@ -367,6 +368,7 @@ class BlockManager(object):
                     self.pendingTransactionsToRemove += [transaction]
 
 ###################################################
+
     def singleBlockFromMessage(self, blockString):
 
         #print("singleBlockFromMessage()")
