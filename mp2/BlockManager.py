@@ -299,6 +299,7 @@ class BlockManager(object):
             self.appendPendingTransactionsToNewBlock()
 
     def rebuildBank(self):
+        print("[REBUILDING BANK]")
         self.bank = dict()
         for blockHash, block in self.blockchain.values():
             for transaction in block.getTransactions():
