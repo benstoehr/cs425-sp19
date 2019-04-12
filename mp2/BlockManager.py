@@ -43,7 +43,7 @@ class BlockManager(object):
         self.waitingForBlockChainFrom = None
 
         self.minTransactionsBeforeHash = 5
-        self.maxTransactionsBeforeHash = 8
+        self.maxTransactionsBeforeHash = 10
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############

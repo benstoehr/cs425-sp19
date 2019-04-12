@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
+      <change beforePath="$PROJECT_DIR$/mp2/BlockManager.py" afterPath="$PROJECT_DIR$/mp2/BlockManager.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,7 +44,7 @@
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="522">
-                  <caret line="654" column="29" lean-forward="false" selection-start-line="654" selection-start-column="29" selection-end-line="654" selection-end-column="29" />
+                  <caret line="654" column="29" lean-forward="true" selection-start-line="654" selection-start-column="29" selection-end-line="654" selection-end-column="29" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#2336#2427#0" expanded="false" />
@@ -110,24 +110,24 @@
           <file leaf-file-name="BlockManager.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/BlockManager.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="643">
-                  <caret line="140" column="8" lean-forward="true" selection-start-line="140" selection-start-column="8" selection-end-line="140" selection-end-column="8" />
+                <state relative-caret-position="615">
+                  <caret line="45" column="43" lean-forward="false" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
                   <folding>
-                    <element signature="e#1149#1305#0" expanded="false" />
-                    <element signature="e#1362#1551#0" expanded="false" />
-                    <element signature="e#1621#2187#0" expanded="false" />
-                    <element signature="e#2244#2288#0" expanded="false" />
-                    <element signature="e#2345#2513#0" expanded="false" />
-                    <element signature="e#2567#2678#0" expanded="false" />
-                    <element signature="e#5737#5977#0" expanded="false" />
-                    <element signature="e#6027#6084#0" expanded="false" />
-                    <element signature="e#6347#8748#0" expanded="false" />
-                    <element signature="e#9197#10092#0" expanded="false" />
-                    <element signature="e#10739#11844#0" expanded="false" />
-                    <element signature="e#11881#12314#0" expanded="false" />
-                    <element signature="e#12417#12653#0" expanded="false" />
-                    <element signature="e#13833#14009#0" expanded="false" />
-                    <element signature="e#14105#14181#0" expanded="false" />
+                    <element signature="e#1150#1306#0" expanded="false" />
+                    <element signature="e#1363#1552#0" expanded="false" />
+                    <element signature="e#1622#2188#0" expanded="false" />
+                    <element signature="e#2245#2289#0" expanded="false" />
+                    <element signature="e#2346#2514#0" expanded="false" />
+                    <element signature="e#2568#2679#0" expanded="false" />
+                    <element signature="e#5738#5978#0" expanded="false" />
+                    <element signature="e#6028#6085#0" expanded="false" />
+                    <element signature="e#6348#8749#0" expanded="false" />
+                    <element signature="e#9198#10093#0" expanded="false" />
+                    <element signature="e#10740#11845#0" expanded="false" />
+                    <element signature="e#11882#12315#0" expanded="false" />
+                    <element signature="e#12418#12654#0" expanded="false" />
+                    <element signature="e#13834#14010#0" expanded="false" />
+                    <element signature="e#14106#14182#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -232,8 +232,8 @@
         <option value="$PROJECT_DIR$/mp2/server.py" />
         <option value="$PROJECT_DIR$/mp2/logger.py" />
         <option value="$PROJECT_DIR$/mp2/analysis.py" />
-        <option value="$PROJECT_DIR$/mp2/BlockManager.py" />
         <option value="$PROJECT_DIR$/mp2/node.py" />
+        <option value="$PROJECT_DIR$/mp2/BlockManager.py" />
       </list>
     </option>
   </component>
@@ -867,34 +867,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mp2/BlockManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="140" column="8" lean-forward="true" selection-start-line="140" selection-start-column="8" selection-end-line="140" selection-end-column="8" />
-          <folding>
-            <element signature="e#1149#1305#0" expanded="false" />
-            <element signature="e#1362#1551#0" expanded="false" />
-            <element signature="e#1621#2187#0" expanded="false" />
-            <element signature="e#2244#2288#0" expanded="false" />
-            <element signature="e#2345#2513#0" expanded="false" />
-            <element signature="e#2567#2678#0" expanded="false" />
-            <element signature="e#5737#5977#0" expanded="false" />
-            <element signature="e#6027#6084#0" expanded="false" />
-            <element signature="e#6347#8748#0" expanded="false" />
-            <element signature="e#9197#10092#0" expanded="false" />
-            <element signature="e#10739#11844#0" expanded="false" />
-            <element signature="e#11881#12314#0" expanded="false" />
-            <element signature="e#12417#12653#0" expanded="false" />
-            <element signature="e#13833#14009#0" expanded="false" />
-            <element signature="e#14105#14181#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="522">
-          <caret line="654" column="29" lean-forward="false" selection-start-line="654" selection-start-column="29" selection-end-line="654" selection-end-column="29" />
+          <caret line="654" column="29" lean-forward="true" selection-start-line="654" selection-start-column="29" selection-end-line="654" selection-end-column="29" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#2336#2427#0" expanded="false" />
@@ -923,6 +899,30 @@
             <element signature="e#15554#16066#0" expanded="false" />
             <element signature="e#16299#16849#0" expanded="false" />
             <element signature="e#17133#17646#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mp2/BlockManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="45" column="43" lean-forward="false" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding>
+            <element signature="e#1150#1306#0" expanded="false" />
+            <element signature="e#1363#1552#0" expanded="false" />
+            <element signature="e#1622#2188#0" expanded="false" />
+            <element signature="e#2245#2289#0" expanded="false" />
+            <element signature="e#2346#2514#0" expanded="false" />
+            <element signature="e#2568#2679#0" expanded="false" />
+            <element signature="e#5738#5978#0" expanded="false" />
+            <element signature="e#6028#6085#0" expanded="false" />
+            <element signature="e#6348#8749#0" expanded="false" />
+            <element signature="e#9198#10093#0" expanded="false" />
+            <element signature="e#10740#11845#0" expanded="false" />
+            <element signature="e#11882#12315#0" expanded="false" />
+            <element signature="e#12418#12654#0" expanded="false" />
+            <element signature="e#13834#14010#0" expanded="false" />
+            <element signature="e#14106#14182#0" expanded="false" />
           </folding>
         </state>
       </provider>
