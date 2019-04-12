@@ -45,8 +45,8 @@ class BlockManager(object):
         self.waitingForBlockChainFrom = None
 
         ## MAX = 90
-        self.minTransactionsBeforeHash = 5
-        self.maxTransactionsBeforeHash = 10
+        self.minTransactionsBeforeHash = 10
+        self.maxTransactionsBeforeHash = 300
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
@@ -243,6 +243,9 @@ class BlockManager(object):
 
                     self.rebuildBank()
                     self.committedBank = copy.deepcopy(self.bank)
+
+                    self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash,
+                                                                    self.maxTransactionsBeforeHash)
 
                     self.newBlock()
                     #self.printPendingTransactions()
