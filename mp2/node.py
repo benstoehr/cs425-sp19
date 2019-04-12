@@ -126,6 +126,7 @@ class Node(Thread):
         self.status = "shutdown"
 
 ############
+
     def replyAndUpdateAddresses(self, ip, port):
         # REPLY
         self.sendReply(ip, port)
@@ -143,6 +144,7 @@ class Node(Thread):
         self.sock.sendto(requestChainMessage.encode('utf-8'), (ip, int(port)))
 
 ##############
+
     def clearIPPortFromAddresses(self, address):
         ip, port = address
         for introMessage in self.introductionMessages_Handled:
@@ -188,8 +190,6 @@ class Node(Thread):
 
         return False
 
-
-
     def addMessagetoSentMessages(self, ip, port, message):
         # Haven't sent them anything yet
         if ((ip, port) not in self.sentMessagesByAddress.keys()):
@@ -227,8 +227,8 @@ class Node(Thread):
         else:
             self.receivedAddressesByBlock[block] += [(ip, int(port))]
 
-
 #### List manipulation
+
     def getNameAndPortFromIP(self):
         pass
 
@@ -260,7 +260,7 @@ class Node(Thread):
         ## CP 1
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
-            print("\t\t\t\t" + str(message2send))
+            print("\t\t\t" + str(message2send))
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
@@ -422,6 +422,9 @@ class Node(Thread):
 
         # Check if ctrl + C was pressed
         while (1):
+
+            print(time.time())
+
             if(self.event.isSet()):
                 self.closeServiceConnection()
                 break
