@@ -371,7 +371,7 @@ class Node(Thread):
             #print(message)
             #print(str(message[1]))
             #print(str(message[2]))
-            print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
+            #print(self.blockManager.blockchainBySelfHash[message[1]].printSelf())
             if(self.blockManager.successfulBlock(message)):
                 #self.currentBlockString = self.blockManager.currentBlockAsString()
                 self.blockManager.newBlock()
