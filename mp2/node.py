@@ -440,6 +440,7 @@ class Node(Thread):
 
             ## 1.B -- READ ALL MESSAGES FROM NODES
             ## Read until no messages
+            readCount = 0
             while (1):
                 # print("read()")
                 # addr = ipANDport = (ip, port)
@@ -448,6 +449,10 @@ class Node(Thread):
                 messageType = self.messager.getMessageType(message)
                 if (messageType is not None):
                     self.handleMessage(message, addr)
+                    readCount += 1
+                    if(readCount == 10):
+                        readCount = 0
+                        break
                 else:
                     break
 
