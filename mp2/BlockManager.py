@@ -131,11 +131,12 @@ class BlockManager(object):
             if(pt != transaction):
                 # If pending transaction has lower timestamp than most recent one, maybe look at it
                 if(pt[1] < transaction[1]):
-                    print("RETRY\t\t" + str(pt))
+                    #print("RETRY\t\t" + str(pt))
                     fA, tA, a = self.getAccountAccountAmount(pt)
                     self.addAccounts(fA, tA)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(pt)
+                        print("R:S\t\t" + str(pt))
                     self.pendingTransactionsToRemove.append(pt)
         #self.removeAddedTransactionsFromPending()
 
@@ -149,7 +150,7 @@ class BlockManager(object):
             self.removeAddedTransactionsFromPending()
             return
 
-        print("BM:S\t" + str(transaction))
+        #print("BM:S\t" + str(transaction))
         #print("\t" + str(transaction ))
         self.currentBlock.addTransactionToBlock(transaction)
         if (transaction in self.pendingTransactions):
@@ -188,7 +189,7 @@ class BlockManager(object):
 
 
 ##############
- 
+
     def logChain(self):
         logString = "CHAIN "
         logString += str(time.time())
