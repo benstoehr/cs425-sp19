@@ -46,10 +46,8 @@ class BlockManager(object):
 
         ## MAX = 90
         self.minTransactionsBeforeHash = 5
-        self.maxTransactionsBeforeHash = 30
+        self.maxTransactionsBeforeHash = 15
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
-
-#############
 
     def getAccountAccountAmount(self, transaction):
         fromAccount = int(transaction[3])
