@@ -607,14 +607,15 @@ class Node(Thread):
                     ip = str(ip)
                     port = int(port)
                     if(self.okToSendBlock(blockString, ip, port)):
+                        self.logger.logSentBlock(hash, blockMessage2send, ip, port)
                         #print("\nblock about to send")
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
                         #print(blockString)
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
+
                         self.sock.sendto(blockMessage2send, (ip, port))
-                        self.logger.logSentBlock(hash, blockMessage2send, ip, port)
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
 
@@ -624,7 +625,7 @@ class Node(Thread):
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockChainString)
-                        self.logger.logSentBlock(hash, blockMessage2send, ip, port)
+                        self.logger.logSentBlock(blockHash, blockMessage2send, ip, port)
                         self.sock.sendto(blockChainMessage2send, (ip, port))
                         self.addAddresstoSentBlocks(blockString, ip, port)
 
