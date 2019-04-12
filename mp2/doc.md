@@ -105,6 +105,13 @@ Our main program iterates all of the nodes, waiting for them to shutdown, and co
 If the nodes are killed by the service, by "thanos", or a regular command, there is either a socket closed which would lead to a socket.error, caught by the messageHandler, or the node simply declares itself dead and exits. 
 
 
+
+### Blocks
+
+`block.py` and `BlockManager.py` take care of most block activities.
+
+###
+
 ## Analysis
 
 ### Transaction propagation completed
@@ -153,6 +160,15 @@ Plot 6: x = time, y = total bandwidth used, nodes = 100
 
 ![Plot 6](img/plot06_line_bandwidth_100.png "Plot 6")
 
+### How Long Does a Transaction appear in a Block
+
+Plot 7: x = time elapsed for all nodes receiving the block, y = count/freq, node = 20
+
+![Plot 7](img/plot07_hist_block_propagation_delay_all_20.png "Plot 7")
+
+Plot 8: x = time elapsed for all nodes receiving the block, y = count/freq, node = 100
+
+![Plot 8](img/plot08_hist_block_propagation_delay_all_100.png "Plot 8")
 
 ### Block Propagation Delay
 
@@ -163,3 +179,9 @@ Plot 9: x = time elapsed for all nodes receiving the block, y = count/freq, node
 Plot 10: x = time elapsed for all nodes receiving the block, y = count/freq, node = 100
 
 ![Plot 10](img/plot10_hist_block_propagation_delay_all_100.png "Plot 10")
+
+### Splits
+
+There were splits in our experiments.
+
+The longest split we observered is

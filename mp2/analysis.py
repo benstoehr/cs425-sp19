@@ -74,6 +74,24 @@ def read_blockTx(filename):
 	df = pd.DataFrame.from_records(raw, columns=labels)
 	return df
 
+def read_blockSplit(filename):
+	raw = []
+	with open(filename, 'r') as f:
+		for line in f:
+			record = line.split(' ') # separating sign to be checked
+			if len(record) >= 2:
+				for blockhash in len(record)-2
+					i = block + 2
+					tmp_list = []
+					tmp_list.append(record[0]) # timestamp
+					tmp_list.append(record[1]) # level
+					tmp_list.append(reocrd[i]) # hash
+					raw.append(tmp_list)
+
+	labels = ['timestamp', 'level', 'blockHash']
+	df = pd.DataFrame.from_records(raw, columns=labels)
+	return df
+
 def draw_hist(d, output_filename):
 	"""
 	d: array
