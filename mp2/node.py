@@ -355,7 +355,8 @@ class Node(Thread):
             print("\t\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
-            self.transactionMessages.append(message)
+            if(message not in self.transactionMessages):
+                self.transactionMessages.append(message)
 
             ## ADD IT TO THE BLOCK MANAGER
             self.blockManager.appendTransactionToCurrentBlock(message)
@@ -620,7 +621,7 @@ class Node(Thread):
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
             #time.sleep(1)
-            time.sleep(0.0000001)
+            time.sleep(0.000000001)
 
 
         print("Run event unset!")
