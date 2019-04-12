@@ -293,7 +293,7 @@ class Node(Thread):
 
             blockKey = ' '.join(message2send)
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
-            print("Received block")
+            #print("Received block")
             #print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
             #print("\n")
 
@@ -573,8 +573,8 @@ class Node(Thread):
                 if(self.blockManager.currentBlock.selfHash is not None):
                     if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
                         self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
-                        #print("SOLVE:")
-                        #self.blockManager.printCurrentBlock()
+                        print("SOLVE:")
+                        self.blockManager.printCurrentBlock()
                         string = "SOLVE "
                         string += self.blockManager.currentBlock.selfHash
                         string += "\n"

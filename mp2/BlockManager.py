@@ -158,7 +158,7 @@ class BlockManager(object):
         block = self.singleBlockFromMessage(blockString)
 
         if(block.level > self.blockLevel):
-            print("New block has higher level!")
+            print("New block has higher level!" + str(block.level))
             #block.printSelf()
             print("Higher Level previousHash: " + block.previousBlockHash)
             # set level so other blocks don't interfere
@@ -173,7 +173,7 @@ class BlockManager(object):
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     print("CONSECUTIVE BETTER BLOCK SUCCESS")
-                    print("I AM SLOW")
+                    #print("I AM SLOW")
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
                     self.blockchainBySelfHash[block.selfHash] = copy.deepcopy(block)
