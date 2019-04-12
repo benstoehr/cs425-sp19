@@ -29,6 +29,8 @@ class Logger():
         return message[1:], bytes
 
 
+    def plainLog(self, message):
+        self.masterLogging.debug(message)
 
     ## SERVICE MESSAGES
     def logServiceTransaction(self, ip, port, message):
