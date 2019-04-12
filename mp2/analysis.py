@@ -69,7 +69,7 @@ def draw_hist(d, output_filename):
 	fig.savefig(output)
 	plt.clf()
 
-def draw_line(df, y, color, output_filename):
+def draw_line(df, x, y, color, output_filename):
 	"""
 	df: dataframe
 	y: the column for y axis
@@ -82,11 +82,11 @@ def draw_line(df, y, color, output_filename):
 	sns_plot = ""
 	sns.set(style="whitegrid")
 	sns.despine(left=True)
-	sns.palplot(sns.color_palette("Blues"))
+	# sns.set_palette(sns.color_palette("Blues"))
 	if color != None:
-		sns_plot = sns.lineplot(x="timestamp", y=y, hue=color, data=df, legend=False)
+		sns_plot = sns.lineplot(x=x, y=y, hue=color, data=df, legend=False)
 	else:
-		sns_plot = sns.lineplot(x="timestamp", y=y, data=df, legend=False)
+		sns_plot = sns.lineplot(x=x, y=y, data=df, legend=False)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 	plt.clf()
@@ -94,14 +94,17 @@ def draw_line(df, y, color, output_filename):
 # Start to work
 raw_df20 = read_data(filename20)
 raw_df20['nodeNum'] = 20
+raw_df20['bytes'] = raw_df20['bytes'].astype(int)
+raw_df20['timestamp'] = pd.to_datetime(raw_df20['timestamp'], unit='s')
+raw_df20['sentTime'] = pd.to_datetime(raw_df20['sentTime'], unit='s')
 raw_df100 = read_data(filename100)
 raw_df100['nodeNum'] = 100
+raw_df100['bytes'] = raw_df100['bytes'].astype(int)
+raw_df100['timestamp'] = pd.to_datetime(raw_df100['timestamp'], unit='s')
+raw_df100['sentTime'] = pd.to_datetime(raw_df100['sentTime'], unit='s')
+print(raw_df20.shape, raw_df100.shape)
 
-# deal with timestamp
 raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
-raw_df['timestamp'] = pd.to_datetime(raw_df['timestamp'], unit='s')
-raw_df['sentTime'] = pd.to_datetime(raw_df['sentTime'], unit='s')
-raw_df['bytes'] = raw_df['bytes'].astype(int)
 
 # transactions for plots in CP1
 tx_df = raw_df[raw_df.status == 'IncomingNodeTransaction'].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
@@ -128,29 +131,76 @@ ttlTime = tx_df.groupby(['tID','nodeNum'])['timeElapsed'].sum().reset_index()
 draw_hist(ttlTime[ttlTime.nodeNum == 20]['timeElapsed'].values, 'plot02-1_hist_propagation_delay_all_20.png')
 draw_hist(ttlTime[ttlTime.nodeNum == 100]['timeElapsed'].values, 'plot02-2_hist_propagation_delay_all_100.png')
 
+# Plot 3 & 4
 # node# receiving a specific message -> x = timestamp, y = rownumByMsg, color = messageID
 # adjust time as 0-end
-tx20_df = tx_df[tx_df.nodeNum == 20]
-tx100_df = tx_df[tx_df.nodeNum == 100]
-tx20_firstSent = tx20_df.groupby(['tID'])['sentTime'].min().to_dict()
-tx100_firstSent = tx100_df.groupby(['tID'])['sentTime'].min().to_dict()
+tx20_df = tx_df[tx_df.nodeNum == 20].reset_index()
+tx100_df = tx_df[tx_df.nodeNum == 100].reset_index()
+print(tx20_df.shape, tx100_df.shape)
+tx20_firstSent_df = tx20_df.groupby(['tID'])['sentTime'].min().reset_index()
+tx100_firstSent_df = tx100_df.groupby(['tID'])['sentTime'].min().reset_index()
+tx20_firstSent = pd.Series(tx20_firstSent_df.sentTime.values,index=tx20_firstSent_df.tID).to_dict()
+tx100_firstSent = pd.Series(tx100_firstSent_df.sentTime.values,index=tx100_firstSent_df.tID).to_dict()
 
-tx20_df['firstSent'] = tx20_df.tID.map(tx20_firstSent)
-tx100_df['firstSent'] = tx100_df.tID.map(tx100_firstSent)
-tx20_df['timestamp'] = (tx20_df.timestamp - tx20_df.firstSent)
-tx100_df['timestamp'] = (tx100_df.timestamp - tx100_df.firstSent)
-tx20_df['timestamp'] = tx20_df['timestamp'].dt.microseconds.abs()
-tx100_df['timestamp'] = tx100_df['timestamp'].dt.microseconds.abs()
+def tx20_FS(x):
+	return tx20_firstSent[x]
 
-draw_line(tx20_df, 'rownumByMsg', 'tID', 'plot03_line_tx_reached_20.png')
-draw_line(tx100_df, 'rownumByMsg', 'tID', 'plot04_line_tx_reached_100.png')
+def tx100_FS(x):
+	return tx100_firstSent[x]
 
+tx20_df['firstSent'] = tx20_df.tID.apply(tx20_FS)
+tx100_df['firstSent'] = tx100_df.tID.apply(tx100_FS)
+tx20_df['adjustTime'] = (tx20_df.timestamp - tx20_df.firstSent)
+tx100_df['adjustTime'] = (tx100_df.timestamp - tx100_df.firstSent)
+tx20_df['adjustTime'] = tx20_df['adjustTime'].dt.microseconds.abs()
+tx100_df['adjustTime'] = tx100_df['adjustTime'].dt.microseconds.abs()
+tx20_df_rownum = tx20_df.groupby(['rownumByMsg'])['adjustTime'].mean().reset_index()
+tx100_df_rownum = tx100_df.groupby(['rownumByMsg'])['adjustTime'].mean().reset_index()
+# print(tx20_df_rownum.head(5))
+# print(tx100_df_rownum.head(5))
+
+draw_line(tx20_df_rownum, 'rownumByMsg', 'adjustTime', None, 'plot03_line_tx_reached_20.png')
+draw_line(tx100_df_rownum, 'rownumByMsg', 'adjustTime', None, 'plot04_line_tx_reached_100.png')
+print("done 3 & 4")
+
+# Plot 5 & 6
 # total bandwidth (all messages includes tx, block, solve, verify)
 # sent: Outgoing*, received: Incoming*
-raw_df20['flow'] = raw_df20.status.apply(lambda x: x[:8])
-raw_df100['flow'] = raw_df100.status.apply(lambda x: x[:8])
+# raw_df20['flow'] = raw_df20.status.apply(lambda x: x[:8])
+# raw_df100['flow'] = raw_df100.status.apply(lambda x: x[:8])
+
 raw_df20['cumBandwidth'] = raw_df20['bytes'].cumsum()
 raw_df100['cumBandwidth'] = raw_df100['bytes'].cumsum()
-# print(df20)
-draw_line(raw_df20, 'cumBandwidth', 'flow', 'plot05_line_bandwidth_20.png')
-draw_line(raw_df100, 'cumBandwidth', 'flow', 'plot06_line_bandwidth_100.png')
+print(raw_df20.head(5))
+draw_line(raw_df20.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot05_line_bandwidth_20.png')
+draw_line(raw_df100.sort_values(['timestamp'], ascending=True), 'timestamp', 'cumBandwidth', None, 'plot06_line_bandwidth_100.png')
+
+# Plot 7 & 8
+# the congestion delays (tx in block)
+# histogram (delay)
+
+
+
+# Plot 9 & 10
+# block propagation
+# histogram (propagation time)
+
+# blocks take how long to propagate to all nodes
+block_df = raw_df[raw_df.status == 'IncomingBlock'].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+
+# calculate the time elaspsed from every pair of nodes
+block_df['timeElapsed'] = (block_df.timestamp - block_df.sentTime)
+block_df['timeElapsed'] = block_df['timeElapsed'].dt.microseconds.abs()
+
+
+# Plot 2
+# total elapsed time for each transaction forwarding
+# histogram: x = timeElapsed
+ttlTimeBlock = block_df.groupby(['tID','nodeNum'])['timeElapsed'].sum().reset_index()
+draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 20]['timeElapsed'].values, 'plot09_hist_block_propagation_delay_all_20.png')
+draw_hist(ttlTimeBlock[ttlTimeBlock.nodeNum == 100]['timeElapsed'].values, 'plot10_hist_block_propagation_delay_all_100.png')
+
+
+# Plot 11 & 12
+# Splits, how often, the longest split (height)
+# scatter: x=time, y=split height

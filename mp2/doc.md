@@ -1,17 +1,5 @@
 # cs425-spring19-mp2 Report
 
-Please submit CP1 using Gradescope. Your submission should include the following information:
-
-You should then have a description of the design of your MP2. Your description should explain:
-
-- How your nodes keep connectivity; how they discover nodes beyond the originally introduced ones, and how they detect failed nodes. **You should justify why you think your design is robust to failures.**
-- How transactions are propagated. Describe the algorithm you are using, any parameters and how you arrived at them.
-- What information is logged and how you used this to generate the graphs. Please make sure that the logs you used in your experiments are checked into the git repository. If you wrote any scripts to analyze the logs please include them in the repo and describe how they work.
-
-As a guideline, each of the three points above should be one or two paragraphs.
-
-Finally, you should have the graphs of transaction propagation and bandwidth from the experiments described above.
-
 ## Group
 
 - mttsao2
@@ -127,13 +115,15 @@ If the nodes are killed by the service, by "thanos", or a regular command, there
 
 Plot 1: x = time elapsed for half of nodes receiving the transaction, y = count/freq, color = node #
 
-![Plot 1](img/plot01_hist_propagation_delay_half.png "Plot 1")
+![Plot 1-2](img/plot01-1_hist_propagation_delay_half_20.png "Plot 1-1")
+![Plot 1-2](img/plot01-2_hist_propagation_delay_half_100.png "Plot 1-2")
 
 - Propagation completed:
 
 Plot 2: x = time elapsed for all nodes receiving the transaction, y = count/freq, color = node # 
 
-![Plot 2](img/plot02_hist_propagation_delay_all.png "Plot 2")
+![Plot 2-1](img/plot02-1_hist_propagation_delay_all_20.png "Plot 2-1")
+![Plot 2-2](img/plot02-2_hist_propagation_delay_all_100.png "Plot 2-2")
 
 - Transaction Propagation:
 
@@ -162,3 +152,14 @@ Nodes: 100
 Plot 6: x = time, y = total bandwidth used, nodes = 100
 
 ![Plot 6](img/plot06_line_bandwidth_100.png "Plot 6")
+
+
+### Block Propagation Delay
+
+Plot 9: x = time elapsed for all nodes receiving the block, y = count/freq, node = 20
+
+![Plot 9](img/plot09_hist_block_propagation_delay_all_20.png "Plot 9")
+
+Plot 10: x = time elapsed for all nodes receiving the block, y = count/freq, node = 100
+
+![Plot 10](img/plot10_hist_block_propagation_delay_all_100.png "Plot 10")
