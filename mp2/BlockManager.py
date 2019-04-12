@@ -228,7 +228,7 @@ class BlockManager(object):
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
-                self.lastSuccessfulHash = hashOfBlock
+                #self.lastSuccessfulHash = hashOfBlock
                 self.newBlock()
 
                 self.fillNewBlock()
