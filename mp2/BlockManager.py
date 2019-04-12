@@ -15,6 +15,7 @@ class BlockManager(object):
         self.blockLevel = 0
 
         self.bank = dict()
+        self.committedBank = None
 
         self.blockchain = dict()
 
@@ -41,8 +42,8 @@ class BlockManager(object):
 
         self.waitingForBlockChainFrom = None
 
-        self.minTransactionsBeforeHash = 12
-        self.maxTransactionsBeforeHash = 20
+        self.minTransactionsBeforeHash = 10
+        self.maxTransactionsBeforeHash = 15
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
@@ -140,7 +141,7 @@ class BlockManager(object):
             self.waitingForPuzzle = True
 
     def appendPendingTransactionsToNewBlock(self):
-        #print("\tappendPendingTransactionsToNewBlock()")
+        print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             self.appendTransactionToCurrentBlock(pt)
 
@@ -188,6 +189,7 @@ class BlockManager(object):
                     self.removeAddedTransactionsFromPending()
 
                     self.rebuildBank()
+                    self.committedBank = copy.deepcopy(self.bank)
 
                     self.newBlock()
                     self.appendPendingTransactionsToNewBlock()
@@ -232,10 +234,14 @@ class BlockManager(object):
                 self.currentBlock.puzzleAnswer = puzzleAnswer
                 self.blockchain[self.currentBlock.level] = (hashOfBlock, copy.deepcopy(self.currentBlock))
                 self.blockchainBySelfHash[hashOfBlock] = copy.deepcopy(self.currentBlock)
+
+                self.clearPendingTransactionsOnBlockChain()
+                self.removeAddedTransactionsFromPending()
+
                 #self.lastSuccessfulHash = hashOfBlock
                 self.newBlock()
 
-                self.fillNewBlock()
+                self.appendPendingTransactionsToNewBlock()
                 self.waitingForPuzzle = False
 
                 return True
@@ -277,9 +283,13 @@ class BlockManager(object):
         # Clean up pending transactions
         if(not self.waitingForBlockChain):
             print("NEW CHAIN COMPLETE!!!")
+
             self.rebuildBank()
+            self.committedBank = copy.deepcopy(self.bank)
+
             self.clearPendingTransactionsOnBlockChain()
             self.removeAddedTransactionsFromPending()
+
             self.newBlock()
             self.fillNewBlock()
 

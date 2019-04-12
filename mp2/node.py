@@ -259,8 +259,8 @@ class Node(Thread):
 
         ## CP 1
         if ("TRANSACTION" in message2send):
-            print("~~got transaction from " +str(addr) + " ~~")
-            print("\t\t\t" + str(message2send))
+            #print("~~got transaction from " +str(addr) + " ~~")
+            #print("\t\t\t" + str(message2send))
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
@@ -351,8 +351,8 @@ class Node(Thread):
         message = message.split(" ")
 
         if ("TRANSACTION" in message):
-            print("~~got transaction from service~~")
-            print("\t\t" + str(message))
+            #print("~~got transaction from service~~")
+            #print("\t\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             if(message not in self.transactionMessages):
@@ -631,9 +631,9 @@ class Node(Thread):
         #    print(tm)
         #print("")
 
-        accounts = sorted(self.blockManager.bank.keys())
+        accounts = sorted(self.blockManager.committedBank.keys())
         for account in accounts:
-            print(str(account) + " " + str(self.blockManager.bank[account]))
+            print(str(account) + " " + str(self.blockManager.committedBank[account]))
 
         #print(self.blockManager.blockchain)
         for i in range(self.blockManager.blockLevel):
