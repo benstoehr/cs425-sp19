@@ -109,6 +109,7 @@ class BlockManager(object):
     # Adds one transaction to the current block, only happens if transaction is possible (no negatives)
     def appendTransactionToCurrentBlock(self, transaction):
 
+        print("BM\t\t" + str(transaction))
         fromAccount = int(transaction[3])
         toAccount = int(transaction[4])
         amount = int(transaction[5])
@@ -116,7 +117,7 @@ class BlockManager(object):
 
         if(self.waitingForPuzzle or self.waitingForBlockChain):
             if (transaction not in self.pendingTransactions):
-                #print("\t\tP" + str(transaction))
+
                 self.appendTransactionsToPending(transaction)
             return
 

@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 import re
 import json
 
+benslog = "log.txt"
+
 filename20 = "log20.txt"
 filename100 = "log100.txt"
 filenameBlockTx20 = "blockTx20.txt"
@@ -50,7 +52,7 @@ def read_data(filename):
 				if record[4] in ttype_list:
 					raw.append(record)
 
-    # fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + 
+	# fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) +
     # " " + str(bytes) + " " + str(ttype) + " " + str(tID) + " " + str(fromNode) + " " + 
     # str(toNode) + " " + str(sentTime) + "\n"
 	# name: vm[#]node[i]
@@ -227,8 +229,8 @@ block100_df['timeElapsed'] = block100_df['timeElapsed'].dt.microseconds.abs()
 
 # total elapsed time for each transaction forwarding
 # histogram: x = timeElapsed
-ttlTimeBlock20 = block_df.groupby(['tID'])['timeElapsed'].max().reset_index()
-ttlTimeBlock100 = block_df.groupby(['tID'])['timeElapsed'].max().reset_index()
+ttlTimeBlock20 = block20_df.groupby(['tID'])['timeElapsed'].max().reset_index()
+ttlTimeBlock100 = block100_df.groupby(['tID'])['timeElapsed'].max().reset_index()
 draw_hist(ttlTimeBlock20['timeElapsed'].values, 'plot09_hist_block_propagation_delay_all_20.png')
 draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_delay_all_100.png')
 

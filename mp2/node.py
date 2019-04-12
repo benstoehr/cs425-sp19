@@ -260,13 +260,14 @@ class Node(Thread):
         ## CP 1
         if ("TRANSACTION" in message2send):
             #print("~~got transaction from " +str(addr) + " ~~")
-            #print("\t\t\t" + str(message2send))
+            #print("NODE\t" + str(message2send))
             self.logger.logReceivedTransaction(' '.join(message))
             # IF YOU HAVEN'T SEEN THIS TRANSACTION, SAVE IT!
             if(message2send not in self.transactionMessages):
+                print("NODE\t" + str(message2send))
                 self.transactionMessages.append(message2send)
                 ## ADD IT TO THE BLOCK MANAGER
-                hash = self.blockManager.appendTransactionToCurrentBlock(message2send)
+                self.blockManager.appendTransactionToCurrentBlock(message2send)
 
             self.addMessagetoReceivedMessages(ip, port, message2send)
             self.replyAndUpdateAddresses(ip, port)
@@ -354,7 +355,7 @@ class Node(Thread):
 
         if ("TRANSACTION" in message):
             #print("~~got transaction from service~~")
-            #print("\t\t" + str(message))
+            print("SERVICE\t" + str(message))
             # Assume it hasn't been seen
             self.logger.logServiceTransaction(self.service_ip, self.service_port, message)
             if(message not in self.transactionMessages):

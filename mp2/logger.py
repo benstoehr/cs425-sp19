@@ -49,7 +49,6 @@ class Logger():
             fromNode) + " " + str(toNode) + " " + str(sentTime)  + "\n"
         self.masterLogging.debug(fileString)
 
-
     def logServiceIntroduction(self, ip, port, message):
 
         timestamp_a = time.time()
@@ -66,7 +65,6 @@ class Logger():
         fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) + " " + str(bytes) + " " + str(
             ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
-
 
     def logServiceVerify(self):
         pass
