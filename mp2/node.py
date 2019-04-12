@@ -312,6 +312,7 @@ class Node(Thread):
 
             # if level is the same, do nothing
             else:
+                print("Ignoring Block")
                 pass
 
         elif("BLOCKCHAIN" in message2send):
@@ -653,7 +654,7 @@ class Node(Thread):
         for i in range(self.blockManager.blockLevel):
 
             blockHash, block = self.blockManager.blockchain[i+1]
-            block.printSelf()
+            #block.printSelf()
 
             storedTransactions += len(block.getTransactions())
 
