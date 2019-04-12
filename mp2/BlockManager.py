@@ -244,6 +244,10 @@ class BlockManager(object):
                 self.clearPendingTransactionsOnBlockChain()
                 self.removeAddedTransactionsFromPending()
                 #self.lastSuccessfulHash = hashOfBlock
+
+                self.rebuildBank()
+                self.committedBank = copy.deepcopy(self.bank)
+
                 self.newBlock()
                 self.printPendingTransactions()
                 self.appendPendingTransactionsToNewBlock()
