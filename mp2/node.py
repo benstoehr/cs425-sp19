@@ -295,7 +295,7 @@ class Node(Thread):
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
             print("Received block")
             print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
-            print("\n")
+            #print("\n")
 
             # if level is greater, you have to ask for the whole blockchain
 

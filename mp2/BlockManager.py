@@ -168,6 +168,7 @@ class BlockManager(object):
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     print("CONSECUTIVE BETTER BLOCK SUCCESS")
+                    print("I AM SLOW")
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
 
