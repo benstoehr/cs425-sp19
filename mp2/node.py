@@ -287,7 +287,7 @@ class Node(Thread):
 
         # CP 2
         elif("BLOCK" in message2send):
-            print("Received block from " + str(ip) + " " +str(port))
+            #print("Received block from " + str(ip) + " " +str(port))
             #print(message2send)
 
             #self.logger.logReceivedBlock(' '.join(message)
@@ -600,7 +600,7 @@ class Node(Thread):
                     if(self.okToSendBlock(blockString, ip, port)):
                         #print("\nblock about to send")
                         #self.blockManager.lastSuccessfulBlock.printSelf()
-                        print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
+                        #print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
                         #print(blockString)
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")
@@ -610,7 +610,7 @@ class Node(Thread):
 
                 for ip, port in self.ipsToSendChain:
                     for blockHash, block in self.blockManager.blockchain.values():
-                        print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
+                        #print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()
                         blockChainMessage2send = str(self.ip) + ":" + str(self.port) + " " + str(blockChainString)
@@ -621,7 +621,7 @@ class Node(Thread):
             ## IDK WHY THIS IS NECESSARY
             ## RUN EVENT IS NOT PROPERLY CHECKED OTHERWISE
             #time.sleep(1)
-            time.sleep(0.000000001)
+            time.sleep(0.00000000001)
 
 
         print("Run event unset!")

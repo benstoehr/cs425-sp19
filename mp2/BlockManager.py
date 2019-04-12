@@ -353,7 +353,7 @@ class BlockManager(object):
             newBlock.transactions.append(splitTransaction)
 
         # Get hash of new block
-        print("singleBlock hash")
+        #print("singleBlock hash")
 
         h = self.hashBlockString(newBlock.toMessage())
         #print(h)
