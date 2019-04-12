@@ -298,7 +298,7 @@ class Node(Thread):
 
             self.addAddresstoReceivedBlocks(blockKey, ip, port)
             #print("Received block")
-            print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
+            #print(self.blockManager.singleBlockFromMessage(message2send[1]).printSelf())
             #print("\n")
 
             # if level is greater, you have to ask for the whole blockchain
@@ -657,12 +657,13 @@ class Node(Thread):
 
             storedTransactions += len(block.getTransactions())
 
-            logString = str(block.selfHash)
+            logString = "BLOCK-TX "
+            logString += str(block.selfHash)
             logString += " "
             txIDs = block.gettxIDs()
 
             logString += " ".join(txIDs)
-            print(logString)
+            #print(logString)
             self.logger.plainLog(logString)
 
         storedTransactions += len(self.blockManager.pendingTransactions)

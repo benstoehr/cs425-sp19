@@ -190,7 +190,8 @@ class BlockManager(object):
 ##############
 
     def logChain(self):
-        logString = str(time.time())
+        logString = "CHAIN "
+        logString += str(time.time())
         logString += " "
         logString += str(self.blockLevel)
         logString += " "
