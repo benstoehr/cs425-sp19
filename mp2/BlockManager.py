@@ -168,7 +168,7 @@ class BlockManager(object):
     def appendPendingTransactionsToNewBlock(self):
         print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
-            print(pt)
+            #print(pt)
             self.appendTransactionToCurrentBlock(pt)
 
     def removeAddedTransactionsFromPending(self):
@@ -242,7 +242,7 @@ class BlockManager(object):
                     self.committedBank = copy.deepcopy(self.bank)
 
                     self.newBlock()
-                    self.printPendingTransactions()
+                    #self.printPendingTransactions()
                     self.appendPendingTransactionsToNewBlock()
 
 
