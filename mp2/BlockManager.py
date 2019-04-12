@@ -193,6 +193,7 @@ class BlockManager(object):
                     # Create new block
                     self.currentBlock = copy.deepcopy(block)
                     # Move pending transactions to it
+
                     self.clearPendingTransactionsOnBlockChain()
                     self.removeAddedTransactionsFromPending()
                     self.sortPendingTransactions()
@@ -304,7 +305,7 @@ class BlockManager(object):
             self.clearPendingTransactionsOnBlockChain()
             self.removeAddedTransactionsFromPending()
             self.sortPendingTransactions()
-            
+
             self.newBlock()
             self.appendPendingTransactionsToNewBlock()
 
