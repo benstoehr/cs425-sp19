@@ -155,13 +155,13 @@ Nodes: 100
 
 Nodes: 20
 
-Plot 3: x = time, y = node # has received the transaction, color = transaction, nodes = 20
+Plot 3: x = node # has received the transaction, y = average time of transactions reach x nodes, nodes = 20
 
 ![Plot 3](img/plot03_line_tx_reached_20.png "Plot 3")
 
 Nodes: 100
 
-Plot 4: x = time, y = node # has received the transaction, color = transaction, nodes = 100
+Plot 4: x = node # has received the transaction, y = average time of transactions reach x nodes, color = transaction, nodes = 100
 
 ![Plot 4](img/plot04_line_tx_reached_100.png "Plot 4")
 
