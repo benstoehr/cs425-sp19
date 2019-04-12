@@ -147,7 +147,7 @@ class Logger():
             ttype) + " " + str(tID) + " " + str(fromNode) + " " + str(toNode) + " " + str(sentTime) + "\n"
         self.masterLogging.debug(fileString)
 
- 
+
     ## CP2
     # Passed in as string
     def logReceivedBlock(self, selfHash, fullMessage):

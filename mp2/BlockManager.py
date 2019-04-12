@@ -46,7 +46,7 @@ class BlockManager(object):
 
         ## MAX = 90
         self.minTransactionsBeforeHash = 10
-        self.maxTransactionsBeforeHash = 300
+        self.maxTransactionsBeforeHash = 30
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
 #############
