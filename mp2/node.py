@@ -560,8 +560,8 @@ class Node(Thread):
                             if (self.okToSend(ip, port, intro)):
                                 #print("!! " + str(message2send) + " > " + str(address) + " !!")
                                 ######### SENDING SECTION #######
-                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.logger.logSentIntroduction(ip, port, message2send)
+                                self.sock.sendto(message2send.encode('utf-8'), (ip, port))
                                 self.addMessagetoSentMessages(ip, port, intro)
                                 ipsToPending.add((ip, port))
 
@@ -621,6 +621,7 @@ class Node(Thread):
 
                 for ip, port in self.ipsToSendChain:
                     for blockHash, block in self.blockManager.blockchain.values():
+                        self.logger.logSentBlock(blockHash, blockMessage2send, ip, port)
                         #print("GONNA SEND CHAIN NODE TO: " + str(ip) + "," + str(port))
                         blockString = block.toMessageWithHash()
                         blockChainString = block.toChainMessage()

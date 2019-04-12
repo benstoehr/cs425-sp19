@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/mp2/logger.py" afterPath="$PROJECT_DIR$/mp2/logger.py" />
+      <change beforePath="$PROJECT_DIR$/mp2/node.py" afterPath="$PROJECT_DIR$/mp2/node.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,8 +44,8 @@
           <file leaf-file-name="node.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp2/node.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="612">
-                  <caret line="615" column="33" lean-forward="true" selection-start-line="615" selection-start-column="33" selection-end-line="615" selection-end-column="33" />
+                <state relative-caret-position="454">
+                  <caret line="562" column="87" lean-forward="false" selection-start-line="562" selection-start-column="87" selection-end-line="562" selection-end-column="87" />
                   <folding>
                     <element signature="e#1#14#0" expanded="true" />
                     <element signature="e#2347#2438#0" expanded="false" />
@@ -155,7 +155,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>logging</find>
       <find>.join</find>
       <find>logger</find>
       <find>time.sleep</find>
@@ -185,6 +184,7 @@
       <find>executeTra</find>
       <find>rebuild</find>
       <find>print</find>
+      <find>self.logger</find>
     </findStrings>
     <replaceStrings>
       <replace>58</replace>
@@ -213,8 +213,8 @@
         <option value="$PROJECT_DIR$/mp2/block.py" />
         <option value="$PROJECT_DIR$/mp2/doc.md" />
         <option value="$PROJECT_DIR$/mp2/BlockManager.py" />
-        <option value="$PROJECT_DIR$/mp2/node.py" />
         <option value="$PROJECT_DIR$/mp2/logger.py" />
+        <option value="$PROJECT_DIR$/mp2/node.py" />
       </list>
     </option>
   </component>
@@ -868,10 +868,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/mp2/logger.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="172" column="29" lean-forward="false" selection-start-line="172" selection-start-column="29" selection-end-line="172" selection-end-column="29" />
+          <folding>
+            <element signature="e#423#610#0" expanded="false" />
+            <element signature="e#662#750#0" expanded="false" />
+            <element signature="e#918#1566#0" expanded="false" />
+            <element signature="e#1634#2242#0" expanded="false" />
+            <element signature="e#2376#3039#0" expanded="false" />
+            <element signature="e#3103#3777#0" expanded="false" />
+            <element signature="e#3836#4486#0" expanded="false" />
+            <element signature="e#8245#8947#0" expanded="false" />
+            <element signature="e#8995#9668#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mp2/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="615" column="33" lean-forward="true" selection-start-line="615" selection-start-column="33" selection-end-line="615" selection-end-column="33" />
+        <state relative-caret-position="454">
+          <caret line="562" column="87" lean-forward="false" selection-start-line="562" selection-start-column="87" selection-end-line="562" selection-end-column="87" />
           <folding>
             <element signature="e#1#14#0" expanded="true" />
             <element signature="e#2347#2438#0" expanded="false" />
@@ -899,24 +917,6 @@
             <element signature="e#15569#16081#0" expanded="false" />
             <element signature="e#16314#16864#0" expanded="false" />
             <element signature="e#17148#17661#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp2/logger.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="172" column="29" lean-forward="false" selection-start-line="172" selection-start-column="29" selection-end-line="172" selection-end-column="29" />
-          <folding>
-            <element signature="e#423#610#0" expanded="false" />
-            <element signature="e#662#750#0" expanded="false" />
-            <element signature="e#918#1566#0" expanded="false" />
-            <element signature="e#1634#2242#0" expanded="false" />
-            <element signature="e#2376#3039#0" expanded="false" />
-            <element signature="e#3103#3777#0" expanded="false" />
-            <element signature="e#3836#4486#0" expanded="false" />
-            <element signature="e#8245#8947#0" expanded="false" />
-            <element signature="e#8995#9668#0" expanded="false" />
           </folding>
         </state>
       </provider>
