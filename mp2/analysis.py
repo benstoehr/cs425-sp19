@@ -8,8 +8,8 @@ import json
 
 benslog = "log.txt"
 
-filename20 = "log20.txt"
-filename100 = "log100.txt"
+filename20 = "logs/allLog.txt"
+filename100 = "logs/allLog.txt"
 
 # Log File
 # bloxk-tx: [blockHash tx1 tx2 tx3 tx4] (log when node terminates?)
@@ -49,23 +49,29 @@ def read_data(filename):
 	ttype_list = ['TRANSACTION', 'BLOCK', 'SOLVED']
 	with open(filename, 'r') as f:
 		for line in f:
-			record = line.split(' ') # separating sign to be checked
+			record = line.rstrip('\n').split(' ') # separating sign to be checked
 			if len(record) > 2:
 				if record[0] == "BLOCK-TX":
-					blockTx.append(record[1:])
+					for txID in range(len(record)-2):
+						tmp_list = []
+						i = txID + 1
+						tmp_list.append(record[1])
+						tmp_list.append(record[i])
+						blockTx.append(tmp_list)
 				elif record[0] == "CHAIN":
 					hash_list = []
 					record_list = []
-					for blockhash in (len(record)-2):
-						i = blockhash + 2
+					for blockhash in range(len(record)-3):
+						i = blockhash + 3
 						hash_list.append(record[i]) # hash
-					record_list.append(record[0]) # timestamp
-					record_list.append(record[1]) # level
+					record_list.append(record[1]) # timestamp
+					record_list.append(record[2]) # level
 					record_list.append(hash_list)
 					chain.append(record_list)
+				elif len(record) < 5:
+					pass
 				elif record[4] in ttype_list:
 					raw.append(record)
-
 	# fileString = '{0:.6f}'.format(timestamp_a) + " " + str(self.name) + " " + str(status) +
     # " " + str(bytes) + " " + str(ttype) + " " + str(tID) + " " + str(fromNode) + " " + 
     # str(toNode) + " " + str(sentTime) + "\n"
@@ -92,7 +98,7 @@ def draw_hist(d, output_filename):
 	output = output_path + output_filename
 
 	sns.set(style="whitegrid")
-	sns_plot = sns.distplot(d, kde=False, color="b")
+	sns_plot = sns.distplot(d, kde=False, color="b", bins=15)
 	fig = sns_plot.get_figure()
 	fig.savefig(output)
 	plt.clf()
@@ -123,20 +129,19 @@ def draw_line(df, x, y, color, output_filename):
 raw_df20, blockTx20_df, chain20_df = read_data(filename20)
 raw_df20['nodeNum'] = 20
 raw_df20['bytes'] = raw_df20['bytes'].astype(int)
-raw_df20['timestamp'] = pd.to_datetime(raw_df20['timestamp'], unit='s')
-raw_df20['sentTime'] = pd.to_datetime(raw_df20['sentTime'], unit='s')
+raw_df20['timestamp'] = pd.to_datetime(raw_df20['timestamp'], unit='s', errors='ignore')
+raw_df20['sentTime'] = pd.to_datetime(raw_df20['sentTime'], unit='s', errors='coerce')
 raw_df100, blockTx100_df, chain100_df = read_data(filename100)
 raw_df100['nodeNum'] = 100
 raw_df100['bytes'] = raw_df100['bytes'].astype(int)
-raw_df100['timestamp'] = pd.to_datetime(raw_df100['timestamp'], unit='s')
-raw_df100['sentTime'] = pd.to_datetime(raw_df100['sentTime'], unit='s')
+raw_df100['timestamp'] = pd.to_datetime(raw_df100['timestamp'], unit='s', errors='ignore')
+raw_df100['sentTime'] = pd.to_datetime(raw_df100['sentTime'], unit='s', errors='coerce')
 print(raw_df20.shape, raw_df100.shape)
 
 raw_df = pd.concat([raw_df20, raw_df100]).reset_index()
 
 # transactions for plots in CP1
-tx_df = raw_df[raw_df.status == 'IncomingNodeTransaction'].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
-
+tx_df = raw_df[(raw_df.status == 'IncomingNodeTransaction') & (raw_df.sentTime != np.datetime64('NaT'))].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
 # calculate the time elaspsed from every pair of nodes
 tx_df['timeElapsed'] = (tx_df.timestamp - tx_df.sentTime)
 tx_df['timeElapsed'] = tx_df['timeElapsed'].dt.microseconds.abs()
@@ -189,7 +194,6 @@ tx100_df_rownum = tx100_df.groupby(['rownumByMsg'])['adjustTime'].mean().reset_i
 
 draw_line(tx20_df_rownum, 'rownumByMsg', 'adjustTime', None, 'plot03_line_tx_reached_20.png')
 draw_line(tx100_df_rownum, 'rownumByMsg', 'adjustTime', None, 'plot04_line_tx_reached_100.png')
-print("done 3 & 4")
 
 # Plot 5 & 6
 # total bandwidth (all messages includes tx, block, solve, verify)
@@ -209,36 +213,38 @@ draw_line(bw100_df.sort_values(['timestamp'], ascending=True), 'timestamp', 'cum
 # histogram (delay)
 
 txts_df = tx_df.groupby(['tID'])['timestamp'].min().reset_index()
-blockts_df = raw_df[raw_df.status == 'IncomingBlock'].groupby(['tID'])['timestamp'].min().reset_index()
-print(raw_df[raw_df.status == 'IncomingBlock'].head(5))
-blockTx20_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
-blockTx20_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
-blockTx100_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
-blockTx100_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
-print(blockTx20_df.head(5))
-blockTx20_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx20_df.timestamp_tx)
-blockTx100_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx100_df.timestamp_tx)
+blockts_df = raw_df[raw_df.ttype == 'BLOCK'].groupby(['tID'])['timestamp'].min().reset_index()
+blockTx20_df = blockTx20_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
+blockTx20_df = blockTx20_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
+blockTx100_df = blockTx100_df.merge(txts_df, how='left', left_on='txID', right_on='tID', suffixes=('', '_tx'))
+blockTx100_df = blockTx100_df.merge(blockts_df, how='left', left_on='blockHash', right_on='tID', suffixes=('', '_block'))
+# print(blockTx100_df[blockTx100_df.tID_block != np.NaN])
+
+blockTx20_df['timeElapsed'] = (blockTx20_df.timestamp_block - blockTx20_df.timestamp)
+blockTx100_df['timeElapsed'] = (blockTx100_df.timestamp_block - blockTx100_df.timestamp)
 blockTx20_df['timeElapsed'] = blockTx20_df['timeElapsed'].dt.microseconds.abs()
 blockTx100_df['timeElapsed'] = blockTx100_df['timeElapsed'].dt.microseconds.abs()
 
-draw_hist(blockTx20_df['timeElapsed'].values, 'plot07_hist_propagation_delay_tx_block_20.png')
-draw_hist(blockTx100_df['timeElapsed'].values, 'plot08_hist_propagation_delay_tx_block_100.png')
+draw_hist(blockTx20_df['timeElapsed'].dropna().values, 'plot07_hist_propagation_delay_tx_block_20.png')
+draw_hist(blockTx100_df['timeElapsed'].dropna().values, 'plot08_hist_propagation_delay_tx_block_100.png')
 
 # Plot 9 & 10
 # block propagation
 # histogram (propagation time)
 
 # blocks take how long to propagate to all nodes
-block20_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 20].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
-block100_df = raw_df[raw_df.status == 'IncomingBlock' & raw_df.nodeNum == 100].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block20_df = raw_df[(raw_df.status == 'IncomingBlock') & (raw_df.nodeNum == 20)].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
+block100_df = raw_df[(raw_df.status == 'IncomingBlock') & (raw_df.nodeNum == 100)].sort_values(by=['timestamp']).drop_duplicates(subset=['tID', 'toNode'], keep="first")
 
 # calculate the time elaspsed from solved to all nodes
-block20_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 20].groupby(['tID'])['timestamp'].min().reset_index()
-block100_solved_df = raw_df[raw_df.ttype == 'SOLVED' & raw_df.nodeNum == 100].groupby(['tID'])['timestamp'].min().reset_index()
-block20_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
-block100_solved = pd.Series(block20_solved_df.sentTime.values,index=block20_solved_df.tID).to_dict()
-block20_df['sentTime'] = tx20_df.tID.apply(lambda x: block20_solved[x])
-block100_df['sentTime'] = tx100_df.tID.apply(lambda x: block100_solved[x])
+# block20_solved_df = raw_df[(raw_df.ttype == 'BLOCK') & (raw_df.nodeNum == 20)].groupby(['tID'])['timestamp'].min().reset_index()
+# block100_solved_df = raw_df[(raw_df.ttype == 'BLOCK') & (raw_df.nodeNum == 100)].groupby(['tID'])['timestamp'].min().reset_index()
+block20_solved_df = raw_df[(raw_df.nodeNum == 20)].groupby(['tID'])['timestamp'].min().reset_index()
+block100_solved_df = raw_df[(raw_df.nodeNum == 100)].groupby(['tID'])['timestamp'].min().reset_index()
+block20_solved = pd.Series(block20_solved_df.timestamp.values,index=block20_solved_df.tID).to_dict()
+block100_solved = pd.Series(block20_solved_df.timestamp.values,index=block20_solved_df.tID).to_dict()
+block20_df['sentTime'] = block20_df.tID.apply(lambda x: block20_solved[x])
+block100_df['sentTime'] = block100_df.tID.apply(lambda x: block100_solved[x])
 ##### record the solved time
 block20_df['timeElapsed'] = (block20_df.timestamp - block20_df.sentTime)
 block100_df['timeElapsed'] = (block100_df.timestamp - block100_df.sentTime)
@@ -256,11 +262,15 @@ draw_hist(ttlTimeBlock100['timeElapsed'].values, 'plot10_hist_block_propagation_
 # Splits, how often, the longest split (height)
 # scatter: x=time, y=split height
 
+chain20_df['blockHashStr'] = chain20_df.blockHashList.apply(lambda x: "".join(x))
+chain20_df['sameLevelHash'] = chain20_df.duplicated(subset=["level", "blockHashStr"], keep=False)
 chain20_df['sameLevel'] = chain20_df.duplicated(subset="level", keep=False)
-duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
+print(chain20_df.groupby(['sameLevelHash']).sum())
+print(chain20_df.groupby(['sameLevel']).sum())
+# duplicatedChain20_df = chain20_df[chain20_df.sameLevel == True]
 
 # if empty, we have no splits!
-print(duplicatedChain20_df)
+# print(duplicatedChain20_df)
 
 # if not empty, check how long the splits are:
-duplicateLevels = duplicatedChain20_df.levels.values()
+# duplicateLevels = duplicatedChain20_df.level.values

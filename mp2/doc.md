@@ -21,7 +21,7 @@ e.g. `python36 main.py 2 sp19-cs425-g58-01.cs.illinois.edu 1111`
 
 ## Commit Hash
 
-[I'm the commit hash]
+7dd5e3b5ad0475c9a92242cb17b8fede9b025678
 
 ## Design Document
 
@@ -183,11 +183,11 @@ Plot 6: x = time, y = total bandwidth used, nodes = 100
 
 Plot 7: x = time elapsed for all nodes receiving the block, y = count/freq, node = 20
 
-![Plot 7](img/plot07_hist_block_propagation_delay_all_20.png "Plot 7")
+![Plot 7](img/plot07_hist_propagation_delay_tx_block_20.png"Plot 7")
 
 Plot 8: x = time elapsed for all nodes receiving the block, y = count/freq, node = 100
 
-![Plot 8](img/plot08_hist_block_propagation_delay_all_100.png "Plot 8")
+![Plot 8](img/plot08_hist_block_propagation_delay_all_100.png"Plot 8")
 
 ### Block Propagation Delay
 
