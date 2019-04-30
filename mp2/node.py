@@ -670,16 +670,16 @@ class Node(Thread):
                 #block.printSelf()
                 block.printNumberHash()
 
-            storedTransactions += len(block.getTransactions())
+                storedTransactions += len(block.getTransactions())
 
-            logString = "BLOCK-TX "
-            logString += str(block.selfHash)
-            logString += " "
-            txIDs = block.gettxIDs()
+                logString = "BLOCK-TX "
+                logString += str(block.selfHash)
+                logString += " "
+                txIDs = block.gettxIDs()
 
-            logString += " ".join(txIDs)
-            #print(logString)
-            self.logger.plainLog(logString)
+                logString += " ".join(txIDs)
+                #print(logString)
+                self.logger.plainLog(logString)
 
         storedTransactions += len(self.blockManager.pendingTransactions)
         print("\n[PENDING TRANSACTIONS]")
