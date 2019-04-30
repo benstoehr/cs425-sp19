@@ -488,7 +488,7 @@ class Node(Thread):
             ######## Update list of IPs from node messages
             # serviceIntroMessage = ['INTRODUCE', 'node2', '172.22.156.3', '4567']
             for serviceIntroMessage in self.serviceIntroductionMessages:
-                print("Converting message to dictionary entry and adding to liveAddresses")
+                #print("Converting message to dictionary entry and adding to liveAddresses")
                 vmname = serviceIntroMessage[1]
                 vmIP = serviceIntroMessage[2]
                 vmPort = int(serviceIntroMessage[3])
@@ -591,7 +591,7 @@ class Node(Thread):
                 if(self.blockManager.currentBlock.selfHash is not None):
                     if(self.blockManager.currentBlock.selfHash not in self.hashesSentToService):
                         self.hashesSentToService.append(self.blockManager.currentBlock.selfHash)
-                        print("SOLVE:")
+                        #print("SOLVE:")
                         #self.blockManager.printCurrentBlock()
                         string = "SOLVE "
                         string += self.blockManager.currentBlock.selfHash
@@ -617,7 +617,7 @@ class Node(Thread):
                         self.logger.logSentBlock(hash, blockMessage2send, ip, port)
                         #print("\nblock about to send")
                         #self.blockManager.lastSuccessfulBlock.printSelf()
-                        print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
+                        #print("GONNA SEND MY BLOCK TO NODE: " + str(ip) + "," + str(port))
                         #print(blockString)
                         #self.blockManager.lastSuccessfulBlock.printSelf()
                         print("")

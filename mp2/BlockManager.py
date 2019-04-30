@@ -136,7 +136,7 @@ class BlockManager(object):
                     self.addAccounts(fA, tA)
                     if(self.executeTrade(fA, tA, a)):
                         self.currentBlock.addTransactionToBlock(pt)
-                        print("R:S\t\t" + str(pt))
+                        #print("R:S\t\t" + str(pt))
                     self.pendingTransactionsToRemove.append(pt)
         #self.removeAddedTransactionsFromPending()
 
@@ -144,7 +144,7 @@ class BlockManager(object):
         # TRANSACTION 1551208414.204385 f78480653bf33e3fd700ee8fae89d53064c8dfa6 183 99 10
         tradeExecuted = self.executeTrade(fromAccount, toAccount, amount)
         if(not tradeExecuted):
-            print("\tInvalid:\t" + str(transaction))
+            #print("\tInvalid:\t" + str(transaction))
             if(transaction not in self.pendingTransactions):
                 self.appendTransactionsToPending(transaction)
             self.removeAddedTransactionsFromPending()
@@ -157,7 +157,7 @@ class BlockManager(object):
             self.pendingTransactionsToRemove.append(transaction)
 
         if(self.currentBlock.transactionCount >= self.numTransactionsBeforeHash):
-            print("\n~~~~~~~MAKING NEW HASH~~~~~~~~\n")
+            #print("\n~~~~~~~MAKING NEW HASH~~~~~~~~\n")
             blockHash = self.hashCurrentBlock()
             self.currentBlock.selfHash = blockHash
             self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
@@ -166,7 +166,7 @@ class BlockManager(object):
 
 
     def appendPendingTransactionsToNewBlock(self):
-        print("\tappendPendingTransactionsToNewBlock()")
+        #print("\tappendPendingTransactionsToNewBlock()")
         for pt in self.pendingTransactions:
             #print(pt)
             self.appendTransactionToCurrentBlock(pt)
@@ -179,7 +179,7 @@ class BlockManager(object):
 
     def printPendingTransactions(self):
         for pt in self.pendingTransactions:
-            print(pt)
+            #print(pt)
 
     def sortPendingTransactions(self):
         #s = set(self.pendingTransactions)
@@ -207,13 +207,13 @@ class BlockManager(object):
         block = self.singleBlockFromMessage(blockString)
 
         if(block.level > self.blockLevel):
-            print("New block has higher level!" + str(block.level))
+            #print("New block has higher level!" + str(block.level))
             #block.printSelf()
 
             #print("Higher Level previousHash: " + block.previousBlockHash)
             #print("Higher Level selfHash: " + block.selfHash)
             # set level so other blocks don't interfere
-            print("[NEW BLOCK LEVEL " + str(block.level) + "]")
+            #print("[NEW BLOCK LEVEL " + str(block.level) + "]")
             self.blockLevel = block.level
 
             if(self.currentBlock is not None):
@@ -221,10 +221,10 @@ class BlockManager(object):
                     self.appendTransactionsToPending(transaction)
 
                 if(block.previousBlockHash == "None"):
-                    print("Found First block from friend!")
+                    #print("Found First block from friend!")
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
-                    print("CONSECUTIVE BETTER BLOCK SUCCESS")
+                    #print("CONSECUTIVE BETTER BLOCK SUCCESS")
                     #print("I AM SLOW")
 
                     self.blockchain[block.level] = (block.selfHash, copy.deepcopy(block))
@@ -272,7 +272,7 @@ class BlockManager(object):
 
             return True
 
-        print("Ignoring Block")
+        #print("Ignoring Block")
         return False
 
 ##############
@@ -285,7 +285,7 @@ class BlockManager(object):
         #print("BLOCK MANAGER hashOfBlock: " + str(hashOfBlock))
         if(self.currentBlock is not None):
             if(self.currentBlock.selfHash == hashOfBlock):
-                print("CONSECUTIVE BLOCK SUCCESS")
+                #print("CONSECUTIVE BLOCK SUCCESS")
 
                 self.blockLevel = self.currentBlock.level
                 self.currentBlock.puzzleAnswer = puzzleAnswer
@@ -331,7 +331,7 @@ class BlockManager(object):
         wordBLOCKCHAIN, blockString = message
         # Get the block
         block = self.singleBlockFromMessage(blockString)
-        print("Adding Block to Chain")
+        #print("Adding Block to Chain")
         #block.printSelf()
 
         # Put it in the blockchain variable
