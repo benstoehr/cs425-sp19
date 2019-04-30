@@ -81,19 +81,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         # check the lock first
         # if no lock, access the lock and write (but how to trace locks until commit?)
         # else wait (2PL)
-        if(key not in lockDict.keys()):
-
-            lockDict[key] = true
-
-        elif(lockDict[key] == true):
-
-            #wait
-            pass
-
-        else:
-
-            lockDict[key] = true
-
+        # what is the format of request?
 
 
     # TODO: commit
