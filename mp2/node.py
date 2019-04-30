@@ -665,9 +665,10 @@ class Node(Thread):
         storedTransactions = 0
         for i in range(self.blockManager.blockLevel):
 
-            blockHash, block = self.blockManager.blockchain[i+1]
-            #block.printSelf()
-            block.printNumberHash()
+            if(i in self.blockManager.blockchain.keys()):
+                blockHash, block = self.blockManager.blockchain[i+1]
+                #block.printSelf()
+                block.printNumberHash()
 
             storedTransactions += len(block.getTransactions())
 
