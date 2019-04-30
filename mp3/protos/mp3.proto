@@ -64,8 +64,7 @@ message getReply {    string value = 1; }
 
 message setMessage {
     string name = 1;
-    string key = 2;
-    string value = 3;
+    string keyvalue = 2;
 }
 message setReply {    string key = 1;   }
 

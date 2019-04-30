@@ -32,6 +32,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     #TODO: begin
     def begin(self, request, context):
+
         t = time.time()
         vmName = request.name
         clientDict[vmName] = [(t, 'begin')]
@@ -56,8 +57,26 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-        key = request.key
-        value = request.value
+        keyvalue = request.keyvalue.split(".")
+        key, value = keyvalue.split(".")
+
+        if(vmName not in clientDict.keys()):
+            return mp3_pb2.setReply(reply='Missing Begin statement')
+        else:
+            arr = clientDict[vmName]
+            string = 'SET %s'.format(keyvalue)
+            arr.append((t,string))
+
+        if(lockDict[keyvalue] is not None):
+            if(waitDict[keyvalue] is None):
+                waitDict[keyvalue] = [vmName]
+            else:
+                waitDict[keyvalue].append(vmName)
+        else:
+            lockDict[keyvalue] = vmName
+
+        while(lockDict[keyvalue] != vmName):
+            time.sleep(0.000001)
 
         # check the lock first
         # if no lock, access the lock and write (but how to trace locks until commit?)
@@ -75,10 +94,14 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
             lockDict[key] = true
 
-        pass
+
 
     # TODO: commit
     def commit(self, request, context):
+        pass
+
+    # TODO: abort
+    def abort(self, request, context):
         pass
 
 
@@ -103,12 +126,10 @@ if __name__ == '__main__':
 
     logging.basicConfig()
 
-
     clientDict = dict()
-
     masterDict = dict()
-
     lockDict = dict()
+    waitDict = dict()
 
     #d['A.x'] = 'Benjamin'
 
