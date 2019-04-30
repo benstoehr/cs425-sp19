@@ -665,7 +665,7 @@ class Node(Thread):
         storedTransactions = 0
         for i in range(self.blockManager.blockLevel):
 
-            if(i in self.blockManager.blockchain.keys()):
+            if((i+1) in self.blockManager.blockchain.keys()):
                 blockHash, block = self.blockManager.blockchain[i+1]
                 #block.printSelf()
                 block.printNumberHash()
@@ -687,9 +687,10 @@ class Node(Thread):
             print(pt)
 
         print("\nTRANSACTIONS IN CURRENT BLOCK")
-        for t in self.blockManager.currentBlock.getTransactions():
-            print(t)
-            storedTransactions += 1
+        if(self.blockManager.currentBlock is not None):
+            for t in self.blockManager.currentBlock.getTransactions():
+                print(t)
+                storedTransactions += 1
 
 
         print("Total Transactions: " + str(totalTransactions))
