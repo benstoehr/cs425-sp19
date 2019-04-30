@@ -179,6 +179,7 @@ class BlockManager(object):
 
     def printPendingTransactions(self):
         for pt in self.pendingTransactions:
+            pass
             #print(pt)
 
     def sortPendingTransactions(self):
