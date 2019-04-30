@@ -288,7 +288,7 @@ class Node(Thread):
 
         # CP 2
         elif("BLOCK" in message2send):
-            print("Received block from " + str(ip) + " " +str(port))
+            #print("Received block from " + str(ip) + " " +str(port))
             #print(message2send)
 
             block = self.blockManager.singleBlockFromMessage(' '.join(message2send))
@@ -304,9 +304,9 @@ class Node(Thread):
             # if level is greater, you have to ask for the whole blockchain
 
             if(self.blockManager.betterBlock(ip, port, message2send)):
-                print("!! BETTER BLOCK == TRUE. GET READY FOR NEW CHAIN  !! ")
+                #print("!! BETTER BLOCK == TRUE. GET READY FOR NEW CHAIN  !! ")
                 self.requestChain(ip, port)
-                print("\nRequested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
+                #print("\nRequested chain from: " + str(self.blockManager.waitingForBlockChainFrom))
                 #self.blockManager.updateBlock()
                 #self.currentBlockString = message2send
 
@@ -682,15 +682,15 @@ class Node(Thread):
                 self.logger.plainLog(logString)
 
         storedTransactions += len(self.blockManager.pendingTransactions)
-        print("\n[PENDING TRANSACTIONS]")
-        for pt in self.blockManager.pendingTransactions:
-            print(pt)
-
-        print("\nTRANSACTIONS IN CURRENT BLOCK")
-        if(self.blockManager.currentBlock is not None):
-            for t in self.blockManager.currentBlock.getTransactions():
-                print(t)
-                storedTransactions += 1
+        # print("\n[PENDING TRANSACTIONS]")
+        # for pt in self.blockManager.pendingTransactions:
+        #     print(pt)
+        #
+        # print("\nTRANSACTIONS IN CURRENT BLOCK")
+        # if(self.blockManager.currentBlock is not None):
+        #     for t in self.blockManager.currentBlock.getTransactions():
+        #         print(t)
+        #         storedTransactions += 1
 
 
         print("Total Transactions: " + str(totalTransactions))

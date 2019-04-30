@@ -170,7 +170,7 @@ class Logger():
         self.masterLogging.debug(fileString)
 
     def logSentBlock(self, selfHash, message, ip, port):
-        print("logSentBlock()")
+        #print("logSentBlock()")
         pureMessage, bytes = self.pullIPoffOutgoing(message)
 
         timestamp_a = time.time()
