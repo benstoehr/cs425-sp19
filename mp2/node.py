@@ -77,7 +77,7 @@ class Node(Thread):
         print("self.host: " + str(self.host))
         self.name = name
         print("name: " +str(self.name))
-        self.vmNumber = int(self.name[8:])
+        self.vmNumber = int(self.name[8])
         # Networking
         self.ip = socket.gethostbyname(self.host)
         print("self.ip:" + str(self.ip))
