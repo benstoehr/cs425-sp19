@@ -45,8 +45,8 @@ class BlockManager(object):
         self.waitingForBlockChainFrom = None
 
         ## MAX = 90
-        self.minTransactionsBeforeHash = 5
-        self.maxTransactionsBeforeHash = 15
+        self.minTransactionsBeforeHash = 60
+        self.maxTransactionsBeforeHash = 85
         self.numTransactionsBeforeHash = random.randint(self.minTransactionsBeforeHash, self.maxTransactionsBeforeHash)
 
     def getAccountAccountAmount(self, transaction):
