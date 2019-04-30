@@ -160,16 +160,16 @@ class Node(Thread):
         readyToSendUnknown = None
 
         # from live addresses
-        if (len(self.liveAddresses) < 3):
+        if (len(self.liveAddresses) < 5):
             readyToSendLive = self.liveAddresses
         else:
-            readyToSendLive = self.liveAddresses[:3]
+            readyToSendLive = self.liveAddresses[:5]
 
         # from unknown addresses
-        if (len(self.unknownAddresses) < 2):
+        if (len(self.unknownAddresses) < 3):
             readyToSendUnknown = self.unknownAddresses
         else:
-            readyToSendUnknown = self.unknownAddresses[:2]
+            readyToSendUnknown = self.unknownAddresses[:3]
 
         readyToSend = readyToSendLive + readyToSendUnknown
         return readyToSend
