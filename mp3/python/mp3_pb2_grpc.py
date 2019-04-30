@@ -44,6 +44,11 @@ class GreeterStub(object):
         request_serializer=mp3__pb2.commitMessage.SerializeToString,
         response_deserializer=mp3__pb2.commitReply.FromString,
         )
+    self.abort = channel.unary_unary(
+        '/mp3.Greeter/abort',
+        request_serializer=mp3__pb2.abortMessage.SerializeToString,
+        response_deserializer=mp3__pb2.abortReply.FromString,
+        )
 
 
 class GreeterServicer(object):
@@ -92,6 +97,13 @@ class GreeterServicer(object):
     context.set_details('Method not implemented!')
     raise NotImplementedError('Method not implemented!')
 
+  def abort(self, request, context):
+    # missing associated documentation comment in .proto file
+    pass
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
 
 def add_GreeterServicer_to_server(servicer, server):
   rpc_method_handlers = {
@@ -124,6 +136,11 @@ def add_GreeterServicer_to_server(servicer, server):
           servicer.commit,
           request_deserializer=mp3__pb2.commitMessage.FromString,
           response_serializer=mp3__pb2.commitReply.SerializeToString,
+      ),
+      'abort': grpc.unary_unary_rpc_method_handler(
+          servicer.abort,
+          request_deserializer=mp3__pb2.abortMessage.FromString,
+          response_serializer=mp3__pb2.abortReply.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(

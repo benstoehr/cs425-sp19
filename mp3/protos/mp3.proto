@@ -38,6 +38,8 @@ service Greeter {
     rpc setValue (setMessage) returns (setReply) {}
 
     rpc commit (commitMessage) returns (commitReply) {}
+
+    rpc abort (abortMessage) returns (abortReply) {}
 }
 
 
@@ -46,35 +48,35 @@ message HelloRequest {
     string name = 1;
 }
 // The response message containing the greetings
-message HelloReply {
-    string message = 1;
-}
+message HelloReply {    string message = 1; }
 
 message beginMessage {
-    string key = 1;
+    string name = 1;
+    string begin = 2;
 }
-message beginReply {
-    string value = 1;
-}
+message beginReply {    string message = 1;   }
 
 message getMessage {
-    string key = 1;
+    string name = 1;
+    string key = 2;
 }
-message getReply {
-    string value = 1;
-}
+message getReply {    string value = 1; }
 
 message setMessage {
-    string key = 1;
-    string value = 2;
+    string name = 1;
+    string key = 2;
+    string value = 3;
 }
-message setReply {
-    string key = 1;
-}
+message setReply {    string key = 1;   }
 
 message commitMessage {
-    string key = 1;
+    string name = 1;
+    string message = 2;
 }
-message commitReply {
-    string value = 1;
+message commitReply {    string reply = 1;  }
+
+message abortMessage {
+    string name = 1;
+    string message = 2;
 }
+message abortReply {    string reply = 1;  }

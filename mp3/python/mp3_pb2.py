@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='mp3',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1b\n\x0c\x62\x65ginMessage\x12\x0b\n\x03key\x18\x01 \x01(\t\"\x1b\n\nbeginReply\x12\r\n\x05value\x18\x01 \x01(\t\"\x19\n\ngetMessage\x12\x0b\n\x03key\x18\x01 \x01(\t\"\x19\n\x08getReply\x12\r\n\x05value\x18\x01 \x01(\t\"(\n\nsetMessage\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t\"\x17\n\x08setReply\x12\x0b\n\x03key\x18\x01 \x01(\t\"\x1c\n\rcommitMessage\x12\x0b\n\x03key\x18\x01 \x01(\t\"\x1c\n\x0b\x63ommitReply\x12\r\n\x05value\x18\x01 \x01(\t2\xaf\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x0c\x62\x65ginMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x62\x65gin\x18\x02 \x01(\t\"\x1d\n\nbeginReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"\'\n\ngetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\"\x19\n\x08getReply\x12\r\n\x05value\x18\x01 \x01(\t\"6\n\nsetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03key\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\"\x17\n\x08setReply\x12\x0b\n\x03key\x18\x01 \x01(\t\".\n\rcommitMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1c\n\x0b\x63ommitReply\x12\r\n\x05reply\x18\x01 \x01(\t\"-\n\x0c\x61\x62ortMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1b\n\nabortReply\x12\r\n\x05reply\x18\x01 \x01(\t2\xde\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x12-\n\x05\x61\x62ort\x12\x11.mp3.abortMessage\x1a\x0f.mp3.abortReply\"\x00\x62\x06proto3')
 )
 
 
@@ -96,8 +96,15 @@ _BEGINMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='mp3.beginMessage.key', index=0,
+      name='name', full_name='mp3.beginMessage.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='begin', full_name='mp3.beginMessage.begin', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -115,7 +122,7 @@ _BEGINMESSAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=79,
-  serialized_end=106,
+  serialized_end=122,
 )
 
 
@@ -127,7 +134,7 @@ _BEGINREPLY = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='mp3.beginReply.value', index=0,
+      name='message', full_name='mp3.beginReply.message', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -145,8 +152,8 @@ _BEGINREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=108,
-  serialized_end=135,
+  serialized_start=124,
+  serialized_end=153,
 )
 
 
@@ -158,8 +165,15 @@ _GETMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='mp3.getMessage.key', index=0,
+      name='name', full_name='mp3.getMessage.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='key', full_name='mp3.getMessage.key', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -176,8 +190,8 @@ _GETMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=137,
-  serialized_end=162,
+  serialized_start=155,
+  serialized_end=194,
 )
 
 
@@ -207,8 +221,8 @@ _GETREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=164,
-  serialized_end=189,
+  serialized_start=196,
+  serialized_end=221,
 )
 
 
@@ -220,15 +234,22 @@ _SETMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='mp3.setMessage.key', index=0,
+      name='name', full_name='mp3.setMessage.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='value', full_name='mp3.setMessage.value', index=1,
+      name='key', full_name='mp3.setMessage.key', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mp3.setMessage.value', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -245,8 +266,8 @@ _SETMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=191,
-  serialized_end=231,
+  serialized_start=223,
+  serialized_end=277,
 )
 
 
@@ -276,8 +297,8 @@ _SETREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=233,
-  serialized_end=256,
+  serialized_start=279,
+  serialized_end=302,
 )
 
 
@@ -289,8 +310,15 @@ _COMMITMESSAGE = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='key', full_name='mp3.commitMessage.key', index=0,
+      name='name', full_name='mp3.commitMessage.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='mp3.commitMessage.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -307,8 +335,8 @@ _COMMITMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=258,
-  serialized_end=286,
+  serialized_start=304,
+  serialized_end=350,
 )
 
 
@@ -320,7 +348,7 @@ _COMMITREPLY = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='value', full_name='mp3.commitReply.value', index=0,
+      name='reply', full_name='mp3.commitReply.reply', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -338,8 +366,77 @@ _COMMITREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=288,
-  serialized_end=316,
+  serialized_start=352,
+  serialized_end=380,
+)
+
+
+_ABORTMESSAGE = _descriptor.Descriptor(
+  name='abortMessage',
+  full_name='mp3.abortMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='mp3.abortMessage.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='mp3.abortMessage.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=382,
+  serialized_end=427,
+)
+
+
+_ABORTREPLY = _descriptor.Descriptor(
+  name='abortReply',
+  full_name='mp3.abortReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='reply', full_name='mp3.abortReply.reply', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=429,
+  serialized_end=456,
 )
 
 DESCRIPTOR.message_types_by_name['HelloRequest'] = _HELLOREQUEST
@@ -352,6 +449,8 @@ DESCRIPTOR.message_types_by_name['setMessage'] = _SETMESSAGE
 DESCRIPTOR.message_types_by_name['setReply'] = _SETREPLY
 DESCRIPTOR.message_types_by_name['commitMessage'] = _COMMITMESSAGE
 DESCRIPTOR.message_types_by_name['commitReply'] = _COMMITREPLY
+DESCRIPTOR.message_types_by_name['abortMessage'] = _ABORTMESSAGE
+DESCRIPTOR.message_types_by_name['abortReply'] = _ABORTREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 HelloRequest = _reflection.GeneratedProtocolMessageType('HelloRequest', (_message.Message,), dict(
@@ -424,6 +523,20 @@ commitReply = _reflection.GeneratedProtocolMessageType('commitReply', (_message.
   ))
 _sym_db.RegisterMessage(commitReply)
 
+abortMessage = _reflection.GeneratedProtocolMessageType('abortMessage', (_message.Message,), dict(
+  DESCRIPTOR = _ABORTMESSAGE,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.abortMessage)
+  ))
+_sym_db.RegisterMessage(abortMessage)
+
+abortReply = _reflection.GeneratedProtocolMessageType('abortReply', (_message.Message,), dict(
+  DESCRIPTOR = _ABORTREPLY,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.abortReply)
+  ))
+_sym_db.RegisterMessage(abortReply)
+
 
 
 _GREETER = _descriptor.ServiceDescriptor(
@@ -432,8 +545,8 @@ _GREETER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=319,
-  serialized_end=622,
+  serialized_start=459,
+  serialized_end=809,
   methods=[
   _descriptor.MethodDescriptor(
     name='SayHello',
@@ -487,6 +600,15 @@ _GREETER = _descriptor.ServiceDescriptor(
     containing_service=None,
     input_type=_COMMITMESSAGE,
     output_type=_COMMITREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='abort',
+    full_name='mp3.Greeter.abort',
+    index=6,
+    containing_service=None,
+    input_type=_ABORTMESSAGE,
+    output_type=_ABORTREPLY,
     serialized_options=None,
   ),
 ])

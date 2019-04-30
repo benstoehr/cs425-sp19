@@ -25,22 +25,42 @@ import mp3_pb2_grpc
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
-
 class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     def SayHello(self, request, context):
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
-    def getValue(self, request, context):
-        if(request.value in d.keys()):
-            return mp3_pb2.getReply(reply='%s' % d[request.value])
-
     #TODO: begin
     def begin(self, request, context):
-        pass
+        t = time.time()
+        vmName = request.name
+        clientDict[vmName] = [(t, 'begin')]
+        return mp3_pb2.beginReply(message='OK')
+
+
+    def getValue(self, request, context):
+        t = time.time()
+        vmName = request.name
+        key = request.key
+
+        if(key in masterDict.keys()):
+            return mp3_pb2.getReply(reply='%s' % masterDict[request.value])
+
+        else:
+            return mp3_pb2.getReply(reply='NOT FOUND')
+
+
 
     #TODO: setValue
     def setValue(self, request, context):
+
+        t = time.time()
+        vmName = request.name
+        key = request.key
+        value = request.value
+
+        
+
         pass
 
     # TODO: commit
@@ -69,7 +89,13 @@ if __name__ == '__main__':
 
     logging.basicConfig()
 
-    d = dict()
-    d['A.x'] = 'Benjamin'
+
+    clientDict = dict()
+
+    masterDict = dict()
+
+    lockDict = dict()
+
+    #d['A.x'] = 'Benjamin'
 
     serve()
