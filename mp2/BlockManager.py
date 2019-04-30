@@ -223,6 +223,7 @@ class BlockManager(object):
 
                 if(block.previousBlockHash == "None"):
                     #print("Found First block from friend!")
+                    pass
 
                 if (block.previousBlockHash == self.lastSuccessfulHash):
                     #print("CONSECUTIVE BETTER BLOCK SUCCESS")
@@ -252,7 +253,7 @@ class BlockManager(object):
 
 
 
-                    print("")
+                    #print("")
                     return False
 
                 else:
