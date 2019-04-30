@@ -525,10 +525,10 @@ class Node(Thread):
             ## Sort the transactions
             sortedTranscations = sorted(self.transactionMessages, key=sortFunction)
             transactionsToSend = None
-            if (len(sortedTranscations) < 10):
+            if (len(sortedTranscations) < 20):
                 transactionsToSend = sortedTranscations
             else:
-                transactionsToSend = sortedTranscations[-10:]
+                transactionsToSend = sortedTranscations[-20:]
 
     ## 3.C -- Figure out which random introductions to send
 
