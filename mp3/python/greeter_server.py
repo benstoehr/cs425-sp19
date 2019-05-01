@@ -72,8 +72,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-        keyvalue = request.serverkeyvalue.split(".")
-        key, value = keyvalue[1].split(" ")
+        serverkeyvalue = request.serverkeyvalue # A.x 1
+        keyvalue = serverkeyvalue.split(".") # ["A", "x 1"]
+        key, value = keyvalue[1].split(" ") # key:x, value: 1
 
         if(vmName not in clientDict.keys()):
             return mp3_pb2.setReply(message='Missing Begin statement')
@@ -82,15 +83,15 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             string = 'SET %s'.format(keyvalue)
             arr.append((t,string))
 
-        if(lockDict[keyvalue] is not None):
-            if(waitDict[keyvalue] is None):
-                waitDict[keyvalue] = [vmName]
+        if(lockDict[key] is not None):
+            if(waitDict[key] is None):
+                waitDict[key] = [vmName]
             else:
-                waitDict[keyvalue].append(vmName)
+                waitDict[key].append(vmName)
         else:
-            lockDict[keyvalue] = ['SET', vmName]
+            lockDict[key] = ['SET', vmName]
 
-        while(lockDict[keyvalue][1] != vmName):
+        while(lockDict[key][1] != vmName):
             time.sleep(0.000001)
 
 
