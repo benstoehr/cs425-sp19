@@ -57,6 +57,20 @@ def run(numVMs):
         with sys.stdin as i:
             while(1):
                 command = input()
+
+                if('COMMIT' in command):
+                    pass
+                if('ABORT' in command):
+                    pass
+
+                if('GET' in command):
+                    get, serverkey = command.split(" ")
+                    server, key = serverkey.split(".")
+
+                    getreply = serverDict[server].getMessage(mp3_pb2.getMessage(name="BensMac", serverkey=serverkey))
+                    print(getreply.message)
+
+
                 print(command)
     except KeyboardInterrupt:
         exit(1)
