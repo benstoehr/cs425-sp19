@@ -61,7 +61,7 @@ def run(numVMs):
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name='Cleint 1', serverkey='A.x'))
     print("getValue received: " + response.message)
 
-    response = serverDict['A'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='A.x 1'))
+    response = serverDict['B'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='B.x 1'))
     print("setValue and received: " + response.message)
 
     response = serverDict['B'].getValue(mp3_pb2.getMessage(name='Cleint 1', serverkey='B.x'))
