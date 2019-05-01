@@ -56,13 +56,13 @@ def run(numVMs):
     print("Start the test!")
 
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name="Cleint 2", serverkey='A.x'))
-    print("getValue %s" % serverkey + "and received: " + response.message)
+    print("getValue received: " + response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name="Cleint 2", serverkeyvalue='B.x 3'))
-    print("setValue %s" % serverkeyvalue + " and received: "+ response.message)
+    print("setValue received: "+ response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name="Cleint 2", serverkeyvalue='A.x 2'))
-    print("setValue %s" % serverkeyvalue + " and received: "+ response.message)
+    print("setValue received: "+ response.message)
 
     for i in range(numVMs):
         response = serverDict[serverLetters[i]].commit(mp3_pb2.commitMessage(name='Client 2', message='commit'))
