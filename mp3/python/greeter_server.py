@@ -72,7 +72,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-        keyvalue = request.keyvalue.split(".")
+        keyvalue = request.serverkeyvalue.split(".")
         key, value = keyvalue.split(".")
 
         if(vmName not in clientDict.keys()):
