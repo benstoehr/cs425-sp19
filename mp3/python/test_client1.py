@@ -48,7 +48,7 @@ def run(numVMs):
         serverDict[serverLetters[i]] = mp3_pb2_grpc.GreeterStub(channel)
 
         response = serverDict[serverLetters[i]].begin(mp3_pb2.beginMessage(name='Client 1', begin='begin'))
-        print("Sent begin to %s and recseived: " % serverLetters[i] + response.reply)
+        print("Sent begin to %s and recseived: " % serverLetters[i] + response.message)
 
         # bensname = serverDict[serverLetters[i]].getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
         # print("getValue received: " + bensname.message)
@@ -56,17 +56,17 @@ def run(numVMs):
     print("Start the test!")
 
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name='Cleint 1', key='A.x'))
-    print("getValue %s" % key + "and received: " + response.reply)
+    print("getValue %s" % key + "and received: " + response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='A.x 1'))
-    print("setValue %s" % keyvalue + " and received: " + response.reply)
+    print("setValue %s" % keyvalue + " and received: " + response.message)
 
     response = serverDict['B'].getValue(mp3_pb2.getMessage(name='Cleint 1', key='B.x'))
-    print("getValue %s" % key + "and received: " + response.reply)
+    print("getValue %s" % key + "and received: " + response.message)
 
     for i in range(numVMs):
         response = serverDict[serverLetters[i]].commit(mp3_pb2.commitMessage(name='Client 1', message='commit'))
-        print("Sent begin to %s and recseived: " % serverLetters[i] + response.reply)
+        print("Sent begin to %s and recseived: " % serverLetters[i] + response.message)
 
 
 if __name__ == '__main__':
