@@ -47,7 +47,7 @@ def run(numVMs):
         channel = grpc.insecure_channel(str(serverVMs[i])+':50051')
         serverDict[serverLetters[i]] = mp3_pb2_grpc.GreeterStub(channel)
 
-        response = serverDict[serverLetters[i]].begin(mp3_pb2.beginMessage(name='Client 1', begin='begin'))
+        response = serverDict[serverLetters[i]].begin(mp3_pb2.beginMessage(name='Client 2', begin='begin'))
         print("Sent begin to %s and recseived: " % serverLetters[i] + response.message)
 
         # bensname = serverDict[serverLetters[i]].getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
@@ -56,16 +56,16 @@ def run(numVMs):
     print("Start the test!")
 
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name="Cleint 2", serverkey='A.x'))
-    print("getValue %s" % key + "and received: " + response.message)
+    print("getValue %s" % serverkey + "and received: " + response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name="Cleint 2", serverkeyvalue='B.x 3'))
-    print("setValue %s" % keyvalue + " and received: "+ response.message)
+    print("setValue %s" % serverkeyvalue + " and received: "+ response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name="Cleint 2", serverkeyvalue='A.x 2'))
-    print("setValue %s" % keyvalue + " and received: "+ response.message)
+    print("setValue %s" % serverkeyvalue + " and received: "+ response.message)
 
     for i in range(numVMs):
-        response = serverDict[serverLetters[i]].commit(mp3_pb2.commitMessage(name='Client 1', message='commit'))
+        response = serverDict[serverLetters[i]].commit(mp3_pb2.commitMessage(name='Client 2', message='commit'))
         print("Sent begin to %s and recseived: " % serverLetters[i] + response.message)
 
 
