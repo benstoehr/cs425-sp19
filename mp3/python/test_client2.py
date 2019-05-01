@@ -55,7 +55,7 @@ def run(numVMs):
 
     print("Start the test!")
 
-    response = serverDict['A'].getValue(mp3_pb2.getMessage(name="Cleint 2", key='A.x'))
+    response = serverDict['A'].getValue(mp3_pb2.getMessage(name="Cleint 2", serverkey='A.x'))
     print("getValue %s" % key + "and received: " + response.message)
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name="Cleint 2", serverkeyvalue='B.x 3'))
