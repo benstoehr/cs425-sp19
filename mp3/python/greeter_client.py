@@ -53,6 +53,14 @@ def run(numVMs):
         # bensname = serverDict[serverLetters[i]].getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
         # print("getValue received: " + bensname.message)
 
+    try:
+        with sys.stdin as i:
+            while(1):
+                command = input()
+                print(command)
+    except KeyboardInterrupt:
+        exit(1)
+
 
 
 
