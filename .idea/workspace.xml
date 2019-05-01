@@ -22,11 +22,11 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="131">
-                  <caret line="140" column="32" lean-forward="false" selection-start-line="140" selection-start-column="32" selection-end-line="140" selection-end-column="32" />
+                <state relative-caret-position="403">
+                  <caret line="147" column="0" lean-forward="true" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
-                    <element signature="e#5617#6027#0" expanded="false" />
+                    <element signature="e#5626#6036#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -784,11 +784,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="140" column="32" lean-forward="false" selection-start-line="140" selection-start-column="32" selection-end-line="140" selection-end-column="32" />
+        <state relative-caret-position="403">
+          <caret line="147" column="0" lean-forward="true" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
-            <element signature="e#5617#6027#0" expanded="false" />
+            <element signature="e#5626#6036#0" expanded="false" />
           </folding>
         </state>
       </provider>

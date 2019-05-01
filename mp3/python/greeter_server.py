@@ -138,15 +138,13 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                             if (len(waitDict[serverkey]) == 0):
                                 del (waitDict[serverkey])
                                 lockDict[serverkey] = None
-                                
+
                     else:
                         if (serverkey in waitDict.keys()):
                             waitDict[serverkey].remove(['GET', vmName])
 
+        return mp3_pb2.commitReply(message='COMMIT OK')
 
-
-
-        pass
 
     # TODO: abort
     def abort(self, request, context):
