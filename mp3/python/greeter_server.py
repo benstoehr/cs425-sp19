@@ -83,8 +83,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             string = 'SET %s'.format(keyvalue)
             arr.append((t,string))
 
-        if(lockDict[key] is not None):
-            if(waitDict[key] is None):
+        if(key in lockDict.keys()):
+            if(key not in waitDict.keys()):
                 waitDict[key] = [vmName]
             else:
                 waitDict[key].append(vmName)
