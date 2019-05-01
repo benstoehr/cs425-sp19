@@ -40,7 +40,7 @@ def run(numVMs):
         channel = grpc.insecure_channel(str(serverVMs[i])+':50051')
         serverDict[serverLetters[i]] = mp3_pb2_grpc.GreeterStub(channel)
 
-        response = serverDict[serverLetters[i]].begin(mp3_pb2.beginMessage(name='Client 1', begin=True))
+        response = serverDict[serverLetters[i]].begin(mp3_pb2.beginMessage(name='Client 1', begin='begin'))
         print("Sent begin to %s and recseived: " % serverLetters[i] + response.reply)
 
         # bensname = serverDict[serverLetters[i]].getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
