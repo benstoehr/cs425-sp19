@@ -93,6 +93,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         while(lockDict[key][1] != vmName):
             time.sleep(0.000001)
+            
+        return mp3_pb2.setReply(message='OK? (I guess)')
 
 
 
