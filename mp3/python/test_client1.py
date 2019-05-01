@@ -57,7 +57,7 @@ def run(numVMs):
 
     print("Start the test!")
 
-    response = serverDict['A'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='A.x 1'))
+    response = serverDict['A'].setValue(mp3_pb2.setMessage(name='Client 1', serverkey='A.x', value='1'))
     print("setValue received: " + response.message)
 
     time.sleep(5)
@@ -65,7 +65,7 @@ def run(numVMs):
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name='Cleint 1', serverkey='A.x'))
     print("getValue received: " + response.message)
 
-    response = serverDict['B'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='B.x 1'))
+    response = serverDict['B'].setValue(mp3_pb2.setMessage(name='Client 1', serverkey='B.x', value='1'))
     print("setValue received: " + response.message)
 
     response = serverDict['B'].getValue(mp3_pb2.getMessage(name='Cleint 1', serverkey='B.x'))
