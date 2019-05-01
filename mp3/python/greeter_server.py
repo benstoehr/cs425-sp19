@@ -64,7 +64,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
         if(key not in lockDict.keys()):
-            lockDict[key] = ['GET', vmName]
+            lockDict[key] = [['GET', vmName]]
         else:
             lockDict[key].append(['GET', vmName])
 
@@ -195,7 +195,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     def checkAcquireReadLock(self, vmname, serverkey):
 
-        print(lockDict.keys())
         if(serverkey not in lockDict.keys()):
             # No one has a lock on it
             return True
