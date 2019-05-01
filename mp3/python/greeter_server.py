@@ -93,6 +93,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         while(lockDict[keyvalue][1] != vmName):
             time.sleep(0.000001)
 
+
+
         # check the lock first
         # if no lock, access the lock and write (but how to trace locks until commit?)
         # else wait (2PL)
@@ -101,11 +103,85 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     # TODO: commit
     def commit(self, request, context):
+        t = time.time()
+        vmName = request.name
+
+        check = self.checkCommitOK(vmName)
+        while(self.checkCommitOK(vmName) == False):
+            time.sleep(0.0001)
+
+        for command in clientDict[vmName]:
+
+            if('SET' in command):
+
+                type, serverkey, value = command.split(" ")
+                server, key = serverkey.split(".")
+                masterDict[key] = value
+
+                if(serverkey in waitDict.keys()):
+                    if(len(waitDict[serverkey]) > 0):
+                        lockDict[serverkey] = waitDict[serverkey].pop()
+                    if(len(waitDict[serverkey]) > 0):
+                        del(waitDict[serverkey])
+                else:
+                    lockDict[serverkey] = None
+
+            if('GET' in command):
+                type, serverkey = command.split(" ")
+
+                if(serverkey in lockDict.keys):
+                    if(lockDict[serverkey] == vmName):
+
+                        if (serverkey in waitDict.keys()):
+                            if (len(waitDict[serverkey]) > 0):
+                                lockDict[serverkey] = waitDict[serverkey].pop()
+                            if (len(waitDict[serverkey]) == 0):
+                                del (waitDict[serverkey])
+                                lockDict[serverkey] = None
+                                
+                    else:
+                        if (serverkey in waitDict.keys()):
+                            waitDict[serverkey].remove(['GET', vmName])
+
+
+
+
         pass
 
     # TODO: abort
     def abort(self, request, context):
         pass
+
+    def checkCommitOK(self, vmName):
+
+        commit = True
+        commands = clientDict[vmName]
+
+        for command in commands[1:]:
+
+            if ('SET' in command):
+                type, serverkey, value = command.split(" ")
+                if (lockDict[serverkey][1] == vmName):
+                    continue
+                else:
+                    return False
+
+            if ('GET' in command):
+                type, serverkey = command.split(" ")
+                if (lockDict[serverkey][1] == vmName):
+                    continue
+                if(lockDict[serverkey][0] == 'SET'):
+                    return False
+                else:
+                    for type, vmname in waitDict[serverkey]:
+                        if(vmName ==vmname):
+                            continue
+                        elif('SET' in value):
+                            return False
+
+        return True
+
+
 
     def checkAcquireReadLock(self, serverkey):
 
