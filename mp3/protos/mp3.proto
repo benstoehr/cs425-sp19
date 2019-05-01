@@ -60,22 +60,22 @@ message getMessage {
     string name = 1;
     string key = 2;
 }
-message getReply {    string value = 1; }
+message getReply {    string message = 1; }
 
 message setMessage {
     string name = 1;
-    string keyvalue = 2;
+    string serverkeyvalue = 2;
 }
-message setReply {    string key = 1;   }
+message setReply {    string message = 1;   }
 
 message commitMessage {
     string name = 1;
     string message = 2;
 }
-message commitReply {    string reply = 1;  }
+message commitReply {    string message = 1;  }
 
 message abortMessage {
     string name = 1;
     string message = 2;
 }
-message abortReply {    string reply = 1;  }
+message abortReply {    string message = 1;  }

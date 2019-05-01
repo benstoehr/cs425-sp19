@@ -30,11 +30,11 @@ def run():
         # Get proxy object
         stub = mp3_pb2_grpc.GreeterStub(channel)
 
-        response = stub.SayHello(mp3_pb2.HelloRequest(name='you'))
-        print("Greeter client received: " + response.message)
+        # response = stub.SayHello(mp3_pb2.HelloRequest(name='you'))
+        # print("Greeter client received: " + response.message)
 
-        bensname = stub.getValue(mp3_pb2.getMessage(value='A.x'))
-        print("getValue received: " + bensname.reply)
+        bensname = stub.getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
+        print("getValue received: " + bensname.message)
 
 
 

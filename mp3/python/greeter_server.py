@@ -43,12 +43,13 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         t = time.time()
         vmName = request.name
         key = request.key
+        print("["+str(t)+"] "+str(vmName)+" getValue " + str(key))
 
         if(key in masterDict.keys()):
-            return mp3_pb2.getReply(reply='%s' % masterDict[request.value])
+            return mp3_pb2.getReply(message='%s' % masterDict[request.value])
 
         else:
-            return mp3_pb2.getReply(reply='NOT FOUND')
+            return mp3_pb2.getReply(message='NOT FOUND')
 
 
 
@@ -61,7 +62,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         key, value = keyvalue.split(".")
 
         if(vmName not in clientDict.keys()):
-            return mp3_pb2.setReply(reply='Missing Begin statement')
+            return mp3_pb2.setReply(message='Missing Begin statement')
         else:
             arr = clientDict[vmName]
             string = 'SET %s'.format(keyvalue)
@@ -120,5 +121,5 @@ if __name__ == '__main__':
     waitDict = dict()
 
     #d['A.x'] = 'Benjamin'
-
+    print("[SERVING]")
     serve()
