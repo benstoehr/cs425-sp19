@@ -55,7 +55,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             else:
                 waitDict[serverkey].append(['GET', vmName])
 
-        while(self.checkAquireReadLock(serverkey) == False):
+        while(self.checkAcquireReadLock(serverkey) == False):
             time.sleep(0.0001)
 
 
