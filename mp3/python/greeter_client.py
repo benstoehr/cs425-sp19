@@ -21,22 +21,22 @@ import grpc
 import mp3_pb2
 import mp3_pb2_grpc
 
-# serverVMs = ['[::]:50051',
-#  'sp19-cs425-g58-01.cs.illinois.edu',
-#  'sp19-cs425-g58-02.cs.illinois.edu',
-#  'sp19-cs425-g58-03.cs.illinois.edu',
-#  'sp19-cs425-g58-04.cs.illinois.edu',
-#  'sp19-cs425-g58-05.cs.illinois.edu']
-
-# serverLetters = ['A', 'B', 'C', 'D', 'E']
-
 serverVMs = ['[::]:50051',
- 'sp19-cs425-g58-10.cs.illinois.edu',
- 'sp19-cs425-g58-09.cs.illinois.edu',
- 'sp19-cs425-g58-08.cs.illinois.edu',
- 'sp19-cs425-g58-07.cs.illinois.edu']
+ 'sp19-cs425-g58-01.cs.illinois.edu',
+ 'sp19-cs425-g58-02.cs.illinois.edu',
+ 'sp19-cs425-g58-03.cs.illinois.edu',
+ 'sp19-cs425-g58-04.cs.illinois.edu',
+ 'sp19-cs425-g58-05.cs.illinois.edu']
 
-serverLetters = ['A', 'B', 'C', 'D']
+serverLetters = ['A', 'B', 'C', 'D', 'E']
+
+# serverVMs = ['[::]:50051',
+#  'sp19-cs425-g58-10.cs.illinois.edu',
+#  'sp19-cs425-g58-09.cs.illinois.edu',
+#  'sp19-cs425-g58-08.cs.illinois.edu',
+#  'sp19-cs425-g58-07.cs.illinois.edu']
+
+# serverLetters = ['A', 'B', 'C', 'D']
 
 def run(numVMs):
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
