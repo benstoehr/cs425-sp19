@@ -36,6 +36,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         t = time.time()
         vmName = request.name
         clientDict[vmName] = [(t, 'begin')]
+        print("["+str(t)+"] "+str(vmName)+" connects to the server.")
 
         return mp3_pb2.beginReply(message='OK')
 
