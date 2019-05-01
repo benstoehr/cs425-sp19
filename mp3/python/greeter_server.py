@@ -28,7 +28,9 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     def SayHello(self, request, context):
+
         print("Received Hello!")
+
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
     #TODO: begin
