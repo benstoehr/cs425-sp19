@@ -35,8 +35,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     #TODO: begin
     def begin(self, request, context):
+
         t = time.time()
         vmName = request.name
+        print("Received Begin from ", vmName)
+
         clientDict[vmName] = [(t, 'begin')]
         print("["+str(t)+"] "+str(vmName)+" connects to the server.")
 
@@ -50,6 +53,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
+        print("Received getValue from ", vmName)
         serverkey = request.serverkey
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
@@ -78,6 +82,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
+
+        print("Received setValue from ", vmName)
+
         serverkeyvalue = request.serverkeyvalue # A.x 1
         keyvalue = serverkeyvalue.split(".") # ["A", "x 1"]
         key, value = keyvalue[1].split(" ") # key:x, value: 1
@@ -116,6 +123,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
     def commit(self, request, context):
         t = time.time()
         vmName = request.name
+
+        print("Received Commit from ", vmName)
 
         check = self.checkCommitOK(vmName)
         while(self.checkCommitOK(vmName) == False):
