@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='mp3',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x0c\x62\x65ginMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x62\x65gin\x18\x02 \x01(\t\"\x1d\n\nbeginReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\ngetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\"\x1b\n\x08getReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"2\n\nsetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x16\n\x0eserverkeyvalue\x18\x02 \x01(\t\"\x1b\n\x08setReply\x12\x0f\n\x07message\x18\x01 \x01(\t\".\n\rcommitMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0b\x63ommitReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x61\x62ortMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\nabortReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xde\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x12-\n\x05\x61\x62ort\x12\x11.mp3.abortMessage\x1a\x0f.mp3.abortReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x0c\x62\x65ginMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x62\x65gin\x18\x02 \x01(\t\"\x1d\n\nbeginReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\ngetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\"\x1b\n\x08getReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"<\n\nsetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\"\x1b\n\x08setReply\x12\x0f\n\x07message\x18\x01 \x01(\t\".\n\rcommitMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0b\x63ommitReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x61\x62ortMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\nabortReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xde\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x12-\n\x05\x61\x62ort\x12\x11.mp3.abortMessage\x1a\x0f.mp3.abortReply\"\x00\x62\x06proto3')
 )
 
 
@@ -241,8 +241,15 @@ _SETMESSAGE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='serverkeyvalue', full_name='mp3.setMessage.serverkeyvalue', index=1,
+      name='serverkey', full_name='mp3.setMessage.serverkey', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='value', full_name='mp3.setMessage.value', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -260,7 +267,7 @@ _SETMESSAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=231,
-  serialized_end=281,
+  serialized_end=291,
 )
 
 
@@ -290,8 +297,8 @@ _SETREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=283,
-  serialized_end=310,
+  serialized_start=293,
+  serialized_end=320,
 )
 
 
@@ -328,8 +335,8 @@ _COMMITMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=312,
-  serialized_end=358,
+  serialized_start=322,
+  serialized_end=368,
 )
 
 
@@ -359,8 +366,8 @@ _COMMITREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=360,
-  serialized_end=390,
+  serialized_start=370,
+  serialized_end=400,
 )
 
 
@@ -397,8 +404,8 @@ _ABORTMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=392,
-  serialized_end=437,
+  serialized_start=402,
+  serialized_end=447,
 )
 
 
@@ -428,8 +435,8 @@ _ABORTREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=439,
-  serialized_end=468,
+  serialized_start=449,
+  serialized_end=478,
 )
 
 DESCRIPTOR.message_types_by_name['HelloRequest'] = _HELLOREQUEST
@@ -538,8 +545,8 @@ _GREETER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=471,
-  serialized_end=821,
+  serialized_start=481,
+  serialized_end=831,
   methods=[
   _descriptor.MethodDescriptor(
     name='SayHello',

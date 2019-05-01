@@ -40,7 +40,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         vmName = request.name
         print("Received Begin from ", vmName)
 
-        clientDict[vmName] = [(t, 'begin')]
+        clientDict[vmName] = dict()
+        clientDict[vmName]['miniDict'] = dict()
+        clientDict[vmName]['commands'] = [(t, 'begin')]
         print("["+str(t)+"] "+str(vmName)+" connects to the server.")
 
         return mp3_pb2.beginReply(message='OK')
@@ -68,7 +70,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         while(self.checkAcquireReadLock(serverkey) == False):
             time.sleep(0.0001)
 
-
         if(serverkey in masterDict.keys()):
             return mp3_pb2.getReply(message='%s' % masterDict[request.value])
 
@@ -85,16 +86,16 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         print("Received setValue from ", vmName)
 
-        serverkeyvalue = request.serverkeyvalue # A.x 1
-        keyvalue = serverkeyvalue.split(".") # ["A", "x 1"]
-        key, value = keyvalue[1].split(" ") # key:x, value: 1
+        serverkey = request.serverkey # A.x 1
+        server, key = serverkey.split(".") # ["A", "x 1"]
+        value = request.value
 
         if(vmName not in clientDict.keys()):
             print(vmName, clientDict.keys())
-            return mp3_pb2.setReply(message='Missing Begin statement')
+            return mp3_pb2.setReply(message='\tMissing Begin statement')
         else:
             arr = clientDict[vmName]
-            string = 'SET %s'.format(keyvalue)
+            string = 'SET %s %s'.format(serverkey, value)
             arr.append((t,string))
 
         if(key in lockDict.keys()):
@@ -108,7 +109,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         while(lockDict[key][1] != vmName):
             time.sleep(0.000001)
 
-        print("["+str(t)+"] "+str(vmName)+" setValue " + str(serverkeyvalue))
+        print("["+str(t)+"] "+str(vmName)+" setValue " + str(serverkey) +" " +str(value))
         return mp3_pb2.setReply(message='OK? (I guess)')
 
 

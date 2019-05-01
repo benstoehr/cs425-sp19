@@ -21,7 +21,8 @@ import grpc
 import mp3_pb2
 import mp3_pb2_grpc
 
-serverVMs = ['sp19-cs425-g58-01.cs.illinois.edu',
+serverVMs = ['[::]:50051',
+ 'sp19-cs425-g58-01.cs.illinois.edu',
  'sp19-cs425-g58-02.cs.illinois.edu',
  'sp19-cs425-g58-03.cs.illinois.edu',
  'sp19-cs425-g58-04.cs.illinois.edu',
@@ -58,6 +59,12 @@ def run(numVMs):
             while(1):
                 command = input()
 
+
+                if('BEGIN' in command):
+                    for server in serverDict.values():
+                        beginreply = server.begin(mp3_pb2.beginMessage(name="BensMac"))
+                        print(beginreply.message)
+
                 if('COMMIT' in command):
                     pass
                 if('ABORT' in command):
@@ -67,11 +74,19 @@ def run(numVMs):
                     get, serverkey = command.split(" ")
                     server, key = serverkey.split(".")
 
-                    getreply = serverDict[server].getMessage(mp3_pb2.getMessage(name="BensMac", serverkey=serverkey))
+                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name="BensMac", serverkey=serverkey))
                     print(getreply.message)
 
+                if ('SET' in command):
+                    set, serverkey, value = command.split(" ")
+                    server, key = serverkey.split(".")
 
-                print(command)
+                    setreply = serverDict[server].setValue(mp3_pb2.setMessage(name="BensMac", serverkey=serverkey, value=value))
+                    print(setreply.message)
+
+
+                #print(command)
+
     except KeyboardInterrupt:
         exit(1)
 

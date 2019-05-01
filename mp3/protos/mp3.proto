@@ -64,7 +64,8 @@ message getReply {    string message = 1; }
 
 message setMessage {
     string name = 1;
-    string serverkeyvalue = 2;
+    string serverkey = 2;
+    string value = 3;
 }
 message setReply {    string message = 1;   }
 
