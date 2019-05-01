@@ -15,26 +15,36 @@
 
 from __future__ import print_function
 import logging
-
+import sys
 import grpc
 
 import mp3_pb2
 import mp3_pb2_grpc
 
-def run():
+serverVMs = ['sp19-cs425-g58-01.cs.illinois.edu',
+ 'sp19-cs425-g58-02.cs.illinois.edu',
+ 'sp19-cs425-g58-03.cs.illinois.edu',
+ 'sp19-cs425-g58-04.cs.illinois.edu',
+ 'sp19-cs425-g58-05.cs.illinois.edu']
+
+serverLetters = ['A', 'B', 'C', 'D', 'E']
+
+def run(numVMs):
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
     # used in circumstances in which the with statement does not fit the needs
     # of the code.
-    with grpc.insecure_channel('localhost:50051') as channel:
 
-        # Get proxy object
-        stub = mp3_pb2_grpc.GreeterStub(channel)
+    serverDict = dict()
 
-        # response = stub.SayHello(mp3_pb2.HelloRequest(name='you'))
-        # print("Greeter client received: " + response.message)
+    for i in range(numVMs):
+        channel = grpc.insecure_channel(str(serverVMs[i])+':50051')
+        serverDict[serverLetters[i]] = mp3_pb2_grpc.GreeterStub(channel)
 
-        bensname = stub.getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
-        print("getValue received: " + bensname.message)
+        response = serverDict[serverLetters[i]].SayHello(mp3_pb2.HelloRequest(name='you'))
+        print("Greeter client received: " + response.message)
+
+        # bensname = serverDict[serverLetters[i]].getValue(mp3_pb2.getMessage(name="BensMac", key='A.x'))
+        # print("getValue received: " + bensname.message)
 
 
 
@@ -43,4 +53,4 @@ if __name__ == '__main__':
 
     logging.basicConfig()
 
-    run()
+    run(int(sys.argv[1]))

@@ -29,6 +29,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 
     def SayHello(self, request, context):
+        print("Received Hello!")
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
     #TODO: begin
@@ -45,6 +46,17 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         vmName = request.name
         serverkey = request.serverkey
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
+
+        if(serverkey not in lockDict.keys()):
+            lockDict[serverkey] = ['GET', vmName]
+        else:
+            if(serverkey not in waitDict.keys()):
+                waitDict[serverkey] = [['GET', vmName]]
+            else:
+                waitDict[serverkey].append(['GET', vmName])
+
+        while(self.checkAquireReadLock(serverkey) == False):
+            time.sleep(0.0001)
 
 
         if(serverkey in masterDict.keys()):
