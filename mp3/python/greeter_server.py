@@ -83,7 +83,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         key, value = keyvalue[1].split(" ") # key:x, value: 1
 
         if(vmName not in clientDict.keys()):
-            print(clientDict.keys())
+            print(vmName, clientDict.keys())
             return mp3_pb2.setReply(message='Missing Begin statement')
         else:
             arr = clientDict[vmName]
