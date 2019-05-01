@@ -43,6 +43,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName] = dict()
         clientDict[vmName]['miniDict'] = dict()
         clientDict[vmName]['commands'] = [(t, 'begin')]
+
         print("["+str(t)+"] "+str(vmName)+" connects to the server.")
 
         return mp3_pb2.beginReply(message='OK')
@@ -57,25 +58,26 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         vmName = request.name
         print("Received getValue from ", vmName)
         serverkey = request.serverkey
+        server, key = serverkey.split(".")
+
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
-        if(serverkey not in lockDict.keys()):
-            lockDict[serverkey] = ['GET', vmName]
+        if(key not in lockDict.keys()):
+            lockDict[key] = ['GET', vmName]
         else:
-            if(serverkey not in waitDict.keys()):
-                waitDict[serverkey] = [['GET', vmName]]
-            else:
-                waitDict[serverkey].append(['GET', vmName])
+            lockDict[key].append(['GET', vmName])
 
-        while(self.checkAcquireReadLock(serverkey) == False):
+        while(self.checkAcquireReadLock(vmName, key) == False):
             time.sleep(0.0001)
 
-        if(serverkey in masterDict.keys()):
+        if (key in masterDict.keys()):
             return mp3_pb2.getReply(message='%s' % masterDict[request.value])
 
-        else:
+        if (key not in clientDict[vmName]['miniDict'].keys()):
             return mp3_pb2.getReply(message='NOT FOUND')
-
+        else:
+            val = clientDict[vmName]['miniDict'][key]
+            return mp3_pb2.getReply(message=str(val))
 
 
     #TODO: setValue
@@ -94,20 +96,20 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             print(vmName, clientDict.keys())
             return mp3_pb2.setReply(message='\tMissing Begin statement')
         else:
-            arr = clientDict[vmName]
-            string = 'SET %s %s'.format(serverkey, value)
+            arr = clientDict[vmName]['commands']
+            string = 'SET {} {}'.format(serverkey, value)
             arr.append((t,string))
+            clientDict[vmName]['commands'] = arr
 
         if(key in lockDict.keys()):
-            if(key not in waitDict.keys()):
-                waitDict[key] = [vmName]
-            else:
-                waitDict[key].append(vmName)
+            lockDict[key].append(['SET', vmName])
         else:
-            lockDict[key] = ['SET', vmName]
+            lockDict[key] = [['SET', vmName]]
 
-        while(lockDict[key][1] != vmName):
+        while(lockDict[key][0][1] != vmName):
             time.sleep(0.000001)
+
+        clientDict[vmName]['miniDict'][key] = value
 
         print("["+str(t)+"] "+str(vmName)+" setValue " + str(serverkey) +" " +str(value))
         return mp3_pb2.setReply(message='OK? (I guess)')
@@ -131,7 +133,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         while(self.checkCommitOK(vmName) == False):
             time.sleep(0.0001)
 
-        for command in clientDict[vmName]:
+        for t, command in clientDict[vmName]['commands'][1:]:
 
             if('SET' in command):
 
@@ -139,11 +141,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                 server, key = serverkey.split(".")
                 masterDict[key] = value
 
-                if(serverkey in waitDict.keys()):
-                    if(len(waitDict[serverkey]) > 0):
-                        lockDict[serverkey] = waitDict[serverkey].pop()
-                    if(len(waitDict[serverkey]) > 0):
-                        del(waitDict[serverkey])
+                if(len(lockDict[key]) > 1):
+                    lockDict[key].pop()
                 else:
                     lockDict[serverkey] = None
 
@@ -152,7 +151,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
                 if(serverkey in lockDict.keys):
                     if(lockDict[serverkey] == vmName):
-
                         if (serverkey in waitDict.keys()):
                             if (len(waitDict[serverkey]) > 0):
                                 lockDict[serverkey] = waitDict[serverkey].pop()
@@ -167,20 +165,17 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         return mp3_pb2.commitReply(message='COMMIT OK')
 
 
-    # TODO: abort
-    def abort(self, request, context):
-        pass
-
     def checkCommitOK(self, vmName):
-
         commit = True
-        commands = clientDict[vmName]
+        commands = clientDict[vmName]['commands']
 
-        for command in commands[1:]:
-
+        for t, command in commands[1:]:
             if ('SET' in command):
                 type, serverkey, value = command.split(" ")
-                if (lockDict[serverkey][1] == vmName):
+                server, key = serverkey.split(".")
+
+                toplock = lockDict[key][0]
+                if (toplock[1] == vmName):
                     continue
                 else:
                     return False
@@ -201,15 +196,21 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         return True
 
 
+    # TODO: abort
+    def abort(self, request, context):
+        pass
 
-    def checkAcquireReadLock(self, serverkey):
+    def checkAcquireReadLock(self, vmname, serverkey):
 
         if(serverkey not in lockDict.keys()):
             # No one has a lock on it
             return True
 
-        lockType, vmName = lockDict[serverkey]
+        lockType, vmName = lockDict[serverkey][0]
+
         if(lockType == 'SET'):
+            if(vmName == vmname):
+                return True
             return False
 
         ret = True

@@ -66,15 +66,19 @@ def run(numVMs):
                         print(beginreply.message)
 
                 if('COMMIT' in command):
-                    pass
+                    for server in serverDict.values():
+                        commitreply = server.commit(mp3_pb2.beginMessage(name="BensMac"))
+                        print(commitreply.message)
+
                 if('ABORT' in command):
                     pass
 
                 if('GET' in command):
                     get, serverkey = command.split(" ")
-                    server, key = serverkey.split(".")
+                    server, key = serverkey[:].split(".")
+                    print(serverkey)
 
-                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name="BensMac", serverkey=serverkey))
+                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name="BensMac", serverkey=str(serverkey)))
                     print(getreply.message)
 
                 if ('SET' in command):
