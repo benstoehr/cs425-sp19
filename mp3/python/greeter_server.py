@@ -42,6 +42,10 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 
     def getValue(self, request, context):
+        # since we update values in masterDict when commit, 
+        # the getValue after a set gets 'Not Found'
+        # use a tempDict to handle this?
+
         t = time.time()
         vmName = request.name
         serverkey = request.serverkey
@@ -93,7 +97,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         while(lockDict[key][1] != vmName):
             time.sleep(0.000001)
-            
+
         return mp3_pb2.setReply(message='OK? (I guess)')
 
 
