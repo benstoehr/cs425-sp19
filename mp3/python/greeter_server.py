@@ -27,25 +27,27 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class Greeter(mp3_pb2_grpc.GreeterServicer):
 
+
     def SayHello(self, request, context):
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
     #TODO: begin
     def begin(self, request, context):
-
         t = time.time()
         vmName = request.name
         clientDict[vmName] = [(t, 'begin')]
+
         return mp3_pb2.beginReply(message='OK')
 
 
     def getValue(self, request, context):
         t = time.time()
         vmName = request.name
-        key = request.key
-        print("["+str(t)+"] "+str(vmName)+" getValue " + str(key))
+        serverkey = request.serverkey
+        print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
-        if(key in masterDict.keys()):
+
+        if(serverkey in masterDict.keys()):
             return mp3_pb2.getReply(message='%s' % masterDict[request.value])
 
         else:
@@ -74,9 +76,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             else:
                 waitDict[keyvalue].append(vmName)
         else:
-            lockDict[keyvalue] = vmName
+            lockDict[keyvalue] = ['SET', vmName]
 
-        while(lockDict[keyvalue] != vmName):
+        while(lockDict[keyvalue][1] != vmName):
             time.sleep(0.000001)
 
         # check the lock first
@@ -92,6 +94,25 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
     # TODO: abort
     def abort(self, request, context):
         pass
+
+    def checkAcquireReadLock(self, serverkey):
+
+        if(serverkey not in lockDict.keys()):
+            # No one has a lock on it
+            return True
+
+        lockType, vmName = lockDict[serverkey]
+        if(lockType == 'SET'):
+            return False
+
+        ret = True
+        if(serverkey in waitDict.keys()):
+            for lockType, vmName in waitDict.items():
+                if (lockType == 'SET'):
+                    ret = False
+        return ret
+
+
 
 
 

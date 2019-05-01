@@ -58,7 +58,7 @@ message beginReply {    string message = 1;   }
 
 message getMessage {
     string name = 1;
-    string key = 2;
+    string serverkey = 2;
 }
 message getReply {    string message = 1; }
 
