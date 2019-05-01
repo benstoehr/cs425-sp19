@@ -18,6 +18,8 @@ import logging
 import sys
 import grpc
 
+import time
+
 import mp3_pb2
 import mp3_pb2_grpc
 
@@ -57,6 +59,8 @@ def run(numVMs):
 
     response = serverDict['A'].setValue(mp3_pb2.setMessage(name='Client 1', serverkeyvalue='A.x 1'))
     print("setValue received: " + response.message)
+
+    time.sleep(5)
 
     response = serverDict['A'].getValue(mp3_pb2.getMessage(name='Cleint 1', serverkey='A.x'))
     print("getValue received: " + response.message)
