@@ -42,6 +42,17 @@ service Greeter {
     rpc abort (abortMessage) returns (abortReply) {}
 }
 
+// The greeting service definition.
+service Coordinator {
+
+    // Sends a greeting
+    rpc SayHi (HiRequest) returns (HiReply) {}
+
+    // Sends a lock/commit/abort message to the coordinator
+    // The coordinator will reply OK or shouldAbort
+    rpc checkLock (checkMessage) returns (checkReply) {}
+}
+
 
 // The request message containing the user's name.
 message HelloRequest {
@@ -80,3 +91,17 @@ message abortMessage {
     string message = 2;
 }
 message abortReply {    string message = 1;  }
+
+// The request message containing the user's name.
+message HiRequest {
+    string name = 1;
+}
+// The response message containing the greetings
+message HiReply {    string message = 1; }
+
+// message: SET A.x 1/GET A.x/COMMIT/ABORT
+message checkMessage {
+    string name = 1;
+    string message = 2;
+}
+message checkReply {    string message = 1;   }
