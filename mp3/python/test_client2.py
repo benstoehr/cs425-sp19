@@ -34,7 +34,7 @@ try:
         while(1):
             command = input()
 
-            checkreply = server.checkLock(mp3_pb2.checkMessage(name="test1", message=str(command)))
+            checkreply = server.checkLock(mp3_pb2.checkMessage(name="test2", message=str(command)))
             print(checkreply.message)
 
 except KeyboardInterrupt:
