@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/mp3/python/greeter_client.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_client.py" />
       <change beforePath="$PROJECT_DIR$/mp3/python/greeter_server.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,9 +13,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/cs425_sp19$greeter_server.coverage" NAME="greeter_server Coverage Results" MODIFIED="1556764910049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
+    <SUITE FILE_PATH="coverage/cs425_sp19$greeter_server.coverage" NAME="greeter_server Coverage Results" MODIFIED="1556770841284" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
     <SUITE FILE_PATH="coverage/cs425_sp19$main.coverage" NAME="main Coverage Results" MODIFIED="1553270722549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp2" />
     <SUITE FILE_PATH="coverage/cs425_sp19$greeter_client.coverage" NAME="greeter_client Coverage Results" MODIFIED="1556742809202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
+    <SUITE FILE_PATH="coverage/cs425_sp19$hw5.coverage" NAME="hw5 Coverage Results" MODIFIED="1556771010241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/grpc" />
   </component>
   <component name="FileEditorManager">
     <splitter split-orientation="horizontal" split-proportion="0.46725786">
@@ -25,15 +25,15 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="353">
-                  <caret line="162" column="8" lean-forward="false" selection-start-line="162" selection-start-column="8" selection-end-line="162" selection-end-column="8" />
+                <state relative-caret-position="556">
+                  <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#1212#1308#0" expanded="false" />
                     <element signature="e#1375#1706#0" expanded="false" />
-                    <element signature="e#6651#7926#0" expanded="false" />
-                    <element signature="e#7994#7998#0" expanded="false" />
-                    <element signature="e#8058#8561#0" expanded="false" />
+                    <element signature="e#6643#7918#0" expanded="false" />
+                    <element signature="e#7986#7990#0" expanded="false" />
+                    <element signature="e#8050#8553#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -43,7 +43,7 @@
             <entry file="file://$PROJECT_DIR$/mp3/README.txt">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="75">
-                  <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+                  <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -52,8 +52,8 @@
           <file leaf-file-name="greeter_client.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_client.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="283">
-                  <caret line="25" column="39" lean-forward="true" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
+                <state relative-caret-position="285">
+                  <caret line="25" column="39" lean-forward="false" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
                   <folding>
                     <element signature="e#649#686#0" expanded="true" />
                   </folding>
@@ -64,12 +64,12 @@
         </leaf>
       </split-first>
       <split-second>
-        <leaf>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="mp3.proto" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/protos/mp3.proto">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-684">
-                  <caret line="21" column="12" lean-forward="false" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+                <state relative-caret-position="400">
+                  <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
                   <folding />
                 </state>
               </provider>
@@ -157,6 +157,7 @@
         <option value="$PROJECT_DIR$/mp3/protos/mp3.proto" />
         <option value="$PROJECT_DIR$/mp3/python/greeter_client.py" />
         <option value="$PROJECT_DIR$/mp3/python/greeter_server.py" />
+        <option value="$PROJECT_DIR$/grpc/hw5.py" />
       </list>
     </option>
   </component>
@@ -166,7 +167,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="width" value="1680" />
     <option name="height" value="1050" />
   </component>
@@ -186,6 +187,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -214,14 +216,21 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="PyConsoleConfigurable.Python Console" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="cs425-sp19" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="cs425-sp19" />
+      </console-settings>
+    </option>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -244,7 +253,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.greeter_server">
+  <component name="RunManager" selected="Python.hw5">
     <configuration name="greeter_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -283,6 +292,25 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="hw5" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/grpc" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cs425-sp19" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/grpc/hw5.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -302,16 +330,18 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="3">
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.main" />
       <item index="1" class="java.lang.String" itemvalue="Python.greeter_server" />
       <item index="2" class="java.lang.String" itemvalue="Python.greeter_client" />
+      <item index="3" class="java.lang.String" itemvalue="Python.hw5" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.greeter_server" />
-        <item index="1" class="java.lang.String" itemvalue="Python.greeter_client" />
-        <item index="2" class="java.lang.String" itemvalue="Python.main" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.hw5" />
+        <item index="1" class="java.lang.String" itemvalue="Python.greeter_server" />
+        <item index="2" class="java.lang.String" itemvalue="Python.greeter_client" />
+        <item index="3" class="java.lang.String" itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -332,22 +362,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
+    <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958034" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17765568" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879582" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17948718" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39914164" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39914164" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -391,20 +421,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mp2/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp2/analysis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="32" column="0" lean-forward="true" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mp2/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1140">
@@ -640,7 +656,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3750">
           <caret line="255" column="21" lean-forward="false" selection-start-line="255" selection-start-column="21" selection-end-line="255" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -648,7 +663,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1125">
           <caret line="92" column="47" lean-forward="false" selection-start-line="92" selection-start-column="47" selection-end-line="92" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -656,20 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="575">
           <caret line="172" column="9" lean-forward="false" selection-start-line="172" selection-start-column="9" selection-end-line="172" selection-end-column="9" />
-          <folding>
-            <element signature="e#423#610#0" expanded="false" />
-            <element signature="e#662#750#0" expanded="false" />
-            <element signature="e#918#1566#0" expanded="false" />
-            <element signature="e#1634#2242#0" expanded="false" />
-            <element signature="e#2376#3039#0" expanded="false" />
-            <element signature="e#3103#3777#0" expanded="false" />
-            <element signature="e#3836#4486#0" expanded="false" />
-            <element signature="e#4551#5204#0" expanded="false" />
-            <element signature="e#6770#7417#0" expanded="false" />
-            <element signature="e#7466#8145#0" expanded="false" />
-            <element signature="e#8246#8948#0" expanded="false" />
-            <element signature="e#8996#9669#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -677,113 +677,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-134">
           <caret line="526" column="37" lean-forward="true" selection-start-line="526" selection-start-column="37" selection-end-line="526" selection-end-column="37" />
-          <folding>
-            <element signature="e#1139#2254#0" expanded="false" />
-            <element signature="e#2262#2269#0" expanded="false" />
-            <element signature="e#2348#2439#0" expanded="false" />
-            <element signature="e#2476#2493#0" expanded="false" />
-            <element signature="e#2541#2561#0" expanded="false" />
-            <element signature="e#2596#2740#0" expanded="false" />
-            <element signature="e#2813#2941#0" expanded="false" />
-            <element signature="e#2986#3198#0" expanded="false" />
-            <element signature="e#3056#3085#0" expanded="false" />
-            <element signature="e#3246#3407#0" expanded="false" />
-            <element signature="e#3482#3695#0" expanded="false" />
-            <element signature="e#3576#3695#0" expanded="false" />
-            <element signature="e#3739#4386#0" expanded="false" />
-            <element signature="e#4440#4987#0" expanded="false" />
-            <element signature="e#4874#4965#0" expanded="false" />
-            <element signature="e#5056#5295#0" expanded="false" />
-            <element signature="e#5368#5578#0" expanded="false" />
-            <element signature="e#5640#6109#0" expanded="false" />
-            <element signature="e#5990#6088#0" expanded="false" />
-            <element signature="e#6174#6370#0" expanded="false" />
-            <element signature="e#6439#6647#0" expanded="false" />
-            <element signature="e#6717#6721#0" expanded="false" />
-            <element signature="e#6777#7186#0" expanded="false" />
-            <element signature="e#6902#7036#0" expanded="false" />
-            <element signature="e#7192#7274#0" expanded="false" />
-            <element signature="e#7370#7412#0" expanded="false" />
-            <element signature="e#7689#8341#0" expanded="false" />
-            <element signature="e#7689#7741#0" expanded="false" />
-            <element signature="e#7996#8219#0" expanded="false" />
-            <element signature="e#8399#8701#0" expanded="false" />
-            <element signature="e#8755#8969#0" expanded="false" />
-            <element signature="e#8879#8969#0" expanded="false" />
-            <element signature="e#9037#10120#0" expanded="false" />
-            <element signature="e#9414#9438#0" expanded="false" />
-            <element signature="e#10178#10504#0" expanded="false" />
-            <element signature="e#10178#10219#0" expanded="false" />
-            <element signature="e#10390#10504#0" expanded="false" />
-            <element signature="e#10564#10675#0" expanded="false" />
-            <element signature="e#10678#10712#0" expanded="false" />
-            <element signature="e#10777#11193#0" expanded="false" />
-            <element signature="e#10883#11173#0" expanded="false" />
-            <element signature="e#10997#11134#0" expanded="false" />
-            <element signature="e#11051#11095#0" expanded="false" />
-            <element signature="e#11313#13616#0" expanded="false" />
-            <element signature="e#11313#11343#0" expanded="false" />
-            <element signature="e#11552#12003#0" expanded="false" />
-            <element signature="e#11552#11594#0" expanded="false" />
-            <element signature="e#12055#12332#0" expanded="false" />
-            <element signature="e#12055#12085#0" expanded="false" />
-            <element signature="e#12381#13011#0" expanded="false" />
-            <element signature="e#12499#12522#0" expanded="false" />
-            <element signature="e#12719#12881#0" expanded="false" />
-            <element signature="e#13063#13149#0" expanded="false" />
-            <element signature="e#13203#13288#0" expanded="false" />
-            <element signature="e#13336#13395#0" expanded="false" />
-            <element signature="e#13442#13559#0" expanded="false" />
-            <element signature="e#14140#14191#0" expanded="false" />
-            <element signature="e#14197#14258#0" expanded="false" />
-            <element signature="e#14414#14912#0" expanded="false" />
-            <element signature="e#14414#14431#0" expanded="false" />
-            <element signature="e#14538#14577#0" expanded="false" />
-            <element signature="e#14795#14863#0" expanded="false" />
-            <element signature="e#15074#15585#0" expanded="false" />
-            <element signature="e#15275#15458#0" expanded="false" />
-            <element signature="e#15642#15682#0" expanded="false" />
-            <element signature="e#15759#16271#0" expanded="false" />
-            <element signature="e#15901#15952#0" expanded="false" />
-            <element signature="e#16028#16271#0" expanded="false" />
-            <element signature="e#16285#16331#0" expanded="false" />
-            <element signature="e#16504#17055#0" expanded="false" />
-            <element signature="e#16818#17055#0" expanded="false" />
-            <element signature="e#17142#17170#0" expanded="false" />
-            <element signature="e#17339#17852#0" expanded="false" />
-            <element signature="e#17516#17852#0" expanded="false" />
-            <element signature="e#17961#18002#0" expanded="false" />
-            <element signature="e#18906#21159#0" expanded="false" />
-            <element signature="e#18952#20622#0" expanded="false" />
-            <element signature="e#19053#19059#0" expanded="false" />
-            <element signature="e#19179#19796#0" expanded="false" />
-            <element signature="e#19361#19796#0" expanded="false" />
-            <element signature="e#19361#19425#0" expanded="false" />
-            <element signature="e#19809#19815#0" expanded="false" />
-            <element signature="e#19934#20622#0" expanded="false" />
-            <element signature="e#19996#20622#0" expanded="false" />
-            <element signature="e#20173#20622#0" expanded="false" />
-            <element signature="e#20173#20237#0" expanded="false" />
-            <element signature="e#20739#21085#0" expanded="false" />
-            <element signature="e#20797#20898#0" expanded="false" />
-            <element signature="e#20981#21085#0" expanded="false" />
-            <element signature="e#21173#21205#0" expanded="false" />
-            <element signature="e#21330#22048#0" expanded="false" />
-            <element signature="e#21407#22048#0" expanded="false" />
-            <element signature="e#21508#22048#0" expanded="false" />
-            <element signature="e#21605#21621#0" expanded="false" />
-            <element signature="e#22322#24246#0" expanded="false" />
-            <element signature="e#22623#23402#0" expanded="false" />
-            <element signature="e#22803#23402#0" expanded="false" />
-            <element signature="e#22887#22918#0" expanded="false" />
-            <element signature="e#23478#24204#0" expanded="false" />
-            <element signature="e#23565#24204#0" expanded="false" />
-            <element signature="e#24260#24292#0" expanded="false" />
-            <element signature="e#24586#24623#0" expanded="false" />
-            <element signature="e#25071#25624#0" expanded="false" />
-            <element signature="e#25137#25624#0" expanded="false" />
-            <element signature="e#25707#25742#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -791,7 +684,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -799,48 +691,65 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="505" column="0" lean-forward="false" selection-start-line="505" selection-start-column="0" selection-end-line="505" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/README.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp3/protos/mp3.proto">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-684">
-          <caret line="21" column="12" lean-forward="false" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="25" column="39" lean-forward="true" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
+        <state relative-caret-position="285">
+          <caret line="25" column="39" lean-forward="false" selection-start-line="25" selection-start-column="39" selection-end-line="25" selection-end-column="39" />
           <folding>
             <element signature="e#649#686#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_bundle/pydev_ipython_console_011.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="297" column="0" lean-forward="false" selection-start-line="297" selection-start-column="0" selection-end-line="297" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grpc/hw5.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="29" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="162" column="8" lean-forward="false" selection-start-line="162" selection-start-column="8" selection-end-line="162" selection-end-column="8" />
+        <state relative-caret-position="556">
+          <caret line="131" column="0" lean-forward="true" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#1212#1308#0" expanded="false" />
             <element signature="e#1375#1706#0" expanded="false" />
-            <element signature="e#6651#7926#0" expanded="false" />
-            <element signature="e#7994#7998#0" expanded="false" />
-            <element signature="e#8058#8561#0" expanded="false" />
+            <element signature="e#6643#7918#0" expanded="false" />
+            <element signature="e#7986#7990#0" expanded="false" />
+            <element signature="e#8050#8553#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mp3/protos/mp3.proto">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>

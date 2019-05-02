@@ -160,7 +160,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         if (vmName not in clientDict.keys()):
             print(vmName, clientDict.keys())
             return mp3_pb2.setReply(message='\tMissing Begin statement')
-        
+
         print("\nReceived Commit from ", vmName)
         self.printALL()
 
