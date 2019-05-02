@@ -162,7 +162,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         # TODO: check deadlock here T_T
         ownDict = dict()
         waitDict = dict()
-        for operation in history:
+        for operation in historyList:
             vmName = operation[0]
             lockType = operation[1]
             serverkey = operation[2]
