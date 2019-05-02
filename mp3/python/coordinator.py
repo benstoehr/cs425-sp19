@@ -154,6 +154,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                     elif(lockType == "SET"):
                         if(self.checkDeadlock(vmName, serverkey)==True):
                             ret = "shouldAbort"
+                            print("Returning ", ret)
                             return mp3_pb2.checkReply(message=ret)
                             
                 allLockDict[serverkey].append(["SET", vmName])
