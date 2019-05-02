@@ -64,7 +64,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         self.printALL()
         return mp3_pb2.beginReply(message='OK')
 
-
     def getValue(self, request, context):
         # since we update values in masterDict when commit, 
         # the getValue after a set gets 'Not Found'
@@ -84,10 +83,14 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             return mp3_pb2.setReply(message='\tMissing Begin statement')
 
         print("\nReceived getValue from ", vmName)
-        self.printALL()
+        #self.printALL()
 
         serverkey = request.serverkey
         server, key = serverkey.split(".")
+
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=serverkey))
+        print(checkreply.message)
+        #TODO: Implement different logic for abort
 
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
@@ -122,7 +125,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             self.printALL()
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, val))
 
-
     #TODO: setValue
     def setValue(self, request, context):
 
@@ -134,6 +136,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         serverkey = request.serverkey # A.x 1
         server, key = serverkey.split(".") # ["A", "x 1"]
         value = request.value
+
+        s = " ".join((serverkey, value))
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=s))
+        print(checkreply.message)
+        # TODO: Implement different logic for abort
 
         if(vmName not in clientDict.keys()):
             print(vmName, clientDict.keys())
@@ -168,6 +175,10 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         print("\nReceived Commit from ", vmName)
         self.printALL()
+
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='COMMIT'))
+        print(checkreply.message)
+        # TODO: Implement different logic for abort
 
         while(self.checkCommitOK(vmName) == False):
             time.sleep(0.0001)
@@ -257,7 +268,35 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     # TODO: abort
     def abort(self, request, context):
-        pass
+        t = time.time()
+        vmName = request.name
+        if (vmName not in clientDict.keys()):
+            print(vmName, clientDict.keys())
+            return mp3_pb2.setReply(message='\tMissing Begin statement')
+
+        print("\nReceived ABORT from ", vmName)
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='COMMIT'))
+        print(checkreply.message)
+        # TODO: Implement different logic for abort
+
+        commands = clientDict[vmName]['commands']
+
+        for t, command in commands[1:]:
+
+            if ('SET' in command):
+                type, serverkey, value = command.split(" ")
+                server, key = serverkey.split(".")
+
+                # Only ok if oldest related 'SET' is from vmName
+                lockDict[key].remove(['SET', vmName])
+
+            if ('GET' in command):
+                type, serverkey = command.split(" ")
+                server, key = serverkey.split(".")
+
+                lockDict[key].remove(['GET', vmName])
+
+        return mp3_pb2.abortReply(message='ABORTED')
 
     def checkAcquireReadLock(self, vmname, key):
 

@@ -21,24 +21,27 @@
     <splitter split-orientation="horizontal" split-proportion="0.46725786">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="747">
-                  <caret line="308" column="87" lean-forward="false" selection-start-line="308" selection-start-column="87" selection-end-line="308" selection-end-column="87" />
+                <state relative-caret-position="432">
+                  <caret line="281" column="8" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="8" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#872#1159#0" expanded="false" />
-                    <element signature="e#1972#3968#0" expanded="false" />
-                    <element signature="e#6843#8118#0" expanded="false" />
-                    <element signature="e#8186#8190#0" expanded="false" />
-                    <element signature="e#8250#8753#0" expanded="false" />
+                    <element signature="e#1212#1519#0" expanded="false" />
+                    <element signature="e#1586#1919#0" expanded="false" />
+                    <element signature="e#1971#4151#0" expanded="false" />
+                    <element signature="e#4224#5506#0" expanded="false" />
+                    <element signature="e#5575#7377#0" expanded="false" />
+                    <element signature="e#7425#8700#0" expanded="false" />
+                    <element signature="e#9876#10379#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="coordinator.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="coordinator.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="330">
@@ -81,7 +84,7 @@
           <file leaf-file-name="mp3.proto" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/protos/mp3.proto">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="441">
+                <state relative-caret-position="-101">
                   <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
                   <folding />
                 </state>
@@ -420,16 +423,16 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mp3/python/greeter_server.py</url>
-          <line>192</line>
+          <line>203</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mp3/python/greeter_server.py</url>
-          <line>94</line>
+          <line>97</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="54" />
+      <option name="time" value="57" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -716,7 +719,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/protos/mp3.proto">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
+        <state relative-caret-position="-101">
           <caret line="45" column="18" lean-forward="false" selection-start-line="45" selection-start-column="18" selection-end-line="45" selection-end-column="18" />
           <folding />
         </state>
@@ -727,18 +730,6 @@
         <state relative-caret-position="30">
           <caret line="2" column="107" lean-forward="false" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="107" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
-          <folding>
-            <element signature="e#896#983#0" expanded="false" />
-            <element signature="e#1037#5333#0" expanded="false" />
-            <element signature="e#5408#6240#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -754,15 +745,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="747">
-          <caret line="308" column="87" lean-forward="false" selection-start-line="308" selection-start-column="87" selection-end-line="308" selection-end-column="87" />
+        <state relative-caret-position="432">
+          <caret line="281" column="8" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="8" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#872#1159#0" expanded="false" />
-            <element signature="e#1972#3968#0" expanded="false" />
-            <element signature="e#6843#8118#0" expanded="false" />
-            <element signature="e#8186#8190#0" expanded="false" />
-            <element signature="e#8250#8753#0" expanded="false" />
+            <element signature="e#1212#1519#0" expanded="false" />
+            <element signature="e#1586#1919#0" expanded="false" />
+            <element signature="e#1971#4151#0" expanded="false" />
+            <element signature="e#4224#5506#0" expanded="false" />
+            <element signature="e#5575#7377#0" expanded="false" />
+            <element signature="e#7425#8700#0" expanded="false" />
+            <element signature="e#9876#10379#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+          <folding>
+            <element signature="e#896#983#0" expanded="false" />
+            <element signature="e#1037#5333#0" expanded="false" />
+            <element signature="e#5408#6240#0" expanded="false" />
           </folding>
         </state>
       </provider>
