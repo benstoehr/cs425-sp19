@@ -135,6 +135,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         for t, command in clientDict[vmName]['commands'][1:]:
 
+            # SET Command
             if('SET' in command):
 
                 type, serverkey, value = command.split(" ")
@@ -146,26 +147,23 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                 else:
                     lockDict[serverkey] = None
 
+            # GET Command
             if('GET' in command):
                 type, serverkey = command.split(" ")
 
-                if(serverkey in lockDict.keys):
-                    if(lockDict[serverkey] == vmName):
-                        if (serverkey in waitDict.keys()):
-                            if (len(waitDict[serverkey]) > 0):
-                                lockDict[serverkey] = waitDict[serverkey].pop()
-                            if (len(waitDict[serverkey]) == 0):
-                                del (waitDict[serverkey])
-                                lockDict[serverkey] = None
-
+                if(lockDict[key] == ['GET', vmName]):
+                    if (len(lockDict[key]) > 1):
+                        lockDict[key].pop()
                     else:
-                        if (serverkey in waitDict.keys()):
-                            waitDict[serverkey].remove(['GET', vmName])
+                        lockDict[serverkey] = None
+                else:
+                    lockDict[key].remove(['GET', vmName])
 
         return mp3_pb2.commitReply(message='COMMIT OK')
 
 
     def checkCommitOK(self, vmName):
+
         commit = True
         commands = clientDict[vmName]['commands']
 
@@ -175,24 +173,34 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                 type, serverkey, value = command.split(" ")
                 server, key = serverkey.split(".")
 
-                toplock = lockDict[key][0]
-                if (toplock[1] == vmName):
+                # Only ok if oldest related 'SET' is from vmName
+                set, vm = lockDict[key][0]
+                if (vm == vmName):
                     continue
                 else:
                     return False
 
             if ('GET' in command):
                 type, serverkey = command.split(" ")
-                if (lockDict[serverkey][1] == vmName):
+                server, key = serverkey.split(".")
+                locks = lockDict[key]
+
+                # Pull off first lock
+                commandType, vm = locks[0]
+                if (vm == vmName):
                     continue
-                if(lockDict[serverkey][0] == 'SET'):
+
+                elif(commandType == 'SET' and vm != vmName):
                     return False
+
                 else:
-                    for type, vmname in waitDict[serverkey]:
-                        if(vmName ==vmname):
-                            continue
-                        elif('SET' in value):
+                    for commandType, vm in locks[1:]:
+                        if ('SET' in commandType):
                             return False
+                        if('SET' in commandType and vm == vmName):
+                            return False
+                        if(vmName == vm):
+                            continue
 
         return True
 
