@@ -39,7 +39,6 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         vmName = request.name # client's name, not the server
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
-        print(historyList)
 
         if('COMMIT' in message):
         # flush everything of this client in allLockDict & history
@@ -59,13 +58,13 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             # delete history
             tmpHistory = []
  
-            for operation in history:
+            for operation in historyList:
                 if (vmName in operation):
                      pass
                 else:
                     tmpHistory.append(operation)
 
-            history = tmpHistory.copy()
+            historyList = tmpHistory.copy()
 
             return mp3_pb2.checkReply(message='OK')
 
@@ -88,13 +87,13 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             # delete history
             tmpHistory = []
  
-            for operation in history:
+            for operation in historyList:
                 if (vmName in operation):
                     pass
                 else:
                     tmpHistory.append(operation)
 
-            history = tmpHistory.copy()
+            historyList = tmpHistory.copy()
 
             return mp3_pb2.checkReply(message='OK')
 
@@ -124,7 +123,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             else:
                 allLockDict[serverkey] = [["SET", vmName]]
 
-            history.append(" ".join([vmName, serverkey]))
+            historyList.append(" ".join([vmName, serverkey]))
             return mp3_pb2.checkReply(message=ret)
 
         if ('SET' in message):
@@ -152,7 +151,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             else:
                 allLockDict[serverkey] = [["SET", vmName]]
 
-            history.append(" ".join([vmName, serverkey])) # not record value here 
+            historyList.append(" ".join([vmName, serverkey])) # not record value here 
             return mp3_pb2.checkReply(message=ret)
             
 
