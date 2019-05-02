@@ -39,6 +39,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         vmName = request.name # client's name, not the server
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
+        print("Before adding this operation:")
+        print(allLockDict)
         print(historyList)
 
         if('COMMIT' in message):
@@ -49,6 +51,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
                     lockClient = operation[1]
+                    print(lockClient)
                     if(lockClient == vmName):
                         pass
                     else:
@@ -78,6 +81,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
                     lockClient = operation[1]
+                    print(lockClient)
                     if(lockClient == vmName):
                         pass
                     else:
