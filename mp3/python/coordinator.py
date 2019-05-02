@@ -121,10 +121,11 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                     if(vmName == lockClient):
                         pass
 
-                    if(lockType == "SET"):
+                    elif(lockType == "SET"):
                         if(self.checkDeadlock(vmName, serverkey)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
+
                 allLockDict[serverkey].append(["GET", vmName])
             else:
                 allLockDict[serverkey] = [["GET", vmName]]
@@ -149,10 +150,11 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                     if(vmName == lockClient):
                         pass
 
-                    if(lockType == "SET"):
+                    elif(lockType == "SET"):
                         if(self.checkDeadlock(vmName, serverkey)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
+                            
                 allLockDict[serverkey].append(["SET", vmName])
             else:
                 allLockDict[serverkey] = [["SET", vmName]]
