@@ -88,6 +88,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         serverkey = request.serverkey
         server, key = serverkey.split(".")
 
+        s = " ".join(('SET', serverkey))
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=serverkey))
         print(checkreply.message)
         #TODO: Implement different logic for abort
@@ -137,7 +138,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         server, key = serverkey.split(".") # ["A", "x 1"]
         value = request.value
 
-        s = " ".join((serverkey, value))
+        s = " ".join(('SET',serverkey, value))
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=s))
         print(checkreply.message)
         # TODO: Implement different logic for abort
@@ -276,7 +277,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         print("\nReceived ABORT from ", vmName)
 
-        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='COMMIT'))
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
         print(checkreply.message)
         # TODO: Implement different logic for abort
 

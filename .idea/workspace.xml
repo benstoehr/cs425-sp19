@@ -12,6 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/cs425_sp19$coordinator.coverage" NAME="coordinator Coverage Results" MODIFIED="1556819548695" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
     <SUITE FILE_PATH="coverage/cs425_sp19$greeter_server.coverage" NAME="greeter_server Coverage Results" MODIFIED="1556813841370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
     <SUITE FILE_PATH="coverage/cs425_sp19$main.coverage" NAME="main Coverage Results" MODIFIED="1553270722549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp2" />
     <SUITE FILE_PATH="coverage/cs425_sp19$greeter_client.coverage" NAME="greeter_client Coverage Results" MODIFIED="1556742809202" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/mp3/python" />
@@ -24,17 +25,17 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="755">
-                  <caret line="350" column="5" lean-forward="false" selection-start-line="350" selection-start-column="5" selection-end-line="350" selection-end-column="5" />
+                <state relative-caret-position="278">
+                  <caret line="90" column="38" lean-forward="false" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="38" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#872#1159#0" expanded="false" />
                     <element signature="e#1212#1519#0" expanded="false" />
                     <element signature="e#1586#1919#0" expanded="false" />
-                    <element signature="e#1971#4151#0" expanded="false" />
-                    <element signature="e#4224#5506#0" expanded="false" />
-                    <element signature="e#7425#8700#0" expanded="false" />
-                    <element signature="e#9877#10380#0" expanded="false" />
+                    <element signature="e#5622#7424#0" expanded="false" />
+                    <element signature="e#7472#8747#0" expanded="false" />
+                    <element signature="e#8815#9863#0" expanded="false" />
+                    <element signature="e#9923#10426#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -43,8 +44,8 @@
           <file leaf-file-name="coordinator.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="647">
-                  <caret line="156" column="52" lean-forward="false" selection-start-line="156" selection-start-column="52" selection-end-line="156" selection-end-column="52" />
+                <state relative-caret-position="287">
+                  <caret line="136" column="30" lean-forward="true" selection-start-line="136" selection-start-column="30" selection-end-line="136" selection-end-column="30" />
                   <folding>
                     <element signature="e#896#983#0" expanded="false" />
                     <element signature="e#1352#2279#0" expanded="false" />
@@ -271,7 +272,26 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.greeter_server">
+  <component name="RunManager" selected="Python.coordinator">
+    <configuration name="coordinator" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/mp3/python" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="cs425-sp19" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/mp3/python/coordinator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="greeter_client" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -348,18 +368,20 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.main" />
       <item index="1" class="java.lang.String" itemvalue="Python.greeter_server" />
       <item index="2" class="java.lang.String" itemvalue="Python.greeter_client" />
       <item index="3" class="java.lang.String" itemvalue="Python.hw5" />
+      <item index="4" class="java.lang.String" itemvalue="Python.coordinator" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Python.greeter_server" />
-        <item index="1" class="java.lang.String" itemvalue="Python.hw5" />
-        <item index="2" class="java.lang.String" itemvalue="Python.greeter_client" />
-        <item index="3" class="java.lang.String" itemvalue="Python.main" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.coordinator" />
+        <item index="1" class="java.lang.String" itemvalue="Python.greeter_server" />
+        <item index="2" class="java.lang.String" itemvalue="Python.hw5" />
+        <item index="3" class="java.lang.String" itemvalue="Python.greeter_client" />
+        <item index="4" class="java.lang.String" itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -395,7 +417,7 @@
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3111566" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3111566" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -425,16 +447,21 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mp3/python/greeter_server.py</url>
-          <line>203</line>
+          <line>204</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mp3/python/greeter_server.py</url>
-          <line>97</line>
+          <line>98</line>
           <option name="timeStamp" value="52" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mp3/python/coordinator.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="57" />
+      <option name="time" value="58" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -747,8 +774,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="647">
-          <caret line="156" column="52" lean-forward="false" selection-start-line="156" selection-start-column="52" selection-end-line="156" selection-end-column="52" />
+        <state relative-caret-position="287">
+          <caret line="136" column="30" lean-forward="true" selection-start-line="136" selection-start-column="30" selection-end-line="136" selection-end-column="30" />
           <folding>
             <element signature="e#896#983#0" expanded="false" />
             <element signature="e#1352#2279#0" expanded="false" />
@@ -761,17 +788,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="755">
-          <caret line="350" column="5" lean-forward="false" selection-start-line="350" selection-start-column="5" selection-end-line="350" selection-end-column="5" />
+        <state relative-caret-position="278">
+          <caret line="90" column="38" lean-forward="false" selection-start-line="90" selection-start-column="38" selection-end-line="90" selection-end-column="38" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#872#1159#0" expanded="false" />
             <element signature="e#1212#1519#0" expanded="false" />
             <element signature="e#1586#1919#0" expanded="false" />
-            <element signature="e#1971#4151#0" expanded="false" />
-            <element signature="e#4224#5506#0" expanded="false" />
-            <element signature="e#7425#8700#0" expanded="false" />
-            <element signature="e#9877#10380#0" expanded="false" />
+            <element signature="e#5622#7424#0" expanded="false" />
+            <element signature="e#7472#8747#0" expanded="false" />
+            <element signature="e#8815#9863#0" expanded="false" />
+            <element signature="e#9923#10426#0" expanded="false" />
           </folding>
         </state>
       </provider>
