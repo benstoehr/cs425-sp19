@@ -204,7 +204,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                 else:
                     lockDict[key].remove(['GET', vmName])
 
-        #del(clientDict[vmName]['commands'])
+        del(clientDict[vmName]['commands'])
 
         self.printALL()
         return mp3_pb2.commitReply(message='COMMIT OK')
