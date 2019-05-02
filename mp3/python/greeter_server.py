@@ -44,8 +44,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName]['miniDict'] = dict()
         clientDict[vmName]['commands'] = [(t, 'begin')]
 
-        print("["+str(t)+"] "+str(vmName)+" connects to the server.")
-
         return mp3_pb2.beginReply(message='OK')
 
 
@@ -53,6 +51,12 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         # since we update values in masterDict when commit, 
         # the getValue after a set gets 'Not Found'
         # use a tempDict to handle this?
+
+        # a while loop goes through the lock queue?
+        # the client still hangs after the other COMMIT
+
+        # the server doesn't release lock after client's disconnection
+        # the server doesn't release lock after commit
 
         t = time.time()
         vmName = request.name
@@ -63,7 +67,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
         if(key not in lockDict.keys()):
-            lockDict[key] = ['GET', vmName]
+            lockDict[key] = [['GET', vmName]]
         else:
             lockDict[key].append(['GET', vmName])
 
@@ -74,13 +78,15 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName]['commands'].append([t,string])
 
         if (key in masterDict.keys()):
-            return mp3_pb2.getReply(message='%s' % masterDict[request.value])
+            return mp3_pb2.getReply(message='%s = %s' % (serverkey, masterDict[key]))
 
         if (key not in clientDict[vmName]['miniDict'].keys()):
+            # Should we return NOT FOUND or let it wait 
+            # if another client SET the object but not commit yet?
             return mp3_pb2.getReply(message='NOT FOUND')
         else:
             val = clientDict[vmName]['miniDict'][key]
-            return mp3_pb2.getReply(message=str(val))
+            return mp3_pb2.getReply(message='%s = %s' % (serverkey, val))
 
 
     #TODO: setValue
@@ -115,15 +121,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName]['miniDict'][key] = value
 
         print("["+str(t)+"] "+str(vmName)+" setValue " + str(serverkey) +" " +str(value))
-        return mp3_pb2.setReply(message='OK? (I guess)')
-
-
-
-        # check the lock first
-        # if no lock, access the lock and write (but how to trace locks until commit?)
-        # else wait (2PL)
-        # what is the format of request?
-
+        return mp3_pb2.setReply(message='OK')
 
     # TODO: commit
     def commit(self, request, context):
