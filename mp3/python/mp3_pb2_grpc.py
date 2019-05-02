@@ -4,8 +4,70 @@ import grpc
 import mp3_pb2 as mp3__pb2
 
 
-class GreeterStub(object):
+class CoordinatorStub(object):
   """The greeting service definition.
+  """
+
+  def __init__(self, channel):
+    """Constructor.
+
+    Args:
+      channel: A grpc.Channel.
+    """
+    self.SayHi = channel.unary_unary(
+        '/mp3.Coordinator/SayHi',
+        request_serializer=mp3__pb2.HiRequest.SerializeToString,
+        response_deserializer=mp3__pb2.HiReply.FromString,
+        )
+    self.checkLock = channel.unary_unary(
+        '/mp3.Coordinator/checkLock',
+        request_serializer=mp3__pb2.checkMessage.SerializeToString,
+        response_deserializer=mp3__pb2.checkReply.FromString,
+        )
+
+
+class CoordinatorServicer(object):
+  """The greeting service definition.
+  """
+
+  def SayHi(self, request, context):
+    """Sends a greeting
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+  def checkLock(self, request, context):
+    """Sends a lock/commit/abort message to the coordinator
+    The coordinator will reply OK or shouldAbort
+    """
+    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+    context.set_details('Method not implemented!')
+    raise NotImplementedError('Method not implemented!')
+
+
+def add_CoordinatorServicer_to_server(servicer, server):
+  rpc_method_handlers = {
+      'SayHi': grpc.unary_unary_rpc_method_handler(
+          servicer.SayHi,
+          request_deserializer=mp3__pb2.HiRequest.FromString,
+          response_serializer=mp3__pb2.HiReply.SerializeToString,
+      ),
+      'checkLock': grpc.unary_unary_rpc_method_handler(
+          servicer.checkLock,
+          request_deserializer=mp3__pb2.checkMessage.FromString,
+          response_serializer=mp3__pb2.checkReply.SerializeToString,
+      ),
+  }
+  generic_handler = grpc.method_handlers_generic_handler(
+      'mp3.Coordinator', rpc_method_handlers)
+  server.add_generic_rpc_handlers((generic_handler,))
+
+
+class GreeterStub(object):
+  """------------------------------------------------------------------
+
+  The greeting service definition.
   """
 
   def __init__(self, channel):
@@ -52,7 +114,9 @@ class GreeterStub(object):
 
 
 class GreeterServicer(object):
-  """The greeting service definition.
+  """------------------------------------------------------------------
+
+  The greeting service definition.
   """
 
   def SayHello(self, request, context):
@@ -145,64 +209,4 @@ def add_GreeterServicer_to_server(servicer, server):
   }
   generic_handler = grpc.method_handlers_generic_handler(
       'mp3.Greeter', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
-
-
-class CoordinatorStub(object):
-  """The greeting service definition.
-  """
-
-  def __init__(self, channel):
-    """Constructor.
-
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.SayHi = channel.unary_unary(
-        '/mp3.Coordinator/SayHi',
-        request_serializer=mp3__pb2.HiRequest.SerializeToString,
-        response_deserializer=mp3__pb2.HiReply.FromString,
-        )
-    self.checkLock = channel.unary_unary(
-        '/mp3.Coordinator/checkLock',
-        request_serializer=mp3__pb2.checkMessage.SerializeToString,
-        response_deserializer=mp3__pb2.checkReply.FromString,
-        )
-
-
-class CoordinatorServicer(object):
-  """The greeting service definition.
-  """
-
-  def SayHi(self, request, context):
-    """Sends a greeting
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-  def checkLock(self, request, context):
-    """Sends a lock/commit/abort message to the coordinator
-    The coordinator will reply OK or shouldAbort
-    """
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
-
-
-def add_CoordinatorServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'SayHi': grpc.unary_unary_rpc_method_handler(
-          servicer.SayHi,
-          request_deserializer=mp3__pb2.HiRequest.FromString,
-          response_serializer=mp3__pb2.HiReply.SerializeToString,
-      ),
-      'checkLock': grpc.unary_unary_rpc_method_handler(
-          servicer.checkLock,
-          request_deserializer=mp3__pb2.checkMessage.FromString,
-          response_serializer=mp3__pb2.checkReply.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'mp3.Coordinator', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

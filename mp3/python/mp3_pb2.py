@@ -20,10 +20,141 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='mp3',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x0c\x62\x65ginMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x62\x65gin\x18\x02 \x01(\t\"\x1d\n\nbeginReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\ngetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\"\x1b\n\x08getReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"<\n\nsetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\"\x1b\n\x08setReply\x12\x0f\n\x07message\x18\x01 \x01(\t\".\n\rcommitMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0b\x63ommitReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x61\x62ortMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\nabortReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x19\n\tHiRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07HiReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x63heckMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\ncheckReply\x12\x0f\n\x07message\x18\x01 \x01(\t2\xde\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x12-\n\x05\x61\x62ort\x12\x11.mp3.abortMessage\x1a\x0f.mp3.abortReply\"\x00\x32i\n\x0b\x43oordinator\x12\'\n\x05SayHi\x12\x0e.mp3.HiRequest\x1a\x0c.mp3.HiReply\"\x00\x12\x31\n\tcheckLock\x12\x11.mp3.checkMessage\x1a\x0f.mp3.checkReply\"\x00\x62\x06proto3')
+  serialized_pb=_b('\n\tmp3.proto\x12\x03mp3\"\x19\n\tHiRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1a\n\x07HiReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x63heckMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\ncheckReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"\x1c\n\x0cHelloRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\"\x1d\n\nHelloReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"+\n\x0c\x62\x65ginMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x62\x65gin\x18\x02 \x01(\t\"\x1d\n\nbeginReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\ngetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\"\x1b\n\x08getReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"<\n\nsetMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x11\n\tserverkey\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\t\"\x1b\n\x08setReply\x12\x0f\n\x07message\x18\x01 \x01(\t\".\n\rcommitMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1e\n\x0b\x63ommitReply\x12\x0f\n\x07message\x18\x01 \x01(\t\"-\n\x0c\x61\x62ortMessage\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0f\n\x07message\x18\x02 \x01(\t\"\x1d\n\nabortReply\x12\x0f\n\x07message\x18\x01 \x01(\t2i\n\x0b\x43oordinator\x12\'\n\x05SayHi\x12\x0e.mp3.HiRequest\x1a\x0c.mp3.HiReply\"\x00\x12\x31\n\tcheckLock\x12\x11.mp3.checkMessage\x1a\x0f.mp3.checkReply\"\x00\x32\xde\x02\n\x07Greeter\x12\x30\n\x08SayHello\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12\x35\n\rSayHelloAgain\x12\x11.mp3.HelloRequest\x1a\x0f.mp3.HelloReply\"\x00\x12-\n\x05\x62\x65gin\x12\x11.mp3.beginMessage\x1a\x0f.mp3.beginReply\"\x00\x12,\n\x08getValue\x12\x0f.mp3.getMessage\x1a\r.mp3.getReply\"\x00\x12,\n\x08setValue\x12\x0f.mp3.setMessage\x1a\r.mp3.setReply\"\x00\x12\x30\n\x06\x63ommit\x12\x12.mp3.commitMessage\x1a\x10.mp3.commitReply\"\x00\x12-\n\x05\x61\x62ort\x12\x11.mp3.abortMessage\x1a\x0f.mp3.abortReply\"\x00\x62\x06proto3')
 )
 
 
+
+
+_HIREQUEST = _descriptor.Descriptor(
+  name='HiRequest',
+  full_name='mp3.HiRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='mp3.HiRequest.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=18,
+  serialized_end=43,
+)
+
+
+_HIREPLY = _descriptor.Descriptor(
+  name='HiReply',
+  full_name='mp3.HiReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='message', full_name='mp3.HiReply.message', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=45,
+  serialized_end=71,
+)
+
+
+_CHECKMESSAGE = _descriptor.Descriptor(
+  name='checkMessage',
+  full_name='mp3.checkMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='name', full_name='mp3.checkMessage.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='mp3.checkMessage.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=73,
+  serialized_end=118,
+)
+
+
+_CHECKREPLY = _descriptor.Descriptor(
+  name='checkReply',
+  full_name='mp3.checkReply',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='message', full_name='mp3.checkReply.message', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=120,
+  serialized_end=149,
+)
 
 
 _HELLOREQUEST = _descriptor.Descriptor(
@@ -52,8 +183,8 @@ _HELLOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18,
-  serialized_end=46,
+  serialized_start=151,
+  serialized_end=179,
 )
 
 
@@ -83,8 +214,8 @@ _HELLOREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=48,
-  serialized_end=77,
+  serialized_start=181,
+  serialized_end=210,
 )
 
 
@@ -121,8 +252,8 @@ _BEGINMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=79,
-  serialized_end=122,
+  serialized_start=212,
+  serialized_end=255,
 )
 
 
@@ -152,8 +283,8 @@ _BEGINREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=124,
-  serialized_end=153,
+  serialized_start=257,
+  serialized_end=286,
 )
 
 
@@ -190,8 +321,8 @@ _GETMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=155,
-  serialized_end=200,
+  serialized_start=288,
+  serialized_end=333,
 )
 
 
@@ -221,8 +352,8 @@ _GETREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=202,
-  serialized_end=229,
+  serialized_start=335,
+  serialized_end=362,
 )
 
 
@@ -266,8 +397,8 @@ _SETMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=231,
-  serialized_end=291,
+  serialized_start=364,
+  serialized_end=424,
 )
 
 
@@ -297,8 +428,8 @@ _SETREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=293,
-  serialized_end=320,
+  serialized_start=426,
+  serialized_end=453,
 )
 
 
@@ -335,8 +466,8 @@ _COMMITMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=322,
-  serialized_end=368,
+  serialized_start=455,
+  serialized_end=501,
 )
 
 
@@ -366,8 +497,8 @@ _COMMITREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=370,
-  serialized_end=400,
+  serialized_start=503,
+  serialized_end=533,
 )
 
 
@@ -404,8 +535,8 @@ _ABORTMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=402,
-  serialized_end=447,
+  serialized_start=535,
+  serialized_end=580,
 )
 
 
@@ -435,141 +566,14 @@ _ABORTREPLY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=449,
-  serialized_end=478,
-)
-
-
-_HIREQUEST = _descriptor.Descriptor(
-  name='HiRequest',
-  full_name='mp3.HiRequest',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='mp3.HiRequest.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=480,
-  serialized_end=505,
-)
-
-
-_HIREPLY = _descriptor.Descriptor(
-  name='HiReply',
-  full_name='mp3.HiReply',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='message', full_name='mp3.HiReply.message', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=507,
-  serialized_end=533,
-)
-
-
-_CHECKMESSAGE = _descriptor.Descriptor(
-  name='checkMessage',
-  full_name='mp3.checkMessage',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='name', full_name='mp3.checkMessage.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='message', full_name='mp3.checkMessage.message', index=1,
-      number=2, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=535,
-  serialized_end=580,
-)
-
-
-_CHECKREPLY = _descriptor.Descriptor(
-  name='checkReply',
-  full_name='mp3.checkReply',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='message', full_name='mp3.checkReply.message', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=_b("").decode('utf-8'),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto3',
-  extension_ranges=[],
-  oneofs=[
-  ],
   serialized_start=582,
   serialized_end=611,
 )
 
+DESCRIPTOR.message_types_by_name['HiRequest'] = _HIREQUEST
+DESCRIPTOR.message_types_by_name['HiReply'] = _HIREPLY
+DESCRIPTOR.message_types_by_name['checkMessage'] = _CHECKMESSAGE
+DESCRIPTOR.message_types_by_name['checkReply'] = _CHECKREPLY
 DESCRIPTOR.message_types_by_name['HelloRequest'] = _HELLOREQUEST
 DESCRIPTOR.message_types_by_name['HelloReply'] = _HELLOREPLY
 DESCRIPTOR.message_types_by_name['beginMessage'] = _BEGINMESSAGE
@@ -582,11 +586,35 @@ DESCRIPTOR.message_types_by_name['commitMessage'] = _COMMITMESSAGE
 DESCRIPTOR.message_types_by_name['commitReply'] = _COMMITREPLY
 DESCRIPTOR.message_types_by_name['abortMessage'] = _ABORTMESSAGE
 DESCRIPTOR.message_types_by_name['abortReply'] = _ABORTREPLY
-DESCRIPTOR.message_types_by_name['HiRequest'] = _HIREQUEST
-DESCRIPTOR.message_types_by_name['HiReply'] = _HIREPLY
-DESCRIPTOR.message_types_by_name['checkMessage'] = _CHECKMESSAGE
-DESCRIPTOR.message_types_by_name['checkReply'] = _CHECKREPLY
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+HiRequest = _reflection.GeneratedProtocolMessageType('HiRequest', (_message.Message,), dict(
+  DESCRIPTOR = _HIREQUEST,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.HiRequest)
+  ))
+_sym_db.RegisterMessage(HiRequest)
+
+HiReply = _reflection.GeneratedProtocolMessageType('HiReply', (_message.Message,), dict(
+  DESCRIPTOR = _HIREPLY,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.HiReply)
+  ))
+_sym_db.RegisterMessage(HiReply)
+
+checkMessage = _reflection.GeneratedProtocolMessageType('checkMessage', (_message.Message,), dict(
+  DESCRIPTOR = _CHECKMESSAGE,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.checkMessage)
+  ))
+_sym_db.RegisterMessage(checkMessage)
+
+checkReply = _reflection.GeneratedProtocolMessageType('checkReply', (_message.Message,), dict(
+  DESCRIPTOR = _CHECKREPLY,
+  __module__ = 'mp3_pb2'
+  # @@protoc_insertion_point(class_scope:mp3.checkReply)
+  ))
+_sym_db.RegisterMessage(checkReply)
 
 HelloRequest = _reflection.GeneratedProtocolMessageType('HelloRequest', (_message.Message,), dict(
   DESCRIPTOR = _HELLOREQUEST,
@@ -672,44 +700,49 @@ abortReply = _reflection.GeneratedProtocolMessageType('abortReply', (_message.Me
   ))
 _sym_db.RegisterMessage(abortReply)
 
-HiRequest = _reflection.GeneratedProtocolMessageType('HiRequest', (_message.Message,), dict(
-  DESCRIPTOR = _HIREQUEST,
-  __module__ = 'mp3_pb2'
-  # @@protoc_insertion_point(class_scope:mp3.HiRequest)
-  ))
-_sym_db.RegisterMessage(HiRequest)
 
-HiReply = _reflection.GeneratedProtocolMessageType('HiReply', (_message.Message,), dict(
-  DESCRIPTOR = _HIREPLY,
-  __module__ = 'mp3_pb2'
-  # @@protoc_insertion_point(class_scope:mp3.HiReply)
-  ))
-_sym_db.RegisterMessage(HiReply)
 
-checkMessage = _reflection.GeneratedProtocolMessageType('checkMessage', (_message.Message,), dict(
-  DESCRIPTOR = _CHECKMESSAGE,
-  __module__ = 'mp3_pb2'
-  # @@protoc_insertion_point(class_scope:mp3.checkMessage)
-  ))
-_sym_db.RegisterMessage(checkMessage)
+_COORDINATOR = _descriptor.ServiceDescriptor(
+  name='Coordinator',
+  full_name='mp3.Coordinator',
+  file=DESCRIPTOR,
+  index=0,
+  serialized_options=None,
+  serialized_start=613,
+  serialized_end=718,
+  methods=[
+  _descriptor.MethodDescriptor(
+    name='SayHi',
+    full_name='mp3.Coordinator.SayHi',
+    index=0,
+    containing_service=None,
+    input_type=_HIREQUEST,
+    output_type=_HIREPLY,
+    serialized_options=None,
+  ),
+  _descriptor.MethodDescriptor(
+    name='checkLock',
+    full_name='mp3.Coordinator.checkLock',
+    index=1,
+    containing_service=None,
+    input_type=_CHECKMESSAGE,
+    output_type=_CHECKREPLY,
+    serialized_options=None,
+  ),
+])
+_sym_db.RegisterServiceDescriptor(_COORDINATOR)
 
-checkReply = _reflection.GeneratedProtocolMessageType('checkReply', (_message.Message,), dict(
-  DESCRIPTOR = _CHECKREPLY,
-  __module__ = 'mp3_pb2'
-  # @@protoc_insertion_point(class_scope:mp3.checkReply)
-  ))
-_sym_db.RegisterMessage(checkReply)
-
+DESCRIPTOR.services_by_name['Coordinator'] = _COORDINATOR
 
 
 _GREETER = _descriptor.ServiceDescriptor(
   name='Greeter',
   full_name='mp3.Greeter',
   file=DESCRIPTOR,
-  index=0,
+  index=1,
   serialized_options=None,
-  serialized_start=614,
-  serialized_end=964,
+  serialized_start=721,
+  serialized_end=1071,
   methods=[
   _descriptor.MethodDescriptor(
     name='SayHello',
@@ -778,38 +811,5 @@ _GREETER = _descriptor.ServiceDescriptor(
 _sym_db.RegisterServiceDescriptor(_GREETER)
 
 DESCRIPTOR.services_by_name['Greeter'] = _GREETER
-
-
-_COORDINATOR = _descriptor.ServiceDescriptor(
-  name='Coordinator',
-  full_name='mp3.Coordinator',
-  file=DESCRIPTOR,
-  index=1,
-  serialized_options=None,
-  serialized_start=966,
-  serialized_end=1071,
-  methods=[
-  _descriptor.MethodDescriptor(
-    name='SayHi',
-    full_name='mp3.Coordinator.SayHi',
-    index=0,
-    containing_service=None,
-    input_type=_HIREQUEST,
-    output_type=_HIREPLY,
-    serialized_options=None,
-  ),
-  _descriptor.MethodDescriptor(
-    name='checkLock',
-    full_name='mp3.Coordinator.checkLock',
-    index=1,
-    containing_service=None,
-    input_type=_CHECKMESSAGE,
-    output_type=_CHECKREPLY,
-    serialized_options=None,
-  ),
-])
-_sym_db.RegisterServiceDescriptor(_COORDINATOR)
-
-DESCRIPTOR.services_by_name['Coordinator'] = _COORDINATOR
 
 # @@protoc_insertion_point(module_scope)

@@ -52,7 +52,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         t = time.time()
         vmName = request.name
         print("\nReceived Begin from ", vmName)
-        self.printALL()
+        #self.printALL()
+
+        #coordinator.SayHi(mp3_pb2.HiRequest(name="Mac1"))
+        hireply = coordinator.HiReply(mp3_pb2.hiMessage(name=request.name))
+        print(hireply.message)
 
         clientDict[vmName] = dict()
         clientDict[vmName]['miniDict'] = dict()
@@ -281,10 +285,10 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 
 def serve():
+
+
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-
     mp3_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
-
     server.add_insecure_port('[::]:50051')
     server.start()
 
@@ -303,6 +307,8 @@ if __name__ == '__main__':
     masterDict = dict()
     lockDict = dict()
     #waitDict = dict()
+
+    coordinator = grpc.insecure_channel('sp19-cs425-g58-05.cs.illinois.edu:50051')
 
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
