@@ -162,9 +162,10 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         ownDict = dict()
         waitDict = dict()
         for operation in historyList:
-            vmName = operation[0]
-            lockType = operation[1]
-            serverkey = operation[2]
+            ops = operation.split(' ')
+            vmName = ops[0]
+            lockType = ops[1]
+            serverkey = ops[2]
             if(lockType == "SET" and serverkey not in ownDict):
                 ownDict[serverkey] = vmName
             else:
@@ -173,8 +174,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 else:
                     waitDict[serverkey].append(vmName)
 
-        print(ownDict)
-        print(waitDict)
+        print("own: " + ownDict)
+        print("wait:" + waitDict)
         if(len(ownDict)>0):
             inCurOwner = ownDict[inServerkey]
             print(inCurOwner)
