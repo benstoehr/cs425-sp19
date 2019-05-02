@@ -29,16 +29,16 @@ server = mp3_pb2_grpc.CoordinatorStub(channel)
 response = server.SayHi(mp3_pb2.HelloRequest(name='test1'))
 print("Coordinator client received: " + response.message)
 
-    try:
-        with sys.stdin as i:
-            while(1):
-                command = input()
+try:
+    with sys.stdin as i:
+        while(1):
+            command = input()
 
-                checkreply = server.checkLock(mp3_pb2.checkMessage(name="test1", message=str(command)))
-                print(checkreply.message)
+            checkreply = server.checkLock(mp3_pb2.checkMessage(name="test1", message=str(command)))
+            print(checkreply.message)
 
-    except KeyboardInterrupt:
-        exit(1)
+except KeyboardInterrupt:
+    exit(1)
 
 
 # serverVMs = ['[::]:50051',
