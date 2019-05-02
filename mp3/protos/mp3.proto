@@ -40,7 +40,7 @@ message HiRequest {
 // The response message containing the greetings
 message HiReply {    string message = 1; }
 
-// message: SET A.x 1/GET A.x/COMMIT/ABORT
+// name: client's name (not the server), message: SET A.x 1/GET A.x/COMMIT/ABORT
 message checkMessage {
     string name = 1;
     string message = 2;
