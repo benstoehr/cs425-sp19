@@ -286,7 +286,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 def serve():
 
-
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     mp3_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
     server.add_insecure_port('[::]:50051')
@@ -308,8 +307,9 @@ if __name__ == '__main__':
     lockDict = dict()
     #waitDict = dict()
 
-    coordinator = grpc.insecure_channel('sp19-cs425-g58-05.cs.illinois.edu:50051')
-
+    coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50051')
+    coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
+    
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
     serve()
