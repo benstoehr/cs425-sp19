@@ -119,7 +119,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                         pass
 
                     if(lockType == "SET"):
-                        if(checkDeadlock(message)==True):
+                        if(self.checkDeadlock(message)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
                 allLockDict[serverkey].append(["SET", vmName])
@@ -134,7 +134,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         # if not: update allLockDict & history and return OK
         # else: check if deadlock exists and return OK or shouldAbort accordingly
 
-            set, serverkey, value = command.split(" ")
+            set, serverkey, value = message.split(" ")
             server, key = serverkey.split(".")
 
             ret = "OK"
@@ -147,7 +147,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                         pass
 
                     if(lockType == "SET"):
-                        if(checkDeadlock(message)==True):
+                        if(self.checkDeadlock(message)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
                 allLockDict[serverkey].append(["SET", vmName])
@@ -158,7 +158,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             return mp3_pb2.checkReply(message=ret)
             
 
-    def checkDeadlock(inVmName, inServerkey):
+    def checkDeadlock(self, inVmName, inServerkey):
         # TODO: check deadlock here T_T
         ownDict = dict()
         waitDict = dict()
