@@ -179,7 +179,7 @@ def checkDeadlock(inVmName, inServerkey):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
-    mp3_pb2_grpc.add_ServiceCoordinatorr_to_server(Coordinator(), server)
+    mp3_pb2_grpc.add_ServiceCoordinator_to_server(Coordinator(), server)
 
     server.add_insecure_port('[::]:50052')
     server.start()
