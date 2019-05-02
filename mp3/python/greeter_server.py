@@ -43,6 +43,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print("Received Hello!")
         # hireply = server.HiReply(mp3_pb2.hiMessage(name=request.name))
         # print(hireply.message)
+        hireply = coordinator.SayHi(mp3_pb2.HiRequest(name=request.name))
+        print(hireply.message)
 
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
@@ -54,9 +56,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print("\nReceived Begin from ", vmName)
         #self.printALL()
 
-        #coordinator.SayHi(mp3_pb2.HiRequest(name="Mac1"))
-        hireply = coordinator.HiReply(mp3_pb2.hiMessage(name=request.name))
-        print(hireply.message)
 
         clientDict[vmName] = dict()
         clientDict[vmName]['miniDict'] = dict()
@@ -309,7 +308,7 @@ if __name__ == '__main__':
 
     coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50051')
     coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
-    
+
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
     serve()
