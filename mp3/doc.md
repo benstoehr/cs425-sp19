@@ -15,9 +15,10 @@ https://gitlab.engr.illinois.edu/mttsao2/cs425-sp19/tree/master/mp3
 
 Please run: 
 
-1. `python36 greeter_server.py`
-2. `python36 greeter_client.py 5` to run 5 nodes.
-3. Enter the transactions in the console.
+1. `cd python`
+2. `python36 greeter_server.py`
+3. `python36 greeter_client.py 5` to run 5 nodes.
+4. Enter the transactions in the console.
 
 ## Commit Hash
 
