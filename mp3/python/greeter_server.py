@@ -72,7 +72,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             time.sleep(0.0001)
 
         if (key in masterDict.keys()):
-            return mp3_pb2.getReply(message='%s = %s' % (serverkey, masterDict[request.key]))
+            return mp3_pb2.getReply(message='%s = %s' % (serverkey, masterDict[key]))
 
         if (key not in clientDict[vmName]['miniDict'].keys()):
             # Should we return NOT FOUND or let it wait 
