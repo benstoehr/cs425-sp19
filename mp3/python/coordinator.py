@@ -39,7 +39,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         vmName = request.name # client's name, not the server
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
-        print(history)
+        print(allLockDict)
 
         if('COMMIT' in message):
         # flush everything of this client in allLockDict & history
