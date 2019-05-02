@@ -182,7 +182,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             for serverkey in waitDict.keys():
                 for vm in waitDict[serverkey]:
                     print("check: " + serverkey + vm)
-                    if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
+                    if(vm == inCurOwner and ownDict[serverkey] == inVmName):
                         return True
 
         return False
