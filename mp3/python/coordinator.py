@@ -134,7 +134,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         # if not: update allLockDict & history and return OK
         # else: check if deadlock exists and return OK or shouldAbort accordingly
 
-            set, serverkey, value = command.split(" ")
+            set, serverkey, value = message.split(" ")
             server, key = serverkey.split(".")
 
             ret = "OK"
