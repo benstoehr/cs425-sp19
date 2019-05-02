@@ -150,34 +150,34 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey].append(["SET", vmName])
             else:
                 allLockDict[serverkey] = [["SET", vmName]]
-                
+
             history.append(" ".join([vmName, serverkey])) # not record value here 
             return mp3_pb2.checkReply(message=ret)
             
 
-def checkDeadlock(inVmName, inServerkey):
-    # TODO: check deadlock here T_T
-    ownDict = dict()
-    waitDict = dict()
-    for operation in history:
-        vmName = operation[0]
-        lockType = operation[1]
-        serverkey = operation[2]
-        if(lockType == "SET" and serverkey not in ownDict):
-            ownDict[serverkey] = vmName
-        else:
-            if(serverkey not in waitDict):
-                waitDict[serverkey] = [vmName]
+    def checkDeadlock(inVmName, inServerkey):
+        # TODO: check deadlock here T_T
+        ownDict = dict()
+        waitDict = dict()
+        for operation in history:
+            vmName = operation[0]
+            lockType = operation[1]
+            serverkey = operation[2]
+            if(lockType == "SET" and serverkey not in ownDict):
+                ownDict[serverkey] = vmName
             else:
-                waitDict[serverkey].append(vmName)
+                if(serverkey not in waitDict):
+                    waitDict[serverkey] = [vmName]
+                else:
+                    waitDict[serverkey].append(vmName)
 
-    inCurOwner = ownDict[inServerkey]
-    for serverkey in waitDict.keys():
-        for vm in waitDict[serverkey]:
-            if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
-                return True
+        inCurOwner = ownDict[inServerkey]
+        for serverkey in waitDict.keys():
+            for vm in waitDict[serverkey]:
+                if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
+                    return True
 
-    return False
+        return False
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
@@ -200,7 +200,7 @@ if __name__ == '__main__':
 
     allLockDict = dict()
     # allLockDict[serverkey] = [[GET, vmName], [SET, vmName]]
-    history = []
+    history = list()
     # ["client1 GET A.x", "client2 SET B.x", "client2 GET A.x"]
 
     print("Coordinator [SERVING]")
