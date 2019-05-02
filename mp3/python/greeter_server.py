@@ -56,6 +56,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         # the client still hangs after the other COMMIT
 
         # the server doesn't release lock after client's disconnection
+        # the server doesn't release lock after commit
 
         t = time.time()
         vmName = request.name
