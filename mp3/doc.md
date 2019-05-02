@@ -52,7 +52,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 A coordinator monitors all operations from the servers. It keeps a dictionary of all current locks. The servers send their GET/SET/COMMIT/ABORT operations to the coordinators. When an operation message comes, it check if the operation causes any deadlocks. If yes, it sends `shouldAbort`. Otherwise, it sends `ok`. The server executes accordingly.
 
-Please refer to `.py`
+Please refer to `cooordinator.py`
 
 ```
 class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
