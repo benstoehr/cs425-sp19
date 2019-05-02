@@ -27,6 +27,17 @@ _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 class Greeter(mp3_pb2_grpc.GreeterServicer):
 
+    def printALL(self):
+        print("clientDict")
+        for k, v in clientDict.items():
+            print(k, ", ", v)
+        print("lockDict")
+        for k, v in lockDict.items():
+            print("\t", k, ", ", v)
+        print("masterDict")
+        for k, v in masterDict.items():
+            print(k, ", ", v)
+
     def SayHello(self, request, context):
 
         print("Received Hello!")
@@ -38,12 +49,14 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-        print("Received Begin from ", vmName)
+        print("\nReceived Begin from ", vmName)
+        self.printALL()
 
         clientDict[vmName] = dict()
         clientDict[vmName]['miniDict'] = dict()
         clientDict[vmName]['commands'] = [(t, 'begin')]
 
+        self.printALL()
         return mp3_pb2.beginReply(message='OK')
 
 
@@ -60,15 +73,28 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-        print("Received getValue from ", vmName)
+        print("\nReceived getValue from ", vmName)
+        self.printALL()
+
         serverkey = request.serverkey
         server, key = serverkey.split(".")
 
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
+        # No Locks
         if(key not in lockDict.keys()):
-            lockDict[key] = [['GET', vmName]]
+            # Key exists in master
+            if(key in masterDict.keys()):
+                # SET LOCK
+                lockDict[key] = [['GET', vmName]]
+            else:
+                # Does key exist locally?
+                if (key not in clientDict[vmName]['miniDict'].keys()):
+                    # Should we return NOT FOUND or let it wait
+                    # if another client SET the object but not commit yet?
+                    return mp3_pb2.getReply(message='NOT FOUND')
         else:
+            # APPEND LOCK
             lockDict[key].append(['GET', vmName])
 
         while(self.checkAcquireReadLock(vmName, key) == False):
@@ -78,14 +104,12 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName]['commands'].append([t,string])
 
         if (key in masterDict.keys()):
+            self.printALL()
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, masterDict[key]))
 
-        if (key not in clientDict[vmName]['miniDict'].keys()):
-            # Should we return NOT FOUND or let it wait 
-            # if another client SET the object but not commit yet?
-            return mp3_pb2.getReply(message='NOT FOUND')
         else:
             val = clientDict[vmName]['miniDict'][key]
+            self.printALL()
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, val))
 
 
@@ -94,8 +118,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
-
-        print("Received setValue from ", vmName)
+        print("\nReceived setValue from ", vmName)
+        self.printALL()
 
         serverkey = request.serverkey # A.x 1
         server, key = serverkey.split(".") # ["A", "x 1"]
@@ -121,14 +145,15 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         clientDict[vmName]['miniDict'][key] = value
 
         print("["+str(t)+"] "+str(vmName)+" setValue " + str(serverkey) +" " +str(value))
+        self.printALL()
         return mp3_pb2.setReply(message='OK')
 
     # TODO: commit
     def commit(self, request, context):
         t = time.time()
         vmName = request.name
-
-        print("Received Commit from ", vmName)
+        print("\nReceived Commit from ", vmName)
+        self.printALL()
 
         while(self.checkCommitOK(vmName) == False):
             time.sleep(0.0001)
@@ -142,25 +167,36 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                 server, key = serverkey.split(".")
                 masterDict[key] = value
 
+                # ASSUME first entry is ['SET', vmName]
                 if(len(lockDict[key]) > 1):
-                    lockDict[key].pop()
+                    lockDict[key].pop(0)
                 else:
-                    lockDict[serverkey] = None
+                    del(lockDict[key])
+                continue
 
             # GET Command
             if('GET' in command):
                 type, serverkey = command.split(" ")
+                server, key = serverkey.split(".")
 
-                if(lockDict[key] == ['GET', vmName]):
-                    if (len(lockDict[key]) > 1):
-                        lockDict[key].pop()
+                if(lockDict[key][0] == ['GET', vmName]):
+
+                    print("\nlockDict")
+                    for k, v in lockDict.items():
+                        print(k, ", ", v)
+
+                    locks = lockDict[key]
+                    if (len(locks) > 1):
+                        lockDict[key].pop(0)
                     else:
-                        lockDict[serverkey] = None
+                        del(lockDict[key])
                 else:
                     lockDict[key].remove(['GET', vmName])
 
-        return mp3_pb2.commitReply(message='COMMIT OK')
+        #del(clientDict[vmName]['commands'])
 
+        self.printALL()
+        return mp3_pb2.commitReply(message='COMMIT OK')
 
     def checkCommitOK(self, vmName):
 
@@ -230,9 +266,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
                     break
 
         return ret
-
-
-
 
 
 

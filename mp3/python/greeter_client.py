@@ -38,7 +38,7 @@ serverLetters = ['A', 'B', 'C', 'D', 'E']
 
 # serverLetters = ['A', 'B', 'C', 'D']
 
-def run(numVMs):
+def run(name, numVMs):
     # NOTE(gRPC Python Team): .close() is possible on a channel and should be
     # used in circumstances in which the with statement does not fit the needs
     # of the code.
@@ -63,35 +63,47 @@ def run(numVMs):
 
                 if('BEGIN' in command):
                     for server in serverDict.values():
-                        beginreply = server.begin(mp3_pb2.beginMessage(name="BensMac"))
+                        beginreply = server.begin(mp3_pb2.beginMessage(name=name))
                         print(beginreply.message)
+                    continue
 
                 if('COMMIT' in command):
                     for server in serverDict.values():
-                        commitreply = server.commit(mp3_pb2.beginMessage(name="BensMac"))
+                        commitreply = server.commit(mp3_pb2.beginMessage(name=name))
                         print(commitreply.message)
+                    continue
 
                 if('ABORT' in command):
                     for server in serverDict.values():
-                        abortreply = server.abort(mp3_pb2.beginMessage(name="BensMac"))
+                        abortreply = server.abort(mp3_pb2.beginMessage(name=name))
                         print(abortreply.message)
+                    continue
 
                 if('GET' in command):
-                    get, serverkey = command.split(" ")
+                    split = command.split(" ")
+                    if(len(split) != 2):
+                        print("\t Error in input")
+                        continue
+                    get, serverkey = split
                     server, key = serverkey[:].split(".")
-                    print(serverkey)
+                    #print(serverkey)
 
-                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name="BensMac", serverkey=str(serverkey)))
+                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name=name, serverkey=str(serverkey)))
                     print(getreply.message)
-
+                    continue
                 if ('SET' in command):
-                    set, serverkey, value = command.split(" ")
+                    split = command.split(" ")
+                    if (len(split) != 3):
+                        print("\t Error in input")
+                        continue
+                    set, serverkey, value = split
                     server, key = serverkey.split(".")
 
-                    setreply = serverDict[server].setValue(mp3_pb2.setMessage(name="BensMac", serverkey=serverkey, value=value))
+                    setreply = serverDict[server].setValue(mp3_pb2.setMessage(name=name, serverkey=serverkey, value=value))
                     print(setreply.message)
+                    continue
 
-
+                print("Unexpected input, please try again!")
                 #print(command)
 
     except KeyboardInterrupt:
@@ -104,4 +116,4 @@ if __name__ == '__main__':
 
     logging.basicConfig()
 
-    run(int(sys.argv[1]))
+    run(sys.argv[1], int(sys.argv[2]))
