@@ -68,7 +68,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             #     else:
             #         tmpHistory.append(operation)
 
-            historyList[:] = [x for x in historyList if vmName in x]
+            historyList[:] = [x for x in historyList if vmName not in x]
 
             return mp3_pb2.checkReply(message='OK')
 
@@ -100,7 +100,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
 
             # historyList = tmpHistory.copy()
 
-            historyList[:] = [x for x in historyList if vmName in x]
+            historyList[:] = [x for x in historyList if vmName not in x]
 
             return mp3_pb2.checkReply(message='OK')
 
