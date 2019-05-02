@@ -346,7 +346,9 @@ if __name__ == '__main__':
     lockDict = dict()
     #waitDict = dict()
 
-    coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
+
+    coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
+    #coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
     coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
 
     #d['A.x'] = 'Benjamin'
