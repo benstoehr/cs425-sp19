@@ -22,7 +22,7 @@ Please run:
 
 ## Commit Hash
 
-[hash]
+2e5be1a4223852023eec647f1511b4c320874636
 
 ## Design Document
 
