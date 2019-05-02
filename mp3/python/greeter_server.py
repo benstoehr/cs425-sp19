@@ -70,6 +70,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         while(self.checkAcquireReadLock(vmName, key) == False):
             time.sleep(0.0001)
 
+        string = 'GET {}'.format(serverkey)
+        clientDict[vmName]['commands'].append([t,string])
+
         if (key in masterDict.keys()):
             return mp3_pb2.getReply(message='%s' % masterDict[request.value])
 
@@ -129,7 +132,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         print("Received Commit from ", vmName)
 
-        check = self.checkCommitOK(vmName)
         while(self.checkCommitOK(vmName) == False):
             time.sleep(0.0001)
 
@@ -170,6 +172,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         commands = clientDict[vmName]['commands']
 
         for t, command in commands[1:]:
+
             if ('SET' in command):
                 type, serverkey, value = command.split(" ")
                 server, key = serverkey.split(".")

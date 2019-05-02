@@ -71,7 +71,9 @@ def run(numVMs):
                         print(commitreply.message)
 
                 if('ABORT' in command):
-                    pass
+                    for server in serverDict.values():
+                        abortreply = server.abort(mp3_pb2.beginMessage(name="BensMac"))
+                        print(abortreply.message)
 
                 if('GET' in command):
                     get, serverkey = command.split(" ")
