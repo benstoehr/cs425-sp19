@@ -39,21 +39,21 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         vmName = request.name # client's name, not the server
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
-        
+
         if('COMMIT' in message):
         # flush everything of this client in allLockDict & history
 
             # delete allLockDict
-            for keyvalue in allLockDict.keys():
+            for serverkey in allLockDict.keys():
                 tmpLocks = []
-                for operation in allLockDict[keyvalue]:
+                for operation in allLockDict[serverkey]:
                     lockClient = lock[1]
                     if(lockClient == vmName):
                         pass
                     else:
                         tmpLocks.append(operation)
                         
-                allLockDict[keyvalue] = tmpLocks.copy()
+                allLockDict[serverkey] = tmpLocks.copy()
  
             # delete history
             tmpHistory = []
@@ -73,16 +73,16 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         # flush everything of this client in allLockDict & history
 
             # delete allLockDict
-            for keyvalue in allLockDict.keys():
+            for serverkey in allLockDict.keys():
                 tmpLocks = []
-                for operation in allLockDict[keyvalue]:
+                for operation in allLockDict[serverkey]:
                     lockClient = lock[1]
                     if(lockClient == vmName):
                         pass
                     else:
                         tmpLocks.append(operation)
 
-                allLockDict[keyvalue] = tmpLocks.copy()
+                allLockDict[serverkey] = tmpLocks.copy()
  
             # delete history
             tmpHistory = []
@@ -107,8 +107,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             print(serverkey)
 
             ret = "OK"
-            if(keyvalue in allLockDict.keys()):
-                for lock in allLockDict[keyvalue]:
+            if(serverkey in allLockDict.keys()):
+                for lock in allLockDict[serverkey]:
                     lockType = lock[0]
                     lockClient = lock[1]
 
@@ -120,7 +120,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
 
-            allLockDict[keyvalue].append(["SET", vmName])
+            allLockDict[serverkey].append(["SET", vmName])
             history.append(" ".join([vmName, serverkey]))
             return mp3_pb2.checkReply(message=ret)
 
@@ -133,8 +133,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             server, key = serverkey.split(".")
 
             ret = "OK"
-            if(keyvalue in allLockDict.keys()):
-                for lock in allLockDict[keyvalue]:
+            if(serverkey in allLockDict.keys()):
+                for lock in allLockDict[serverkey]:
                     lockType = lock[0]
                     lockClient = lock[1]
 
@@ -146,7 +146,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
 
-            allLockDict[keyvalue].append(["SET", vmName])
+            allLockDict[serverkey].append(["SET", vmName])
             history.append(" ".join([vmName, serverkey])) # not record value here 
             return mp3_pb2.checkReply(message=ret)
             
@@ -195,7 +195,7 @@ if __name__ == '__main__':
     logging.basicConfig()
 
     allLockDict = dict()
-    # allLockDict[keyvalue] = [[GET, vmName], [SET, vmName]]
+    # allLockDict[serverkey] = [[GET, vmName], [SET, vmName]]
     history = []
     # ["client1 GET A.x", "client2 SET B.x", "client2 GET A.x"]
 
