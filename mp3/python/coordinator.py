@@ -48,7 +48,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             for serverkey in allLockDict.keys():
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
-                    lockClient = lock[1]
+                    lockClient = operation[1]
                     if(lockClient == vmName):
                         pass
                     else:
@@ -77,7 +77,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             for serverkey in allLockDict.keys():
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
-                    lockClient = lock[1]
+                    lockClient = operation[1]
                     if(lockClient == vmName):
                         pass
                     else:
@@ -107,7 +107,6 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
 
             get, serverkey = message.split(" ")
             server, key = serverkey[:].split(".")
-            print(serverkey)
 
             ret = "OK"
             if(serverkey in allLockDict.keys()):
@@ -122,11 +121,11 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                         if(self.checkDeadlock(vmName, serverkey)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
-                allLockDict[serverkey].append(["SET", vmName])
+                allLockDict[serverkey].append(["GET", vmName])
             else:
-                allLockDict[serverkey] = [["SET", vmName]]
+                allLockDict[serverkey] = [["GET", vmName]]
 
-            historyList.append(" ".join([vmName, serverkey]))
+            historyList.append(" ".join([vmName, "GET", serverkey]))
             return mp3_pb2.checkReply(message=ret)
 
         if ('SET' in message):
@@ -154,7 +153,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             else:
                 allLockDict[serverkey] = [["SET", vmName]]
 
-            historyList.append(" ".join([vmName, serverkey])) # not record value here 
+            historyList.append(" ".join([vmName, "SET", serverkey])) # not record value here 
             return mp3_pb2.checkReply(message=ret)
             
 
@@ -163,9 +162,10 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         ownDict = dict()
         waitDict = dict()
         for operation in historyList:
-            vmName = operation[0]
-            lockType = operation[1]
-            serverkey = operation[2]
+            ops = operation.split(' ')
+            vmName = ops[0]
+            lockType = ops[1]
+            serverkey = ops[2]
             if(lockType == "SET" and serverkey not in ownDict):
                 ownDict[serverkey] = vmName
             else:
@@ -174,11 +174,15 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 else:
                     waitDict[serverkey].append(vmName)
 
+        print(ownDict)
+        print(waitDict)
         if(len(ownDict)>0):
             inCurOwner = ownDict[inServerkey]
+            print(inCurOwner)
             for serverkey in waitDict.keys():
                 for vm in waitDict[serverkey]:
-                    if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
+                    print("check: " + serverkey + vm)
+                    if(vm == inCurOwner and ownDict[serverkey] == inVmName):
                         return True
 
         return False
