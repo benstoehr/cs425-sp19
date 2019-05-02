@@ -73,6 +73,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         t = time.time()
         vmName = request.name
+
+        if (vmName not in clientDict.keys()):
+            print(vmName, clientDict.keys())
+            return mp3_pb2.setReply(message='\tMissing Begin statement')
+
         print("\nReceived getValue from ", vmName)
         self.printALL()
 
@@ -152,6 +157,10 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
     def commit(self, request, context):
         t = time.time()
         vmName = request.name
+        if (vmName not in clientDict.keys()):
+            print(vmName, clientDict.keys())
+            return mp3_pb2.setReply(message='\tMissing Begin statement')
+        
         print("\nReceived Commit from ", vmName)
         self.printALL()
 
