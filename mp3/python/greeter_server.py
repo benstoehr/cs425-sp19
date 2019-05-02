@@ -275,6 +275,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             return mp3_pb2.setReply(message='\tMissing Begin statement')
 
         print("\nReceived ABORT from ", vmName)
+
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='COMMIT'))
         print(checkreply.message)
         # TODO: Implement different logic for abort

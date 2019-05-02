@@ -40,6 +40,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
         print("Before adding this operation:")
+
         print(allLockDict)
         print(historyList)
 
@@ -160,6 +161,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey] = [["SET", vmName]]
 
             historyList.append(" ".join([vmName, "SET", serverkey])) # not record value here 
+            print("Returning ", ret)
             return mp3_pb2.checkReply(message=ret)
             
 

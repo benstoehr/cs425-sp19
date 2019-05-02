@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/mp3/python/coordinator.py" afterPath="$PROJECT_DIR$/mp3/python/coordinator.py" />
       <change beforePath="$PROJECT_DIR$/mp3/python/greeter_server.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +26,8 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="432">
-                  <caret line="281" column="8" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="8" />
+                <state relative-caret-position="842">
+                  <caret line="218" column="57" lean-forward="true" selection-start-line="218" selection-start-column="57" selection-end-line="218" selection-end-column="57" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#872#1159#0" expanded="false" />
@@ -33,9 +35,8 @@
                     <element signature="e#1586#1919#0" expanded="false" />
                     <element signature="e#1971#4151#0" expanded="false" />
                     <element signature="e#4224#5506#0" expanded="false" />
-                    <element signature="e#5575#7377#0" expanded="false" />
                     <element signature="e#7425#8700#0" expanded="false" />
-                    <element signature="e#9876#10379#0" expanded="false" />
+                    <element signature="e#9877#10380#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -44,12 +45,14 @@
           <file leaf-file-name="coordinator.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="330">
-                  <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+                <state relative-caret-position="620">
+                  <caret line="163" column="35" lean-forward="false" selection-start-line="163" selection-start-column="35" selection-end-line="163" selection-end-column="35" />
                   <folding>
                     <element signature="e#896#983#0" expanded="false" />
-                    <element signature="e#1037#5333#0" expanded="false" />
-                    <element signature="e#5408#6240#0" expanded="false" />
+                    <element signature="e#1352#2279#0" expanded="false" />
+                    <element signature="e#2322#3271#0" expanded="false" />
+                    <element signature="e#3311#4367#0" expanded="false" />
+                    <element signature="e#5633#6616#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -174,6 +177,7 @@
         <option value="$PROJECT_DIR$/mp3/python/greeter_client.py" />
         <option value="$PROJECT_DIR$/grpc/hw5.py" />
         <option value="$PROJECT_DIR$/mp3/python/greeter_server.py" />
+        <option value="$PROJECT_DIR$/mp3/python/coordinator.py" />
       </list>
     </option>
   </component>
@@ -745,8 +749,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="281" column="8" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="8" />
+        <state relative-caret-position="842">
+          <caret line="218" column="57" lean-forward="true" selection-start-line="218" selection-start-column="57" selection-end-line="218" selection-end-column="57" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#872#1159#0" expanded="false" />
@@ -754,21 +758,22 @@
             <element signature="e#1586#1919#0" expanded="false" />
             <element signature="e#1971#4151#0" expanded="false" />
             <element signature="e#4224#5506#0" expanded="false" />
-            <element signature="e#5575#7377#0" expanded="false" />
             <element signature="e#7425#8700#0" expanded="false" />
-            <element signature="e#9876#10379#0" expanded="false" />
+            <element signature="e#9877#10380#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/coordinator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="29" column="0" lean-forward="false" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state relative-caret-position="620">
+          <caret line="163" column="35" lean-forward="false" selection-start-line="163" selection-start-column="35" selection-end-line="163" selection-end-column="35" />
           <folding>
             <element signature="e#896#983#0" expanded="false" />
-            <element signature="e#1037#5333#0" expanded="false" />
-            <element signature="e#5408#6240#0" expanded="false" />
+            <element signature="e#1352#2279#0" expanded="false" />
+            <element signature="e#2322#3271#0" expanded="false" />
+            <element signature="e#3311#4367#0" expanded="false" />
+            <element signature="e#5633#6616#0" expanded="false" />
           </folding>
         </state>
       </provider>
