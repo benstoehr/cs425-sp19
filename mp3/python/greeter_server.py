@@ -55,6 +55,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         # a while loop goes through the lock queue?
         # the client still hangs after the other COMMIT
 
+        # the server doesn't release lock after client's disconnection
+
         t = time.time()
         vmName = request.name
         print("Received getValue from ", vmName)
