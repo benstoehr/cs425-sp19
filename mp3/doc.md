@@ -27,7 +27,7 @@ Please run:
 
 ### Lock
 
-Each server maintains a lock dictionary locally. Once a client requests a GET or SET, we put the lock request into the dictionary. If the client requests a GET and there is no SET request in the dictionary, it executes GET. Otherwise, the client has to wait for the lock released. If a client requests GET or SET and there is a SET of that object in the lock dictionary, it has to wait.
+Each server maintains a lock dictionary locally. Once a client requests a GET or SET of an object, we put the lock request into the dictionary. If the client requests a GET and there is no SET request in the dictionary, it executes GET. Otherwise, the client has to wait for the lock released. If a client requests GET or SET and there is a SET of that object in the lock dictionary, it has to wait. The locks are released while commit or abort.
 
 Please refer to `greeter_server.py`
 
@@ -49,7 +49,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
 ### Deadlock Detection
 
-A coordinator receives all operations from the servers. It keeps a dictionary of all current locks. When a message comes, it check if the operation causes any deadlocks. If yes, it sends `shouldAbort`. Otherwise, it sends `ok`. The server executes accordingly.
+A coordinator monitors all operations from the servers. It keeps a dictionary of all current locks. The servers send their GET/SET/COMMIT/ABORT operations to the coordinators. When an operation message comes, it check if the operation causes any deadlocks. If yes, it sends `shouldAbort`. Otherwise, it sends `ok`. The server executes accordingly.
 
 Please refer to `.py`
 
