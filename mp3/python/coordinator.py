@@ -57,15 +57,15 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey] = tmpLocks.copy()
  
             # delete history
-            tmpHistory = []
+            # tmpHistory = []
  
-            for operation in historyList:
-                if (vmName in operation):
-                     pass
-                else:
-                    tmpHistory.append(operation)
+            # for operation in historyList:
+            #     if (vmName in operation):
+            #          pass
+            #     else:
+            #         tmpHistory.append(operation)
 
-            historyList = tmpHistory.copy()
+            historyList[:] = [x for x in historyList if vmName in x]
 
             return mp3_pb2.checkReply(message='OK')
 
@@ -86,15 +86,17 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey] = tmpLocks.copy()
  
             # delete history
-            tmpHistory = []
+            # tmpHistory = []
  
-            for operation in historyList:
-                if (vmName in operation):
-                    pass
-                else:
-                    tmpHistory.append(operation)
+            # for operation in historyList:
+            #     if (vmName in operation):
+            #         pass
+            #     else:
+            #         tmpHistory.append(operation)
 
-            historyList = tmpHistory.copy()
+            # historyList = tmpHistory.copy()
+
+            historyList[:] = [x for x in historyList if vmName in x]
 
             return mp3_pb2.checkReply(message='OK')
 
