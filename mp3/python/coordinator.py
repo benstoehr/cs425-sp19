@@ -152,8 +152,28 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             return mp3_pb2.checkReply(message=ret)
             
 
-def checkDeadlock(message):
+def checkDeadlock(inVmName, inServerkey):
     # TODO: check deadlock here T_T
+    ownDict = dict()
+    waitDict = dict()
+    for operation in history:
+        vmName = operation[0]
+        lockType = operation[1]
+        serverkey = operation[2]
+        if(lockType == "SET" and serverkey not in ownDict):
+            ownDict[serverkey] = vmName
+        else:
+            if(serverkey not in waitDict):
+                waitDict[serverkey] = [vmName]
+            else:
+                waitDict[serverkey].append(vmName)
+
+    inCurOwner = ownDict[inServerkey]
+    for serverkey in waitDict.keys():
+        for vm in waitDict[serverkey]:
+            if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
+                return True
+
     return False
 
 def serve():
