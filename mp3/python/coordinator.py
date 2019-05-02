@@ -31,7 +31,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
 
         print("Received Hi!")
 
-        return mp3_pb2.HelloReply(message='Hi, %s!' % request.name)
+        return mp3_pb2.HiReply(message='Hi, %s!' % request.name)
 
     def checkLock(self, request, context):
 
