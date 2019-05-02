@@ -119,8 +119,10 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                         if(checkDeadlock(message)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
+                allLockDict[serverkey].append(["SET", vmName])
+            else:
+                allLockDict[serverkey] = [["SET", vmName]]
 
-            allLockDict[serverkey].append(["SET", vmName])
             history.append(" ".join([vmName, serverkey]))
             return mp3_pb2.checkReply(message=ret)
 
@@ -145,8 +147,10 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                         if(checkDeadlock(message)==True):
                             ret = "shouldAbort"
                             return mp3_pb2.checkReply(message=ret)
-
-            allLockDict[serverkey].append(["SET", vmName])
+                allLockDict[serverkey].append(["SET", vmName])
+            else:
+                allLockDict[serverkey] = [["SET", vmName]]
+                
             history.append(" ".join([vmName, serverkey])) # not record value here 
             return mp3_pb2.checkReply(message=ret)
             
