@@ -107,7 +107,6 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
 
             get, serverkey = message.split(" ")
             server, key = serverkey[:].split(".")
-            print(serverkey)
 
             ret = "OK"
             if(serverkey in allLockDict.keys()):
@@ -174,10 +173,14 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 else:
                     waitDict[serverkey].append(vmName)
 
+        print(ownDict)
+        print(waitDict)
         if(len(ownDict)>0):
             inCurOwner = ownDict[inServerkey]
+            print(inCurOwner)
             for serverkey in waitDict.keys():
                 for vm in waitDict[serverkey]:
+                    print("check: " + serverkey + vm)
                     if(vm == inCurOwnerr and ownDict[serverkey] == inVmName):
                         return True
 
