@@ -199,10 +199,10 @@ if __name__ == '__main__':
 
     logging.basicConfig()
 
-    allLockDict = dict()
-    # allLockDict[serverkey] = [[GET, vmName], [SET, vmName]]
     historyList = []
     # ["client1 GET A.x", "client2 SET B.x", "client2 GET A.x"]
+    allLockDict = dict()
+    # allLockDict[serverkey] = [[GET, vmName], [SET, vmName]]
 
     print("Coordinator [SERVING]")
     serve()
