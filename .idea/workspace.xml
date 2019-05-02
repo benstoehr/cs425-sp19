@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/mp3/python/greeter_server.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,13 +23,14 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-105">
-                  <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+                <state relative-caret-position="361">
+                  <caret line="263" column="22" lean-forward="true" selection-start-line="263" selection-start-column="22" selection-end-line="263" selection-end-column="22" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#1388#2891#0" expanded="false" />
                     <element signature="e#2965#3981#0" expanded="false" />
                     <element signature="e#4050#5133#0" expanded="false" />
+                    <element signature="e#5182#6457#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -85,7 +85,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>logger</find>
       <find>time.sleep</find>
       <find>blockToSend</find>
       <find>storeMessage</find>
@@ -115,6 +114,7 @@
       <find>self.logger</find>
       <find>helloworld</find>
       <find>print</find>
+      <find>waitDict</find>
     </findStrings>
     <replaceStrings>
       <replace>58</replace>
@@ -827,13 +827,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-105">
-          <caret line="194" column="0" lean-forward="true" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
+        <state relative-caret-position="361">
+          <caret line="263" column="22" lean-forward="true" selection-start-line="263" selection-start-column="22" selection-end-line="263" selection-end-column="22" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#1388#2891#0" expanded="false" />
             <element signature="e#2965#3981#0" expanded="false" />
             <element signature="e#4050#5133#0" expanded="false" />
+            <element signature="e#5182#6457#0" expanded="false" />
           </folding>
         </state>
       </provider>

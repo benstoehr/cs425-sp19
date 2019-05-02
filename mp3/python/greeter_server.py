@@ -209,13 +209,13 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
     def abort(self, request, context):
         pass
 
-    def checkAcquireReadLock(self, vmname, serverkey):
+    def checkAcquireReadLock(self, vmname, key):
 
-        if(serverkey not in lockDict.keys()):
+        if(key not in lockDict.keys()):
             # No one has a lock on it
             return True
 
-        lockType, vmName = lockDict[serverkey][0]
+        lockType, vmName = lockDict[key][0]
 
         if(lockType == 'SET'):
             if(vmName == vmname):
@@ -223,10 +223,12 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             return False
 
         ret = True
-        if(serverkey in waitDict.keys()):
-            for lockType, vmName in waitDict.items():
-                if (lockType == 'SET'):
+        if(key in lockDict.keys()):
+            for lockType, vmName in lockDict[key]:
+                if (lockType == 'SET' and vmName != vmname):
                     ret = False
+                    break
+
         return ret
 
 
@@ -256,7 +258,7 @@ if __name__ == '__main__':
     clientDict = dict()
     masterDict = dict()
     lockDict = dict()
-    waitDict = dict()
+    #waitDict = dict()
 
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
