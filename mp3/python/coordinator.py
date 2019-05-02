@@ -39,6 +39,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         vmName = request.name # client's name, not the server
         message = request.message
         print("\nReceived %s from %s" % (message, vmName))
+        print(history)
 
         if('COMMIT' in message):
         # flush everything of this client in allLockDict & history
@@ -201,6 +202,7 @@ if __name__ == '__main__':
     allLockDict = dict()
     # allLockDict[serverkey] = [[GET, vmName], [SET, vmName]]
     history = list()
+    print(history)
     # ["client1 GET A.x", "client2 SET B.x", "client2 GET A.x"]
 
     print("Coordinator [SERVING]")
