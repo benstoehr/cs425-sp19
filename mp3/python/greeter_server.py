@@ -41,8 +41,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
     def SayHello(self, request, context):
 
         print("Received Hello!")
-        hireply = server.HiReply(mp3_pb2.hiMessage(name=request.name))
-        print(hireply.message)
+        # hireply = server.HiReply(mp3_pb2.hiMessage(name=request.name))
+        # print(hireply.message)
 
         return mp3_pb2.HelloReply(message='Hello, %s!' % request.name)
 
