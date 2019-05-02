@@ -48,7 +48,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             for serverkey in allLockDict.keys():
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
-                    lockClient = lock[1]
+                    lockClient = operation[1]
                     if(lockClient == vmName):
                         pass
                     else:
@@ -77,7 +77,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             for serverkey in allLockDict.keys():
                 tmpLocks = []
                 for operation in allLockDict[serverkey]:
-                    lockClient = lock[1]
+                    lockClient = operation[1]
                     if(lockClient == vmName):
                         pass
                     else:
