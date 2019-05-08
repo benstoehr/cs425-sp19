@@ -92,6 +92,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=s))
         print(checkreply.message)
         #TODO: Implement different logic for abort
+        if (checkreply.message == 'shouldAbort'):
+            self.doAbort(vmName)
+            checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
+            return mp3_pb2.abortReply(message='ABORTED')
+
 
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
 
@@ -126,7 +131,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             self.printALL()
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, val))
 
-    #TODO: setValue
     def setValue(self, request, context):
 
         t = time.time()
@@ -142,6 +146,10 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=s))
         print(checkreply.message)
         # TODO: Implement different logic for abort
+        if (checkreply.message == 'shouldAbort'):
+            self.doAbort(vmName)
+            checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
+            return mp3_pb2.abortReply(message='ABORTED')
 
         if(vmName not in clientDict.keys()):
             print(vmName, clientDict.keys())
@@ -180,6 +188,11 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='COMMIT'))
         print(checkreply.message)
         # TODO: Implement different logic for abort
+        if(checkreply.message == 'shouldAbort'):
+            self.doAbort(vmName)
+            checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
+            return mp3_pb2.abortReply(message='ABORTED')
+
 
         while(self.checkCommitOK(vmName) == False):
             time.sleep(0.0001)
@@ -266,6 +279,40 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         return True
 
+    def doAbort(self, vmName):
+
+        commands = clientDict[vmName]['commands']
+
+        for t, command in commands[1:]:
+            # SET Command
+            if ('SET' in command):
+
+                type, serverkey, value = command.split(" ")
+                server, key = serverkey.split(".")
+                # ASSUME first entry is ['SET', vmName]
+                if (len(lockDict[key]) > 1):
+                    lockDict[key].pop(0)
+                else:
+                    del (lockDict[key])
+                continue
+
+            # GET Command
+            if ('GET' in command):
+                type, serverkey = command.split(" ")
+                server, key = serverkey.split(".")
+                if (lockDict[key][0] == ['GET', vmName]):
+                    print("\nlockDict")
+                    for k, v in lockDict.items():
+                        print(k, ", ", v)
+                    locks = lockDict[key]
+                    if (len(locks) > 1):
+                        lockDict[key].pop(0)
+                    else:
+                        del (lockDict[key])
+                else:
+                    lockDict[key].remove(['GET', vmName])
+
+        del (clientDict[vmName])
 
     # TODO: abort
     def abort(self, request, context):
@@ -282,43 +329,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print(checkreply.message)
         # TODO: Implement different logic for abort
 
-        commands = clientDict[vmName]['commands']
-
-        for t, command in commands[1:]:
-
-            # SET Command
-            if('SET' in command):
-
-                type, serverkey, value = command.split(" ")
-                server, key = serverkey.split(".")
-
-                # ASSUME first entry is ['SET', vmName]
-                if(len(lockDict[key]) > 1):
-                    lockDict[key].pop(0)
-                else:
-                    del(lockDict[key])
-                continue
-
-            # GET Command
-            if('GET' in command):
-                type, serverkey = command.split(" ")
-                server, key = serverkey.split(".")
-
-                if(lockDict[key][0] == ['GET', vmName]):
-
-                    print("\nlockDict")
-                    for k, v in lockDict.items():
-                        print(k, ", ", v)
-
-                    locks = lockDict[key]
-                    if (len(locks) > 1):
-                        lockDict[key].pop(0)
-                    else:
-                        del(lockDict[key])
-                else:
-                    lockDict[key].remove(['GET', vmName])
-
-        del (clientDict[vmName])
+        self.doAbort(vmName)
 
         return mp3_pb2.abortReply(message='ABORTED')
 
