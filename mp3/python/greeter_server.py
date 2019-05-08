@@ -139,7 +139,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         value = request.value
 
         s = " ".join(('SET',serverkey, value))
-        checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message=s))
+        checkreply = coordinator.checkLock(mp3_pb2.checkMessagegr(gname=vmName, message=s))
         print(checkreply.message)
         # TODO: Implement different logic for abort
 
@@ -348,7 +348,8 @@ if __name__ == '__main__':
     #waitDict = dict()
 
 
-    coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
+    coordinatorChannel = grpc.insecure_channel('172.22.156.195:50052')\
+    #coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
     #coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
     coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
 
