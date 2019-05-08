@@ -21,7 +21,7 @@ import grpc
 import mp3_pb2
 import mp3_pb2_grpc
 
-serverVMs = ['10.193.240.202:50051',
+serverVMs = ['10.193.240.202',
  'sp19-cs425-g58-01.cs.illinois.edu',
  'sp19-cs425-g58-02.cs.illinois.edu',
  'sp19-cs425-g58-03.cs.illinois.edu',

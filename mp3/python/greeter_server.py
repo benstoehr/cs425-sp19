@@ -57,7 +57,6 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print("\nReceived Begin from ", vmName)
         #self.printALL()
 
-
         clientDict[vmName] = dict()
         clientDict[vmName]['miniDict'] = dict()
         clientDict[vmName]['commands'] = [(t, 'begin')]
@@ -355,7 +354,7 @@ if __name__ == '__main__':
         coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
     else:
         coordinator = None
-        
+
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
     serve()
