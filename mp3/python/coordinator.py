@@ -132,6 +132,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey] = [["GET", vmName]]
 
             historyList.append(" ".join([vmName, "GET", serverkey]))
+            print("almost done GET")
             return mp3_pb2.checkReply(message=ret)
 
         if ('SET' in message):
