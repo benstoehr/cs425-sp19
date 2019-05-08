@@ -35,7 +35,7 @@ serverVMs = ['10.193.240.202:50051',
 #  'sp19-cs425-g58-04.cs.illinois.edu',
 #  'sp19-cs425-g58-05.cs.illinois.edu']
 
-# serverLetters = ['A', 'B', 'C', 'D', 'E']
+serverLetters = ['A', 'B', 'C', 'D', 'E']
 
 # serverVMs = [
 #  'sp19-cs425-g58-10.cs.illinois.edu',
