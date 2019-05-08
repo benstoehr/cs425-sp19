@@ -16,6 +16,7 @@
 from concurrent import futures
 import time
 import logging
+import sys
 
 import grpc
 
@@ -347,12 +348,14 @@ if __name__ == '__main__':
     lockDict = dict()
     #waitDict = dict()
 
-
-    coordinatorChannel = grpc.insecure_channel('172.22.156.195:50052')\
-    #coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
-    #coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
-    coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
-
+    if(sys.argv[0] == '1'):
+        coordinatorChannel = grpc.insecure_channel('172.22.156.195:50052')\
+        #coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
+        #coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
+        coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
+    else:
+        coordinator = None
+        
     #d['A.x'] = 'Benjamin'
     print("[SERVING]")
     serve()
