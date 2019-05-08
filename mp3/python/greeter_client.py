@@ -64,22 +64,22 @@ def run(name, numVMs):
     try:
         with sys.stdin as i:
             while(1):
+
                 command = input()
 
-
-                if('BEGIN' in command):
+                if('BEGIN' in command and len(command) == 5):
                     for server in serverDict.values():
                         beginreply = server.begin(mp3_pb2.beginMessage(name=name))
                         print(beginreply.message)
                     continue
 
-                if('COMMIT' in command):
+                if('COMMIT' in command and len(command) == 6):
                     for server in serverDict.values():
                         commitreply = server.commit(mp3_pb2.beginMessage(name=name))
                         print(commitreply.message)
                     continue
 
-                if('ABORT' in command):
+                if('ABORT' in command and len(command) == 5):
                     for server in serverDict.values():
                         abortreply = server.abort(mp3_pb2.beginMessage(name=name))
                         print(abortreply.message)

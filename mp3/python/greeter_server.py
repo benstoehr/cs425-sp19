@@ -269,6 +269,7 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
     # TODO: abort
     def abort(self, request, context):
+
         t = time.time()
         vmName = request.name
         if (vmName not in clientDict.keys()):
@@ -285,18 +286,39 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
 
         for t, command in commands[1:]:
 
-            if ('SET' in command):
+            # SET Command
+            if('SET' in command):
+
                 type, serverkey, value = command.split(" ")
                 server, key = serverkey.split(".")
 
-                # Only ok if oldest related 'SET' is from vmName
-                lockDict[key].remove(['SET', vmName])
+                # ASSUME first entry is ['SET', vmName]
+                if(len(lockDict[key]) > 1):
+                    lockDict[key].pop(0)
+                else:
+                    del(lockDict[key])
+                continue
 
-            if ('GET' in command):
+            # GET Command
+            if('GET' in command):
                 type, serverkey = command.split(" ")
                 server, key = serverkey.split(".")
 
-                lockDict[key].remove(['GET', vmName])
+                if(lockDict[key][0] == ['GET', vmName]):
+
+                    print("\nlockDict")
+                    for k, v in lockDict.items():
+                        print(k, ", ", v)
+
+                    locks = lockDict[key]
+                    if (len(locks) > 1):
+                        lockDict[key].pop(0)
+                    else:
+                        del(lockDict[key])
+                else:
+                    lockDict[key].remove(['GET', vmName])
+
+        del (clientDict[vmName])
 
         return mp3_pb2.abortReply(message='ABORTED')
 
@@ -347,8 +369,11 @@ if __name__ == '__main__':
     lockDict = dict()
     #waitDict = dict()
 
-    if(sys.argv[0] == '1'):
-        coordinatorChannel = grpc.insecure_channel('172.22.156.195:50052')\
+    coordArg = sys.argv[1]
+    print("coordArg: ", coordArg)
+    if(coordArg == '1'):
+        print("COORDINATOR = TRUE")
+        coordinatorChannel = grpc.insecure_channel('[::]:50052')\
         #coordinatorChannel = grpc.insecure_channel('10.193.240.202:50052')\
         #coordinatorChannel = grpc.insecure_channel('sp19-cs425-g58-03.cs.illinois.edu:50052')
         coordinator = mp3_pb2_grpc.CoordinatorStub(coordinatorChannel)
