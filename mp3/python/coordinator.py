@@ -110,13 +110,11 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
         # if not: update allLockDict & history and return OK
         # else: check if deadlock exists and return OK or shouldAbort accordingly
 
-            print("execute GET")
             get, serverkey = message.split(" ")
             server, key = serverkey[:].split(".")
 
             ret = "OK"
             if(serverkey in allLockDict.keys()):
-                print("check Lock")
                 for lock in allLockDict[serverkey]:
                     lockType = lock[0]
                     lockClient = lock[1]
@@ -134,7 +132,6 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 allLockDict[serverkey] = [["GET", vmName]]
 
             historyList.append(" ".join([vmName, "GET", serverkey]))
-            print("almost done GET")
             return mp3_pb2.checkReply(message=ret)
 
         if ('SET' in message):
