@@ -93,9 +93,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print(checkreply.message)
         #TODO: Implement different logic for abort
         if (checkreply.message == 'shouldAbort'):
-            self.doAbort(vmName)
+            #self.doAbort(vmName)
             checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
-            return mp3_pb2.abortReply(message='ABORTED')
+            return mp3_pb2.abortReply(message='shouldAbort')
 
 
         print("["+str(t)+"] "+str(vmName)+" getValue " + str(serverkey))
@@ -148,9 +148,9 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
         print(checkreply.message)
         # TODO: Implement different logic for abort
         if (checkreply.message == 'shouldAbort'):
-            self.doAbort(vmName)
+            #self.doAbort(vmName)
             checkreply = coordinator.checkLock(mp3_pb2.checkMessage(name=vmName, message='ABORT'))
-            return mp3_pb2.abortReply(message='ABORTED')
+            return mp3_pb2.abortReply(message='shouldAbort')
 
         if(vmName not in clientDict.keys()):
             print(vmName, clientDict.keys())

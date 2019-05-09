@@ -67,49 +67,62 @@ def run(name, numVMs):
 
                 command = input()
 
+                goodCommand = False
+
                 if('BEGIN' in command and len(command) == 5):
+                    goodCommand = True
                     for server in serverDict.values():
-                        beginreply = server.begin(mp3_pb2.beginMessage(name=name))
-                        print(beginreply.message)
-                    continue
+                        reply = server.begin(mp3_pb2.beginMessage(name=name))
+                        print(reply.message)
 
-                if('COMMIT' in command and len(command) == 6):
+                elif('COMMIT' in command and len(command) == 6):
+                    goodCommand = True
                     for server in serverDict.values():
-                        commitreply = server.commit(mp3_pb2.beginMessage(name=name))
-                        print(commitreply.message)
-                    continue
+                        reply = server.commit(mp3_pb2.beginMessage(name=name))
 
-                if('ABORT' in command and len(command) == 5):
+
+                elif('ABORT' in command and len(command) == 5):
+                    goodCommand = True
                     for server in serverDict.values():
-                        abortreply = server.abort(mp3_pb2.beginMessage(name=name))
-                        print(abortreply.message)
-                    continue
+                        reply = server.abort(mp3_pb2.beginMessage(name=name))
 
-                if('GET' in command):
+
+                elif('GET' in command):
+
                     split = command.split(" ")
                     if(len(split) != 2):
                         print("\t Error in input")
                         continue
+                    goodCommand = True
                     get, serverkey = split
                     server, key = serverkey[:].split(".")
                     #print(serverkey)
 
-                    getreply = serverDict[server].getValue(mp3_pb2.getMessage(name=name, serverkey=str(serverkey)))
-                    print(getreply.message)
-                    continue
-                if ('SET' in command):
+                    reply = serverDict[server].getValue(mp3_pb2.getMessage(name=name, serverkey=str(serverkey)))
+
+                elif ('SET' in command):
+
                     split = command.split(" ")
                     if (len(split) != 3):
                         print("\t Error in input")
-                        continue
+
+                    goodCommand = True
                     set, serverkey, value = split
                     server, key = serverkey.split(".")
 
-                    setreply = serverDict[server].setValue(mp3_pb2.setMessage(name=name, serverkey=serverkey, value=value))
-                    print(setreply.message)
+                    reply = serverDict[server].setValue(mp3_pb2.setMessage(name=name, serverkey=serverkey, value=value))
+
+
+                if(not goodCommand):
+                    print("Unexpected input, please try again!")
                     continue
 
-                print("Unexpected input, please try again!")
+                if(reply.message == "shouldAbort"):
+                    for server in serverDict.values():
+                        reply = server.abort(mp3_pb2.beginMessage(name=name))
+                else:
+                    print(reply.message)
+
                 #print(command)
 
     except KeyboardInterrupt:
