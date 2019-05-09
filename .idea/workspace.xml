@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ca0825b9-9af2-49a0-9014-29abeb0e9d6a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/mp3/python/greeter_client.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_client.py" />
       <change beforePath="$PROJECT_DIR$/mp3/python/greeter_server.py" afterPath="$PROJECT_DIR$/mp3/python/greeter_server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,18 +25,19 @@
           <file leaf-file-name="greeter_server.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="359">
-                  <caret line="386" column="74" lean-forward="false" selection-start-line="386" selection-start-column="74" selection-end-line="386" selection-end-column="74" />
+                <state relative-caret-position="486">
+                  <caret line="282" column="30" lean-forward="false" selection-start-line="282" selection-start-column="30" selection-end-line="282" selection-end-column="30" />
                   <folding>
                     <element signature="e#649#679#0" expanded="true" />
                     <element signature="e#883#1170#0" expanded="false" />
-                    <element signature="e#1981#4434#0" expanded="false" />
-                    <element signature="e#4487#6014#0" expanded="false" />
-                    <element signature="e#6083#8124#0" expanded="false" />
-                    <element signature="e#8172#9447#0" expanded="false" />
-                    <element signature="e#9489#10641#0" expanded="false" />
-                    <element signature="e#11293#11796#0" expanded="false" />
-                    <element signature="e#11818#12137#0" expanded="false" />
+                    <element signature="e#1981#4458#0" expanded="false" />
+                    <element signature="e#4511#6038#0" expanded="false" />
+                    <element signature="e#6107#8148#0" expanded="false" />
+                    <element signature="e#8196#9471#0" expanded="false" />
+                    <element signature="e#9513#10665#0" expanded="false" />
+                    <element signature="e#10733#11257#0" expanded="false" />
+                    <element signature="e#11317#11820#0" expanded="false" />
+                    <element signature="e#11842#12161#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -76,7 +76,7 @@
           <file leaf-file-name="greeter_client.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/mp3/python/greeter_client.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="293">
+                <state relative-caret-position="225">
                   <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
                   <folding>
                     <element signature="e#649#686#0" expanded="true" />
@@ -449,7 +449,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/mp3/python/greeter_server.py</url>
-          <line>217</line>
+          <line>218</line>
           <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -774,7 +774,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
+        <state relative-caret-position="225">
           <caret line="29" column="0" lean-forward="true" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
           <folding>
             <element signature="e#649#686#0" expanded="true" />
@@ -784,18 +784,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mp3/python/greeter_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="386" column="74" lean-forward="false" selection-start-line="386" selection-start-column="74" selection-end-line="386" selection-end-column="74" />
+        <state relative-caret-position="486">
+          <caret line="282" column="30" lean-forward="false" selection-start-line="282" selection-start-column="30" selection-end-line="282" selection-end-column="30" />
           <folding>
             <element signature="e#649#679#0" expanded="true" />
             <element signature="e#883#1170#0" expanded="false" />
-            <element signature="e#1981#4434#0" expanded="false" />
-            <element signature="e#4487#6014#0" expanded="false" />
-            <element signature="e#6083#8124#0" expanded="false" />
-            <element signature="e#8172#9447#0" expanded="false" />
-            <element signature="e#9489#10641#0" expanded="false" />
-            <element signature="e#11293#11796#0" expanded="false" />
-            <element signature="e#11818#12137#0" expanded="false" />
+            <element signature="e#1981#4458#0" expanded="false" />
+            <element signature="e#4511#6038#0" expanded="false" />
+            <element signature="e#6107#8148#0" expanded="false" />
+            <element signature="e#8196#9471#0" expanded="false" />
+            <element signature="e#9513#10665#0" expanded="false" />
+            <element signature="e#10733#11257#0" expanded="false" />
+            <element signature="e#11317#11820#0" expanded="false" />
+            <element signature="e#11842#12161#0" expanded="false" />
           </folding>
         </state>
       </provider>

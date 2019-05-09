@@ -117,7 +117,8 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             lockDict[key].append(['GET', vmName])
 
         while(self.checkAcquireReadLock(vmName, key) == False):
-            time.sleep(0.0001)
+            time.sleep(1)
+            print("waiting")
 
         string = 'GET {}'.format(serverkey)
         clientDict[vmName]['commands'].append([t,string])
