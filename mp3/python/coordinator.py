@@ -73,7 +73,6 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
 
             return mp3_pb2.checkReply(message='OK')
 
-
         if('ABORT' in message):
         # flush everything of this client in allLockDict & history
 
@@ -177,8 +176,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             lockType = ops[1]
             serverkey = ops[2]
 
-            # if(lockType == "SET" and serverkey not in ownDict):
-            if (serverkey not in ownDict):
+            if(lockType == "SET" and serverkey not in ownDict):
+            #if (serverkey not in ownDict):
                 ownDict[serverkey] = vmName
             else:
                 if(serverkey not in waitDict):
