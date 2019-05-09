@@ -176,6 +176,7 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             vmName = ops[0]
             lockType = ops[1]
             serverkey = ops[2]
+
             if(lockType == "SET" and serverkey not in ownDict):
                 ownDict[serverkey] = vmName
             else:
