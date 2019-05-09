@@ -42,6 +42,7 @@ serverVMs = [
  'sp19-cs425-g58-09.cs.illinois.edu',
  'sp19-cs425-g58-08.cs.illinois.edu',
  'sp19-cs425-g58-07.cs.illinois.edu']
+
 # serverLetters = ['A', 'B', 'C', 'D']
 
 def run(name, numVMs):

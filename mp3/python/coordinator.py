@@ -177,7 +177,8 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
             lockType = ops[1]
             serverkey = ops[2]
 
-            if(lockType == "SET" and serverkey not in ownDict):
+            # if(lockType == "SET" and serverkey not in ownDict):
+            if (serverkey not in ownDict):
                 ownDict[serverkey] = vmName
             else:
                 if(serverkey not in waitDict):
@@ -185,9 +186,9 @@ class Coordinator(mp3_pb2_grpc.CoordinatorServicer):
                 else:
                     waitDict[serverkey].append(vmName)
 
-        print(ownDict)
-        print(waitDict)
-        if(len(ownDict)>0):
+        print("ownDict", ownDict)
+        print("waitDict", waitDict)
+        if(len(ownDict) > 0):
             inCurOwner = ownDict[inServerkey]
             print(inCurOwner)
             for serverkey in waitDict.keys():
