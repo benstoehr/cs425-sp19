@@ -118,8 +118,10 @@ def run(name, numVMs):
                     continue
 
                 if(reply.message == "shouldAbort"):
-                    for server in serverDict.values():
+                    for letter, server in serverDict.items():
                         reply = server.abort(mp3_pb2.beginMessage(name=name))
+                        print(letter,": ",reply.message)
+
                 else:
                     print(reply.message)
 
