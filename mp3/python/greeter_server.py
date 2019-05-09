@@ -128,6 +128,12 @@ class Greeter(mp3_pb2_grpc.GreeterServicer):
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, masterDict[key]))
 
         else:
+            # Does key exist locally?
+            if (key not in clientDict[vmName]['miniDict'].keys()):
+                # Should we return NOT FOUND or let it wait
+                # if another client SET the object but not commit yet?
+                return mp3_pb2.getReply(message='NOT FOUND')
+
             val = clientDict[vmName]['miniDict'][key]
             self.printALL()
             return mp3_pb2.getReply(message='%s = %s' % (serverkey, val))
