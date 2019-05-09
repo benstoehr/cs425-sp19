@@ -105,7 +105,7 @@ def run(name, numVMs):
                     split = command.split(" ")
                     if (len(split) != 3):
                         print("\t Error in input")
-
+                        continue
                     goodCommand = True
                     set, serverkey, value = split
                     server, key = serverkey.split(".")
