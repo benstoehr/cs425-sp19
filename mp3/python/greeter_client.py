@@ -28,12 +28,12 @@ import mp3_pb2_grpc
 #  'sp19-cs425-g58-04.cs.illinois.edu',
 #  'sp19-cs425-g58-05.cs.illinois.edu']
 
-serverVMs = [
- 'sp19-cs425-g58-01.cs.illinois.edu',
- 'sp19-cs425-g58-02.cs.illinois.edu',
- 'sp19-cs425-g58-03.cs.illinois.edu',
- 'sp19-cs425-g58-04.cs.illinois.edu',
- 'sp19-cs425-g58-05.cs.illinois.edu']
+# serverVMs = [
+#  'sp19-cs425-g58-01.cs.illinois.edu',
+#  'sp19-cs425-g58-02.cs.illinois.edu',
+#  'sp19-cs425-g58-03.cs.illinois.edu',
+#  'sp19-cs425-g58-04.cs.illinois.edu',
+#  'sp19-cs425-g58-05.cs.illinois.edu']
 
 serverLetters = ['A', 'B', 'C', 'D', 'E']
 
@@ -138,3 +138,17 @@ if __name__ == '__main__':
     logging.basicConfig()
 
     run(sys.argv[1], int(sys.argv[2]))
+
+    if(sys.argv[3] == 'ben'):
+        serverVMs = [
+            'sp19-cs425-g58-01.cs.illinois.edu',
+            'sp19-cs425-g58-02.cs.illinois.edu',
+            'sp19-cs425-g58-03.cs.illinois.edu',
+            'sp19-cs425-g58-04.cs.illinois.edu',
+            'sp19-cs425-g58-05.cs.illinois.edu']
+    else:
+        serverVMs = [
+            'sp19-cs425-g58-07.cs.illinois.edu',
+            'sp19-cs425-g58-08.cs.illinois.edu',
+            'sp19-cs425-g58-09.cs.illinois.edu',
+            'sp19-cs425-g58-10.cs.illinois.edu']
